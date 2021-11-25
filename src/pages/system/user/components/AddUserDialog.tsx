@@ -29,9 +29,9 @@ const AddUserDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose
   }, [data])
 
   useEffect(() => {
-    getRolesAll().then((res) => {
-      setRoles(res.data)
-    })
+    // getRolesAll().then((res) => {
+    //   setRoles(res.data)
+    // })
   }, [])
 
   useEffect(() => {

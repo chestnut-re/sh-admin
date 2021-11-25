@@ -12,13 +12,14 @@ export function login(account: string, password: string): Promise<any> {
 
 /**
  * 用户列表
+ *
+ * pageIndex = 0, pageSize = 20
  */
-export function userList(pageIndex = 0, pageSize = 20): Promise<any> {
+export function userList(params: any): Promise<any> {
+  console.log('params', params)
+
   return axios.get('/api/userList', {
-    params: {
-      pageIndex,
-      pageSize,
-    },
+    params: params,
   })
 }
 
