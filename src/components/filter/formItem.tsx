@@ -1,6 +1,5 @@
 import { Form, Input, Select } from 'antd'
-import { NamePath } from 'antd/lib/form/interface'
-import React, { Props } from 'react'
+import React from 'react'
 import { FC } from 'react'
 
 /**

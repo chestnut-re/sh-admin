@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 import { InputTemp, SelectTemp } from '@/components/filter/formItem'
 import { delUser, userList } from '@/service/user'
-import { Button, Col, Form, Input, Row, Select, Space, Table, Tag } from 'antd'
+import { Button, Col, Form, Row, Space, Table } from 'antd'
 import React, { useEffect, useState } from 'react'
 import AddUserDialog, { DialogMode } from './components/AddUserDialog'
 import './index.less'
@@ -103,12 +103,6 @@ const UserPage: React.FC = () => {
 
   return (
     <div className="page-root">
-      <Space>
-        <div className="title">用户管理</div>
-        <Button type="primary" onClick={showAddDialog}>
-          添加用户
-        </Button>
-      </Space>
       <div>
         <Form
           name="basic"
@@ -139,6 +133,9 @@ const UserPage: React.FC = () => {
               </Button>
               <Button htmlType="button" onClick={onReset}>
                 清除
+              </Button>
+              <Button type="primary" onClick={showAddDialog}>
+                添加用户
               </Button>
             </Space>
           </Form.Item>

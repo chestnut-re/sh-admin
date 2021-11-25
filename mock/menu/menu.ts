@@ -34,23 +34,35 @@ export default [
             {
               name: '营销中心',
               id: 2,
-              componentPath: '/table',
-              path: '/table',
+              componentPath: '/market',
+              path: '/market',
+            },
+            {
+              name: '财务中心',
+              id: 3,
+              componentPath: '/finance',
+              path: '/finance',
             },
             {
               name: '用户中心',
-              id: 3,
-              componentPath: '/table',
-              path: '/table1',
+              id: 4,
+              componentPath: '/user',
+              path: '/user',
+            },
+            {
+              name: '行程中心',
+              id: 5,
+              componentPath: '/route',
+              path: '/route',
             },
             {
               name: '系统中心',
-              id: 4,
+              id: 6,
               path: '/system',
               children: [
                 {
                   name: '用户列表',
-                  id: 41,
+                  id: 61,
                   componentPath: '/system/user',
                   path: '/system/user',
                 },
