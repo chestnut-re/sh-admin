@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import { InputTemp, SelectTemp } from '@/components/filter/formItem'
+import { InputTemp, SelectTemp, TimePickerTemp, DatePickerTemp, RangePickerTemp, LowAndHighTemp } from '@/components/filter/formItem'
 import { delUser, userList } from '@/service/user'
 import { Button, Col, Form, Row, Space, Table } from 'antd'
 import React, { useEffect, useState } from 'react'
@@ -123,6 +123,32 @@ const UserPage: React.FC = () => {
             </Col>
             <Col span={4}>
               <SelectTemp name="gender" />
+            </Col>
+            <Col span={2} className="table-from-label">
+              选择时间
+            </Col>
+            <Col span={4}>
+              <TimePickerTemp name="time" />
+            </Col>
+            <Col span={2} className="table-from-label">
+              选择日期
+            </Col>
+            <Col span={4}>
+              <DatePickerTemp name="date" />
+            </Col>
+          </Row>
+          <Row gutter={[10, 0]}>
+            <Col span={2} className="table-from-label">
+              日期区域筛选
+            </Col>
+            <Col span={4}>
+              <RangePickerTemp name="datearea" />
+            </Col>
+            <Col span={2} className="table-from-label">
+              累计销量
+            </Col>
+            <Col span={4}>
+              <LowAndHighTemp name="high" />
             </Col>
           </Row>
 
