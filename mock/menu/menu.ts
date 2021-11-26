@@ -34,8 +34,30 @@ export default [
             {
               name: '营销中心',
               id: 2,
-              componentPath: '/market',
+              componentPath: 'market',
               path: '/market',
+              children: [
+                {
+                  name: '渠道管理',
+                  id: 21,
+                  componentPath: '/market',
+                  path: '/channel-management',
+                  children: [
+                    {
+                      name: '渠道列表',
+                      id: 211,
+                      componentPath: '/market/channel-management/channel-list',
+                      path: '/market/channel-management/channel-list'
+                    },
+                    {
+                      name: '创建渠道',
+                      id: 212,
+                      componentPath: '/market/channel-management/create-channel',
+                      path: '/market/channel-management/create-channel'
+                    }
+                  ]
+                }
+              ]
             },
             {
               name: '财务中心',
@@ -65,6 +87,12 @@ export default [
                   id: 61,
                   componentPath: '/system/user',
                   path: '/system/user',
+                },
+                {
+                  name: '支付配置',
+                  id: 62,
+                  componentPath: '/system/payment',
+                  path: '/system/payment',
                 },
               ],
             },
