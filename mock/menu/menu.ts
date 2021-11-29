@@ -47,17 +47,17 @@ export default [
                       name: '渠道列表',
                       id: 211,
                       componentPath: '/market/channel-management/channel-list',
-                      path: '/market/channel-management/channel-list'
+                      path: '/market/channel-management/channel-list',
                     },
                     {
                       name: '创建渠道',
                       id: 212,
                       componentPath: '/market/channel-management/create-channel',
-                      path: '/market/channel-management/create-channel'
-                    }
-                  ]
-                }
-              ]
+                      path: '/market/channel-management/create-channel',
+                    },
+                  ],
+                },
+              ],
             },
             {
               name: '财务中心',
@@ -80,22 +80,109 @@ export default [
             {
               name: '系统中心',
               id: 6,
+              componentPath: 'system',
               path: '/system',
               children: [
                 {
-                  name: '用户列表',
+                  name: '权限管理',
                   id: 61,
-                  componentPath: '/system/user',
-                  path: '/system/user',
+                  componentPath: '/system/authority',
+                  path: '/system/authority',
+                  children: [
+                    {
+                      name: '用户管理',
+                      id: 611,
+                      componentPath: '/system/authority/user',
+                      path: '/system/authority/user',
+                    },
+                    {
+                      name: '菜单管理',
+                      id: 612,
+                      componentPath: '/system/authority/menu',
+                      path: '/system/authority/menu',
+                    },
+                    {
+                      name: '角色管理',
+                      id: 613,
+                      componentPath: '/system/authority/role',
+                      path: '/system/authority/role',
+                    },
+                  ],
                 },
                 {
-                  name: '支付配置',
+                  name: '意见反馈',
                   id: 62,
-                  componentPath: '/system/payment',
-                  path: '/system/payment',
+                  componentPath: '/system/opinion',
+                  path: '/system/opinion',
+                },
+                {
+                  name: '版本管理',
+                  id: 63,
+                  componentPath: '/system/version',
+                  path: '/system/version',
+                  children: [
+                    {
+                      name: 'B端版本管理',
+                      id: 631,
+                      componentPath: '/system/version/version-b',
+                      path: '/system/version/user',
+                    },
+                    {
+                      name: 'C端版本管理',
+                      id: 632,
+                      componentPath: '/system/version/version-c',
+                      path: '/system/version/menu',
+                    },
+                    {
+                      name: '支付配置',
+                      id: 633,
+                      componentPath: '/system/version/pay',
+                      path: '/system/version/pay',
+                      children: [
+                        {
+                          name: '支付模块',
+                          id: 6331,
+                          componentPath: '/system/version/pay/payment',
+                          path: '/system/version/pay/payment',
+                        },
+                        {
+                          name: '支付宝',
+                          id: 6332,
+                          componentPath: '/system/version/pay/aLiPay',
+                          path: '/system/version/pay/aLiPay',
+                        },
+                        {
+                          name: '微信',
+                          id: 6333,
+                          componentPath: '/system/version/pay/weChat',
+                          path: '/system/version/pay/weChat',
+                        },
+                      ],
+                    },
+                  ],
                 },
               ],
             },
+            // {
+            //   name: '系统中心',
+            //   id: 6,
+            //   componentPath: 'system',
+            //   path: '/system',
+            //   children: [
+            //     {
+            //       name: '用户列表',
+            //       id: 61,
+            //       componentPath: '/system/user',
+            //       path: '/system/user',
+            //     },
+            //     {
+            //       name: '支付配置',
+            //       id: 62,
+            //       componentPath: '/system/payment',
+            //       path: '/system/payment',
+            //     },
+            //   ],
+            // },
             // {
             //   name: '用户中心',
             //   id: 3,

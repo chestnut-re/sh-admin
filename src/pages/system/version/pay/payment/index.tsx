@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react'
 import './index.less'
 
 /**
- * 用户中心
+ * 系统中心-支付配置
  */
 const PaymentPage: React.FC = () => {
   const [form] = Form.useForm()

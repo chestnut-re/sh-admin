@@ -1,48 +1,47 @@
-/* eslint-disable react/display-name */
-import { Space, Table, Tag, Form, Row, Col, Button } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { InputTemp, SelectTemp } from '@/components/filter/formItem'
+import { InputTemp, SelectTemp, RangePickerTemp } from '@/components/filter/formItem'
+import { Form, Table, Col, Row, Space, Button } from 'antd'
 
 /**
- * 用户中心-用户列表
+ * 系统中心-意见反馈
  */
 
-const TablePage: React.FC = () => {
+const OpinionPage: React.FC = () => {
   const [form] = Form.useForm()
-  // const [data, setData] = useState([])
+  const [data, setData] = useState([])
   const columns = [
     {
-      title: '编号',
+      title: '序号',
       align: 'center',
       render: (text, record, index) => `${index + 1}`,
     },
     {
-      title: '账号',
+      title: '用户角色',
       align: 'center',
       dataIndex: 'account',
     },
     {
-      title: '密码',
+      title: '联系电话',
       align: 'center',
       dataIndex: 'password',
     },
     {
-      title: '用户名称',
+      title: '反馈图片',
       align: 'center',
       dataIndex: 'name',
     },
     {
-      title: '所属角色',
+      title: '反馈详情',
       align: 'center',
       dataIndex: 'role',
     },
     {
-      title: '创建时间',
+      title: '反馈状态',
       align: 'center',
       dataIndex: 'createtime',
     },
     {
-      title: '状态',
+      title: '反馈时间',
       align: 'center',
       dataIndex: 'state',
     },
@@ -56,20 +55,6 @@ const TablePage: React.FC = () => {
       ),
     },
   ]
-
-  const data = [
-    {
-      id: '1',
-      account: 'id1',
-      password: '123',
-    },
-    {
-      id: '2',
-      account: 'id2',
-      password: '123',
-    },
-  ]
-
   const onFinish = (values: any) => {
     console.log('Success:', values)
     // loadData()
@@ -82,7 +67,6 @@ const TablePage: React.FC = () => {
   const onChange = () => {
     console.log(1)
   }
-
   return (
     <div className="page-root">
       <div>
@@ -95,23 +79,28 @@ const TablePage: React.FC = () => {
         >
           <Row gutter={[10, 0]}>
             <Col span={2} className="table-from-label">
-              用户名
+              反馈者
             </Col>
             <Col span={4}>
-              <InputTemp name="username" />
+              <InputTemp name="name" />
             </Col>
             <Col span={2} className="table-from-label">
-              状态
+              反馈类型
             </Col>
             <Col span={4}>
               <SelectTemp name="gender" />
+            </Col>
+            <Col span={2} className="table-from-label">
+              反馈时间
+            </Col>
+            <Col span={4}>
+              <RangePickerTemp name="gender" />
             </Col>
             <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
               <Space>
                 <Button type="primary" htmlType="submit">
                   搜索
                 </Button>
-                <Button type="primary">新增用户</Button>
               </Space>
             </Form.Item>
           </Row>
@@ -122,4 +111,4 @@ const TablePage: React.FC = () => {
   )
 }
 
-export default TablePage
+export default OpinionPage
