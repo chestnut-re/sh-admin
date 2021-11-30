@@ -8,7 +8,7 @@ import { FC } from 'react'
 export const SelectTemp: FC<any> = ({ name, ...props }) => {
   return (
     <Form.Item name={name}>
-      <Select placeholder="选择性别" allowClear {...props}>
+      <Select allowClear {...props}>
         <Select.Option value="male">male</Select.Option>
         <Select.Option value="female">female</Select.Option>
         <Select.Option value="other">other</Select.Option>

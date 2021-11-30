@@ -27,6 +27,18 @@ export default [
                       componentPath: '/operation/production/production-list',
                       path: '/operation/production/production-list',
                     },
+                    {
+                      name: '发布商品',
+                      id: 112,
+                      componentPath: '/operation/production/release-product',
+                      path: '/operation/production/release-product',
+                    },
+                    {
+                      name: '商品审核',
+                      id: 113,
+                      componentPath: '/operation/production/commodity-audit',
+                      path: '/operation/production/commodity-audit',
+                    },
                   ],
                 },
               ],

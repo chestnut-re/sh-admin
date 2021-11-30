@@ -3,45 +3,50 @@ import React, { useEffect, useState } from 'react'
 import { InputTemp, SelectTemp } from '@/components/filter/formItem'
 
 /**
- * 系统中心-版本管理-C端版本管理
+ * 运营中心-商品管理-商品审核
  */
 
-const VersionCPage: React.FC = () => {
+const CommodityAuditPage: React.FC = () => {
   const [form] = Form.useForm()
   const [data, setData] = useState([])
   const columns = [
     {
-      title: '序号',
+      title: '编号',
       align: 'center',
       render: (text, record, index) => `${index + 1}`,
     },
     {
-      title: '版本号',
+      title: '商品名称',
       align: 'center',
       dataIndex: 'account',
     },
     {
-      title: '版本状态',
+      title: '现售价',
       align: 'center',
       dataIndex: 'password',
     },
     {
-      title: '发布者',
+      title: '创建时间',
       align: 'center',
       dataIndex: 'name',
     },
     {
-      title: '更新内容',
+      title: '创建人',
       align: 'center',
       dataIndex: 'role',
     },
     {
-      title: '下载链接',
+      title: '最近编辑时间',
       align: 'center',
       dataIndex: 'createtime',
     },
     {
-      title: '版本迭代时间',
+      title: '最近编辑人',
+      align: 'center',
+      dataIndex: 'state',
+    },
+    {
+      title: '状态',
       align: 'center',
       dataIndex: 'state',
     },
@@ -49,8 +54,7 @@ const VersionCPage: React.FC = () => {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button>编辑</Button>
-          <Button danger>删除</Button>
+          <Button>审核</Button>
         </Space>
       ),
     },
@@ -79,26 +83,21 @@ const VersionCPage: React.FC = () => {
         >
           <Row gutter={[10, 0]}>
             <Col span={2} className="table-from-label">
-              版本号
+              商品名称
             </Col>
             <Col span={4}>
               <InputTemp name="name" />
             </Col>
             <Col span={2} className="table-from-label">
-              版本名称
+              状态
             </Col>
             <Col span={4}>
-              <InputTemp name="name" />
-            </Col>
-            <Col span={2} className="table-from-label">
-              发布时间
-            </Col>
-            <Col span={4}>
-              <InputTemp name="name" />
+              <SelectTemp name="name" />
             </Col>
             <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
               <Space>
-                <Button type="primary">新建版本</Button>  
+                <Button type="primary">查询</Button>
+                <Button>重置</Button>
               </Space>
             </Form.Item>
           </Row>
@@ -109,4 +108,4 @@ const VersionCPage: React.FC = () => {
   )
 }
 
-export default VersionCPage
+export default CommodityAuditPage
