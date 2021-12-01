@@ -67,6 +67,12 @@ export default [
                       componentPath: '/market/channel-management/create-channel',
                       path: '/market/channel-management/create-channel',
                     },
+                    {
+                      name: '分佣方案',
+                      id: 213,
+                      componentPath: '/market/channel-management/commission-scheme',
+                      path: '/market/channel-management/commission-scheme',
+                    },
                   ],
                 },
               ],
