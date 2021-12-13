@@ -3,6 +3,8 @@
  * 请求拦截、响应拦截、错误统一处理
  */
 
+import { userLoginOut } from '@/utils/biz'
+import { message } from 'antd'
 import axios from 'axios'
 import createHeader from './custom-header'
 const JSONbigString = require('json-bigint')({ storeAsString: true })
@@ -11,9 +13,9 @@ const JSONbigString = require('json-bigint')({ storeAsString: true })
 const instance = axios.create({
   timeout: 1000 * 10,
   headers: {
-    get: {
-      'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
-    },
+    // get: {
+    //   'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+    // },
     post: {
       'Content-Type': 'application/json;charset=utf-8',
     },
@@ -54,7 +56,16 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   // 请求成功
   (res) => {
+    console.log('res', res)
     if (res.status === 200) {
+      if (res.data.code !== '200') {
+        message.error(res.data.msg)
+      }
+      if (res.data.code === '010011') {
+        // 登录态失效
+        userLoginOut()
+        return
+      }
       return Promise.resolve(res.data)
     } else {
       return Promise.reject(res.data)
@@ -63,6 +74,7 @@ instance.interceptors.response.use(
   // 请求失败
   (error) => {
     const { response } = error
+    console.log('response', response)
     return Promise.reject(response)
   }
 )

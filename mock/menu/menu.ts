@@ -6,7 +6,7 @@ export default [
     type: 'get',
     response: (config) => {
       return {
-        code: 200,
+        code: '200',
         data: {
           menus: [
             {
@@ -40,6 +40,20 @@ export default [
                       path: '/operation/production/commodity-audit',
                     },
                   ],
+                },
+              ],
+            },
+            {
+              name: 'App营销',
+              id: 7,
+              componentPath: 'market',
+              path: '/app-market',
+              children: [
+                {
+                  name: '轮播图管理',
+                  id: 71,
+                  componentPath: '/app-market/banner',
+                  path: '/app-market/banner',
                 },
               ],
             },

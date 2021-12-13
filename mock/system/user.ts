@@ -6,7 +6,7 @@ export default [
     type: 'get',
     response: (config) => {
       return {
-        code: 200,
+        code: '200',
         data: {
           list: [
             {

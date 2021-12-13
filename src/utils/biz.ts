@@ -1,6 +1,15 @@
 import { getCookie, removeCookie, setCookie } from './cookies'
 
 /**
+ * 退出登录
+ */
+export function userLoginOut() {
+  removeJWT()
+  if (window.location.pathname === '/login') return
+  window.location.href = '/login'
+}
+
+/**
  * 获取 jwt
  */
 export function getJWT() {

@@ -1,10 +1,13 @@
-// import { CookieUtils } from "@/utils"
+import { getJWT } from '@/utils/biz'
 
 // 自定义请求头
 export default () => {
-  return {
-    mclient: "web",
-    Lang: "zh-CN",
-    // Authorization: CookieUtils.getToken(),
+  const headers = {
+    mclient: 'web',
+    Lang: 'zh-CN',
   }
+  if (getJWT()) {
+    headers['Authorization'] = getJWT()
+  }
+  return headers
 }

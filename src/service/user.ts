@@ -1,13 +1,15 @@
 import axios from '@/request'
 
-/**
- * 登录
- */
-export function login(account: string, password: string): Promise<any> {
-  return axios.post('/api/login', {
-    account,
-    password,
-  })
+export class UserService {
+  /**
+   * 登录
+   */
+  static login(username: string, password: string): Promise<any> {
+    return axios.post('/api/users/admin/login', {
+      username,
+      password,
+    })
+  }
 }
 
 /**

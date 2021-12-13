@@ -1,4 +1,6 @@
 import { getMenus } from '@/service/menu'
+import { UserService } from '@/service/user'
+import { setJWT } from '@/utils/biz'
 import { action, makeObservable, observable } from 'mobx'
 
 // const adminStore = observable({
@@ -17,6 +19,7 @@ import { action, makeObservable, observable } from 'mobx'
 /**
  * 管理后台必备 Store
  * 1. 菜单
+ * 2. 登录
  */
 class AdminData {
   menu: any[] = []
@@ -34,6 +37,14 @@ class AdminData {
     const res = await getMenus()
     this.setMenu(res.data.menus)
     console.log(JSON.stringify(res))
+  }
+
+  /**登录 */
+  async login(username, password){
+    const loginRes = await UserService.login(username, password)
+    console.log(loginRes);
+    setJWT(loginRes.data.accessToken)
+    window.location.href = '/'
   }
 
   setMenu(_menu: any) {

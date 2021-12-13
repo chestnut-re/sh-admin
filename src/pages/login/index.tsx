@@ -9,17 +9,23 @@ import './index.less'
  * 登录页面
  */
 const LoginPage: React.FC = () => {
+  const [form] = Form.useForm()
   const { adminStore } = useStore()
   useEffect(() => {
+    //TODO: test
+    form.setFieldsValue({
+      username: 'qwrqerewty',
+      password: '6623664xing',
+    })
+
     if (getJWT()) {
       // 已经登录，跳转到首页
-      location.href = '/'
+      window.location.href = '/'
     }
   }, [])
 
   const onFinish = (values: any) => {
-    console.log('Success:', values)
-    adminStore.login(values.account, values.password)
+    adminStore.login(values.username, values.password)
   }
 
   const onFinishFailed = (errorInfo: any) => {
@@ -39,8 +45,9 @@ const LoginPage: React.FC = () => {
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             autoComplete="off"
+            form={form}
           >
-            <Form.Item label="账号" name="account" rules={[{ required: true, message: '请输入账号' }]}>
+            <Form.Item label="账号" name="username" rules={[{ required: true, message: '请输入账号' }]}>
               <Input />
             </Form.Item>
 
