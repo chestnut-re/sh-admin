@@ -1,4 +1,4 @@
-import { getRolesAll } from '@/service/role'
+// import { getRolesAll } from '@/service/role'
 import { createUser, editUser } from '@/service/user'
 import { Form, Input, Modal, Select } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
@@ -22,7 +22,7 @@ const { Option } = Select
 const AddUserDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) => {
   const [form] = Form.useForm()
   const [selectedRoles, setSelectedRoles] = useState<Array<any>>([])
-  const [roles, setRoles] = useState<Array<any>>([])
+  const [roles] = useState<Array<any>>([])
 
   useEffect(() => {
     setSelectedRoles(data?.roles ?? [])
@@ -94,8 +94,8 @@ const AddUserDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 16 }}
         initialValues={{ remember: true }}
-        onFinish={(values: any) => {}}
-        onFinishFailed={(errorInfo: any) => {}}
+        onFinish={(values: any) => {console.log(values)}}
+        onFinishFailed={(errorInfo: any) => {console.log(errorInfo)}}
         autoComplete="off"
         form={form}
       >
