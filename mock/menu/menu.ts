@@ -55,6 +55,12 @@ export default [
                   componentPath: '/app-market/banner',
                   path: '/app-market/banner',
                 },
+                {
+                  name: '活动管理',
+                  id: 72,
+                  componentPath: '/app-market/activities',
+                  path: '/app-market/activities',
+                },
               ],
             },
             {
