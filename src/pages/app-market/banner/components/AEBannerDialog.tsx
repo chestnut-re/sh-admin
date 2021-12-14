@@ -1,7 +1,8 @@
 import { getRolesAll } from '@/service/role'
-import { createUser, editUser } from '@/service/user'
+import { BannerService } from '@/service/BannerService'
 import { Form, Input, Modal, Select } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
+import { HttpCode } from '@/constants/HttpCode'
 
 export type DialogMode = 'add' | 'edit'
 
@@ -36,11 +37,12 @@ const AEBannerDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClos
 
   useEffect(() => {
     form.setFieldsValue({
-      id: data?.id,
-      name: data?.name,
-      account: data?.account,
-      password: data?.pwd,
-      roles: data?.roles,
+      bannerImg: data?.bannerImg,
+      title: data?.title,
+      bannerUrl: data?.bannerUrl,
+      sort: data?.sort,
+      startDate: data?.startDate,
+      endDate: data?.endDate,
     })
   }, [show])
 
@@ -51,22 +53,15 @@ const AEBannerDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClos
       .then((formData) => {
         if (mode === 'add') {
           // create
-          const postData = { ...formData, menus: selectedRoles }
-          console.log(postData)
-          createUser(postData).then((res) => {
-            if (res.code === 200) {
+          BannerService.newBanner({ ...formData }).then((res) => {
+            if (res.code === HttpCode.success) {
               onSuccess()
             }
           })
         } else {
-          const postData = {
-            ...formData,
-            id: data?.id,
-            menus: selectedRoles,
-          }
-          console.log('postData', postData)
-          editUser(postData).then((res) => {
-            if (res.code === 200) {
+          //edit
+          BannerService.edit({ ...formData }).then((res) => {
+            if (res.code === HttpCode.success) {
               onSuccess()
             }
           })
@@ -82,11 +77,6 @@ const AEBannerDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClos
     onClose()
   }
 
-  const handleChange = (value) => {
-    console.log(value)
-    setSelectedRoles(value)
-  }
-
   return (
     <Modal title="用户" visible={show} onOk={_handleUpdate} onCancel={_formClose}>
       <Form
@@ -99,25 +89,23 @@ const AEBannerDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClos
         autoComplete="off"
         form={form}
       >
-        <Form.Item label="账号" name="account" rules={[{ required: true, message: '请输入账号' }]}>
+        <Form.Item label="相对路径" name="bannerImg" rules={[{ message: '请输入图片相对路径' }]}>
           <Input />
         </Form.Item>
-        <Form.Item label="姓名" name="name" rules={[{ required: true, message: '请输入姓名' }]}>
+        <Form.Item label="标题" name="title" rules={[{ message: '请输入标题' }]}>
           <Input />
         </Form.Item>
-        <Form.Item label="密码" name="password" rules={[{ required: true, message: '请输入密码' }]}>
-          <Input.Password />
+        <Form.Item label="跳转地址" name="bannerUrl" rules={[{ message: '请输入跳转地址' }]}>
+          <Input />
         </Form.Item>
-        <Form.Item label="角色" name="roles">
-          <Select mode="multiple" allowClear placeholder="请选择角色" value={selectedRoles} onChange={handleChange}>
-            {roles.map((i) => {
-              return (
-                <Option key={i.id} value={i.id}>
-                  {i.name}
-                </Option>
-              )
-            })}
-          </Select>
+        <Form.Item label="排序" name="sort" rules={[{ message: '请输入排序号' }]}>
+          <Input />
+        </Form.Item>
+        <Form.Item label="展示结束时间" name="startDate" rules={[{ message: '请输入展示结束时间' }]}>
+          <Input />
+        </Form.Item>
+        <Form.Item label="展示开始时间" name="endDate" rules={[{ message: '请输入展示开始时间' }]}>
+          <Input />
         </Form.Item>
       </Form>
     </Modal>

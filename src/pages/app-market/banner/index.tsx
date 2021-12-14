@@ -39,6 +39,7 @@ const BannerListPage: React.FC = () => {
     {
       title: '主题图',
       dataIndex: 'bannerUrl',
+      render: (text: any, record: any) => <img src="" alt="" />,
     },
     {
       title: '主题名称',
@@ -72,7 +73,7 @@ const BannerListPage: React.FC = () => {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button>编辑</Button>
+          <Button onClick={() => _editDialog(record)}>编辑</Button>
           <Button onClick={() => _delItem(record)}>删除</Button>
         </Space>
       ),
@@ -88,8 +89,16 @@ const BannerListPage: React.FC = () => {
     })
   }
 
+  /**编辑 */
+  const _editDialog = (record) => {
+    setDialogMode('edit')
+    setSelectedData(record)
+    setShowDialog(true)
+  }
+
   const onFinish = (values: any) => {
     setShowDialog(true)
+    setDialogMode('add')
   }
 
   const onFinishFailed = (errorInfo: any) => {
