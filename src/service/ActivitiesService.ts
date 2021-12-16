@@ -19,13 +19,27 @@ export class ActivitiesService {
    * 创建角色
    */
   static save(data): Promise<any> {
-    return axios.post('/api/operation/activity/save', data)
+    return axios.post(
+      '/api/operation/activity/save',
+      data
+    )
   }
-
+  /**
+   *  专题活动-更新-已完成
+   */
+  static edit(data): Promise<any> {
+    return axios.put(`/api/operation/activity/update`, data)
+  }
   /**
    * 删除
    */
   static del({ id }): Promise<any> {
-    return axios.delete(`/api/operation/banner/delete/${id}`)
+    return axios.delete(`/api/operation/activity/delete/${id}`)
+  }
+  /**
+   * 专题活动-详情-已完成
+   */
+  static get(id): Promise<any> {
+    return axios.get(`/api/operation/activity/get/${id}`)
   }
 }

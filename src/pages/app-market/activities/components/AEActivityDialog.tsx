@@ -1,6 +1,7 @@
 import { ActivitiesService } from '@/service/ActivitiesService'
 import { Form, Input, Modal, Select, DatePicker } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
+import moment from 'moment'
 export type DialogMode = 'add' | 'edit'
 interface Props {
   data: any
@@ -22,7 +23,7 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
   const [roles, setRoles] = useState<Array<any>>([])
 
   useEffect(() => {
-    setSelectedRoles(data?.roles ?? [])
+    // setSelectedRoles(data?.roles ?? [])
   }, [data])
 
   useEffect(() => {
@@ -39,17 +40,27 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
   }, [])
 
   useEffect(() => {
-    form.setFieldsValue({
-      id: data?.id,
-      activityTitle: data?.activityTitle,
-      activityImg: data?.activityImg,
-      activitySubtitle: data?.activitySubtitle,
-      activityUrl: data?.activityUrl,
-      activityPreviewImg: data?.activityPreviewImg,
-      // activityDate: !data?.startDate?[moment(data?.startDate??'2020-01-01', dateFormat), moment(data?.endDate??'2022-01-01', dateFormat)]:undefined,
-      activityGoodsIdList: [],
-    })
-  },[show])
+    // if (data?.id ?? '' !== '') {
+    //   console.log(data, '----')
+    //   ActivitiesService.get(data?.id).then((res) => {
+    //     console.log(res)
+    //   })
+    // }
+    if (show) {
+      form.setFieldsValue({
+        id: data?.id,
+        activityTitle: data?.activityTitle,
+        activityImg: data?.activityImg,
+        activitySubtitle: data?.activitySubtitle,
+        activityUrl: data?.activityUrl,
+        activityPreviewImg: data?.activityPreviewImg,
+        activityDate: !!data?.startDate
+          ? [moment(data?.startDate, 'YYYY-MM-DD HH:mm:ss'), moment(data?.endDate, 'YYYY-MM-DD HH:mm:ss')]
+          : null,
+        activityGoodsIdList: data?.goodsIdList.split(',') ?? '',
+      })
+    }
+  }, [show])
 
   /**提交数据 */
   const _handleUpdate = async () => {
@@ -58,8 +69,8 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
       .then((formData) => {
         const postData = {
           ...formData,
-          startDate: formData.activityDate[0].format('YYYY-MM-DD'),
-          endDate: formData.activityDate[1].format('YYYY-MM-DD'),
+          startDate: formData.activityDate[0].format('YYYY-MM-DD HH:mm:ss'),
+          endDate: formData.activityDate[1].format('YYYY-MM-DD HH:mm:ss'),
           goodsIdList: formData.activityGoodsIdList.join(','),
         }
         if (mode === 'add') {
@@ -68,21 +79,19 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
           delete postData.activityDate
           delete postData.activityGoodsIdList
           ActivitiesService.save(postData).then((res) => {
-            if (res.code === 200) {
+            if (res.code === '200' || res.code == 200) {
               onSuccess()
             }
           })
         } else {
-          const postData = {
-            ...formData,
-            id: data?.id,
-          }
-          console.log('postData', postData)
-          // editUser(postData).then((res) => {
-          //   if (res.code === 200) {
-          //     onSuccess()
-          //   }
-          // })
+          postData.id = data.id
+          delete postData.activityDate
+          delete postData.activityGoodsIdList
+          ActivitiesService.edit(postData).then((res) => {
+            if (res.code === '200' || res.code == 200) {
+              onSuccess()
+            }
+          })
         }
       })
       .catch((e) => {
@@ -96,7 +105,6 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
   }
 
   const handleChange = (value) => {
-    console.log(value)
     setSelectedRoles(value)
   }
 
@@ -140,7 +148,16 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
           name="activityDate"
           rules={[{ required: false, message: '请选择活动展示时间' }]}
         >
-          <DatePicker.RangePicker />
+          <DatePicker.RangePicker
+            format="YYYY-MM-DD HH:mm:ss"
+            defaultValue={[
+              moment(data?.startDate, 'YYYY-MM-DD HH:mm:ss'),
+              moment(data?.endDate, 'YYYY-MM-DD HH:mm:ss'),
+            ]}
+            showTime={{
+              hideDisabledOptions: true,
+            }}
+          />
         </Form.Item>
         <Form.Item label="活动关联商品" name="activityGoodsIdList">
           <Select mode="multiple" allowClear placeholder="活动关联商品" value={selectedRoles} onChange={handleChange}>

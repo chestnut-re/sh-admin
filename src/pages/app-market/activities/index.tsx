@@ -9,7 +9,6 @@ import { HttpCode } from '@/constants/HttpCode'
  * App营销-Activity管理-List
  */
 const BannerListPage: React.FC = () => {
-  const [form] = Form.useForm()
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(0)
   const [pageSize, setPageSize] = useState(10)
@@ -25,7 +24,6 @@ const BannerListPage: React.FC = () => {
 
   const loadData = (pageIndex) => {
     ActivitiesService.list({ current: pageIndex, size: pageSize }).then((res) => {
-      console.log(res)
       setData(res.data.records)
       setTotal(res.data.total)
     })
@@ -37,42 +35,34 @@ const BannerListPage: React.FC = () => {
       render: (text, record, index) => `${index + 1}`,
     },
     {
-      title: '主题图',
-      dataIndex: 'bannerUrl',
+      title: '标题',
+      dataIndex: 'activityTitle',
     },
     {
-      title: '主题名称',
-      dataIndex: 'title',
+      title: '副标题',
+      dataIndex: 'activitySubtitle',
     },
     {
-      title: '链接',
-      dataIndex: 'bannerUrl',
+      title: '活动跳转地址',
+      dataIndex: 'activityUrl',
     },
     {
-      title: '状态',
-      dataIndex: 'state',
+      title: '专题页头图',
+      dataIndex: 'activityPreviewImg',
     },
     {
-      title: '展示时段',
-      dataIndex: 'name',
-    },
-    {
-      title: '剩余展示时长',
+      title: '活动展示开始时间',
       dataIndex: 'startDate',
     },
     {
-      title: '添加人',
-      dataIndex: 'updateUser',
-    },
-    {
-      title: '添加时间',
-      dataIndex: 'updateTime',
+      title: '活动展示结束时间',
+      dataIndex: 'endDate',
     },
     {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button>编辑</Button>
+          <Button onClick={() => _editDialog(record)}>编辑</Button>
           <Button onClick={() => _delItem(record)}>删除</Button>
         </Space>
       ),
@@ -86,6 +76,13 @@ const BannerListPage: React.FC = () => {
         loadData(pageIndex)
       }
     })
+  }
+  /**编辑 */
+  const _editDialog = (record) => {
+    console.log(record,'00000000')
+    setDialogMode('edit')
+    setSelectedData(record)
+    setShowDialog(true)
   }
 
   const onFinish = (values: any) => {
@@ -115,7 +112,6 @@ const BannerListPage: React.FC = () => {
           initialValues={{ remember: true }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
-          form={form}
         >
           <Row gutter={[10, 0]}>
             <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
