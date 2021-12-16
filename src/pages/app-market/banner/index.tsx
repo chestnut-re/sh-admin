@@ -4,6 +4,7 @@ import './index.less'
 import AEBannerDialog, { DialogMode } from './components/AEBannerDialog'
 import { BannerService } from '@/service/BannerService'
 import { HttpCode } from '@/constants/HttpCode'
+// import { format } from 'path'
 
 /**
  * App营销-Banner管理-List
@@ -38,8 +39,8 @@ const BannerListPage: React.FC = () => {
     },
     {
       title: '主题图',
-      dataIndex: 'bannerUrl',
-      render: (text: any, record: any) => <img src="" alt="" />,
+      dataIndex: 'bannerImg',
+      render: (text: any, record: any) => <img src={record.bannerImg} alt="" />,
     },
     {
       title: '主题名称',
@@ -52,14 +53,28 @@ const BannerListPage: React.FC = () => {
     {
       title: '状态',
       dataIndex: 'state',
+      render: (text: any, record: any) => {
+        if (record.state == 0) {
+          return `下线`
+        } else {
+          return `上线`
+        }
+      },
     },
     {
       title: '展示时段',
-      dataIndex: 'name',
+      dataIndex: 'endDate',
+      render: (text: any, record: any) => `${record.startDate}~${record.endDate}`,
     },
     {
       title: '剩余展示时长',
       dataIndex: 'startDate',
+      render: (text: any, record: any) => {
+        const temp = new Date().getTime()
+        const end = new Date(record.endDate).getTime()
+        const surplus = (end - temp) / 86400000
+        return `${date_format(surplus)}`
+      },
     },
     {
       title: '添加人',
@@ -94,6 +109,22 @@ const BannerListPage: React.FC = () => {
     setDialogMode('edit')
     setSelectedData(record)
     setShowDialog(true)
+  }
+
+  /**时间 */
+  //时分秒换算
+  const date_format = (micro_second) => {
+    // 总秒数
+    const second = Math.floor(micro_second / 1000)
+    // 天数
+    const day = Math.floor(second / 3600 / 24)
+    // 小时
+    const hr = Math.floor((second / 3600) % 24)
+    // 分钟
+    const min = Math.floor((second / 60) % 60)
+    // 秒
+    const sec = Math.floor(second % 60)
+    return day + '天' + hr + '小时' + min + '分钟' + sec + '秒'
   }
 
   const onFinish = (values: any) => {

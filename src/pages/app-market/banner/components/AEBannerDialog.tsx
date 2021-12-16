@@ -22,18 +22,6 @@ const { Option } = Select
  */
 const AEBannerDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) => {
   const [form] = Form.useForm()
-  const [selectedRoles, setSelectedRoles] = useState<Array<any>>([])
-  const [roles, setRoles] = useState<Array<any>>([])
-
-  useEffect(() => {
-    setSelectedRoles(data?.roles ?? [])
-  }, [data])
-
-  useEffect(() => {
-    getRolesAll().then((res) => {
-      setRoles(res.data)
-    })
-  }, [])
 
   useEffect(() => {
     form.setFieldsValue({
