@@ -52,3 +52,33 @@ export const delUser = (id: string): Promise<any> => {
 export const editUser = (data): Promise<any> => {
   return axios.post('/api/user/edit', data)
 }
+
+/**
+ *
+ * 用户列表
+ */
+export const usersQueryList = (data): Promise<any> => {
+  return axios.post('/api/users/admin/userInfo/list', data)
+}
+/**
+ * 
+ 用户订单详情    
+ */
+
+export const usersOrdersDetail = (data): Promise<any> => {
+  return axios.post('/api/users/ordersDetail', data)
+}
+/**
+ * 
+用户详情
+ */
+
+export function usersDetail({ userId }): Promise<any> {
+  return axios.get(`/api/users/detail/${userId}`)
+}
+/**
+ * 创建B端用户
+ */
+export const usersAddUser = (data): Promise<any> => {
+  return axios.post('/api/users/addUser', data)
+}
