@@ -75,6 +75,6 @@ const baseConfig = webpackConfigBase('production')
 
 const resultConfig = merge(baseConfig, webpackProdConfig)
 
-console.log(resultConfig)
+// console.log(resultConfig)
 
 module.exports = resultConfig

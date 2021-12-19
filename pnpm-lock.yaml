@@ -30,6 +30,7 @@ specifiers:
   css-loader: ^5.2.0
   css-minimizer-webpack-plugin: ^2.0.0
   cssnano-preset-advanced: ^5.0.0
+  dayjs: ^1.10.7
   dotenv: ^8.2.0
   eslint: ^7.24.0
   eslint-plugin-react: ^7.23.2
@@ -44,6 +45,7 @@ specifiers:
   mobx: ^6.3.5
   mobx-react-lite: ^3.2.0
   mockjs: ^1.1.0
+  moment: ^2.29.1
   normalize.css: ^8.0.1
   postcss-loader: ^5.2.0
   process: ^0.11.10
@@ -66,10 +68,12 @@ dependencies:
   '@loadable/component': 5.15.2_react@17.0.2
   antd: 4.17.3_react-dom@17.0.2+react@17.0.2
   axios: 0.21.4
+  dayjs: 1.10.7
   js-cookie: 3.0.1
   json-bigint: 1.0.0
   mobx: 6.3.8
   mobx-react-lite: 3.2.2_02876c366ce89e988b8bf5dff3cf0e00
+  moment: 2.29.1
   normalize.css: 8.0.1
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
