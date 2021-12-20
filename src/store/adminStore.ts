@@ -1,6 +1,6 @@
 import { getMenus } from '@/service/menu'
 import { UserService } from '@/service/user'
-import { setJWT } from '@/utils/biz'
+import { isUserLogin, setJWT } from '@/utils/biz'
 import { action, makeObservable, observable } from 'mobx'
 
 // const adminStore = observable({
@@ -37,12 +37,19 @@ class AdminData {
     const res = await getMenus()
     this.setMenu(res.data.menus)
     console.log(JSON.stringify(res))
+
+    if (!isUserLogin()) {
+      // 未登录，去登录页面
+      if (window.location.pathname !== '/login') {
+        window.location.href = '/login'
+      }
+    }
   }
 
   /**登录 */
-  async login(username, password){
+  async login(username, password) {
     const loginRes = await UserService.login(username, password)
-    console.log(loginRes);
+    console.log(loginRes)
     setJWT(loginRes.data.accessToken)
     window.location.href = '/'
   }
