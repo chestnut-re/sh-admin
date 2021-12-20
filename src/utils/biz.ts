@@ -31,6 +31,13 @@ export function removeJWT() {
 }
 
 /**
+ * 用户是否已经登录
+ */
+export function isUserLogin(): boolean {
+  return !!getJWT()
+}
+
+/**
  * 菜单数据转化成树形结构需要的数据
  */
 export const menus2TreeData = (menus: Array<any>) => {
