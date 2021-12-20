@@ -1,7 +1,8 @@
 import { ActivitiesService } from '@/service/ActivitiesService'
 import { Form, Input, Modal, Select, DatePicker } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
-import moment from 'moment'
+// import dayjsFormat from 'dayjsFormat'
+import { dayjsFormat } from '@/utils/dayFormate'
 export type DialogMode = 'add' | 'edit'
 interface Props {
   data: any
@@ -55,9 +56,9 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
         activityUrl: data?.activityUrl,
         activityPreviewImg: data?.activityPreviewImg,
         activityDate: !!data?.startDate
-          ? [moment(data?.startDate, 'YYYY-MM-DD HH:mm:ss'), moment(data?.endDate, 'YYYY-MM-DD HH:mm:ss')]
+          ? [dayjsFormat(data?.startDate, 'YYYY-MM-DD HH:mm:ss'), dayjsFormat(data?.endDate, 'YYYY-MM-DD HH:mm:ss')]
           : null,
-        activityGoodsIdList: data?.goodsIdList.split(',') ?? '',
+        activityGoodsIdList: data?.goodsIdList.split(',') ?? [],
       })
     }
   }, [show])
@@ -151,8 +152,8 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
           <DatePicker.RangePicker
             format="YYYY-MM-DD HH:mm:ss"
             defaultValue={[
-              moment(data?.startDate, 'YYYY-MM-DD HH:mm:ss'),
-              moment(data?.endDate, 'YYYY-MM-DD HH:mm:ss'),
+              dayjsFormat(data?.startDate, 'YYYY-MM-DD HH:mm:ss'),
+              dayjsFormat(data?.endDate, 'YYYY-MM-DD HH:mm:ss'),
             ]}
             showTime={{
               hideDisabledOptions: true,

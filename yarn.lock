@@ -1689,6 +1689,14 @@
   dependencies:
     "color-convert" "^2.0.1"
 
+<<<<<<< HEAD
+=======
+"antd-dayjs-webpack-plugin@^1.0.6":
+  "integrity" "sha512-UlK3BfA0iE2c5+Zz/Bd2iPAkT6cICtrKG4/swSik5MZweBHtgmu1aUQCHvICdiv39EAShdZy/edfP6mlkS/xXg=="
+  "resolved" "https://registry.npmjs.org/antd-dayjs-webpack-plugin/-/antd-dayjs-webpack-plugin-1.0.6.tgz"
+  "version" "1.0.6"
+
+>>>>>>> b3c7ded92149f0461d3b3b5f60aec288b522fadc
 "antd@^4.16.6":
   "integrity" "sha512-GNVuVnWJjFE1r3AGYc7vhy+gzlDAimAAZMTNCZdAncLBDN7gCTrf8euSb+C0TEqr7UV26yNGBQ9yGoeUcHUdSA=="
   "resolved" "https://registry.npmjs.org/antd/-/antd-4.17.1.tgz"
@@ -2593,7 +2601,11 @@
   "resolved" "https://registry.npmjs.org/date-fns/-/date-fns-2.26.0.tgz"
   "version" "2.26.0"
 
+<<<<<<< HEAD
 "dayjs@^1.10.7", "dayjs@1.x":
+=======
+"dayjs@*", "dayjs@^1.10.7", "dayjs@1.x":
+>>>>>>> b3c7ded92149f0461d3b3b5f60aec288b522fadc
   "integrity" "sha512-P6twpd70BcPK34K26uJ1KT3wlhpuOAPoMwJzpsIWUxHZ7wpmbdZL/hQqBDfz7hGurYSa5PhzdhDHtt319hL3ig=="
   "resolved" "https://registry.npmjs.org/dayjs/-/dayjs-1.10.7.tgz"
   "version" "1.10.7"
@@ -4710,7 +4722,11 @@
   dependencies:
     "commander" "*"
 
+<<<<<<< HEAD
 "moment@^2.24.0", "moment@^2.25.3", "moment@^2.29.1":
+=======
+"moment@^2.24.0", "moment@^2.25.3":
+>>>>>>> b3c7ded92149f0461d3b3b5f60aec288b522fadc
   "integrity" "sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ=="
   "resolved" "https://registry.npmjs.org/moment/-/moment-2.29.1.tgz"
   "version" "2.29.1"
