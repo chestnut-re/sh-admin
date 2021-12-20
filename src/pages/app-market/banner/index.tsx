@@ -4,12 +4,16 @@ import './index.less'
 import AEBannerDialog, { DialogMode } from './components/AEBannerDialog'
 import { BannerService } from '@/service/BannerService'
 import { HttpCode } from '@/constants/HttpCode'
+import ThumbnailPage from '@/components/thumbnail'
+import dayjs from 'dayjs'
+import duration from 'dayjs/plugin/duration'
 // import { format } from 'path'
 
 /**
  * App营销-Banner管理-List
  */
 const BannerListPage: React.FC = () => {
+  dayjs.extend(duration)
   const [form] = Form.useForm()
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(0)
@@ -40,7 +44,7 @@ const BannerListPage: React.FC = () => {
     {
       title: '主题图',
       dataIndex: 'bannerImg',
-      render: (text: any, record: any) => <img src={record.bannerImg} alt="" />,
+      render: (text: any, record: any) => <ThumbnailPage url={record.bannerImg} />,
     },
     {
       title: '主题名称',
@@ -64,16 +68,32 @@ const BannerListPage: React.FC = () => {
     {
       title: '展示时段',
       dataIndex: 'endDate',
-      render: (text: any, record: any) => `${record.startDate}~${record.endDate}`,
+      render: (text: any, record: any) =>
+        record.startDate && record.endDate
+          ? `${dayjs(record.startDate.split('+')[0]).format('YYYY-MM-DD HH:mm:ss')}~${dayjs(
+              record.endDate.split('+')[0]
+            ).format('YYYY-MM-DD HH:mm:ss')}`
+          : null,
     },
     {
       title: '剩余展示时长',
       dataIndex: 'startDate',
       render: (text: any, record: any) => {
-        const temp = new Date().getTime()
-        const end = new Date(record.endDate).getTime()
-        const surplus = (end - temp) / 86400000
-        return `${date_format(surplus)}`
+        if (record.endDate) {
+          const now = dayjs().unix()
+          const end = dayjs(record.endDate.split('+')[0]).unix() || null
+          if (end) {
+            if (end < now) {
+              return 0
+            } else {
+              return calculateDiffTime(end, now)
+            }
+          } else {
+            return null
+          }
+        } else {
+          return null
+        }
       },
     },
     {
@@ -110,21 +130,18 @@ const BannerListPage: React.FC = () => {
     setSelectedData(record)
     setShowDialog(true)
   }
-
-  /**时间 */
   //时分秒换算
-  const date_format = (micro_second) => {
-    // 总秒数
-    const second = Math.floor(micro_second / 1000)
-    // 天数
-    const day = Math.floor(second / 3600 / 24)
-    // 小时
-    const hr = Math.floor((second / 3600) % 24)
-    // 分钟
-    const min = Math.floor((second / 60) % 60)
-    // 秒
-    const sec = Math.floor(second % 60)
-    return day + '天' + hr + '小时' + min + '分钟' + sec + '秒'
+  const calculateDiffTime = (start_time: any, endTime: any) => {
+    const timeDiff: any = endTime - start_time
+    let day: any = parseInt(timeDiff / 86400)
+    let hour: any = parseInt((timeDiff % 86400) / 3600)
+    let minute: any = parseInt(((timeDiff % 86400) % 3600) / 60)
+    let second: any = parseInt((((timeDiff % 86400) % 3600) % 60) % 60)
+    day = day ? day + '天' : ''
+    hour = hour ? hour + '时' : ''
+    minute = minute ? minute + '分' : ''
+    second = second ? second + '秒' : ''
+    return day + hour + minute + second
   }
 
   const onFinish = (values: any) => {
