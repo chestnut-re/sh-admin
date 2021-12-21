@@ -138,6 +138,32 @@ export default [
               path: '/route',
             },
             {
+              name: '基础信息管理',
+              id: 9,
+              componentPath: 'basic',
+              path: '/basic',
+              children: [
+                {
+                  name: '意见反馈',
+                  id: 91,
+                  componentPath: '/basic/opinion',
+                  path: '/basic/opinion',
+                },
+                {
+                  name: '角色权限',
+                  id: 92,
+                  componentPath: '/basic/role-based',
+                  path: '/basic/role-based ',
+                },
+                {
+                  name: '管理员账户',
+                  id: 93,
+                  componentPath: '/basic/administrator',
+                  path: '/basic/administrator',
+                },
+              ]
+            },
+            {
               name: '系统中心',
               id: 6,
               componentPath: 'system',
@@ -169,12 +195,7 @@ export default [
                     },
                   ],
                 },
-                {
-                  name: '意见反馈',
-                  id: 62,
-                  componentPath: '/system/opinion',
-                  path: '/system/opinion',
-                },
+              
                 {
                   name: '版本管理',
                   id: 63,
