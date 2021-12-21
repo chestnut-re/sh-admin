@@ -17,6 +17,13 @@ export class TemplateService {
   }
 
   /**
+   * get
+   */
+  static get({ id }): Promise<any> {
+    return axios.get(`/api/operation/banner/get`, { params: {} })
+  }
+
+  /**
    * 删除
    */
   static del({ id }): Promise<any> {
