@@ -33,9 +33,9 @@ const BannerListPage: React.FC = () => {
 
   const loadData = (pageIndex) => {
     const query = {
-      pageIndex: pageIndex,
+      current: pageIndex,
       pageSize: pageSize,
-      // ...form.getFieldsValue(),
+      ...form.getFieldsValue(),
     }
     usersQueryList(query).then((res) => {
       console.log(res)
@@ -126,9 +126,8 @@ const BannerListPage: React.FC = () => {
       .then((formData) => {
         //edit
 
-    loadData(pageIndex)
+        loadData(pageIndex)
         console.log(formData, '----')
-     
       })
       .catch((e) => {
         console.error(e)
@@ -175,6 +174,9 @@ const BannerListPage: React.FC = () => {
             </Col>
             <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
               <Space>
+                <Button type="primary" htmlType="submit" onClick={() => loadData(1)}>
+                  查询
+                </Button>
                 <Button type="primary" htmlType="submit" onClick={onFinish}>
                   添加
                 </Button>

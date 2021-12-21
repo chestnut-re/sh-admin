@@ -1,12 +1,11 @@
+/*
+ * @Description: 渠道列表
+ * @LastEditTime: 2021-12-21 10:12:01
+ */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space } from 'antd'
 import { InputTemp, SelectTemp, LowAndHighTemp } from '@/components/filter/formItem'
 import './index.less'
-
-/**
- * 营销中心-渠道管理-渠道列表
- */
-
 const ChannelListPage: React.FC = () => {
   const [form] = Form.useForm()
   const [data, setData] = useState([])
