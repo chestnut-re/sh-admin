@@ -1,105 +1,86 @@
 /*
  * @Description: 渠道列表
- * @LastEditTime: 2021-12-21 10:12:01
+ * @LastEditTime: 2021-12-21 15:05:08
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space } from 'antd'
 import { InputTemp, SelectTemp, LowAndHighTemp } from '@/components/filter/formItem'
+
+import AddChannelDialog, { DialogMode } from './components/AddChannelDialog'
+import ChannelService from '@/service/ChannelService'
+import data from './data'
 import './index.less'
 const ChannelListPage: React.FC = () => {
   const [form] = Form.useForm()
   const [data, setData] = useState([])
 
+  const [pageIndex, setPageIndex] = useState(0)
+  const [pageSize] = useState(10)
+  const [total, setTotal] = useState()
+  const [showDialog, setShowDialog] = useState(false)
+  const [selectedData, setSelectedData] = useState(null)
+  const [dialogMode, setDialogMode] = useState<DialogMode>('add')
+  const [ProvinceCityData, setProvinceCity] = useState([])
+  useEffect(() => {
+    loadData()
+    getDetail()
+    setProvinceCity(data)
+  }, [])
+  const getDetail = () => {
+    ChannelService.getProvinceCity().then((res) => {
+      console.log(res.data, '-----')
+      setProvinceCity(res.data)
+      // setData(res.data?.list)
+    })
+  }
+
+  const loadData = (params = {}) => {
+    form.validateFields().then((query) => {
+      ChannelService.list({ ...params, ...query }).then((res) => {
+        setData(res.data?.list)
+      })
+    })
+  }
+
   const columns = [
     {
-      title: '编号',
+      title: 'id',
       render: (text, record, index) => `${index + 1}`,
     },
     {
-      title: '创建日期',
-      dataIndex: 'time',
-    },
-    {
-      title: '创建方',
-      dataIndex: 'name',
-    },
-    {
-      title: '创建平台',
-      dataIndex: 'name',
-    },
-    {
-      title: '归属',
-      dataIndex: 'name',
+      title: '渠道编号',
+      dataIndex: 'no',
     },
     {
       title: '渠道名称',
       dataIndex: 'name',
     },
     {
-      title: '渠道职称',
+      title: '责任人',
+      dataIndex: 'name',
+    },
+    {
+      title: '责任人手机号',
       dataIndex: 'name',
     },
     {
       title: '责任区域',
-      dataIndex: 'name',
+      dataIndex: 'region',
     },
     {
-      title: '下一道渠道数',
-      dataIndex: 'name',
+      title: '归属',
+      dataIndex: 'parentName',
     },
     {
       title: '状态',
-      dataIndex: 'name',
-    },
-    {
-      title: '分佣',
-      dataIndex: 'name',
+      dataIndex: 'state',
     },
 
-    {
-      title: '运营资金余额',
-      dataIndex: 'name',
-    },
-    {
-      title: '激励佣',
-      dataIndex: 'name',
-    },
-    {
-      title: '激励佣配置方',
-      dataIndex: 'name',
-    },
-    {
-      title: 'KPI进度',
-      dataIndex: 'name',
-    },
-    {
-      title: '累计销售额',
-      dataIndex: 'name',
-    },
-    {
-      title: '累计销量',
-      dataIndex: 'name',
-    },
-    {
-      title: '退款订单量',
-      dataIndex: 'name',
-    },
-    {
-      title: '累计上架商品量',
-      dataIndex: 'name',
-    },
-    {
-      title: '积分下发额',
-      dataIndex: 'name',
-    },
-    {
-      title: '积分消耗额',
-      dataIndex: 'name',
-    },
     {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
+          <Button>查看</Button>
           <Button>编辑</Button>
           <Button>删除</Button>
         </Space>
@@ -115,10 +96,24 @@ const ChannelListPage: React.FC = () => {
     console.log('Failed:', errorInfo)
   }
 
-  const onChange = () => {
-    console.log(1)
+  const onReset = () => {
+    form.resetFields()
+  }
+  const showAddDialog = (record, add = true) => {
+    setDialogMode(add ? 'add' : 'edit')
+    setShowDialog(true)
+    setSelectedData(record)
+  }
+  const _onDialogSuccess = () => {
+    setSelectedData(null)
+    setShowDialog(false)
+    loadData()
   }
 
+  const _onDialogClose = () => {
+    setSelectedData(null)
+    setShowDialog(false)
+  }
   return (
     <div className="channel-list">
       <div>
@@ -129,47 +124,55 @@ const ChannelListPage: React.FC = () => {
           onFinishFailed={onFinishFailed}
           form={form}
         >
-          <Row gutter={[10, 0]}>
-            <Col span={3} className="table-from-label">
-              渠道名称
-            </Col>
-            <Col span={5}>
-              <InputTemp name="username" />
-            </Col>
-            <Col span={3} className="table-from-label">
-              归属渠道名称
-            </Col>
-            <Col span={5}>
-              <InputTemp name="username" />
-            </Col>
-            <Col span={3} className="table-from-label">
-              状态
-            </Col>
-            <Col span={5}>
-              <SelectTemp name="gender" />
-            </Col>
-          </Row>
-          <Row gutter={[10, 0]}>
-            <Col span={3} className="table-from-label">
-              累计销量
-            </Col>
-            <Col span={5}>
-              <LowAndHighTemp name="high" />
-            </Col>
-            <Col span={3} className="table-from-label">
-              累计销售额
-            </Col>
-            <Col span={5}>
-              <LowAndHighTemp name="high" />
-            </Col>
-            <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
+          <Row justify="end">
+            <Form.Item wrapperCol={{ span: 0 }}>
               <Space>
-                <Button type="primary" htmlType="submit">
-                  查询
-                </Button>
-                <Button htmlType="button">重置</Button>
+                <Button type="primary">创建渠道</Button>
               </Space>
             </Form.Item>
+          </Row>
+          <Row gutter={[10, 0]}>
+            <Col span={1} className="table-from-label">
+              渠道名称
+            </Col>
+            <Col span={3}>
+              <InputTemp name="username" />
+            </Col>
+            <Col span={1} className="table-from-label">
+              归属渠道名称
+            </Col>
+            <Col span={3}>
+              <InputTemp name="username" />
+            </Col>
+            <Col span={1} className="table-from-label">
+              状态
+            </Col>
+            <Col span={3}>
+              <SelectTemp name="gender" />
+            </Col>
+            <Col span={5}>
+              {/* <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
+                <Space>
+                  <Button type="primary" htmlType="submit">
+                    查询
+                  </Button>
+                  <Button htmlType="button">重置</Button>
+                </Space>
+              </Form.Item> */}
+              <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
+                <Space>
+                  <Button type="primary" htmlType="submit">
+                    查询
+                  </Button>
+                  <Button htmlType="button" onClick={onReset}>
+                    清除
+                  </Button>
+                  <Button type="primary" onClick={showAddDialog}>
+                    创建渠道
+                  </Button>
+                </Space>
+              </Form.Item>
+            </Col>
           </Row>
         </Form>
       </div>
@@ -178,7 +181,21 @@ const ChannelListPage: React.FC = () => {
         columns={columns}
         scroll={{ x: 'max-content' }}
         dataSource={[...data]}
-        pagination={{ onChange: onChange }}
+        pagination={{
+          onChange: setPageIndex,
+          showSizeChanger: true,
+          showQuickJumper: true,
+          pageSize: pageSize,
+          total: total,
+        }}
+      />
+      <AddChannelDialog
+        data={selectedData}
+        mode={dialogMode}
+        cityData={ProvinceCityData}
+        onSuccess={_onDialogSuccess}
+        show={showDialog}
+        onClose={_onDialogClose}
       />
     </div>
   )

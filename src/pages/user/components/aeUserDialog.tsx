@@ -1,8 +1,11 @@
+/*
+ * @Description: 用户详情
+ * @LastEditTime: 2021-12-21 17:02:17
+ */
 
-// import { BannerService } from '@/service/BannerService'
 import { usersAddUser } from '@/service/user'
-
-import { Form, Input, Modal, Select ,Button,Row,Col} from 'antd'
+import {status,regCode} from '@/utils/enum'
+import { Form, Input, Modal, Select, Button, Row, Col } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
 import { HttpCode } from '@/constants/HttpCode'
 export type DialogMode = 'add' | 'edit'
@@ -24,14 +27,17 @@ const AEBannerDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClos
   const [form] = Form.useForm()
 
   useEffect(() => {
-    form.setFieldsValue({
-      bannerImg: data?.bannerImg,
-      title: data?.title,
-      bannerUrl: data?.bannerUrl,
-      sort: data?.sort,
-      startDate: data?.startDate,
-      endDate: data?.endDate,
-    })
+    if (show) {
+      form.setFieldsValue({
+        address: data?.address,
+        phone: data?.phone,
+        registerChannel: regCode[data?.registerChannel],
+        registerTime: data?.registerTime,
+        state: status[data?.state],
+        tokenAmount: data?.tokenAmount,
+        userName: data?.userName,
+      })
+    }
   }, [show])
 
   /**提交数据 */
@@ -47,6 +53,7 @@ const AEBannerDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClos
             }
           })
         } else {
+          onSuccess()
           //edit
           // BannerService.edit({ ...formData }).then((res) => {
           //   if (res.code === HttpCode.success) {
@@ -66,48 +73,58 @@ const AEBannerDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClos
   }
 
   return (
-    <Modal title="用户" visible={show} onOk={_handleUpdate} onCancel={_formClose}>
+    <Modal
+      title={mode == 'edit' ? '查看' : '创建'}
+      getContainer={false}
+      visible={show}
+      onOk={_handleUpdate}
+      onCancel={_formClose}
+    >
       <Form
         name="basic"
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 16 }}
         initialValues={{ remember: true }}
-        onFinish={(values: any) => {}}
-        onFinishFailed={(errorInfo: any) => {}}
         autoComplete="off"
         form={form}
       >
-        <Form.Item label="姓名" name="realName" rules={[{ message: '请输入姓名' }]}>
-          <Input />
+        <Form.Item label="姓名" name="userName" rules={[{ message: '请输入姓名' }]}>
+          <Input disabled={mode == 'edit'} />
         </Form.Item>
-        <Form.Item label="角色ID" name="roleId" rules={[{ message: '请输入角色ID' }]}>
-          <Input />
+        <Form.Item label="手机号" name="phone" rules={[{ message: '请输入手机号' }]}>
+          <Input disabled={mode == 'edit'} />
         </Form.Item>
-        <Form.Item label="手机号" name="phoneNumber" rules={[{ message: '请输入手机号' }]}>
-          <Input />
+        <Form.Item label="常住地址" name="address" rules={[{ message: '请输入常住地址' }]}>
+          <Input disabled={mode == 'edit'} />
         </Form.Item>
-        <Form.Item label="微信号" name="wechatNumber" rules={[{ message: '请输入排序号' }]}>
-          <Input />
+        <Form.Item label="注册途径" name="registerChannel" rules={[{ message: '请输入' }]}>
+          <Input disabled={mode == 'edit'} />
         </Form.Item>
-      
-        <Form.Item label="验证码" >
-        <Row gutter={8}>
-          <Col span={12}>
-            <Form.Item
-              name="vaildCode"
-              noStyle
-              rules={[{ required: true, message: '请输入验证码' }]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Button>获取验证码</Button>
-          </Col>
-        </Row>
-      </Form.Item>
+        <Form.Item label="注册时间" name="registerTime" rules={[{ message: '请输入' }]}>
+          <Input disabled={mode == 'edit'} />
+        </Form.Item>
+        <Form.Item label="关系归属" name="relationChannel" rules={[{ message: '请输入' }]}>
+          <Input disabled={mode == 'edit'} />
+        </Form.Item>
+        <Form.Item label="状态" name="state" rules={[{ message: '请输入' }]}>
+          <Input disabled={mode == 'edit'} />
+        </Form.Item>
+        <Form.Item label="账户代币余额" name="tokenAmount" rules={[{ message: '请输入' }]}>
+          <Input disabled={mode == 'edit'} />
+        </Form.Item>
 
-      
+        {/* <Form.Item label="验证码">
+          <Row gutter={8}>
+            <Col span={12}>
+              <Form.Item name="vaildCode" noStyle rules={[{ required: true, message: '请输入验证码' }]}>
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Button>获取验证码</Button>
+            </Col>
+          </Row>
+        </Form.Item> */}
       </Form>
     </Modal>
   )

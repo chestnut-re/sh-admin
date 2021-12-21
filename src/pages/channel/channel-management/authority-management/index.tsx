@@ -1,186 +1,82 @@
 /*
  * @Description: 渠道权限
- * @LastEditTime: 2021-12-21 10:11:29
+ * @LastEditTime: 2021-12-21 14:21:32
  */
 import React, { useState, useEffect } from 'react'
-import { Form, Col, Row, Button, Table, Space } from 'antd'
-import { InputTemp, SelectTemp, LowAndHighTemp } from '@/components/filter/formItem'
+import { Menu, Col, Row, Checkbox, Radio, Input, Tooltip } from 'antd'
+
+import { InfoCircleOutlined } from '@ant-design/icons'
+
+import ChannelTree from '../components/channelTree'
 import './index.less'
 
 const ChannelListPage: React.FC = () => {
-  const [form] = Form.useForm()
-  const [data, setData] = useState([])
-
-  const columns = [
-    {
-      title: '编号',
-      render: (text, record, index) => `${index + 1}`,
-    },
-    {
-      title: '创建日期',
-      dataIndex: 'time',
-    },
-    {
-      title: '创建方',
-      dataIndex: 'name',
-    },
-    {
-      title: '创建平台',
-      dataIndex: 'name',
-    },
-    {
-      title: '归属',
-      dataIndex: 'name',
-    },
-    {
-      title: '渠道名称',
-      dataIndex: 'name',
-    },
-    {
-      title: '渠道职称',
-      dataIndex: 'name',
-    },
-    {
-      title: '责任区域',
-      dataIndex: 'name',
-    },
-    {
-      title: '下一道渠道数',
-      dataIndex: 'name',
-    },
-    {
-      title: '状态',
-      dataIndex: 'name',
-    },
-    {
-      title: '分佣',
-      dataIndex: 'name',
-    },
-
-    {
-      title: '运营资金余额',
-      dataIndex: 'name',
-    },
-    {
-      title: '激励佣',
-      dataIndex: 'name',
-    },
-    {
-      title: '激励佣配置方',
-      dataIndex: 'name',
-    },
-    {
-      title: 'KPI进度',
-      dataIndex: 'name',
-    },
-    {
-      title: '累计销售额',
-      dataIndex: 'name',
-    },
-    {
-      title: '累计销量',
-      dataIndex: 'name',
-    },
-    {
-      title: '退款订单量',
-      dataIndex: 'name',
-    },
-    {
-      title: '累计上架商品量',
-      dataIndex: 'name',
-    },
-    {
-      title: '积分下发额',
-      dataIndex: 'name',
-    },
-    {
-      title: '积分消耗额',
-      dataIndex: 'name',
-    },
-    {
-      title: '操作',
-      render: (text: any, record: any) => (
-        <Space size="middle">
-          <Button>编辑</Button>
-          <Button>删除</Button>
-        </Space>
-      ),
-    },
-  ]
-
-  const onFinish = (values: any) => {
-    console.log('Success:', values)
+  const [radioValue, setValue] = useState('')
+  const [current, setCurrent] = useState('one')
+  const handleClick = (e) => {
+    console.log(e, '-----')
+    setCurrent(e.key)
   }
-
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo)
+  const onChange = (e) => {
+    console.log(e, '---')
   }
-
-  const onChange = () => {
-    console.log(1)
+  const onChangeRadio = (e) => {
+    setValue(e.target.value)
   }
 
   return (
     <div className="channel-list">
-      <div>
-        <Form
-          name="basic"
-          initialValues={{ remember: true }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          form={form}
-        >
-          <Row gutter={[10, 0]}>
-            <Col span={3} className="table-from-label">
-              渠道名称
-            </Col>
-            <Col span={5}>
-              <InputTemp name="username" />
-            </Col>
-            <Col span={3} className="table-from-label">
-              归属渠道名称
-            </Col>
-            <Col span={5}>
-              <InputTemp name="username" />
-            </Col>
-            <Col span={3} className="table-from-label">
-              状态
-            </Col>
-            <Col span={5}>
-              <SelectTemp name="gender" />
+      <Row gutter={[10, 0]}>
+        <Col span={3}>
+          <ChannelTree />
+        </Col>
+        <Col span={21}>
+          <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
+            <Menu.Item key="one">功能权限</Menu.Item>
+            <Menu.Item key="two">佣金权限</Menu.Item>
+          </Menu>
+          {/* <ChannelTree /> */}
+          <Checkbox.Group style={{ width: '100%' }} onChange={onChange}>
+            <Row>
+              <Col span={1}>佣金权限</Col>
+              <Col span={2}>
+                <Checkbox value="A">销售分佣</Checkbox>
+              </Col>
+              <Col span={2}>
+                <Checkbox value="B">直销分佣</Checkbox>
+              </Col>
+              <Col span={2}>
+                <Checkbox value="C">发团服务费</Checkbox>
+              </Col>
+              <Col span={4}>
+                <Checkbox value="D">
+                  {/* 预设团建奖金
+                  <Input suffix="%" /> */}
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    预设团建奖金&nbsp; &nbsp;
+                    <Input suffix="%" style={{ width: '100px' }} />
+                  </div>
+                </Checkbox>
+              </Col>
+            </Row>
+          </Checkbox.Group>
+          <Row>
+            <Col span={1}>结算要求</Col>
+            <Col span={23}>
+              <Radio.Group onChange={onChangeRadio} value={radioValue}>
+                <Radio value={2}>下单</Radio>
+                <Radio value={3}>核销</Radio>
+                <Radio value={4}>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    行程结束 &nbsp; &nbsp;且需满&nbsp; &nbsp;
+                    <Input suffix="天" style={{ width: '100px' }} />
+                  </div>
+                </Radio>
+              </Radio.Group>
             </Col>
           </Row>
-          <Row gutter={[10, 0]}>
-            <Col span={3} className="table-from-label">
-              累计销量
-            </Col>
-            <Col span={5}>
-              <LowAndHighTemp name="high" />
-            </Col>
-            <Col span={3} className="table-from-label">
-              累计销售额
-            </Col>
-            <Col span={5}>
-              <LowAndHighTemp name="high" />
-            </Col>
-            <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
-              <Space>
-                <Button type="primary" htmlType="submit">
-                  查询
-                </Button>
-                <Button htmlType="button">重置</Button>
-              </Space>
-            </Form.Item>
-          </Row>
-        </Form>
-      </div>
-      <Table
-        rowKey="id"
-        columns={columns}
-        scroll={{ x: 'max-content' }}
-        dataSource={[...data]}
-        pagination={{ onChange: onChange }}
-      />
+        </Col>
+      </Row>
     </div>
   )
 }
