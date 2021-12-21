@@ -25,6 +25,10 @@ const ProductionListPage: React.FC = observer(() => {
       dataIndex: 'name',
     },
     {
+      title: '商品类型标签',
+      dataIndex: 'name',
+    },
+    {
       title: '出行类型',
       dataIndex: 'type',
     },
@@ -37,7 +41,11 @@ const ProductionListPage: React.FC = observer(() => {
       dataIndex: 'time',
     },
     {
-      title: '现售价',
+      title: '库存',
+      dataIndex: 'name',
+    },
+    {
+      title: '现售价(¥)',
       dataIndex: 'price',
     },
     {
@@ -45,50 +53,27 @@ const ProductionListPage: React.FC = observer(() => {
       dataIndex: 'num',
     },
     {
-      title: '已上架分中心',
+      title: '已上架渠道',
       dataIndex: 'center',
-    },
-    {
-      title: '上架时间',
-      dataIndex: 'time',
     },
     {
       title: '状态',
       dataIndex: 'state',
     },
     {
-      title: '支持抵扣',
-      dataIndex: 'methods',
-    },
-    {
-      title: '商品分佣',
-      dataIndex: 'methods',
-    },
-    {
-      title: '营销活动',
-      dataIndex: 'active',
-    },
-    {
-      title: '创建人',
-      dataIndex: ' people',
+      title: '创建渠道',
+      dataIndex: 'time',
     },
     {
       title: '创建时间',
       dataIndex: 'methods',
     },
     {
-      title: '最新编辑人',
-      dataIndex: 'active',
-    },
-    {
-      title: '最新编辑时间',
-      dataIndex: 'active',
-    },
-    {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button>详情</Button>
+          <Button>查看</Button>
+          <Button>编辑</Button>
         </Space>
       ),
     },
@@ -119,65 +104,19 @@ const ProductionListPage: React.FC = observer(() => {
           form={form}
         >
           <Row gutter={[5, 0]} style={{ paddingLeft: '10px' }}>
-            {/* <Col span={1} className="table-from-label">
-            </Col> */}
-            <Col span={2}>
+            <Col span={8}>
               <InputTemp name="username" />
             </Col>
             <Col span={2} className="table-from-label">
               出行类型
             </Col>
-            <Col span={2}>
+            <Col span={4}>
               <SelectTemp name="gender" />
             </Col>
-            <Col span={2} className="table-from-label">
-              出发时间
-            </Col>
-            <Col span={4}>
-              <LowAndHighTemp name="high" />
-            </Col>
-            <Col span={2} className="table-from-label">
-              现售价
-            </Col>
-            <Col span={4}>
-              <LowAndHighTemp name="high" />
-            </Col>
-            <Col span={2} className="table-from-label">
-              累计销量
-            </Col>
-            <Col span={4}>
-              <LowAndHighTemp name="high" />
-            </Col>
-          </Row>
-          <Row gutter={[10, 0]}>
             <Col span={2} className="table-from-label">
               状态
             </Col>
-            <Col span={2}>
-              <SelectTemp name="gender" />
-            </Col>
-            <Col span={2} className="table-from-label">
-              已上架
-            </Col>
-            <Col span={2}>
-              <InputTemp name="username" />
-            </Col>
-            <Col span={2} className="table-from-label">
-              商品分佣
-            </Col>
-            <Col span={2}>
-              <SelectTemp name="gender" />
-            </Col>
-            <Col span={2} className="table-from-label">
-              营销活动
-            </Col>
-            <Col span={2}>
-              <SelectTemp name="gender" />
-            </Col>
-            <Col span={2} className="table-from-label">
-              支持抵扣
-            </Col>
-            <Col span={2}>
+            <Col span={4}>
               <SelectTemp name="gender" />
             </Col>
             <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
@@ -186,6 +125,18 @@ const ProductionListPage: React.FC = observer(() => {
                   查询
                 </Button>
                 <Button htmlType="button">重置</Button>
+              </Space>
+            </Form.Item>
+          </Row>
+          <Row justify="end">
+            <Form.Item>
+              <Space>
+                <Button type="primary" htmlType="button">
+                  添加商品
+                </Button>
+                <Button htmlType="button" type="primary">
+                  下架
+                </Button>
               </Space>
             </Form.Item>
           </Row>
