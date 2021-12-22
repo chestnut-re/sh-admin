@@ -1,6 +1,6 @@
 /*
  * @Description: 用户列表
- * @LastEditTime: 2021-12-22 10:44:54
+ * @LastEditTime: 2021-12-22 10:46:48
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space } from 'antd'
@@ -21,8 +21,8 @@ const BannerListPage: React.FC = () => {
   const [dialogMode, setDialogMode] = useState<DialogMode>('add')
   useEffect(() => {
     form.setFieldsValue({
-      employeeStatus: 0,
-      registerChannel: 1,
+      employeeStatus: 99,
+      registerChannel: 99,
       keyword: '',
     })
   }, [])

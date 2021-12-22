@@ -242,6 +242,18 @@ export default [
                     },
                   ],
                 },
+                {
+                  name: '管理员账号',
+                  id: 64,
+                  componentPath: '/system/admin',
+                  path: '/system/admin',
+                },
+                {
+                  name: '支付配置',
+                  id: 65,
+                  componentPath: '/system/payment-configuration',
+                  path: '/system/payment-configuration',
+                },
               ],
             },
             // {
