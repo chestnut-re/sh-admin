@@ -1,18 +1,18 @@
 /*
  * @Description: 用户列表
- * @LastEditTime: 2021-12-22 10:46:48
+ * @LastEditTime: 2021-12-22 11:29:17
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space } from 'antd'
 import AEUserDialog, { DialogMode } from './components/aeUserDialog'
 import { usersQueryList, userGet } from '@/service/user'
 import dayjs from 'dayjs'
-import {regCode} from '@/utils/enum'
+import { regCode } from '@/utils/enum'
 import { InputTemp, SelectEmployeeStatusTemp, SelectRegisterChannel } from '@/components/filter/formItem'
 const BannerListPage: React.FC = () => {
   const [form] = Form.useForm()
   const [data, setData] = useState([])
-  const [pageIndex, setPageIndex] = useState(0)
+  const [pageIndex, setPageIndex] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [total, setTotal] = useState()
 
@@ -28,16 +28,16 @@ const BannerListPage: React.FC = () => {
   }, [])
   useEffect(() => {
     loadData(pageIndex)
-  }, [pageIndex])
+  }, [])
 
   const loadData = (pageIndex) => {
     const query = {
-      current: pageIndex,
+      current: pageIndex - 1,
       pageSize: pageSize,
       ...form.getFieldsValue(),
     }
-    if(query.registerChannel==99) delete query.registerChannel
-    if(query.employeeStatus==99) delete query.employeeStatus
+    if (query.registerChannel == 99) delete query.registerChannel
+    if (query.employeeStatus == 99) delete query.employeeStatus
     usersQueryList(query).then((res) => {
       console.log(res)
       setData(res.data.records)
@@ -57,7 +57,7 @@ const BannerListPage: React.FC = () => {
     {
       title: '注册时间',
       dataIndex: 'registerTime',
-      render: (record: any)=><div>{dayjs(record?.registerTime).format('YYYY-MM-DD HH:mm:ss')}</div>
+      render: (record: any) => <div>{dayjs(record?.registerTime).format('YYYY-MM-DD HH:mm:ss')}</div>,
     },
     {
       title: '姓名',
@@ -83,7 +83,6 @@ const BannerListPage: React.FC = () => {
       title: '注册渠道',
       dataIndex: 'registerChannel',
       render: (text: any, record: any) => {
-       
         return regCode[record.registerChannel]
       },
     },
@@ -118,20 +117,10 @@ const BannerListPage: React.FC = () => {
     })
   }
 
-  const onValuesFailed = () => {
-    form
-      .validateFields()
-      .then((formData) => {
-        //edit
-
-        loadData(pageIndex)
-        console.log(formData, '----')
-      })
-      .catch((e) => {
-        console.error(e)
-      })
+  const onValuesFailed = (value) => {
+    setPageIndex(value)
+    loadData(pageIndex)
   }
-
   const onFinish = () => {
     setShowDialog(true)
   }
@@ -150,7 +139,7 @@ const BannerListPage: React.FC = () => {
   return (
     <div className="channel-list">
       <div>
-        <Form name="basic" initialValues={{ remember: true }} onValuesChange={onValuesFailed} form={form}>
+        <Form name="basic" initialValues={{ remember: true }} form={form}>
           <Row gutter={[10, 0]}>
             <Col span={1} className="table-from-label">
               用户类型
@@ -172,7 +161,7 @@ const BannerListPage: React.FC = () => {
             </Col>
             <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
               <Space>
-                <Button type="primary" htmlType="submit" onClick={() => loadData(1)}>
+                <Button type="primary" htmlType="submit" onClick={() => onValuesFailed(1)}>
                   查询
                 </Button>
                 <Button type="primary" htmlType="submit" onClick={onFinish}>
@@ -190,8 +179,9 @@ const BannerListPage: React.FC = () => {
         dataSource={[...data]}
         pagination={{
           onChange: setPageIndex,
-          showSizeChanger: true,
+          showSizeChanger: false,
           showQuickJumper: true,
+          current: pageIndex,
           pageSize: pageSize,
           total: total,
         }}

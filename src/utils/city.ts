@@ -1,6 +1,6 @@
 /*
  * @Description: 城市数据处理
- * @LastEditTime: 2021-12-21 19:06:01
+ * @LastEditTime: 2021-12-22 11:27:16
  */
 
 /**
@@ -9,7 +9,7 @@
  * @param {*} children
  * @return {*}
  */
-export const cityDispose = (city: Array<any>, children: string):any=> {
+export const cityDispose = (city: Array<any>, children: string): any => {
   city.forEach((item) => {
     if (item[children] && item[children].length > 0) {
       item = cityDispose(item[children], children)
@@ -22,9 +22,9 @@ export const cityDispose = (city: Array<any>, children: string):any=> {
 }
 /**
  * @description:  根据id 获取父 - 子 数据
- * @param {Array} oldArray 
- * @param {string} isId 
- * @return {Array} 
+ * @param {Array} oldArray
+ * @param {string} isId
+ * @return {Array}
  */
 export const shellArray = (oldArray: Array<any>, isId: string) => {
   const newArray: any = []
@@ -57,15 +57,23 @@ export const shellArray = (oldArray: Array<any>, isId: string) => {
  * @param {string} isId
  * @return {string}
  */
-export const analyName = (oldArray: Array<any>, isId: string):string=>{
-  return shellArray(oldArray,isId).map(res=>res.name).join('-')
+
+export const analysisName = (oldArray: Array<any>, isId: string): string => {
+  return shellArray(oldArray, isId)
+    .map((res) => res.name)
+    .join('-')
 }
 /**
  * @description: 获取id
  * @param {Array} oldArray
  * @param {string} isId
- * @return {Array} 
+ * @return {Array}
  */
-export const analyId = (oldArray: Array<any>, isId: string)=>{
-  return shellArray(oldArray,isId).map(res=>res.name)
+export const analysisId = (oldArray: Array<any>, isId: string) => {
+  return shellArray(oldArray, isId).map((res) => res.name)
+}
+export const echoData = (oldArray: Array<any>, data: string) => {
+  data.split(',').map((res) => {
+    return analysisId(oldArray, res)
+  })
 }

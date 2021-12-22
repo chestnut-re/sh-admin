@@ -5,7 +5,7 @@
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space } from 'antd'
 import { InputTemp, SelectTemp, LowAndHighTemp } from '@/components/filter/formItem'
-import { shellArray,cityDispose ,analyId} from '@/utils/city'
+import { shellArray,cityDispose } from '@/utils/city'
 import AddChannelDialog, { DialogMode } from './components/AddChannelDialog'
 import ChannelService from '@/service/ChannelService'
 import dataList from './data'
@@ -25,9 +25,6 @@ const ChannelListPage: React.FC = () => {
     loadData()
     getDetail()
   
-    // setProvinceCity(cityDispose(dataList,'areas'))
-
-    console.log(analyId(dataList, '330400'), 'llllll')
   }, [])
   const getDetail = () => {
     ChannelService.getProvinceCity().then((res) => {
