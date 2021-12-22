@@ -73,8 +73,8 @@ export const usersOrdersDetail = (data): Promise<any> => {
 用户详情
  */
 
-export function usersDetail({ userId }): Promise<any> {
-  return axios.get(`/api/users/detail/${userId}`)
+export function userGet(userId): Promise<any> {
+  return axios.get(`/api/users/admin//userDetail/get/${userId}`)
 }
 /**
  * 创建B端用户

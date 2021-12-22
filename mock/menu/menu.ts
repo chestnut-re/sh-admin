@@ -43,26 +43,7 @@ export default [
                 },
               ],
             },
-            {
-              name: 'App营销',
-              id: 7,
-              componentPath: 'market',
-              path: '/app-market',
-              children: [
-                {
-                  name: '轮播图管理',
-                  id: 71,
-                  componentPath: '/app-market/banner',
-                  path: '/app-market/banner',
-                },
-                {
-                  name: '活动管理',
-                  id: 72,
-                  componentPath: '/app-market/activities',
-                  path: '/app-market/activities',
-                },
-              ],
-            },
+
             {
               name: '营销中心',
               id: 2,
@@ -70,28 +51,69 @@ export default [
               path: '/market',
               children: [
                 {
-                  name: '渠道管理',
+                  name: 'App营销',
                   id: 21,
-                  componentPath: '/market',
+                  componentPath: 'market',
+                  path: '/app-market',
+                  children: [
+                    {
+                      name: '轮播图管理',
+                      id: 211,
+                      componentPath: '/market/app-market/banner',
+                      path: '/market/app-market/banner',
+                    },
+                    {
+                      name: '活动管理',
+                      id: 212,
+                      componentPath: '/market/app-market/activities',
+                      path: '/market/app-market/activities',
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              name: '渠道管理',
+              id: 3,
+              componentPath: 'channel',
+              path: '/channel',
+              children: [
+                {
+                  name: '渠道库',
+                  id: 31,
+                  componentPath: '/channel',
                   path: '/channel-management',
                   children: [
                     {
                       name: '渠道列表',
-                      id: 211,
-                      componentPath: '/market/channel-management/channel-list',
-                      path: '/market/channel-management/channel-list',
+                      id: 311,
+                      componentPath: '/channel/channel-management/channel-list',
+                      path: '/channel/channel-management/channel-list',
+                    },
+                    // {
+                    //   name: '创建渠道',
+                    //   id: 312,
+                    //   hidden:true,
+                    //   componentPath: '/channel/channel-management/create-channel',
+                    //   path: '/channel/channel-management/create-channel',
+                    // },
+                    {
+                      name: '渠道权限',
+                      id: 312,
+                      componentPath: '/channel/channel-management/authority-management',
+                      path: '/channel/channel-management/authority-management',
                     },
                     {
-                      name: '创建渠道',
-                      id: 212,
-                      componentPath: '/market/channel-management/create-channel',
-                      path: '/market/channel-management/create-channel',
+                      name: '渠道分佣方案',
+                      id: 313,
+                      componentPath: '/channel/channel-management/commission-scheme',
+                      path: '/channel/channel-management/commission-scheme',
                     },
                     {
-                      name: '分佣方案',
-                      id: 213,
-                      componentPath: '/market/channel-management/commission-scheme',
-                      path: '/market/channel-management/commission-scheme',
+                      name: '人员管理',
+                      id: 314,
+                      componentPath: '/channel/channel-management/personnel',
+                      path: '/channel/channel-management/personnel',
                     },
                   ],
                 },
@@ -114,6 +136,32 @@ export default [
               id: 5,
               componentPath: '/route',
               path: '/route',
+            },
+            {
+              name: '基础信息管理',
+              id: 9,
+              componentPath: 'basic',
+              path: '/basic',
+              children: [
+                {
+                  name: '意见反馈',
+                  id: 91,
+                  componentPath: '/basic/opinion',
+                  path: '/basic/opinion',
+                },
+                {
+                  name: '角色权限',
+                  id: 92,
+                  componentPath: '/basic/role-based',
+                  path: '/basic/role-based ',
+                },
+                {
+                  name: '管理员账户',
+                  id: 93,
+                  componentPath: '/basic/administrator',
+                  path: '/basic/administrator',
+                },
+              ]
             },
             {
               name: '系统中心',
@@ -147,12 +195,7 @@ export default [
                     },
                   ],
                 },
-                {
-                  name: '意见反馈',
-                  id: 62,
-                  componentPath: '/system/opinion',
-                  path: '/system/opinion',
-                },
+              
                 {
                   name: '版本管理',
                   id: 63,

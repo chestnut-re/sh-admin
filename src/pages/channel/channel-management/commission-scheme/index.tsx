@@ -1,11 +1,10 @@
+/*
+ * @Description: 渠道分佣方案
+ * @LastEditTime: 2021-12-21 10:12:42
+ */
 import { Space, Table, Tag, Form, Row, Col, Button } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { InputTemp, SelectTemp } from '@/components/filter/formItem'
-
-/**
- * 系统中心-权限管理-角色管理
- */
-
 const CommissionSchemePage: React.FC = () => {
   const [form] = Form.useForm()
   const [data, setData] = useState([])
@@ -85,12 +84,8 @@ const CommissionSchemePage: React.FC = () => {
           <Row justify="end">
             <Form.Item wrapperCol={{ span: 0 }}>
               <Space>
-                <Button type="primary">
-                  创建商品分佣方案
-                </Button>
-                <Button type="primary">
-                  创建KPI分佣方案
-                </Button>
+                <Button type="primary">创建商品分佣方案</Button>
+                <Button type="primary">创建KPI分佣方案</Button>
               </Space>
             </Form.Item>
           </Row>

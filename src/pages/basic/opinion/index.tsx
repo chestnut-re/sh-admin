@@ -1,11 +1,10 @@
+/*
+ * @Description: 意见反馈
+ * @LastEditTime: 2021-12-21 10:43:20
+ */
 import React, { useEffect, useState } from 'react'
 import { InputTemp, SelectTemp, RangePickerTemp } from '@/components/filter/formItem'
 import { Form, Table, Col, Row, Space, Button } from 'antd'
-
-/**
- * 系统中心-意见反馈
- */
-
 const OpinionPage: React.FC = () => {
   const [form] = Form.useForm()
   const [data, setData] = useState([])
