@@ -21,6 +21,7 @@ specifiers:
   '@typescript-eslint/eslint-plugin': ^4.21.0
   '@typescript-eslint/parser': ^4.21.0
   antd: ^4.16.6
+  antd-dayjs-webpack-plugin: ^1.0.6
   autoprefixer: ^10.2.5
   axios: ^0.21.1
   babel-loader: ^8.2.2
@@ -96,6 +97,7 @@ devDependencies:
   '@types/webpack-dev-server': 3.11.6
   '@typescript-eslint/eslint-plugin': 4.33.0_b77187731987bbf90b17856f1d20b7ae
   '@typescript-eslint/parser': 4.33.0_eslint@7.32.0+typescript@4.5.3
+  antd-dayjs-webpack-plugin: 1.0.6_dayjs@1.10.7
   autoprefixer: 10.4.0
   babel-loader: 8.2.3_8dd2b11efd9b7265f9b7da54f0e73ab1
   clean-webpack-plugin: 3.0.0_webpack@5.65.0
@@ -2090,6 +2092,14 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       color-convert: 2.0.1
+    dev: true
+
+  /antd-dayjs-webpack-plugin/1.0.6_dayjs@1.10.7:
+    resolution: {integrity: sha512-UlK3BfA0iE2c5+Zz/Bd2iPAkT6cICtrKG4/swSik5MZweBHtgmu1aUQCHvICdiv39EAShdZy/edfP6mlkS/xXg==}
+    peerDependencies:
+      dayjs: '*'
+    dependencies:
+      dayjs: 1.10.7
     dev: true
 
   /antd/4.17.3_react-dom@17.0.2+react@17.0.2:

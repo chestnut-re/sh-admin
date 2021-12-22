@@ -1,0 +1,122 @@
+.ReleaseProduct__root {
+  padding: 20px;
+  .stepsView {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+    padding: 10px 0;
+    z-index: 1;
+    min-width: 500px;
+    width: 50%;
+    .line {
+      position: absolute;
+      width: 100%;
+      border: 1px dashed #526ecc;
+      top: 50%;
+      z-index: -1;
+    }
+    .item {
+      font-size: 14px;
+      color: #B1B1B1;
+      font-weight: 500;
+      padding: 15px 20px;
+      border-radius: 33px;
+      background: #f3f6f8;
+      border: 1px solid #d8d8d8;
+    }
+    .item-selected {
+      background-color: #526ecc;
+      border: none;
+      color: #fff;
+    }
+  }
+  .steps-content {
+    min-height: 200px;
+    margin-top: 16px;
+    padding: 20px;
+    background-color: #fafafa;
+    border-radius: 10px;
+    .title {
+      font-size: 16px;
+      color: #292929;
+      line-height: 22px;
+      padding-left: 17px;
+      padding-top: 15px;
+      padding-bottom: 40px;
+    }
+    .baseInfo {
+      display: flex;
+      flex-direction: row;
+      .item {
+        flex: 1;
+      }
+    }
+  }
+  .avatar-uploader > .ant-upload{
+    margin-left: 20px;
+    width: 225px;
+    height: 290px;
+    border: 1px solid #dddddd;
+  }
+  .upload-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .icon {
+      width: 30px;
+      height: 30px;
+      background: #e1e1e1;
+      border-radius: 30px;
+      line-height: 30px;
+      font-size: 22px;
+      color: #9b9b9b;
+    }
+    .addImgTxt {
+      margin: 8px 0;
+    }
+    .require {
+      font-size: 14px;
+      font-weight: 500;
+      text-align: left;
+      color: #dadada;
+    }
+  }
+  .btnView {
+    display: flex;
+    flex-direction: row;
+    margin-top: 100px;
+    .draftBtn {
+      width: 150px;
+      height: 49px;
+      background: #ced6f1;
+      border-radius: 3px;
+      line-height: 49px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 600;
+      color: #526ecc;
+    }
+    .nextBtn {
+      width: 150px;
+      height: 49px;
+      background: #526ecc;
+      border-radius: 3px;
+      line-height: 49px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      margin-right: 36px;
+    }
+  }
+  
+  .steps-action {
+    margin-top: 24px;
+  }
+  
+}
+
+
