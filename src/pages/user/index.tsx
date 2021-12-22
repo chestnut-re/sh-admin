@@ -1,6 +1,6 @@
 /*
  * @Description: 用户列表
- * @LastEditTime: 2021-12-21 16:57:07
+ * @LastEditTime: 2021-12-22 10:44:54
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space } from 'antd'
@@ -34,8 +34,10 @@ const BannerListPage: React.FC = () => {
     const query = {
       current: pageIndex,
       pageSize: pageSize,
-      // ...form.getFieldsValue(),
+      ...form.getFieldsValue(),
     }
+    if(query.registerChannel==99) delete query.registerChannel
+    if(query.employeeStatus==99) delete query.employeeStatus
     usersQueryList(query).then((res) => {
       console.log(res)
       setData(res.data.records)

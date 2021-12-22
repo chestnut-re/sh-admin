@@ -1,14 +1,14 @@
 /*
  * @Description: 渠道列表
- * @LastEditTime: 2021-12-21 15:05:08
+ * @LastEditTime: 2021-12-21 19:03:00
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space } from 'antd'
 import { InputTemp, SelectTemp, LowAndHighTemp } from '@/components/filter/formItem'
-
+import { shellArray,cityDispose ,analyId} from '@/utils/city'
 import AddChannelDialog, { DialogMode } from './components/AddChannelDialog'
 import ChannelService from '@/service/ChannelService'
-import data from './data'
+import dataList from './data'
 import './index.less'
 const ChannelListPage: React.FC = () => {
   const [form] = Form.useForm()
@@ -24,12 +24,15 @@ const ChannelListPage: React.FC = () => {
   useEffect(() => {
     loadData()
     getDetail()
-    setProvinceCity(data)
+  
+    // setProvinceCity(cityDispose(dataList,'areas'))
+
+    console.log(analyId(dataList, '330400'), 'llllll')
   }, [])
   const getDetail = () => {
     ChannelService.getProvinceCity().then((res) => {
       console.log(res.data, '-----')
-      setProvinceCity(res.data)
+      setProvinceCity(cityDispose(res.data,'areas'))
       // setData(res.data?.list)
     })
   }

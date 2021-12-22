@@ -24,6 +24,7 @@ export const SelectEmployeeStatusTemp: FC<any> = ({ name, ...props }) => {
   return (
     <Form.Item name={name}>
       <Select allowClear {...props}>
+        <Select.Option value={99}>全部</Select.Option>
         <Select.Option value={0}>用户</Select.Option>
         <Select.Option value={1}>客户</Select.Option>
       </Select>
@@ -37,7 +38,7 @@ export const SelectRegisterChannel: FC<any> = ({ name, ...props }) => {
   return (
     <Form.Item name={name}>
       <Select allowClear {...props}>
-        {/* <Select.Option value={0}>全部</Select.Option> */}
+        <Select.Option value={99}>全部</Select.Option>
         <Select.Option value={1}>扫码</Select.Option>
         <Select.Option value={2}>任务分享</Select.Option>
         <Select.Option value={3}>商品分享</Select.Option>
