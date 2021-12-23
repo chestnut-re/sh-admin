@@ -17,7 +17,7 @@ const ChannelPage: React.FC = () => {
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
   const [pageSize] = useState(10)
-  const [total, setTotal] = useState()
+  const [total] = useState()
   const [showDialog, setShowDialog] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
   const [channelId, setChannelId] = useState(null)

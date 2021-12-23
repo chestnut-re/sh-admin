@@ -1,6 +1,6 @@
 /*
  * @Description: 添加渠道
- * @LastEditTime: 2021-12-23 16:14:19
+ * @LastEditTime: 2021-12-23 17:07:26
  */
 
 import { Form, Input, Modal, Cascader } from 'antd'
@@ -36,16 +36,16 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
     const dataId = propData?.id
     if (!dataId === false) {
       ChannelService.get(dataId).then((res) => {
-        const data =res.data
+        const data = res.data
         setNameDefault(analysisName(structure, data?.id, 'children', 'id'))
         form.setFieldsValue({
-          id: data?.id,
+          structureId: data?.id,
           name: data?.name,
           person: data?.person,
-          region: regionsCodeArray(data?.region, propArea),
+          region: data?.regions ? regionsCodeArray(data?.regions, propArea) : null,
           regionsName: data?.regionsName,
           phoneNumber: data?.phoneNumber,
-          hotLine: data?.hotLine
+          hotLine: data?.hotLine,
         })
       })
     }
@@ -68,7 +68,7 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
         const postData = { ...formData }
         postData.region = lastOneJoin(formData.region)
         postData.regionsName = arrayNameJoin(formData.region, area)
-
+        delete postData.structureId
         if (mode === 'add') {
           ChannelService.add(postData).then((res) => {
             if (res.code == 200) {
@@ -103,8 +103,7 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
       }
     })
   }
-  const changeStructure = (e: string | any[]) => {
-    console.log(e[e.length - 1], 'xxx')
+  const changeStructure = (e) => {
     form.setFieldsValue({
       id: e[e.length - 1],
     })
@@ -143,7 +142,7 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
         <Form.Item label="手机号" name="phoneNumber" rules={[{ required: true, message: '请输入' }]}>
           <Input />
         </Form.Item>
-        <Form.Item label="归属渠道" name="id" rules={[{ required: true, message: '请输入' }]}>
+        <Form.Item label="归属渠道" name="structureId" rules={[{ required: true, message: '请输入' }]}>
           {mode == 'add' ? (
             <Cascader
               options={structure}
