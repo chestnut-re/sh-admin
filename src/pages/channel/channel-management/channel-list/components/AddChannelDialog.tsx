@@ -1,6 +1,6 @@
 /*
  * @Description: 添加渠道
- * @LastEditTime: 2021-12-23 15:21:51
+ * @LastEditTime: 2021-12-23 16:14:19
  */
 
 import { Form, Input, Modal, Cascader } from 'antd'
@@ -35,7 +35,6 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
   const getDetail = (propData, propArea) => {
     const dataId = propData?.id
     if (!dataId === false) {
-      console.log(dataId)
       ChannelService.get(dataId).then((res) => {
         const data =res.data
         setNameDefault(analysisName(structure, data?.id, 'children', 'id'))
@@ -71,7 +70,6 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
         postData.regionsName = arrayNameJoin(formData.region, area)
 
         if (mode === 'add') {
-          // create
           ChannelService.add(postData).then((res) => {
             if (res.code == 200) {
               onSuccess()
@@ -98,14 +96,14 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
     form.resetFields()
     onClose()
   }
-  const casOnChange = (data) => {
+  const casOnChange = (data: any[]) => {
     data.map((items, index, arr) => {
       if (items.length < 2) {
         arr[index].push(area.find((res) => res.adcode == items[0]).areas[0].adcode)
       }
     })
   }
-  const changeStructure = (e) => {
+  const changeStructure = (e: string | any[]) => {
     console.log(e[e.length - 1], 'xxx')
     form.setFieldsValue({
       id: e[e.length - 1],
