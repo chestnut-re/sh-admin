@@ -1,22 +1,16 @@
 /*
- * @Description:
- * @LastEditTime: 2021-12-23 11:30:01
+ * @Description: 左侧tree
+ * @LastEditTime: 2021-12-23 15:22:18
  */
 import { Tree } from 'antd'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 interface Props {
   structure: Array<any>
-  onSelectStructure: () => void
+  onSelectStructure: (e: any) => void
 }
-
 const ChannelListTree: React.FC<Props> = ({ structure, onSelectStructure }) => {
-  useEffect(() => {
-    console.log(structure, 'xxxzzzzzzzz')
-  })
-
-  const onSelect = (selectedKeys, info) => {
-    console.log('selected', selectedKeys, info)
-    onSelectStructure()
+  const onSelect = (selectedKeys) => {
+    onSelectStructure(selectedKeys[selectedKeys.length - 1])
   }
   return (
     <Tree

@@ -1,15 +1,13 @@
 /*
  * @Description: 添加渠道
- * @LastEditTime: 2021-12-22 18:17:13
+ * @LastEditTime: 2021-12-23 15:21:51
  */
 
-import { createUser, editUser } from '@/service/user'
-import { Form, Input, Modal, Select, Cascader } from 'antd'
+import { Form, Input, Modal, Cascader } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
-import { cityDispose, analysisName, lastOneJoin,arrayNameJoin } from '@/utils/city'
+import { cityDispose, analysisName, lastOneJoin, arrayNameJoin, regionsCodeArray } from '@/utils/city'
 import ChannelService from '@/service/ChannelService'
 export type DialogMode = 'add' | 'edit'
-
 interface Props {
   data: any
   mode: DialogMode
@@ -18,74 +16,77 @@ interface Props {
   onSuccess: () => void
   onClose: () => void
 }
-
 /**
  * 添加&编辑
  */
 const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSuccess, onClose }) => {
   const [form] = Form.useForm()
-  const [selectedRoles, setSelectedRoles] = useState<Array<any>>([])
   const [area, setArea] = useState<Array<any>>([])
-
+  const [nameDefault, setNameDefault] = useState('')
   useEffect(() => {
     if (show) {
       getProvinceCity()
-      console.log(structure, 'structure')
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [show])
-
-  useEffect(() => {
-    form.setFieldsValue({
-      id: data?.id,
-      name: data?.name,
-      person: data?.person,
-      regions: data?.regions,
-      regionsName: data?.regionsName,
-      phoneNumber: data?.phoneNumber,
-      platform: data?.platform,
-      hotLine: data?.hotLine,
-      // password: data?.pwd,
-      // roles: data?.roles,
-    })
-  }, [show])
+  /**
+   * @description: 回显数据
+   */
+  const getDetail = (propData, propArea) => {
+    const dataId = propData?.id
+    if (!dataId === false) {
+      console.log(dataId)
+      ChannelService.get(dataId).then((res) => {
+        const data =res.data
+        setNameDefault(analysisName(structure, data?.id, 'children', 'id'))
+        form.setFieldsValue({
+          id: data?.id,
+          name: data?.name,
+          person: data?.person,
+          region: regionsCodeArray(data?.region, propArea),
+          regionsName: data?.regionsName,
+          phoneNumber: data?.phoneNumber,
+          hotLine: data?.hotLine
+        })
+      })
+    }
+  }
   /**
    * @description: 负责区域
    */
-  const getProvinceCity = () => {
+  const getProvinceCity = async () => {
     ChannelService.getProvinceCity().then((res) => {
       setArea(cityDispose(res?.data, 'areas'))
+      getDetail(data, res?.data)
     })
   }
 
   /**提交数据 */
   const _handleUpdate = async () => {
- 
     form
       .validateFields()
       .then((formData) => {
+        const postData = { ...formData }
+        postData.region = lastOneJoin(formData.region)
+        postData.regionsName = arrayNameJoin(formData.region, area)
+
         if (mode === 'add') {
           // create
-          const postData = { ...formData }
-  
-          postData.region = lastOneJoin(formData.region)
-          postData.regionsName = arrayNameJoin(formData.region,area)
-  
-          
           ChannelService.add(postData).then((res) => {
-            if (res.code === 200) {
+            if (res.code == 200) {
               onSuccess()
             }
           })
         } else {
-          const postData = {
-            ...formData,
+          const putData = {
+            ...postData,
             id: data?.id,
           }
-          // editUser(postData).then((res) => {
-          //   if (res.code === 200) {
-          //     onSuccess()
-          //   }
-          // })
+          ChannelService.edit(putData).then((res) => {
+            if (res.code == 200) {
+              onSuccess()
+            }
+          })
         }
       })
       .catch((e) => {
@@ -145,13 +146,16 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
           <Input />
         </Form.Item>
         <Form.Item label="归属渠道" name="id" rules={[{ required: true, message: '请输入' }]}>
-          <Cascader
-            options={structure}
-            changeOnSelect
-            fieldNames={{ label: 'name', value: 'id', children: 'children' }}
-            onChange={changeStructure}
-          />
-          ,
+          {mode == 'add' ? (
+            <Cascader
+              options={structure}
+              changeOnSelect
+              fieldNames={{ label: 'name', value: 'id', children: 'children' }}
+              onChange={changeStructure}
+            />
+          ) : (
+            <div>{nameDefault}</div>
+          )}
         </Form.Item>
         <Form.Item label="客服热线" name="password" rules={[{ required: true, message: '请输入' }]}>
           <Input />
@@ -160,5 +164,4 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
     </Modal>
   )
 }
-
 export default AddUserDialog

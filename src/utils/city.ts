@@ -1,6 +1,6 @@
 /*
  * @Description: 城市数据处理
- * @LastEditTime: 2021-12-22 18:15:24
+ * @LastEditTime: 2021-12-23 15:09:22
  */
 
 /**
@@ -72,7 +72,8 @@ export const analysisName = (oldArray: Array<any>, isId: string, areas = 'areas'
  * @return {Array}
  */
 export const analysisId = (oldArray: Array<any>, isId: string, areas = 'areas', adcode = 'adcode') => {
-  return shellArray(oldArray, isId, areas, adcode).map((res) => res.name)
+  console.log(shellArray(oldArray, isId, areas, adcode))
+  return shellArray(oldArray, isId, areas, adcode).map((res) => res[adcode])
 }
 export const echoData = (oldArray: Array<any>, data: string) => {
   data.split(',').map((res) => {
@@ -92,10 +93,17 @@ export const lastOneJoin = (array) => {
     .join(',')
 }
 
-export const arrayNameJoin = (array,area, areas = 'areas', adcode = 'adcode') => {
+export const arrayNameJoin = (array, area, areas = 'areas', adcode = 'adcode') => {
   return array
     .map((item) => {
       return analysisName(area, item[item.length - 1], areas, adcode)
     })
     .join(',')
+}
+export const regionsCodeArray = (array, area, areas = 'areas', adcode = 'adcode') => {
+console.log(array,'xxx')
+  return array.split(',')
+    .map((item) => {
+      return analysisId(area, item, areas, adcode)
+    })
 }
