@@ -79,7 +79,7 @@ const BannerListPage: React.FC = () => {
   }
   /**编辑 */
   const _editDialog = (record) => {
-    console.log(record,'00000000')
+    console.log(record, '00000000')
     setDialogMode('edit')
     setSelectedData(record)
     setShowDialog(true)
@@ -107,12 +107,7 @@ const BannerListPage: React.FC = () => {
   return (
     <div className="channel-list">
       <div>
-        <Form
-          name="basic"
-          initialValues={{ remember: true }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-        >
+        <Form name="basic" initialValues={{ remember: true }} onFinish={onFinish} onFinishFailed={onFinishFailed}>
           <Row gutter={[10, 0]}>
             <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
               <Space>
