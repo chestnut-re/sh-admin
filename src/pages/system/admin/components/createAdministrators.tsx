@@ -3,6 +3,7 @@ import { Form, Input, Modal, Select, Radio } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
 import { HttpCode } from '@/constants/HttpCode'
 import { AdminService } from '@/service/AdminService'
+import { getRoles } from '@/service/role'
 
 export type DialogMode = 'add' | 'edit'
 
@@ -22,43 +23,9 @@ const { Option } = Select
  */
 const CreateAdminDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) => {
   const [form] = Form.useForm()
-  const [role, setRole] = useState('全部')
+  const [roleList, setRoleList] = useState([])
   const [state, setState] = React.useState(1)
-
-  const roleList = [
-    {
-      key: 1,
-      value: '全部',
-    },
-    {
-      key: 2,
-      value: '超管',
-    },
-    {
-      key: 3,
-      value: '运营管家',
-    },
-    {
-      key: 4,
-      value: '运营商品小二',
-    },
-    {
-      key: 5,
-      value: '运营营销小二',
-    },
-    {
-      key: 6,
-      value: '运营渠道小二',
-    },
-    {
-      key: 7,
-      value: '运营财务小二',
-    },
-    {
-      key: 8,
-      value: '分中心',
-    },
-  ]
+  const [roleId, setRoleId] = React.useState('')
 
   useEffect(() => {
     form.setFieldsValue({
@@ -67,17 +34,28 @@ const CreateAdminDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onC
       mobile: data?.mobile,
       state: data?.state,
     })
+    loadRoleData()
   }, [show])
+
+  const loadRoleData = () => {
+    getRoles({ state: 0 }).then((res) => {
+      setRoleList(res.data)
+    })
+  }
 
   /**提交数据 */
   const _handleUpdate = async () => {
     form
       .validateFields()
       .then((formData) => {
-        console.log(formData)
         if (mode === 'add') {
           // create
-          AdminService.add({ ...formData, roleId: 0 }).then((res) => {
+          AdminService.add({
+            mobile: formData.mobile,
+            nickName: formData.nickName,
+            roleId: roleId,
+            state: formData.state,
+          }).then((res) => {
             if (res.code === HttpCode.success) {
               onSuccess()
             }
@@ -105,7 +83,7 @@ const CreateAdminDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onC
     <Modal title="用户" visible={show} onOk={_handleUpdate} onCancel={_formClose} okText="保存提交">
       <Form
         name="basic"
-        labelCol={{ span: 6 }}
+        labelCol={{ span: 4 }}
         wrapperCol={{ span: 16 }}
         initialValues={{ remember: true }}
         onFinish={(values: any) => {}}
@@ -113,12 +91,12 @@ const CreateAdminDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onC
         autoComplete="off"
         form={form}
       >
-        <Form.Item label="角色" name="roleName" rules={[{ required: true, message: '请选择角色' }]}>
-          <Select placeholder="请选择角色" style={{ width: 120 }} onChange={(value) => setRole(value)}>
+        <Form.Item label="角色" name="roleName">
+          <Select placeholder="请选择角色" style={{ width: 120 }} onChange={(value, e) => setRoleId(e.key)}>
             {roleList.map((item) => {
               return (
-                <Option value={item.value} key={item.key}>
-                  {item.value}
+                <Option value={item.roleName} key={item.id}>
+                  {item.roleName}
                 </Option>
               )
             })}
