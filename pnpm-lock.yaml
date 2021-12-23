@@ -42,6 +42,7 @@ specifiers:
   json-bigint: ^1.0.0
   less: ^4.1.1
   less-loader: ^8.0.0
+  lodash: ^4.17.21
   mini-css-extract-plugin: ^1.4.1
   mobx: ^6.3.5
   mobx-react-lite: ^3.2.0
@@ -72,6 +73,7 @@ dependencies:
   dayjs: 1.10.7
   js-cookie: 3.0.1
   json-bigint: 1.0.0
+  lodash: 4.17.21
   mobx: 6.3.8
   mobx-react-lite: 3.2.2_02876c366ce89e988b8bf5dff3cf0e00
   moment: 2.29.1

@@ -73,6 +73,7 @@
     "dayjs": "^1.10.7",
     "js-cookie": "^3.0.1",
     "json-bigint": "^1.0.0",
+    "lodash": "^4.17.21",
     "mobx": "^6.3.5",
     "mobx-react-lite": "^3.2.0",
     "moment": "^2.29.1",

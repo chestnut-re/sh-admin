@@ -2,18 +2,40 @@ import axios from '@/request'
 
 export class ProductionService {
   /**
-   * 上传商品背景图
-   */
-   static uploadFile(data): Promise<any> {
-    return axios.post(`/api/third/oss/uploadFile`, data)
-  }
-
-  /**
    * 保存草稿/提交至待发布
    */
 
-  static save(data): Promise<any> {
-    return axios.post(`/api/operation/goods/save`, data)
-  }
+  
+
+  // static save(data): Promise<any> {
+  //   return axios.post(`/api/operation/goods/save`, { params: {
+  //     data,
+  //   }})
+  // }
 }
- 
+
+/**
+ * 创建B端用户
+ */
+export const save = (data): Promise<any> => {
+  return axios.post('/api/operation/goods/save', data)
+}
+
+/**
+ * 发布记录
+ */
+export const releaseRecord = (data): Promise<any> => {
+  return axios.get('/api/operation/goods/release/page', {
+    params: {
+      ...data
+    },
+  })
+}
+
+/**
+ * 标签列表
+ */
+
+export const sortList = (data): Promise<any> => {
+  return axios.post('/api/operation/goods/sortManagement/query', data)
+}
