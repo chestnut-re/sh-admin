@@ -1,16 +1,143 @@
-import React, { useEffect, useState } from 'react'
-import { message, Form, Input, Row, Col, Upload, Select, Image, Spin } from 'antd'
-import { save, sortList } from '@/service/ProductionService'
+
+import React, { useEffect, useState, useRef } from 'react'
+import { observer } from 'mobx-react-lite'
 
 import './index.less'
-import { FileService } from '@/service/FileService'
 import { CheckOutlined } from '@ant-design/icons';
-import debounce from 'lodash/debounce';
 
+import BaseInfo from './components/BaseInfo'
 import Itinerary from './components/Itinerary'
+import Marketing from './components/Marketing'
+const goodsParam = {
+  goods: {
+    goodsTypeTag: '', // 商品类型标签
+    goodsName: '', // 商品标题
+    goodsNickName: '', // 商品副标题
+    goodsDetail: { // 商品详情页
 
-const { Option } = Select;
-
+    },
+    insuranceAgreement: '', // 保险协议
+    refundAndChangePolicy: '', // 退改政策
+    promotionalImageUrl: '', // 商品预览图
+    travelMode: '', // 0是固定时间出行，1是约定时间出行
+    orderDeadline: '', // 下单截至时间，单位小时
+    goodsPrices: [  // 商品日期价格行程详情
+      {
+        childCostPrice: '', // 儿童成本价
+        childCurrentPrice: '', // 儿童现售价
+        childMarkPrice: '', // 儿童市场标价
+        days: '', // 一共多少天
+        endDate: '', // 价格结束日期
+        personCostPrice: '', // 成人成本价
+        personCurrentPrice: '', // 成人现售价
+        personMarkPrice: '', // 成人市场标价
+        travels: [ // 行程
+          {
+            travelDetails: [ // 一天的行程行情
+              {
+                travelGoods: {  // 行程关联的商品信息
+                  airTicket: { // 机票
+                    aircraftCabin: '', // 舱位
+                    airline: '', // 航空公司
+                    arriveAirport: '', //到达机场
+                    childCostPrice: '', // 儿童成本价
+                    childCurrentPrice: '', // 儿童现售价
+                    childMarkPrice: '', // 儿童市场标价
+                    departAirport: '', // 出发机场
+                    departureTime: '', // 起飞时间
+                    latitude: '', // 途经点纬度
+                    longitude: '', // 途经点经度
+                    personCostPrice: '', // 成人成本价
+                    personCurrentPrice: '', // 成人现售价
+                    personMarkPrice: '', // 成人市场标价
+                    remark: '', // 备注
+                    transportation: '', // 交通方式1：飞机 2：火车 3：大巴
+                  },
+                  bus: { // 大巴
+                    busType: '', // 大巴车型
+                    busUseType: '', //大巴使用类型
+                    departureStation: '', //出发站
+                    childCostPrice: '', // 儿童成本价
+                    childCurrentPrice: '', // 儿童现售价
+                    childMarkPrice: '', // 儿童市场标价
+                    latitude: '', // 途经点纬度
+                    longitude: '', // 途经点经度
+                    personCostPrice: '', // 成人成本价
+                    personCurrentPrice: '', // 成人现售价
+                    personMarkPrice: '', // 成人市场标价
+                    remark: '', // 备注
+                    transportation: '', // 交通方式1：飞机 2：火车 3：大巴
+                  },
+                  hotel: { // 酒店
+                    hotelName: '', //酒店名称
+                    roomType: '', // 房型
+                    childCostPrice: '', // 儿童成本价
+                    childCurrentPrice: '', // 儿童现售价
+                    childMarkPrice: '', // 儿童市场标价
+                    personCostPrice: '', // 成人成本价
+                    personCurrentPrice: '', // 成人现售价
+                    personMarkPrice: '', // 成人市场标价
+                    latitude: '', // 途经点纬度
+                    longitude: '', // 途经点经度
+                    remark: '', // 备注
+                  },
+                  restaurant: { // 饭店
+                    limitPeople: '', // 人限
+                    restaurantName: '', //饭店名称
+                    childCostPrice: '', // 儿童成本价
+                    childCurrentPrice: '', // 儿童现售价
+                    childMarkPrice: '', // 儿童市场标价
+                    personCostPrice: '', // 成人成本价
+                    personCurrentPrice: '', // 成人现售价
+                    personMarkPrice: '', // 成人市场标价
+                    latitude: '', // 途经点纬度
+                    longitude: '', // 途经点经度
+                    remark: '', // 备注
+                  },
+                  scenicSpot: { // 景点
+                    additionItem: '', // 附加项目
+                    scenicSpotName: '', // 景点名称
+                    visitingTime: '', //游览时长 分钟
+                    childCostPrice: '', // 儿童成本价
+                    childCurrentPrice: '', // 儿童现售价
+                    childMarkPrice: '', // 儿童市场标价
+                    personCostPrice: '', // 成人成本价
+                    personCurrentPrice: '', // 成人现售价
+                    personMarkPrice: '', // 成人市场标价
+                    latitude: '', // 途经点纬度
+                    longitude: '', // 途经点经度
+                    remark: '', // 备注
+                  },
+                  train: { // 火车
+                    arrivalStation: '', // 到达站
+                    departureStation: '', // 出发站
+                    departureTime: '', // 出发时间
+                    seat: '', // 席位
+                    trainsType: '', //车次类型
+                    transportation: '', // 交通方式1：飞机 2：火车 3：大巴
+                    childCostPrice: '', // 儿童成本价
+                    childCurrentPrice: '', // 儿童现售价
+                    childMarkPrice: '', // 儿童市场标价
+                    personCostPrice: '', // 成人成本价
+                    personCurrentPrice: '', // 成人现售价
+                    personMarkPrice: '', // 成人市场标价
+                    latitude: '', // 途经点纬度
+                    longitude: '', // 途经点经度
+                    remark: '', // 备注
+                  }
+                },
+                travelTime: '', // 行程时间
+                travelTitle: '', // 行程标题
+                travelType: '', //行程类型 1酒店，2交通，3餐饮，4景点
+              }
+            ],
+            whatDay: '', // 第几天
+          }
+        ]
+      }
+    ],
+  }
+}
 const steps = [
   {
     title: '基础信息',
@@ -29,13 +156,20 @@ const steps = [
  * 运营中心-商品管理-发布商品
  */
 const ReleaseProductPage: React.FC = () => {
-  const [current, setCurrent] = React.useState(1)
-  const [productType, setProductType] = React.useState([])
-  const [goodsImg, setGoodsImg] = React.useState('')
-  const [updater, setUpdater] = useState(0);
-  function forceUpdate() {
-    setUpdater(updater => updater + 1);
-  }
+  const [current, setCurrent] = useState(1)
+  const [draftParam, steDraftParam] = useState(goodsParam)
+  const getBaseInfo = useRef();
+  const getItinerary = useRef();
+  const getMarketing = useRef();
+
+
+
+
+  useEffect(() => {
+
+
+    // const { adminStore } = adminStore()
+  }, [])
 
   const next = () => {
     if (current === steps.length - 1) {
@@ -43,85 +177,45 @@ const ReleaseProductPage: React.FC = () => {
     } else {
       setCurrent(current + 1)
     }
-    // console.log('debounce', debounce)
   }
 
   const prev = () => {
     setCurrent(current - 1)
   }
-
-  const layout = {
-    labelCol: { span: 6 },
-    wrapperCol: { span: 18 },
-  }
-
-  const onDraft = () => {
-    const postData = form.getFieldsValue()
-    postData.promotionalImageUrl = goodsImg
-    save(postData).then((res) => {
-      console.log('post Data post Data', res)
-    })
-  }
-
-  const beforeUpload = (file) => {
-    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png'
-    if (!isJpgOrPng) {
-      message.error('You can only upload JPG/PNG file!')
-    }
-    const isLt2M = file.size / 1024 / 1024 < 2
-    if (!isLt2M) {
-      message.error('Image must smaller than 2MB!')
-    }
-    return false
-  }
-
-  const handleChange = (info) => {
-    FileService.uploadImg(info.file).then((res) => {
-      const { ossServerUrl, fileUrl } = res.data
-      setGoodsImg(`${ossServerUrl}${fileUrl}`)
-    })
-  }
-
   /**
-   * 商品类型标签文本框值变化时回调	
+   * 保存草稿箱
+   * @param item 
    */
-  const fetchRef = React.useRef(0);
-  const [fetching, setFetching] = React.useState(false);
-
-
-  const debounceFetcher = React.useMemo(() => {
-    const loadOptions = (value: string) => {
-      fetchRef.current += 1;
-      const fetchId = fetchRef.current;
-      setFetching(true);
-      setProductType([])
-      sortList({ sortName: value }).then(res => {
-        setFetching(false);
-        setProductType(res.data)
-        console.log('sortListsortList', res.data)
-        forceUpdate()
+  const onDraft = () => {
+    // 获取子组件实例值
+    if (current === 0) {
+      const { formFields, typeFields }: any = getBaseInfo.current
+      const { } = formFields.getFieldsValue()
+      steDraftParam((obj) => {
+        obj['goodsTypeTag'] = 18
+        return { ...draftParam }
       })
-    };
+    } else if (current === 1) {
+      const { formItineraryFields }: any = getItinerary.current;
+      console.log('getFields FieldsForm', formItineraryFields.getFieldsValue());
+    }
 
-    return debounce(loadOptions, 2000);
-  }, [])
-
-
-  const goodsTypeHandleChange = value => {
-    console.log('goodsTypeHandleChangegoodsTypeHandleChange', value)
+    // save(draftParam).then((res) => {
+    //   console.log('post Data post Data', res)
+    // })
   }
-  const [form] = Form.useForm();
+
 
   return (
     <div className="ReleaseProduct__root">
       <div className="stepsView">
         {steps.map((item) => (
           item.index < current ? (
-            <div className='item item-selected'>
+            <div key={`index${item.index}`} className='item item-selected'>
               <CheckOutlined style={{ color: '#fff', fontSize: 24 }} />
             </div>
           ) : (
-            <div className={item.index == current ? 'item item-selected' : 'item'} key={item.index}>
+            <div key={`index${item.index}`} className={item.index == current ? 'item item-selected' : 'item'}>
               {`${item.index + 1}. ${item.title}`}
             </div>
           )
@@ -130,123 +224,29 @@ const ReleaseProductPage: React.FC = () => {
       </div>
       <div className="steps-content">
         <div className="title">{steps[current].title}</div>
-        <Form {...layout} colon={false} form={form} size="large" name="product-release">
-          {current == 0 && (
-            <Row>
-              <Col span={12}>
-                <Form.Item name='goodsTypeTag' label="商品类型标签">
+        {current == 0 && <BaseInfo ref={getBaseInfo} />}
+        {current == 1 && <Itinerary ref={getItinerary} />}
+        {current == 2 && <Marketing />}
 
-                  <Select
-                    mode="multiple"
-                    allowClear
-                    style={{ width: '100%' }}
-                    placeholder="请选择商品类型标签"
-                    onChange={goodsTypeHandleChange}
-                    onSearch={debounceFetcher}
-
-                    notFoundContent={fetching ? <Spin /> : '暂无数据'}
-
-                  // onDropdownVisibleChange={() => goodsTypeHandleSearch()}
-                  >
-                    {productType && productType.map(item => (
-                      <Option name={item['sortName']} value={item['id']} key={item['id']}>{item['sortName']}</Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-                <Form.Item name='goodsName' label="商品主标题">
-                  <Input />
-                </Form.Item>
-                <Form.Item name='goodsNickName' label="商品副标题">
-                  <Input />
-                </Form.Item>
-                <Form.Item name={'goodsDetail'} label="商品详情页">
-
-                  <div className='productItem'>
-                    <Input />
-                    <div className='QRimg'></div>
-                  </div>
-
-                </Form.Item>
-                <Form.Item name={'insuranceAgreement'} label="保险协议">
-                  <div className='productItem'>
-                    <Input />
-                    <div className='QRimg'></div>
-                  </div>
-                </Form.Item>
-                <Form.Item name={'refundAndChangePolicy'} label="退改政策">
-                  <Input />
-                </Form.Item>
-              </Col>
-              <Col span={10}>
-
-                <Upload
-                  listType="picture-card"
-                  className="avatar-uploader"
-                  showUploadList={false}
-                  onChange={handleChange}
-                  beforeUpload={beforeUpload}
-                >
-                  <div className="upload-item">
-                    <p className="icon">+</p>
-                    <div className="addImgTxt">上传商品预览图</div>
-                    <div className="require">尺寸 336px X 416px</div>
-                    <div className="require">不大于1M</div>
-                  </div>
-                </Upload>
-                {goodsImg && (
-                  <Image
-                    width={200}
-                    src={goodsImg}
-                    preview={{
-                      src: goodsImg
-                    }}
-                  />
-                )}
-              </Col>
-            </Row>
-          )}
-          {current == 1 && <Itinerary />}
-          {current == 2 && <div>3</div>}
-
-          <Form.Item label=" ">
-            <div className="btnView">
-              {current > 0 && (
-                <div onClick={() => prev()} className="nextBtn prev">
-                  上一步
-                </div>
-              )}
-              <div onClick={() => next()} className="nextBtn">
-                {current === steps.length - 1 ? '保存' : '下一步'}
+        <div className="btnView">
+          <div className='item'>
+            {current > 0 && (
+              <div onClick={() => prev()} className="nextBtn prev">
+                上一步
               </div>
-
-              <div onClick={() => onDraft()} className="draftBtn">
-                保存至草稿箱
-              </div>
+            )}
+            <div onClick={() => next()} className="nextBtn">
+              {current === steps.length - 1 ? '保存' : '下一步'}
             </div>
-          </Form.Item>
-        </Form>
+          </div>
 
-
-        {/* <div className="steps-action">
-          {current < steps.length - 1 && (
-            <Button type="primary" onClick={() => next()}>
-              下一步
-            </Button>
-          )}
-          {current === steps.length - 1 && (
-            <Button type="primary" onClick={() => message.success('Processing complete!')}>
-              Done
-            </Button>
-          )}
-          {current > 0 && (
-            <Button style={{ margin: '0 8px' }} onClick={() => prev()}>
-              Previous
-            </Button>
-          )}
-        </div> */}
+          <div onClick={() => onDraft()} className="draftBtn">
+            保存至草稿箱
+          </div>
+        </div>
       </div >
     </div >
   )
 }
 
-export default ReleaseProductPage
+export default observer(ReleaseProductPage)
