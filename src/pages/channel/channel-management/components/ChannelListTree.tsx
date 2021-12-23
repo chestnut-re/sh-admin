@@ -1,9 +1,12 @@
 /*
  * @Description: 左侧tree
- * @LastEditTime: 2021-12-23 15:22:18
+ * @LastEditTime: 2021-12-23 17:25:41
  */
 import { Tree } from 'antd'
 import React from 'react'
+import {
+  DownOutlined
+} from '@ant-design/icons';
 interface Props {
   structure: Array<any>
   onSelectStructure: (e: any) => void
@@ -13,12 +16,15 @@ const ChannelListTree: React.FC<Props> = ({ structure, onSelectStructure }) => {
     onSelectStructure(selectedKeys[selectedKeys.length - 1])
   }
   return (
-    <Tree
-      showLine
-      fieldNames={{ title: 'name', key: 'id', children: 'children' }}
-      onSelect={onSelect}
-      treeData={structure}
-    />
+    <div style={{ height: '100%', background: '#FFFFFF' }}>
+      <Tree
+        showLine
+        defaultExpandAll={true}
+        fieldNames={{ title: 'name', key: 'id', children: 'children' }}
+        onSelect={onSelect}
+        treeData={structure}
+      />
+    </div>
   )
 }
 

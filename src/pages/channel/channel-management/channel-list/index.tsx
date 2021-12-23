@@ -1,6 +1,6 @@
 /*
  * @Description: 渠道列表
- * @LastEditTime: 2021-12-23 16:58:06
+ * @LastEditTime: 2021-12-23 17:17:28
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
@@ -46,7 +46,7 @@ const ChannelPage: React.FC = () => {
   const columns = [
     {
       title: 'id',
-      render: (text, record, index) => `${index + 1}`,
+      render: (_text, _record, index) => `${index + 1}`,
     },
     {
       title: '渠道编号',
@@ -75,12 +75,12 @@ const ChannelPage: React.FC = () => {
     {
       title: '状态',
       dataIndex: 'state',
-      render: (text, record, index) => `${enumState[record.state]} `,
+      render: (_text, record) => `${enumState[record.state]} `,
     },
 
     {
       title: '操作',
-      render: (text: any, record: any) => (
+      render: (_text: any, record: any) => (
         <Space size="middle">
           {/* <Button >查看</Button> */}
           <Button onClick={() => showAddDialog(record, false)}>编辑</Button>
@@ -130,7 +130,7 @@ const ChannelPage: React.FC = () => {
     <div className="channel-list">
       <Row gutter={[10, 0]}>
         <Col span={3}>
-          <ChannelListTree structure={structure} onSelectStructure={_onSelectStructure} />
+          {structure.length>0? <ChannelListTree structure={structure} onSelectStructure={_onSelectStructure} />:''}
         </Col>
         <Col span={21}>
           <div>

@@ -1,6 +1,6 @@
 /*
  * @Description: 渠道分佣方案
- * @LastEditTime: 2021-12-21 10:12:42
+ * @LastEditTime: 2021-12-23 18:50:08
  */
 import { Space, Table, Tag, Form, Row, Col, Button } from 'antd'
 import React, { useEffect, useState } from 'react'
@@ -72,7 +72,7 @@ const CommissionSchemePage: React.FC = () => {
     console.log(1)
   }
   return (
-    <div className="page-root">
+    <div className="commission-scheme__root">
       <div>
         <Form
           name="basic"
