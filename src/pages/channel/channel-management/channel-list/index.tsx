@@ -1,10 +1,10 @@
 /*
  * @Description: 渠道列表
- * @LastEditTime: 2021-12-23 15:25:39
+ * @LastEditTime: 2021-12-23 16:58:06
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
-import { InputTemp, SelectTemp, LowAndHighTemp } from '@/components/filter/formItem'
+import { InputTemp } from '@/components/filter/formItem'
 import AddChannelDialog, { DialogMode } from './components/AddChannelDialog'
 import ChannelListTree from '../components/ChannelListTree'
 import ChannelService from '@/service/ChannelService'
@@ -17,7 +17,7 @@ const ChannelPage: React.FC = () => {
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
   const [pageSize] = useState(10)
-  const [total, setTotal] = useState()
+  const [total] = useState()
   const [showDialog, setShowDialog] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
   const [channelId, setChannelId] = useState(null)
@@ -102,14 +102,8 @@ const ChannelPage: React.FC = () => {
   const onReset = () => {
     form.resetFields()
   }
-  // useEffect(()=>{
-  //   setDialogMode('edit')
-  //   setShowDialog(true)
-  //   setSelectedData({"id":"1473893995674558464","code":"QD202112230002","level":2,"platform":null,"name":"测试-分中心名称","regions":null,"regionsName":"安徽省-安庆市,福建省-福州市,广东省-潮州市,北京市-北京城区,甘肃省-白银市","settleType":null,"settleDay":null,"businessAuthority":null,"menuAuthority":null,"createTime":"2021-12-23T05:51:26.877+00:00","createUser":"100","createUserName":null,"updateTime":null,"updateUser":null,"updateUserName":null,"isDeleted":null,"children":null,"belongName":null,"userName":null,"phoneNumber":"13111111111","state":null})
 
-  // },[])
   const showAddDialog = (record, add = true) => {
-    // console.log(JSON.stringify(record), '------')
     setDialogMode(add ? 'add' : 'edit')
     setShowDialog(true)
     setSelectedData(record)
