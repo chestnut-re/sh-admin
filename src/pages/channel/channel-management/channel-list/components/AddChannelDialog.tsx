@@ -1,67 +1,77 @@
 /*
  * @Description: 添加渠道
- * @LastEditTime: 2021-12-21 18:57:38
+ * @LastEditTime: 2021-12-22 18:17:13
  */
 
 import { createUser, editUser } from '@/service/user'
 import { Form, Input, Modal, Select, Cascader } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
-import {cityDispose} from '@/utils/city'
+import { cityDispose, analysisName, lastOneJoin,arrayNameJoin } from '@/utils/city'
+import ChannelService from '@/service/ChannelService'
 export type DialogMode = 'add' | 'edit'
 
 interface Props {
   data: any
   mode: DialogMode
+  structure: Array<any>
   show: boolean
-  cityData: Array<any>
   onSuccess: () => void
   onClose: () => void
 }
 
-const { Option } = Select
-
 /**
  * 添加&编辑
  */
-const AddUserDialog: FC<Props> = ({ data, mode, show = false, cityData, onSuccess, onClose }) => {
+const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSuccess, onClose }) => {
   const [form] = Form.useForm()
   const [selectedRoles, setSelectedRoles] = useState<Array<any>>([])
-  const [roles] = useState<Array<any>>([])
+  const [area, setArea] = useState<Array<any>>([])
 
   useEffect(() => {
-    // cityDispose()
-  if(show){
-    setSelectedRoles(data?.roles ?? [])
-    console.log(cityData, '--111-')
-  }
-  }, [cityData])
-
-  useEffect(() => {
-    // getRolesAll().then((res) => {
-    //   setRoles(res.data)
-    // })
-  }, [])
+    if (show) {
+      getProvinceCity()
+      console.log(structure, 'structure')
+    }
+  }, [show])
 
   useEffect(() => {
     form.setFieldsValue({
       id: data?.id,
       name: data?.name,
-      account: data?.account,
-      password: data?.pwd,
-      roles: data?.roles,
+      person: data?.person,
+      regions: data?.regions,
+      regionsName: data?.regionsName,
+      phoneNumber: data?.phoneNumber,
+      platform: data?.platform,
+      hotLine: data?.hotLine,
+      // password: data?.pwd,
+      // roles: data?.roles,
     })
   }, [show])
+  /**
+   * @description: 负责区域
+   */
+  const getProvinceCity = () => {
+    ChannelService.getProvinceCity().then((res) => {
+      setArea(cityDispose(res?.data, 'areas'))
+    })
+  }
 
   /**提交数据 */
   const _handleUpdate = async () => {
+ 
     form
       .validateFields()
       .then((formData) => {
         if (mode === 'add') {
           // create
-          const postData = { ...formData, menus: selectedRoles }
-          console.log(postData)
-          createUser(postData).then((res) => {
+          const postData = { ...formData }
+  
+          postData.region = lastOneJoin(formData.region)
+          postData.regionsName = arrayNameJoin(formData.region,area)
+  
+          
+          ChannelService.add(postData).then((res) => {
             if (res.code === 200) {
               onSuccess()
             }
@@ -70,14 +80,12 @@ const AddUserDialog: FC<Props> = ({ data, mode, show = false, cityData, onSucces
           const postData = {
             ...formData,
             id: data?.id,
-            menus: selectedRoles,
           }
-          console.log('postData', postData)
-          editUser(postData).then((res) => {
-            if (res.code === 200) {
-              onSuccess()
-            }
-          })
+          // editUser(postData).then((res) => {
+          //   if (res.code === 200) {
+          //     onSuccess()
+          //   }
+          // })
         }
       })
       .catch((e) => {
@@ -89,13 +97,18 @@ const AddUserDialog: FC<Props> = ({ data, mode, show = false, cityData, onSucces
     form.resetFields()
     onClose()
   }
-
-  const handleChange = (value) => {
-    console.log(value)
-    setSelectedRoles(value)
+  const casOnChange = (data) => {
+    data.map((items, index, arr) => {
+      if (items.length < 2) {
+        arr[index].push(area.find((res) => res.adcode == items[0]).areas[0].adcode)
+      }
+    })
   }
-  const casOnChange = (e) => {
-    console.log(e)
+  const changeStructure = (e) => {
+    console.log(e[e.length - 1], 'xxx')
+    form.setFieldsValue({
+      id: e[e.length - 1],
+    })
   }
 
   return (
@@ -118,11 +131,8 @@ const AddUserDialog: FC<Props> = ({ data, mode, show = false, cityData, onSucces
           <Input />
         </Form.Item>
         <Form.Item label="责任区域" name="region" rules={[{ required: true, message: '请输入' }]}>
-          {/* <Input /> */}
           <Cascader
-            options={cityData}
-            defaultValue={[['340000', '340800']]}
-
+            options={area}
             onChange={casOnChange}
             multiple
             fieldNames={{ label: 'name', value: 'adcode', children: 'areas' }}
@@ -131,27 +141,21 @@ const AddUserDialog: FC<Props> = ({ data, mode, show = false, cityData, onSucces
         <Form.Item label="责任人姓名" name="person" rules={[{ required: true, message: '请输入' }]}>
           <Input />
         </Form.Item>
-        <Form.Item label="手机号" name="mobile" rules={[{ required: true, message: '请输入' }]}>
+        <Form.Item label="手机号" name="phoneNumber" rules={[{ required: true, message: '请输入' }]}>
           <Input />
         </Form.Item>
-        <Form.Item label="归属渠道" name="parentId" rules={[{ required: true, message: '请输入' }]}>
-          <Input />
+        <Form.Item label="归属渠道" name="id" rules={[{ required: true, message: '请输入' }]}>
+          <Cascader
+            options={structure}
+            changeOnSelect
+            fieldNames={{ label: 'name', value: 'id', children: 'children' }}
+            onChange={changeStructure}
+          />
+          ,
         </Form.Item>
         <Form.Item label="客服热线" name="password" rules={[{ required: true, message: '请输入' }]}>
           <Input />
         </Form.Item>
-
-        {/* <Form.Item label="角色" name="roles">
-          <Select mode="multiple" allowClear placeholder="请选择角色" value={selectedRoles} onChange={handleChange}>
-            {roles.map((i) => {
-              return (
-                <Option key={i.id} value={i.id}>
-                  {i.name}
-                </Option>
-              )
-            })}
-          </Select>
-        </Form.Item> */}
       </Form>
     </Modal>
   )
