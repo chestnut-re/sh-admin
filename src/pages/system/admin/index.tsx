@@ -11,8 +11,8 @@ import { getRoles } from '@/service/role'
 const AdminListPage: React.FC = () => {
   const [form] = Form.useForm()
   const { Option } = Select
-  const [roleId, setRoleId] = useState()
-  const [state, setState] = useState()
+  const [roleId, setRoleId] = useState('')
+  const [state, setState] = useState('1')
   const [keyword, setKeyword] = useState('')
   const [data, setData] = useState([])
   const [roleData, setRoleData] = useState([])
@@ -162,10 +162,10 @@ const AdminListPage: React.FC = () => {
               角色
             </Col>
             <Col span={4}>
-              <Select style={{ width: 120 }} placeholder="请选择" onChange={(value, e) => setRoleId(e.key)}>
-                {roleData?.map((item, index) => {
+              <Select style={{ width: 120 }} placeholder="请选择" onChange={(value: any) => setRoleId(value)}>
+                {roleData?.map((item: any, index) => {
                   return (
-                    <Option value={item.roleName} key={item.id}>
+                    <Option value={item.id} key={item.id}>
                       {item.roleName}
                     </Option>
                   )
@@ -176,16 +176,10 @@ const AdminListPage: React.FC = () => {
               状态
             </Col>
             <Col span={4}>
-              <Select
-                placeholder="请选择"
-                style={{ width: 120 }}
-                onChange={(value, e) => {
-                  setState(e.key)
-                }}
-              >
+              <Select placeholder="请选择" style={{ width: 120 }} onChange={(value: any) => setState(value)}>
                 {stateList.map((item) => {
                   return (
-                    <Option value={item.value} key={item.key}>
+                    <Option value={item.key} key={item.key}>
                       {item.value}
                     </Option>
                   )

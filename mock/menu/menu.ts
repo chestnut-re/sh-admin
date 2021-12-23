@@ -39,6 +39,12 @@ export default [
                       componentPath: '/operation/production/commodity-audit',
                       path: '/operation/production/commodity-audit',
                     },
+                    {
+                      name: '商品配置',
+                      id: 114,
+                      componentPath: '/operation/production/commodity-allocation',
+                      path: '/operation/production/commodity-allocation',
+                    },
                   ],
                 },
               ],
