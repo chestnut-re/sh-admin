@@ -11,8 +11,9 @@ import { getRoles } from '@/service/role'
 const AdminListPage: React.FC = () => {
   const [form] = Form.useForm()
   const { Option } = Select
-  const [role, setRole] = useState('全部')
-  const [state, setState] = useState('全部')
+  const [roleId, setRoleId] = useState()
+  const [state, setState] = useState()
+  const [keyword, setKeyword] = useState('')
   const [data, setData] = useState([])
   const [roleData, setRoleData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
@@ -28,16 +29,15 @@ const AdminListPage: React.FC = () => {
   }, [pageIndex])
 
   const loadData = (pageIndex) => {
-    AdminService.list({ current: pageIndex, pageSize: pageSize }).then((res) => {
-      console.log(res)
+    AdminService.list({ current: pageIndex, pageSize: pageSize, keyword, state, roleId }).then((res) => {
       setData(res.data.records)
       setTotal(res.data.total)
     })
   }
 
   const loadRoleData = () => {
-    getRoles({}).then((res) => {
-      console.log(res)
+    getRoles({ state: 0 }).then((res) => {
+      setRoleData(res.data)
     })
   }
 
@@ -85,21 +85,21 @@ const AdminListPage: React.FC = () => {
   ]
   const stateList = [
     {
-      key: 1,
+      key: '',
       value: '全部',
     },
     {
-      key: 2,
+      key: 0,
       value: '禁用',
     },
     {
-      key: 3,
+      key: 1,
       value: '正常',
     },
   ]
 
   const onFinish = (values: any) => {
-    console.log('Success:', values, role, state)
+    loadData(pageIndex)
   }
 
   const onFinishFailed = (errorInfo: any) => {
@@ -150,17 +150,23 @@ const AdminListPage: React.FC = () => {
         >
           <Row gutter={[5, 0]} style={{ paddingLeft: '40px' }}>
             <Col span={8}>
-              <Input name="admin" />
+              <Input
+                value={keyword}
+                onChange={(e) => {
+                  setKeyword(e.target.value)
+                }}
+                placeholder="姓名/手机号"
+              />
             </Col>
             <Col span={2} className="table-from-label">
               角色
             </Col>
             <Col span={4}>
-              <Select defaultValue="全部" style={{ width: 120 }} onChange={(value) => setRole(value)}>
-                {roleData?.map((item) => {
+              <Select style={{ width: 120 }} placeholder="请选择" onChange={(value, e) => setRoleId(e.key)}>
+                {roleData?.map((item, index) => {
                   return (
-                    <Option value={item.value} key={item.key}>
-                      {item.value}
+                    <Option value={item.roleName} key={item.id}>
+                      {item.roleName}
                     </Option>
                   )
                 })}
@@ -170,7 +176,13 @@ const AdminListPage: React.FC = () => {
               状态
             </Col>
             <Col span={4}>
-              <Select defaultValue="全部" style={{ width: 120 }} onChange={(value) => setState(value)}>
+              <Select
+                placeholder="请选择"
+                style={{ width: 120 }}
+                onChange={(value, e) => {
+                  setState(e.key)
+                }}
+              >
                 {stateList.map((item) => {
                   return (
                     <Option value={item.value} key={item.key}>
@@ -188,8 +200,8 @@ const AdminListPage: React.FC = () => {
                 <Button
                   htmlType="submit"
                   onClick={() => {
-                    setRole('全部')
-                    setState('全部')
+                    setRoleId('')
+                    setState('')
                   }}
                 >
                   重置

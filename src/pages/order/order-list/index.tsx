@@ -1,18 +1,128 @@
 import React, { useState, useEffect } from 'react'
-import { Radio, Row, Col, Space, Input, Select, Button, Form } from 'antd'
+import { Radio, Row, Col, Space, Input, Select, Button, Form, DatePicker, Table } from 'antd'
+import { SelectState, OrderRoute, OrderType, OrderState } from '@/components/filter/formItem'
 import './index.less'
 /**
  * 订单列表
  */
 const OrderListPage: React.FC = () => {
   const [form] = Form.useForm()
+  const { Option } = Select
+  const { RangePicker } = DatePicker
   const [tabValue, setTabValue] = useState('全部')
+  const [selData, setSelData] = useState('渠道名称')
+  const [data, setData] = useState([])
+  const [pageIndex, setPageIndex] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
+  const [total, setTotal] = useState()
+
   const options = [
     { label: '全部', value: '全部', innerWidth: '40px' },
     { label: '待付款(34)', value: '待付款(34)' },
     { label: '待确认(302)', value: '待确认(302)' },
     { label: '已完成', value: '已完成' },
     { label: '已失效', value: '已失效' },
+  ]
+
+  useEffect(() => {
+    loadData(pageIndex)
+  }, [pageIndex])
+
+  const loadData = (pageIndex) => {
+    // AdminService.list({ current: pageIndex, pageSize: pageSize, }).then((res) => {
+    //   setData(res.data.records)
+    //   setTotal(res.data.total)
+    // })
+  }
+
+  const columns = [
+    {
+      title: '订单编号',
+      dataIndex: 'systemUserId',
+    },
+    {
+      title: '下单时间',
+      dataIndex: 'nickName',
+    },
+    {
+      title: '商品名称',
+      dataIndex: 'mobile',
+    },
+    {
+      title: '单价',
+      dataIndex: 'roleName',
+    },
+    {
+      title: '营销活动',
+      dataIndex: 'state',
+    },
+    {
+      title: '下单数量',
+      dataIndex: 'createTime',
+    },
+    {
+      title: '应付款',
+      dataIndex: 'createTime',
+    },
+    {
+      title: '实付款',
+      dataIndex: 'createTime',
+    },
+    {
+      title: '付款方式',
+      dataIndex: 'createTime',
+    },
+    {
+      title: '付款时间',
+      dataIndex: 'createTime',
+    },
+    {
+      title: '买家手机号',
+      dataIndex: 'createTime',
+    },
+    {
+      title: '下单途径',
+      dataIndex: 'createTime',
+    },
+    {
+      title: '订单类型',
+      dataIndex: 'createTime',
+    },
+    {
+      title: '订单/售后状态',
+      dataIndex: 'createTime',
+    },
+    {
+      title: '操作',
+      render: (text: any, record: any) => (
+        <Space size="middle">
+          <Button>详情</Button>
+        </Space>
+      ),
+    },
+  ]
+
+  const selectData = [
+    {
+      key: '1',
+      value: '渠道名称',
+    },
+    {
+      key: '2',
+      value: '订单编号',
+    },
+    {
+      key: '3',
+      value: '商品名称',
+    },
+    {
+      key: '4',
+      value: '买家手机号',
+    },
+    {
+      key: '5',
+      value: '始发地',
+    },
   ]
 
   const onFinish = (values: any) => {
@@ -53,65 +163,82 @@ const OrderListPage: React.FC = () => {
           form={form}
         >
           <Row gutter={[5, 0]} style={{ paddingLeft: '40px' }}>
-            <Col span={8}>
-              <Input name="admin" />
-            </Col>
-            <Col span={2} className="table-from-label">
-              角色
-            </Col>
-            <Col span={4}>
-              <Select defaultValue="全部" style={{ width: 120 }} onChange={(value) => setRole(value)}>
-                {/* {roleData?.map((item) => {
+            <Col span={6}>
+              <Select value={selData} style={{ width: 120 }} onChange={(value) => setSelData(value)}>
+                {selectData?.map((item) => {
                   return (
                     <Option value={item.value} key={item.key}>
                       {item.value}
                     </Option>
                   )
-                })} */}
+                })}
               </Select>
+              {selData === '渠道名称' ? (
+                <Select value={selData} style={{ width: 120 }} onChange={(value) => setSelData(value)}>
+                  {selectData?.map((item) => {
+                    return (
+                      <Option value={item.value} key={item.key}>
+                        {item.value}
+                      </Option>
+                    )
+                  })}
+                </Select>
+              ) : (
+                <Input style={{ width: 120 }} />
+              )}
             </Col>
             <Col span={2} className="table-from-label">
-              状态
+              下单时间
             </Col>
             <Col span={4}>
-              <Select defaultValue="全部" style={{ width: 120 }} onChange={(value) => setState(value)}>
-                {/* {stateList.map((item) => {
-                  return (
-                    <Option value={item.value} key={item.key}>
-                      {item.value}
-                    </Option>
-                  )
-                })} */}
-              </Select>
+              <Form.Item>
+                <RangePicker showTime />
+              </Form.Item>
             </Col>
-            <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
+            <Col span={2} className="table-from-label">
+              订单类型
+            </Col>
+            <Col span={2}>
+              <OrderType name="orderType" />
+            </Col>
+            <Col span={2} className="table-from-label">
+              下单途径
+            </Col>
+            <Col span={2}>
+              <OrderRoute name="orderRoute" />
+            </Col>
+          </Row>
+          <Row gutter={[5, 0]} style={{ marginLeft: '-52px' }} justify="start">
+            <Col span={4} className="table-from-label">
+              订单/售后状态
+            </Col>
+            <Col span={2}>
+              <OrderState name="state" />
+            </Col>
+            <Form.Item wrapperCol={{ offset: 4, span: 0 }}>
               <Space>
                 <Button type="primary" htmlType="submit">
                   查询
                 </Button>
-                <Button
-                  htmlType="submit"
-                  // onClick={() => {
-                  //   setRole('全部')
-                  //   setState('全部')
-                  // }}
-                >
-                  重置
-                </Button>
-              </Space>
-            </Form.Item>
-          </Row>
-          <Row style={{ paddingLeft: '40px' }}>
-            <Form.Item>
-              <Space>
-                <Button type="primary" htmlType="button">
-                  添加
-                </Button>
+                <Button htmlType="button">重置</Button>
               </Space>
             </Form.Item>
           </Row>
         </Form>
       </div>
+      <Table
+        rowKey="id"
+        columns={columns}
+        scroll={{ x: 'max-content' }}
+        dataSource={[...data]}
+        pagination={{
+          onChange: setPageIndex,
+          showSizeChanger: true,
+          showQuickJumper: true,
+          pageSize: pageSize,
+          total: total,
+        }}
+      />
     </div>
   )
 }

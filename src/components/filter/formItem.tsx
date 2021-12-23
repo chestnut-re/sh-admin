@@ -50,6 +50,71 @@ export const SelectRegisterChannel: FC<any> = ({ name, ...props }) => {
 }
 
 /**
+ * 选择状态 模版
+ */
+export const SelectState: FC<any> = ({ name, ...props }) => {
+  return (
+    <Form.Item name={name}>
+      <Select allowClear {...props}>
+        <Select.Option value={''}>全部</Select.Option>
+        <Select.Option value={1}>正常</Select.Option>
+        <Select.Option value={2}>禁用</Select.Option>
+      </Select>
+    </Form.Item>
+  )
+}
+
+/**
+ * 订单状态 模版
+ */
+export const OrderState: FC<any> = ({ name, ...props }) => {
+  return (
+    <Form.Item name={name}>
+      <Select allowClear {...props}>
+        <Select.Option value={''}>全部</Select.Option>
+        <Select.Option value={1}>待付款</Select.Option>
+        <Select.Option value={2}>待确认</Select.Option>
+        <Select.Option value={3}>已完成</Select.Option>
+        <Select.Option value={4}>已失效</Select.Option>
+        <Select.Option value={5}>退款成功</Select.Option>
+      </Select>
+    </Form.Item>
+  )
+}
+
+/**
+ * 订单类型 模版
+ */
+export const OrderType: FC<any> = ({ name, ...props }) => {
+  return (
+    <Form.Item name={name}>
+      <Select allowClear {...props}>
+        <Select.Option value={''}>全部</Select.Option>
+        <Select.Option value={1}>直销</Select.Option>
+        <Select.Option value={2}>分销</Select.Option>
+      </Select>
+    </Form.Item>
+  )
+}
+
+/**
+ * 下单途径 模版
+ */
+export const OrderRoute: FC<any> = ({ name, ...props }) => {
+  return (
+    <Form.Item name={name}>
+      <Select allowClear {...props}>
+        <Select.Option value={''}>全部</Select.Option>
+        <Select.Option value={1}>自然获客</Select.Option>
+        <Select.Option value={2}>分享链接</Select.Option>
+        <Select.Option value={3}>分享任务</Select.Option>
+        <Select.Option value={4}>线下扫码</Select.Option>
+      </Select>
+    </Form.Item>
+  )
+}
+
+/**
  * 输入框，模版
  */
 export const InputTemp: FC<any> = ({ name, ...props }) => {
