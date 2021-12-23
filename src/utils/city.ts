@@ -1,6 +1,6 @@
 /*
  * @Description: 城市数据处理
- * @LastEditTime: 2021-12-22 11:27:16
+ * @LastEditTime: 2021-12-23 15:09:22
  */
 
 /**
@@ -26,21 +26,21 @@ export const cityDispose = (city: Array<any>, children: string): any => {
  * @param {string} isId
  * @return {Array}
  */
-export const shellArray = (oldArray: Array<any>, isId: string) => {
+export const shellArray = (oldArray: Array<any>, isId: string, areas = 'areas', adcode = 'adcode') => {
   const newArray: any = []
   const shellArr = (oldArray: Array<any>, id: string): any => {
     if (oldArray.length) {
       oldArray.forEach((item) => {
-        if (item.areas && item.areas.length) {
-          if (item.areas.some((row) => row.adcode == id)) {
+        if (item[areas] && item[areas].length) {
+          if (item[areas].some((row) => row[adcode] == id)) {
             newArray.push(item)
-            shellArr(oldArray, item.adcode)
+            shellArr(oldArray, item[adcode])
             return item
           } else {
-            shellArr(item.areas, id)
+            shellArr(item[areas], id)
           }
         } else {
-          if (item.adcode == isId) {
+          if (item[adcode] == isId) {
             newArray.push(item)
           }
           return
@@ -58,9 +58,11 @@ export const shellArray = (oldArray: Array<any>, isId: string) => {
  * @return {string}
  */
 
-export const analysisName = (oldArray: Array<any>, isId: string): string => {
-  return shellArray(oldArray, isId)
-    .map((res) => res.name)
+export const analysisName = (oldArray: Array<any>, isId: string, areas = 'areas', adcode = 'adcode'): string => {
+  return shellArray(oldArray, isId, areas, adcode)
+    .map((res) => {
+      return res.name
+    })
     .join('-')
 }
 /**
@@ -69,11 +71,39 @@ export const analysisName = (oldArray: Array<any>, isId: string): string => {
  * @param {string} isId
  * @return {Array}
  */
-export const analysisId = (oldArray: Array<any>, isId: string) => {
-  return shellArray(oldArray, isId).map((res) => res.name)
+export const analysisId = (oldArray: Array<any>, isId: string, areas = 'areas', adcode = 'adcode') => {
+  console.log(shellArray(oldArray, isId, areas, adcode))
+  return shellArray(oldArray, isId, areas, adcode).map((res) => res[adcode])
 }
 export const echoData = (oldArray: Array<any>, data: string) => {
   data.split(',').map((res) => {
     return analysisId(oldArray, res)
   })
+}
+/**
+ * @description:  最后一个join string
+ * @param {*} array
+ * @return {*}
+ */
+export const lastOneJoin = (array) => {
+  return array
+    .map((item) => {
+      return item[item.length - 1]
+    })
+    .join(',')
+}
+
+export const arrayNameJoin = (array, area, areas = 'areas', adcode = 'adcode') => {
+  return array
+    .map((item) => {
+      return analysisName(area, item[item.length - 1], areas, adcode)
+    })
+    .join(',')
+}
+export const regionsCodeArray = (array, area, areas = 'areas', adcode = 'adcode') => {
+console.log(array,'xxx')
+  return array.split(',')
+    .map((item) => {
+      return analysisId(area, item, areas, adcode)
+    })
 }

@@ -1,13 +1,13 @@
 /*
  * @Description: 渠道权限
- * @LastEditTime: 2021-12-21 14:21:32
+ * @LastEditTime: 2021-12-23 11:22:14
  */
 import React, { useState, useEffect } from 'react'
 import { Menu, Col, Row, Checkbox, Radio, Input, Tooltip } from 'antd'
 
 import { InfoCircleOutlined } from '@ant-design/icons'
 
-import ChannelTree from '../components/channelTree'
+import ChannelTree from '../components/ChannelListTree'
 import './index.less'
 
 const ChannelListPage: React.FC = () => {

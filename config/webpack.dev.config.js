@@ -1,3 +1,4 @@
+
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path')
 const { merge } = require('webpack-merge')
@@ -23,7 +24,7 @@ const webpackConfigDev = {
     hot: true,
     historyApiFallback: true, // router history 模式下需要
     proxy: {
-      '/api': { target: 'https://devapi.mountainseas.cn', secure: false, changeOrigin: true },
+      '/api': { target: 'http://devapi.mountainseas.cn/', secure: false, changeOrigin: true },
       // '/api/users': { target: 'http://192.168.10.60:19001', secure: false, changeOrigin: true },
       // '/api': { target: 'http://192.168.10.60:39210', secure: false, changeOrigin: true },
     },
