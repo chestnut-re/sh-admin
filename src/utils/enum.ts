@@ -1,6 +1,6 @@
 /*
  * @Description: 字典
- * @LastEditTime: 2021-12-23 11:55:46
+ * @LastEditTime: 2021-12-23 19:37:10
  */
 
 export const status = {
@@ -21,4 +21,12 @@ export const regCode = {
   3: '商品分享',
   4: 'app自然流量',
   5: '小程序自然流量',
+}
+/**
+ * @description:  按钮权限
+ */
+export const BtnPermission = {
+  1: 'edit',
+  2: 'add',
+  3: 'del',
 }

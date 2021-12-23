@@ -1,6 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道列表
+<<<<<<< HEAD
  * @LastEditTime: 2021-12-23 17:17:28
+=======
+ * @LastEditTime: 2021-12-23 16:05:26
+>>>>>>> f387a9e87dd3c258f7a1bb61587874396fbef687
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
@@ -10,7 +15,6 @@ import ChannelListTree from '../components/ChannelListTree'
 import ChannelService from '@/service/ChannelService'
 import { cityDispose } from '@/utils/city'
 import { enumState } from '@/utils/enum'
-
 import './index.less'
 const ChannelPage: React.FC = () => {
   const [form] = Form.useForm()
@@ -30,6 +34,10 @@ const ChannelPage: React.FC = () => {
       state: '',
     })
   }, [])
+  useEffect(() => {
+    loadData()
+  }, [pageIndex])
+
   const getStructure = () => {
     ChannelService.getStructure().then((res) => {
       setStructure(cityDispose([res?.data], 'children'))
@@ -40,13 +48,18 @@ const ChannelPage: React.FC = () => {
       const postForm = { pages: pageIndex, size: pageSize, ...query, id: channelId }
       ChannelService.list(postForm).then((res) => {
         setData(res.data?.records ?? [])
+        setTotal(res.data?.total)
       })
     })
   }
   const columns = [
     {
       title: 'id',
+<<<<<<< HEAD
       render: (_text, _record, index) => `${index + 1}`,
+=======
+      render: (index: number) => `${index + 1}`,
+>>>>>>> f387a9e87dd3c258f7a1bb61587874396fbef687
     },
     {
       title: '渠道编号',
@@ -75,7 +88,11 @@ const ChannelPage: React.FC = () => {
     {
       title: '状态',
       dataIndex: 'state',
+<<<<<<< HEAD
       render: (_text, record) => `${enumState[record.state]} `,
+=======
+      render: (text, record) => `${enumState[record.state]} `,
+>>>>>>> f387a9e87dd3c258f7a1bb61587874396fbef687
     },
 
     {
@@ -184,7 +201,7 @@ const ChannelPage: React.FC = () => {
           </div>
           <Table
             rowKey="id"
-            childrenColumnName="childrens"
+            childrenColumnName="childrenArray"
             columns={columns}
             scroll={{ x: 'max-content' }}
             dataSource={[...data]}
@@ -192,7 +209,7 @@ const ChannelPage: React.FC = () => {
               onChange: setPageIndex,
               showSizeChanger: true,
               showQuickJumper: true,
-              current: pageSize,
+              current: pageIndex,
               pageSize: pageSize,
               total: total,
             }}

@@ -70,7 +70,6 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
         postData.regionsName = arrayNameJoin(formData.region, area)
         delete postData.structureId
         if (mode === 'add') {
-          // create
           ChannelService.add(postData).then((res) => {
             if (res.code == 200) {
               onSuccess()
@@ -97,7 +96,7 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
     form.resetFields()
     onClose()
   }
-  const casOnChange = (data) => {
+  const casOnChange = (data: any[]) => {
     data.map((items, index, arr) => {
       if (items.length < 2) {
         arr[index].push(area.find((res) => res.adcode == items[0]).areas[0].adcode)
