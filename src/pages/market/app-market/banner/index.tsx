@@ -16,7 +16,7 @@ const BannerListPage: React.FC = () => {
   dayjs.extend(duration)
   const [form] = Form.useForm()
   const [data, setData] = useState([])
-  const [pageIndex, setPageIndex] = useState(0)
+  const [pageIndex, setPageIndex] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [total, setTotal] = useState()
 
