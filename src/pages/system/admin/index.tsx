@@ -3,6 +3,7 @@ import { Button, Col, Row, Form, Table, Pagination, Space, Input, Select } from 
 import './index.less'
 import CreateAdminDialog, { DialogMode } from './components/createAdministrators'
 import { AdminService } from '@/service/AdminService'
+import { getRoles } from '@/service/role'
 
 /**
  * 管理员账号
@@ -13,6 +14,7 @@ const AdminListPage: React.FC = () => {
   const [role, setRole] = useState('全部')
   const [state, setState] = useState('全部')
   const [data, setData] = useState([])
+  const [roleData, setRoleData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [total, setTotal] = useState()
@@ -22,6 +24,7 @@ const AdminListPage: React.FC = () => {
 
   useEffect(() => {
     loadData(pageIndex)
+    loadRoleData()
   }, [pageIndex])
 
   const loadData = (pageIndex) => {
@@ -29,6 +32,12 @@ const AdminListPage: React.FC = () => {
       console.log(res)
       setData(res.data.records)
       setTotal(res.data.total)
+    })
+  }
+
+  const loadRoleData = () => {
+    getRoles({}).then((res) => {
+      console.log(res)
     })
   }
 
@@ -72,41 +81,6 @@ const AdminListPage: React.FC = () => {
           <Button>删除</Button>
         </Space>
       ),
-    },
-  ]
-
-  const roleList = [
-    {
-      key: 1,
-      value: '全部',
-    },
-    {
-      key: 2,
-      value: '超管',
-    },
-    {
-      key: 3,
-      value: '运营管家',
-    },
-    {
-      key: 4,
-      value: '运营商品小二',
-    },
-    {
-      key: 5,
-      value: '运营营销小二',
-    },
-    {
-      key: 6,
-      value: '运营渠道小二',
-    },
-    {
-      key: 7,
-      value: '运营财务小二',
-    },
-    {
-      key: 8,
-      value: '分中心',
     },
   ]
   const stateList = [
@@ -183,7 +157,7 @@ const AdminListPage: React.FC = () => {
             </Col>
             <Col span={4}>
               <Select defaultValue="全部" style={{ width: 120 }} onChange={(value) => setRole(value)}>
-                {roleList.map((item) => {
+                {roleData?.map((item) => {
                   return (
                     <Option value={item.value} key={item.key}>
                       {item.value}

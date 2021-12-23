@@ -121,13 +121,13 @@ export default [
             },
             {
               name: '财务中心',
-              id: 3,
+              id: 4,
               componentPath: '/finance',
               path: '/finance',
               children: [
                 {
                   name: '销售业绩',
-                  id: 31,
+                  id: 41,
                   componentPath: '/finance/sales-performance',
                   path: '/finance/sales-performance',
                 },
@@ -135,13 +135,27 @@ export default [
             },
             {
               name: '用户中心',
-              id: 4,
+              id: 5,
               componentPath: '/user',
               path: '/user',
             },
             {
+              name: '订单中心',
+              id: 7,
+              componentPath: '/order',
+              path: '/order',
+              children: [
+                {
+                  name: '订单列表',
+                  id: 71,
+                  componentPath: '/order/order-list',
+                  path: '/order/order-list',
+                },
+              ],
+            },
+            {
               name: '行程中心',
-              id: 5,
+              id: 8,
               componentPath: '/route',
               path: '/route',
             },
