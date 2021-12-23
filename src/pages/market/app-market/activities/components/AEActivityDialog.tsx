@@ -3,6 +3,7 @@ import { Form, Input, Modal, Select, DatePicker } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
 // import dayjsFormat from 'dayjsFormat'
 import { dayjsFormat } from '@/utils/dayFormate'
+import UploadImage from '@/components/formItem/UploadImage'
 export type DialogMode = 'add' | 'edit'
 interface Props {
   data: any
@@ -68,6 +69,7 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
     form
       .validateFields()
       .then((formData) => {
+        console.log(formData)
         const postData = {
           ...formData,
           startDate: formData.activityDate[0].format('YYYY-MM-DD HH:mm:ss'),
@@ -125,9 +127,15 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
         autoComplete="off"
         form={form}
       >
-        <Form.Item label="活动图片" name="activityImg" rules={[{ required: false, message: '请上传活动图片' }]}>
-          <Input />
+        <Form.Item
+          label="活动图片"
+          name="activityImg"
+          rules={[{ required: false, message: '请上传图片' }]}
+          // getValueFromEvent={normFile}
+        >
+          <UploadImage />
         </Form.Item>
+
         <Form.Item label="标题" name="activityTitle" rules={[{ required: false, message: '请输入活动标题' }]}>
           <Input />
         </Form.Item>

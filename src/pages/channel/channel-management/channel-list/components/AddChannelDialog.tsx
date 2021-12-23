@@ -1,6 +1,6 @@
 /*
  * @Description: 添加渠道
- * @LastEditTime: 2021-12-21 16:07:01
+ * @LastEditTime: 2021-12-21 18:57:38
  */
 
 import { createUser, editUser } from '@/service/user'
@@ -30,8 +30,10 @@ const AddUserDialog: FC<Props> = ({ data, mode, show = false, cityData, onSucces
 
   useEffect(() => {
     // cityDispose()
+  if(show){
     setSelectedRoles(data?.roles ?? [])
     console.log(cityData, '--111-')
+  }
   }, [cityData])
 
   useEffect(() => {
@@ -112,10 +114,10 @@ const AddUserDialog: FC<Props> = ({ data, mode, show = false, cityData, onSucces
         autoComplete="off"
         form={form}
       >
-        <Form.Item label="分中心名称" name="name" rules={[{ required: true, message: '请输入账号' }]}>
+        <Form.Item label="分中心名称" name="name" rules={[{ required: true, message: '请输入' }]}>
           <Input />
         </Form.Item>
-        <Form.Item label="责任区域" name="region" rules={[{ required: true, message: '请输入姓名' }]}>
+        <Form.Item label="责任区域" name="region" rules={[{ required: true, message: '请输入' }]}>
           {/* <Input /> */}
           <Cascader
             options={cityData}
@@ -126,16 +128,16 @@ const AddUserDialog: FC<Props> = ({ data, mode, show = false, cityData, onSucces
             fieldNames={{ label: 'name', value: 'adcode', children: 'areas' }}
           />
         </Form.Item>
-        <Form.Item label="责任人姓名" name="person" rules={[{ required: true, message: '请输入密码' }]}>
+        <Form.Item label="责任人姓名" name="person" rules={[{ required: true, message: '请输入' }]}>
           <Input />
         </Form.Item>
-        <Form.Item label="手机号" name="mobile" rules={[{ required: true, message: '请输入密码' }]}>
+        <Form.Item label="手机号" name="mobile" rules={[{ required: true, message: '请输入' }]}>
           <Input />
         </Form.Item>
-        <Form.Item label="归属渠道" name="parentId" rules={[{ required: true, message: '请输入密码' }]}>
+        <Form.Item label="归属渠道" name="parentId" rules={[{ required: true, message: '请输入' }]}>
           <Input />
         </Form.Item>
-        <Form.Item label="客服热线" name="password" rules={[{ required: true, message: '请输入密码' }]}>
+        <Form.Item label="客服热线" name="password" rules={[{ required: true, message: '请输入' }]}>
           <Input />
         </Form.Item>
 

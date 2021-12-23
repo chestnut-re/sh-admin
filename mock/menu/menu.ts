@@ -124,6 +124,14 @@ export default [
               id: 3,
               componentPath: '/finance',
               path: '/finance',
+              children: [
+                {
+                  name: '销售业绩',
+                  id: 31,
+                  componentPath: '/finance/sales-performance',
+                  path: '/finance/sales-performance',
+                },
+              ],
             },
             {
               name: '用户中心',
@@ -161,7 +169,7 @@ export default [
                   componentPath: '/basic/administrator',
                   path: '/basic/administrator',
                 },
-              ]
+              ],
             },
             {
               name: '系统中心',
@@ -195,7 +203,7 @@ export default [
                     },
                   ],
                 },
-              
+
                 {
                   name: '版本管理',
                   id: 63,
@@ -241,6 +249,18 @@ export default [
                       ],
                     },
                   ],
+                },
+                {
+                  name: '管理员账号',
+                  id: 64,
+                  componentPath: '/system/admin',
+                  path: '/system/admin',
+                },
+                {
+                  name: '支付配置',
+                  id: 65,
+                  componentPath: '/system/payment-configuration',
+                  path: '/system/payment-configuration',
                 },
               ],
             },
