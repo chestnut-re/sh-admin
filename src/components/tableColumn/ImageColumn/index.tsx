@@ -1,4 +1,5 @@
 import React from 'react'
+import { deprecate } from 'util'
 import './index.less'
 
 interface Props {
@@ -7,8 +8,9 @@ interface Props {
 
 /**
  * 列表图片
+ * Table img
  */
-const ThumbnailPage: React.FC<Props> = ({ url }) => {
+const ImageColumn: React.FC<Props> = ({ url }) => {
   return <img src={url} alt="" />
 }
-export default ThumbnailPage
+export default ImageColumn

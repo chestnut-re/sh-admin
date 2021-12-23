@@ -1,9 +1,13 @@
 import { useStore } from '@/store/context'
 import { observer } from 'mobx-react-lite'
-import React, { useState } from 'react'
-import { Button, Col, Form, Row, Space, Table, Divider } from 'antd'
+import React, { useState, useEffect } from 'react'
+import { Button, Col, Form, Row, Space, Table, Divider, Tabs, Layout } from 'antd'
 import { InputTemp, SelectTemp, LowAndHighTemp } from '@/components/filter/formItem'
 import './index.less'
+const { Content } = Layout;
+import { releaseRecord } from '@/service/ProductionService'
+const { TabPane } = Tabs;
+
 
 /**
  * 运营中心-商品列表
@@ -79,6 +83,12 @@ const ProductionListPage: React.FC = observer(() => {
     },
   ]
 
+  useEffect(() => {
+    releaseRecord({ current: 1, size: 10, searchDim: '12' }).then(res => {
+      console.log(res)
+    })
+  }, [])
+
   const onFinish = (values: any) => {
     console.log('Success:', values)
   }
@@ -91,10 +101,28 @@ const ProductionListPage: React.FC = observer(() => {
     console.log(pageNum)
   }
 
+
   return (
     <div className="ProductionList__root">
-      <h1 className="title">商品库</h1>
-      <Divider />
+      <Layout>
+        <Content style={{ margin: '24px 16px 0' }}>
+          <div className="layout-bg">
+            <Tabs tabBarStyle={{ backgroundColor: '#f4f4f4' }} size='large' defaultActiveKey="1">
+              <TabPane tab="商品库" key="1">
+                商品库
+              </TabPane>
+              <TabPane tab="发布记录" key="2">
+                发布记录
+              </TabPane>
+              <TabPane tab="商品草稿箱" key="3">
+                商品草稿箱
+              </TabPane>
+            </Tabs>
+          </div>
+        </Content>
+      </Layout>
+      {/* <h1 className="title">商品库</h1> */}
+      {/* <Divider />
       <div>
         <Form
           name="basic"
@@ -148,7 +176,7 @@ const ProductionListPage: React.FC = observer(() => {
         scroll={{ x: 'max-content' }}
         dataSource={[...data]}
         pagination={{ onChange: onChange }}
-      />
+      /> */}
     </div>
   )
 })

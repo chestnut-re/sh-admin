@@ -27,21 +27,13 @@ export class BannerService {
    * 新增
    */
   static newBanner(data): Promise<any> {
-    return axios.post(`/api/operation/banner/save`, {
-      params: {
-        data,
-      },
-    })
+    return axios.post(`/api/operation/banner/save`, data)
   }
 
   /**
    * 编辑
    */
   static edit(data): Promise<any> {
-    return axios.put(`/api/operation/banner/update`, {
-      params: {
-        data,
-      },
-    })
+    return axios.put(`/api/operation/banner/update`, data)
   }
 }

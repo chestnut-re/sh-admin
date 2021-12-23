@@ -7,13 +7,8 @@ import axios from '@/request'
 /**
  * 获取角色
  */
-export function getRoles(pageIndex = 0, pageSize = 20): Promise<any> {
-  return axios.get('/api/role/list', {
-    params: {
-      pageIndex,
-      pageSize,
-    },
-  })
+export function getRoles(data: any): Promise<any> {
+  return axios.get('/api/platform/role/list', data)
 }
 
 /**

@@ -109,31 +109,53 @@ export default [
                       componentPath: '/channel/channel-management/commission-scheme',
                       path: '/channel/channel-management/commission-scheme',
                     },
-                    {
-                      name: '人员管理',
-                      id: 314,
-                      componentPath: '/channel/channel-management/personnel',
-                      path: '/channel/channel-management/personnel',
-                    },
                   ],
+                },
+                {
+                  name: '人员管理',
+                  id: 314,
+                  componentPath: '/channel/personnel',
+                  path: '/channel/personnel',
                 },
               ],
             },
             {
               name: '财务中心',
-              id: 3,
+              id: 4,
               componentPath: '/finance',
               path: '/finance',
+              children: [
+                {
+                  name: '销售业绩',
+                  id: 41,
+                  componentPath: '/finance/sales-performance',
+                  path: '/finance/sales-performance',
+                },
+              ],
             },
             {
               name: '用户中心',
-              id: 4,
+              id: 5,
               componentPath: '/user',
               path: '/user',
             },
             {
+              name: '订单中心',
+              id: 7,
+              componentPath: '/order',
+              path: '/order',
+              children: [
+                {
+                  name: '订单列表',
+                  id: 71,
+                  componentPath: '/order/order-list',
+                  path: '/order/order-list',
+                },
+              ],
+            },
+            {
               name: '行程中心',
-              id: 5,
+              id: 8,
               componentPath: '/route',
               path: '/route',
             },
@@ -161,7 +183,7 @@ export default [
                   componentPath: '/basic/administrator',
                   path: '/basic/administrator',
                 },
-              ]
+              ],
             },
             {
               name: '系统中心',
@@ -195,7 +217,7 @@ export default [
                     },
                   ],
                 },
-              
+
                 {
                   name: '版本管理',
                   id: 63,

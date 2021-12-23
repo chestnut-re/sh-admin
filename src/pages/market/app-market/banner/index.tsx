@@ -4,10 +4,10 @@ import './index.less'
 import AEBannerDialog, { DialogMode } from './components/AEBannerDialog'
 import { BannerService } from '@/service/BannerService'
 import { HttpCode } from '@/constants/HttpCode'
-import ThumbnailPage from '@/components/thumbnail'
 import dayjs from 'dayjs'
 import duration from 'dayjs/plugin/duration'
-// import { format } from 'path'
+import ImageColumn from '@/components/tableColumn/ImageColumn'
+import RemainTime from '@/components/tableColumn/RemainTime'
 
 /**
  * App营销-Banner管理-List
@@ -16,7 +16,7 @@ const BannerListPage: React.FC = () => {
   dayjs.extend(duration)
   const [form] = Form.useForm()
   const [data, setData] = useState([])
-  const [pageIndex, setPageIndex] = useState(0)
+  const [pageIndex, setPageIndex] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [total, setTotal] = useState()
 
@@ -44,7 +44,7 @@ const BannerListPage: React.FC = () => {
     {
       title: '主题图',
       dataIndex: 'bannerImg',
-      render: (text: any, record: any) => <ThumbnailPage url={record.bannerImg} />,
+      render: (text: any, record: any) => <ImageColumn url={record.bannerImg} />,
     },
     {
       title: '主题名称',
@@ -79,21 +79,7 @@ const BannerListPage: React.FC = () => {
       title: '剩余展示时长',
       dataIndex: 'startDate',
       render: (text: any, record: any) => {
-        if (record.endDate) {
-          const now = dayjs().unix()
-          const end = dayjs(record.endDate.split('+')[0]).unix() || null
-          if (end) {
-            if (end < now) {
-              return 0
-            } else {
-              return calculateDiffTime(end, now)
-            }
-          } else {
-            return null
-          }
-        } else {
-          return null
-        }
+        return <RemainTime endDate={record.endDate} />
       },
     },
     {
@@ -130,19 +116,6 @@ const BannerListPage: React.FC = () => {
     setSelectedData(record)
     setShowDialog(true)
   }
-  //时分秒换算
-  const calculateDiffTime = (start_time: any, endTime: any) => {
-    const timeDiff: any = endTime - start_time
-    let day: any = parseInt(timeDiff / 86400)
-    let hour: any = parseInt((timeDiff % 86400) / 3600)
-    let minute: any = parseInt(((timeDiff % 86400) % 3600) / 60)
-    let second: any = parseInt((((timeDiff % 86400) % 3600) % 60) % 60)
-    day = day ? day + '天' : ''
-    hour = hour ? hour + '时' : ''
-    minute = minute ? minute + '分' : ''
-    second = second ? second + '秒' : ''
-    return day + hour + minute + second
-  }
 
   const onFinish = (values: any) => {
     setShowDialog(true)
@@ -162,6 +135,11 @@ const BannerListPage: React.FC = () => {
   const _onDialogClose = () => {
     setSelectedData(null)
     setShowDialog(false)
+  }
+
+  const onPaginationChange = (page: number, pageSize: number) => {
+    setPageIndex(page)
+    setPageSize(pageSize)
   }
 
   return (
@@ -191,7 +169,7 @@ const BannerListPage: React.FC = () => {
         scroll={{ x: 'max-content' }}
         dataSource={[...data]}
         pagination={{
-          onChange: setPageIndex,
+          onChange: onPaginationChange,
           showSizeChanger: true,
           showQuickJumper: true,
           pageSize: pageSize,
