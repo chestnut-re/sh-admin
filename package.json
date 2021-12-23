@@ -61,7 +61,7 @@
     "webpack": "^5.31.0",
     "webpack-bundle-analyzer": "^4.4.1",
     "webpack-cli": "^4.6.0",
-    "webpack-dev-server": "^3.11.2",
+    "webpack-dev-server": "^3.11.3",
     "webpack-merge": "^5.7.3"
   },
   "dependencies": {
@@ -73,6 +73,7 @@
     "dayjs": "^1.10.7",
     "js-cookie": "^3.0.1",
     "json-bigint": "^1.0.0",
+    "lodash": "^4.17.21",
     "mobx": "^6.3.5",
     "mobx-react-lite": "^3.2.0",
     "moment": "^2.29.1",
