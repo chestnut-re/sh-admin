@@ -1,6 +1,6 @@
 /*
  * @Description: 城市数据处理
- * @LastEditTime: 2021-12-23 16:13:01
+ * @LastEditTime: 2021-12-24 14:56:47
  */
 
 
@@ -63,7 +63,7 @@ export const shellArray = (oldArray: Array<any>, isId: string, areas = 'areas', 
 export const analysisName = (oldArray: Array<any>, isId: string, areas = 'areas', adcode = 'adcode'): string => {
   return shellArray(oldArray, isId, areas, adcode)
     .map((res: { name: any }) => {
-      return res.name
+      return res?.name
     })
     .join('-')
 }
@@ -123,3 +123,12 @@ export const regionsCodeArray = (array: string, area: any[], areas = 'areas', ad
       return analysisId(area, item, areas, adcode)
     })
 }
+
+/**
+ * @description:  根据所有id string 获取对应的tree数据
+ * @param {*}
+ * @return {*}
+ */
+//  export const getChild =(arr:  any[],stringId): any=>{
+ 
+// }

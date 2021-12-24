@@ -1,6 +1,6 @@
 /*
  * @Description:渠道管理
- * @LastEditTime: 2021-12-23 15:16:43
+ * @LastEditTime: 2021-12-24 11:50:56
  */
 import axios from '@/request'
 
@@ -23,41 +23,15 @@ export default class ChannelService {
     return axios.get(`/api/market/channel/structure`)
   }
   static edit(data): Promise<any> {
-    return axios.put('/api/market/channel/update',data)
+    return axios.put('/api/market/channel/update', data)
   }
-
-  // /**
-  //  * @description: 渠道详情奖励信息
-  //  * @param {*} param1
-  //  * @return {*}
-  //  */
-  // static getAward({ id }): Promise<any> {
-  //   return axios.get(`/api/market/channel/awardDetail/${id}`)
-  // }
-  // /**
-  //  * @description: 渠道详情kpi信息
-  //  * @param {*} param1
-  //  * @return {*}
-  //  */
-  // static getKip({ id }): Promise<any> {
-  //   return axios.get(`/api/market/channel/kpiDetail/${id}`)
-  // }
-  // /**
-  //  * @description: 渠道详情商品列表
-  //  * @param {*} param1
-  //  * @return {*}
-  //  */
-  // static getGoods({ id }): Promise<any> {
-  //   return axios.get(`/api/market/channel/goodsDetail/${id}`)
-  // }
-  // static edit(data): Promise<any> {
-  //   return axios.put(`/api/market/channel/update`, {
-  //     params: {
-  //       data,
-  //     },
-  //   })
-  // }
   static getProvinceCity(): Promise<any> {
     return axios.get(`/api/area/provinceCity `)
+  }
+  // 权限相关
+  static authority = {
+    // edit(data): Promise<any> {
+    //   return axios.put('/api/market/channel/update', data)
+    // },
   }
 }

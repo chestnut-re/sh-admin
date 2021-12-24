@@ -1,10 +1,10 @@
 /*
  * @Description: 用户详情
- * @LastEditTime: 2021-12-21 17:02:17
+ * @LastEditTime: 2021-12-24 13:37:22
  */
 
 import { usersAddUser } from '@/service/user'
-import {status,regCode} from '@/utils/enum'
+import { status, regCode } from '@/utils/enum'
 import { Form, Input, Modal, Select, Button, Row, Col } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
 import { HttpCode } from '@/constants/HttpCode'
@@ -78,7 +78,12 @@ const AEBannerDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClos
       getContainer={false}
       visible={show}
       onOk={_handleUpdate}
-      onCancel={_formClose}
+      footer={[
+        <Button key="ok"  type="primary"  onClick={_handleUpdate}>
+          确定
+        </Button>,
+      ]}
+      // onCancel={_formClose}
     >
       <Form
         name="basic"

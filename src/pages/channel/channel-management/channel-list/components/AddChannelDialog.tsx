@@ -1,11 +1,11 @@
 /*
  * @Description: 添加渠道
- * @LastEditTime: 2021-12-24 10:52:27
+ * @LastEditTime: 2021-12-24 14:58:59
  */
 
-import { Form, Input, Modal, Cascader } from 'antd'
+import { Form, Input, Modal, Cascader, Switch,message } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
-import { cityDispose, analysisName, lastOneJoin, arrayNameJoin, regionsCodeArray } from '@/utils/city'
+import { cityDispose, analysisName, lastOneJoin, arrayNameJoin, regionsCodeArray } from '@/utils/tree'
 import ChannelService from '@/service/ChannelService'
 export type DialogMode = 'add' | 'edit'
 interface Props {
@@ -22,6 +22,7 @@ interface Props {
 const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSuccess, onClose }) => {
   const [form] = Form.useForm()
   const [area, setArea] = useState<Array<any>>([])
+  const [level, setLevel] = useState(1)
   const [nameDefault, setNameDefault] = useState('')
   useEffect(() => {
     if (show) {
@@ -38,15 +39,24 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
       ChannelService.get(dataId).then((res) => {
         const data = res.data
         setNameDefault(analysisName(structure, data?.id, 'children', 'id'))
+        setLevel(data?.level)
         form.setFieldsValue({
+          level: data?.level,
           structureId: data?.id,
           name: data?.name,
           person: data?.person,
-          region: data?.regions ? regionsCodeArray(data?.regions, propArea) : null,
+          regions: data?.regions ? regionsCodeArray(data?.regions, propArea) : null,
           regionsName: data?.regionsName,
           phoneNumber: data?.phoneNumber,
           hotLine: data?.hotLine,
+          state: data?.state == 1 ? true : false,
+          isOpenAccount: data?.isOpenAccount == 1 ? true : false,
         })
+      })
+    } else {
+      form.setFieldsValue({
+        state: true,
+        isOpenAccount: true,
       })
     }
   }
@@ -67,15 +77,22 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
       .then((formData) => {
         console.log(formData, '999999')
         const postData = { ...formData }
-        postData.region = lastOneJoin(formData.region)
-        postData.regionsName = arrayNameJoin(formData.region, area)
-
+        postData.regions = lastOneJoin(formData.regions)
+        postData.regionsName = arrayNameJoin(formData.regions, area)
+        postData.state = formData.state ? 1 : 0
+        postData.isOpenAccount = formData.isOpenAccount ? 1 : 0
         if (mode === 'add') {
           postData.id = formData.structureId[formData.structureId.length - 1]
           delete postData.structureId
           ChannelService.add(postData).then((res) => {
             if (res.code == 200) {
-              onSuccess()
+              message.success('渠道创建成功')
+              setTimeout(() => {
+                onSuccess()
+              }, 500);
+            }else{
+              message.error('渠道创建失败，请重试')
+              
             }
           })
         } else {
@@ -86,7 +103,10 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
           delete putData.structureId
           ChannelService.edit(putData).then((res) => {
             if (res.code == 200) {
-              onSuccess()
+              message.success('渠道编辑成功')
+              setTimeout(() => {
+                onSuccess()
+              }, 500);
             }
           })
         }
@@ -107,9 +127,12 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
       }
     })
   }
-  const changeStructure = (e) => {
+  const changeStructure = (e, data) => {
+    console.log(data, '---')
+    setLevel(data[data.length - 1]?.level)
     form.setFieldsValue({
       id: e[e.length - 1],
+      level: data[data.length - 1]?.level,
     })
   }
 
@@ -129,10 +152,22 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
         autoComplete="off"
         form={form}
       >
+        <Form.Item label="归属渠道" name="structureId" rules={[{ required: true, message: '请输入' }]}>
+          {mode == 'add' ? (
+            <Cascader
+              options={structure}
+              changeOnSelect
+              fieldNames={{ label: 'name', value: 'id', children: 'children' }}
+              onChange={changeStructure}
+            />
+          ) : (
+            <div>{nameDefault}</div>
+          )}
+        </Form.Item>
         <Form.Item label="分中心名称" name="name" rules={[{ required: true, message: '请输入' }]}>
           <Input />
         </Form.Item>
-        <Form.Item label="责任区域" name="region" rules={[{ required: true, message: '请输入' }]}>
+        <Form.Item label="责任区域" name="regions" rules={[{ required: true, message: '请输入' }]}>
           <Cascader
             options={area}
             onChange={casOnChange}
@@ -146,19 +181,28 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
         <Form.Item label="手机号" name="phoneNumber" rules={[{ required: true, message: '请输入' }]}>
           <Input />
         </Form.Item>
-        <Form.Item label="归属渠道" name="structureId" rules={[{ required: true, message: '请输入' }]}>
-          {mode == 'add' ? (
-            <Cascader
-              options={structure}
-              changeOnSelect
-              fieldNames={{ label: 'name', value: 'id', children: 'children' }}
-              onChange={changeStructure}
-            />
-          ) : (
-            <div>{nameDefault}</div>
-          )}
+        <Form.Item label="渠道账户" name="isOpenAccount" style={{ display: level == 1 ? 'flex' : 'none' }}>
+          <Switch defaultChecked={!!data?.isOpenAccount} />
         </Form.Item>
-        <Form.Item label="客服热线" name="password" rules={[{ required: true, message: '请输入' }]}>
+        <Form.Item
+          label="客服热线"
+          name="hotLine"
+          rules={[{ required: level == 1, message: '请输入' }]}
+          style={{ display: level == 1 ? 'flex' : 'none' }}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item label="是否开启" name="state">
+          <Switch defaultChecked={!!data?.state} />
+        </Form.Item>
+
+        <Form.Item
+          label="level"
+          name="level"
+          rules={[{ required: true, message: '请输入' }]}
+          style={{ visibility: 'hidden', height: 0 }}
+        >
           <Input />
         </Form.Item>
       </Form>

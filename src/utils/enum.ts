@@ -1,6 +1,6 @@
 /*
  * @Description: 字典
- * @LastEditTime: 2021-12-23 19:50:29
+ * @LastEditTime: 2021-12-24 14:34:06
  */
 
 export const status = {
@@ -11,8 +11,8 @@ export const status = {
 
 export const enumState = {
   '': '全部',
-  0: '正常',
-  1: '关闭',
+  0: '关闭',
+  1: '开启',
 }
 
 export const regCode = {
