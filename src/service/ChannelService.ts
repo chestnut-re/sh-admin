@@ -1,6 +1,6 @@
 /*
  * @Description:渠道管理
- * @LastEditTime: 2021-12-24 11:50:56
+ * @LastEditTime: 2021-12-24 16:28:05
  */
 import axios from '@/request'
 
@@ -28,6 +28,7 @@ export default class ChannelService {
   static getProvinceCity(): Promise<any> {
     return axios.get(`/api/area/provinceCity `)
   }
+
   // 权限相关
   static authority = {
     // edit(data): Promise<any> {
