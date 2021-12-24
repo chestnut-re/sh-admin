@@ -1,6 +1,6 @@
 /*
  * @Description: 添加渠道
- * @LastEditTime: 2021-12-24 15:27:25
+ * @LastEditTime: 2021-12-24 15:59:41
  */
 
 import { Form, Input, Modal, Cascader, Switch,message } from 'antd'
@@ -38,8 +38,8 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
     if (!dataId === false) {
       ChannelService.get(dataId).then((res) => {
         const data = res.data
-        setNameDefault(analysisName(structure, data?.pid, 'children', 'id'))
-        console.log(analysisName(structure, data?.pid, 'children', 'id'))
+        setNameDefault(analysisName(structure, data?.pid, 'children', 'id','pid'))
+        console.log(analysisName(structure, data?.pid, 'children', 'id','pid'))
         setLevel(data?.level)
         form.setFieldsValue({
           level: data?.level,

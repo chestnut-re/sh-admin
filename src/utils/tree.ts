@@ -1,6 +1,6 @@
 /*
  * @Description: 城市数据处理
- * @LastEditTime: 2021-12-24 15:48:01
+ * @LastEditTime: 2021-12-24 16:07:37
  */
 
 /**
@@ -27,16 +27,21 @@ export const cityDispose = (city: Array<any>, children: string): any => {
  * @return {Array}
  */
 
-export const shellArray = (arr, id, areas = 'areas', adcode = 'adcode',pid='pid') => {
-  let temp = []
+export const shellArray = (arr, id, areas = 'areas', adcode = 'adcode', pid = 'adcode') => {
+  // eslint-disable-next-line prefer-const
+  let temp: any[]
+  // eslint-disable-next-line prefer-const
+  temp = []
   const callback = function (nowArr, id) {
     for (let i = 0; i < nowArr.length; i++) {
-      let item = nowArr[i]
+      const item = nowArr[i]
+
       if (item[adcode] === id) {
         temp.push(item)
         callback(arr, item[pid])
         break
       } else {
+        // item.pid = id
         if (item[areas]) {
           callback(item[areas], id)
         }
@@ -44,9 +49,9 @@ export const shellArray = (arr, id, areas = 'areas', adcode = 'adcode',pid='pid'
     }
   }
   callback(arr, id)
+
   return temp //最后返回
 }
-
 
 /**
  * @description:  获取城市名字 列表展示 省-市
@@ -55,8 +60,14 @@ export const shellArray = (arr, id, areas = 'areas', adcode = 'adcode',pid='pid'
  * @return {string}
  */
 
-export const analysisName = (oldArray: Array<any>, isId: string, areas = 'areas', adcode = 'adcode'): string => {
-  return shellArray(oldArray, isId, areas, adcode)
+export const analysisName = (
+  oldArray: Array<any>,
+  isId: string,
+  areas = 'areas',
+  adcode = 'adcode',
+  pid = 'adcode'
+): string => {
+  return shellArray(oldArray, isId, areas, adcode, pid)
     .map((res: { name: any }) => {
       return res?.name
     })
