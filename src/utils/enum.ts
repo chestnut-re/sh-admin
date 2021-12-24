@@ -1,6 +1,6 @@
 /*
  * @Description: 字典
- * @LastEditTime: 2021-12-23 19:37:10
+ * @LastEditTime: 2021-12-23 19:50:29
  */
 
 export const status = {
@@ -25,8 +25,16 @@ export const regCode = {
 /**
  * @description:  按钮权限
  */
-export const BtnPermission = {
-  1: 'edit',
-  2: 'add',
-  3: 'del',
+export const btnPermission = {
+  'edit': 'edit',
+  'add': 'add',
+  'del': 'del',
+}
+/**
+ * @description:  按钮类型
+ */
+ export const typePermission = {
+  'edit': 'edit',
+  'add': 'add',
+  'del': 'del',
 }

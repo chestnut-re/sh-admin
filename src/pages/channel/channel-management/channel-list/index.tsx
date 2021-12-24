@@ -1,11 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道列表
-<<<<<<< HEAD
- * @LastEditTime: 2021-12-23 17:17:28
-=======
- * @LastEditTime: 2021-12-23 16:05:26
->>>>>>> f387a9e87dd3c258f7a1bb61587874396fbef687
+ * @LastEditTime: 2021-12-24 10:30:17
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
@@ -21,7 +17,7 @@ const ChannelPage: React.FC = () => {
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
   const [pageSize] = useState(10)
-  const [total] = useState()
+  const [total,setTotal] = useState()
   const [showDialog, setShowDialog] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
   const [channelId, setChannelId] = useState(null)
@@ -55,11 +51,7 @@ const ChannelPage: React.FC = () => {
   const columns = [
     {
       title: 'id',
-<<<<<<< HEAD
       render: (_text, _record, index) => `${index + 1}`,
-=======
-      render: (index: number) => `${index + 1}`,
->>>>>>> f387a9e87dd3c258f7a1bb61587874396fbef687
     },
     {
       title: '渠道编号',
@@ -88,11 +80,7 @@ const ChannelPage: React.FC = () => {
     {
       title: '状态',
       dataIndex: 'state',
-<<<<<<< HEAD
       render: (_text, record) => `${enumState[record.state]} `,
-=======
-      render: (text, record) => `${enumState[record.state]} `,
->>>>>>> f387a9e87dd3c258f7a1bb61587874396fbef687
     },
 
     {

@@ -1,6 +1,6 @@
 /*
  * @Description: 添加渠道
- * @LastEditTime: 2021-12-23 17:07:26
+ * @LastEditTime: 2021-12-24 10:52:27
  */
 
 import { Form, Input, Modal, Cascader } from 'antd'
@@ -65,11 +65,14 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
     form
       .validateFields()
       .then((formData) => {
+        console.log(formData, '999999')
         const postData = { ...formData }
         postData.region = lastOneJoin(formData.region)
         postData.regionsName = arrayNameJoin(formData.region, area)
-        delete postData.structureId
+
         if (mode === 'add') {
+          postData.id = formData.structureId[formData.structureId.length - 1]
+          delete postData.structureId
           ChannelService.add(postData).then((res) => {
             if (res.code == 200) {
               onSuccess()
@@ -80,6 +83,7 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
             ...postData,
             id: data?.id,
           }
+          delete putData.structureId
           ChannelService.edit(putData).then((res) => {
             if (res.code == 200) {
               onSuccess()
