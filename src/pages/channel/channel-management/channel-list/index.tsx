@@ -1,11 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道列表
-<<<<<<< HEAD
  * @LastEditTime: 2021-12-23 17:17:28
-=======
- * @LastEditTime: 2021-12-23 16:05:26
->>>>>>> f387a9e87dd3c258f7a1bb61587874396fbef687
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
@@ -55,11 +51,7 @@ const ChannelPage: React.FC = () => {
   const columns = [
     {
       title: 'id',
-<<<<<<< HEAD
       render: (_text, _record, index) => `${index + 1}`,
-=======
-      render: (index: number) => `${index + 1}`,
->>>>>>> f387a9e87dd3c258f7a1bb61587874396fbef687
     },
     {
       title: '渠道编号',
@@ -88,11 +80,7 @@ const ChannelPage: React.FC = () => {
     {
       title: '状态',
       dataIndex: 'state',
-<<<<<<< HEAD
       render: (_text, record) => `${enumState[record.state]} `,
-=======
-      render: (text, record) => `${enumState[record.state]} `,
->>>>>>> f387a9e87dd3c258f7a1bb61587874396fbef687
     },
 
     {
