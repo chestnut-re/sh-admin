@@ -1,12 +1,10 @@
 import { useStore } from '@/store/context'
 import { observer } from 'mobx-react-lite'
 import React, { useState, useEffect } from 'react'
-import { Button, Col, Form, Row, Space, Table, Divider, Tabs, Layout } from 'antd'
+import { Button, Col, Form, Row, Space, Table, Divider } from 'antd'
 import { InputTemp, SelectTemp, LowAndHighTemp } from '@/components/filter/formItem'
 import './index.less'
-const { Content } = Layout;
-import { releaseRecord } from '@/service/ProductionService'
-const { TabPane } = Tabs;
+import { goodsList } from '@/service/ProductionService'
 
 
 /**
@@ -16,6 +14,10 @@ const { TabPane } = Tabs;
 const ProductionListPage: React.FC = observer(() => {
   const [form] = Form.useForm()
   const [data, setData] = useState([])
+  const [pageIndex, setPageIndex] = useState(0)
+  const [pageSize, setPageSize] = useState(10)
+  const [total, setTotal] = useState()
+
   const [getResult, setGetResult] = useState('')
   const store = useStore()
 
@@ -26,19 +28,19 @@ const ProductionListPage: React.FC = observer(() => {
     },
     {
       title: '商品名称',
-      dataIndex: 'name',
+      dataIndex: 'goodsName',
     },
     {
       title: '商品类型标签',
-      dataIndex: 'name',
+      dataIndex: 'goodsTypeTag',
     },
     {
       title: '出行类型',
-      dataIndex: 'type',
+      dataIndex: 'travelMode',
     },
     {
       title: '始发地',
-      dataIndex: 'place',
+      dataIndex: 'departureCity',
     },
     {
       title: '最近出发时间',
@@ -50,7 +52,7 @@ const ProductionListPage: React.FC = observer(() => {
     },
     {
       title: '现售价(¥)',
-      dataIndex: 'price',
+      dataIndex: 'personCurrentPrice',
     },
     {
       title: '累计销量',
@@ -58,11 +60,11 @@ const ProductionListPage: React.FC = observer(() => {
     },
     {
       title: '已上架渠道',
-      dataIndex: 'center',
+      dataIndex: 'putawayChannelNum',
     },
     {
       title: '状态',
-      dataIndex: 'state',
+      dataIndex: 'activityState',
     },
     {
       title: '创建渠道',
@@ -84,12 +86,27 @@ const ProductionListPage: React.FC = observer(() => {
   ]
 
   useEffect(() => {
-    releaseRecord({ current: 1, size: 10, searchDim: '12' }).then(res => {
-      console.log(res)
+    loadData(pageIndex)
+  }, [pageIndex])
+
+  const loadData = (pageIndex, param = {}) => {
+    const getParam = {
+      page: {
+        current: pageIndex,
+        size: pageSize
+      },
+      goodsDto: {
+        ...param
+      }
+    }
+    goodsList(getParam).then(res => {
+      setData(res.data.records)
+      setTotal(res.data.total)
     })
-  }, [])
+  }
 
   const onFinish = (values: any) => {
+    loadData(1, values)
     console.log('Success:', values)
   }
 
@@ -97,32 +114,20 @@ const ProductionListPage: React.FC = observer(() => {
     console.log('Failed:', errorInfo)
   }
 
-  const onChange = (pageNum: number) => {
-    console.log(pageNum)
+  const onChange = (page: number, pageSize: number) => {
+    setPageIndex(page)
+    setPageSize(pageSize)
   }
 
+  const onEmptyFrom = () => {
+    form.resetFields();
+    loadData(1)
+  }
 
   return (
     <div className="ProductionList__root">
-      <Layout>
-        <Content style={{ margin: '24px 16px 0' }}>
-          <div className="layout-bg">
-            <Tabs tabBarStyle={{ backgroundColor: '#f4f4f4' }} size='large' defaultActiveKey="1">
-              <TabPane tab="商品库" key="1">
-                商品库
-              </TabPane>
-              <TabPane tab="发布记录" key="2">
-                发布记录
-              </TabPane>
-              <TabPane tab="商品草稿箱" key="3">
-                商品草稿箱
-              </TabPane>
-            </Tabs>
-          </div>
-        </Content>
-      </Layout>
-      {/* <h1 className="title">商品库</h1> */}
-      {/* <Divider />
+      <h1 className="title">商品库</h1>
+      <Divider />
       <div>
         <Form
           name="basic"
@@ -133,26 +138,26 @@ const ProductionListPage: React.FC = observer(() => {
         >
           <Row gutter={[5, 0]} style={{ paddingLeft: '10px' }}>
             <Col span={8}>
-              <InputTemp name="username" />
+              <InputTemp name="productDict" />
             </Col>
             <Col span={2} className="table-from-label">
               出行类型
             </Col>
             <Col span={4}>
-              <SelectTemp name="gender" />
+              <SelectTemp name="goodsTypeTags" />
             </Col>
             <Col span={2} className="table-from-label">
               状态
             </Col>
             <Col span={4}>
-              <SelectTemp name="gender" />
+              <SelectTemp name="state" />
             </Col>
             <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
               <Space>
                 <Button type="primary" htmlType="submit">
                   查询
                 </Button>
-                <Button htmlType="button">重置</Button>
+                <Button onClick={onEmptyFrom} htmlType="button">重置</Button>
               </Space>
             </Form.Item>
           </Row>
@@ -175,8 +180,14 @@ const ProductionListPage: React.FC = observer(() => {
         columns={columns}
         scroll={{ x: 'max-content' }}
         dataSource={[...data]}
-        pagination={{ onChange: onChange }}
-      /> */}
+        pagination={{
+          onChange: onChange,
+          showSizeChanger: true,
+          showQuickJumper: true,
+          pageSize: pageSize,
+          total: total,
+        }}
+      />
     </div>
   )
 })

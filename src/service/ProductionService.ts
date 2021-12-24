@@ -39,3 +39,11 @@ export const releaseRecord = (data): Promise<any> => {
 export const sortList = (data): Promise<any> => {
   return axios.post('/api/operation/goods/sortManagement/query', data)
 }
+
+/**
+ * 商品列表
+ */
+ export const goodsList = (data): Promise<any> => {
+  return axios.post('/api/operation/goods/platform/page', data)
+}
+

@@ -1,7 +1,8 @@
 /*
  * @Description: 城市数据处理
- * @LastEditTime: 2021-12-23 15:09:22
+ * @LastEditTime: 2021-12-24 14:56:47
  */
+
 
 /**
  * @description: 把city 数据的children 为null 的去掉
@@ -26,13 +27,14 @@ export const cityDispose = (city: Array<any>, children: string): any => {
  * @param {string} isId
  * @return {Array}
  */
+
 export const shellArray = (oldArray: Array<any>, isId: string, areas = 'areas', adcode = 'adcode') => {
   const newArray: any = []
   const shellArr = (oldArray: Array<any>, id: string): any => {
     if (oldArray.length) {
       oldArray.forEach((item) => {
         if (item[areas] && item[areas].length) {
-          if (item[areas].some((row) => row[adcode] == id)) {
+          if (item[areas].some((row: { [x: string]: string }) => row[adcode] == id)) {
             newArray.push(item)
             shellArr(oldArray, item[adcode])
             return item
@@ -60,8 +62,8 @@ export const shellArray = (oldArray: Array<any>, isId: string, areas = 'areas', 
 
 export const analysisName = (oldArray: Array<any>, isId: string, areas = 'areas', adcode = 'adcode'): string => {
   return shellArray(oldArray, isId, areas, adcode)
-    .map((res) => {
-      return res.name
+    .map((res: { name: any }) => {
+      return res?.name
     })
     .join('-')
 }
@@ -73,37 +75,60 @@ export const analysisName = (oldArray: Array<any>, isId: string, areas = 'areas'
  */
 export const analysisId = (oldArray: Array<any>, isId: string, areas = 'areas', adcode = 'adcode') => {
   console.log(shellArray(oldArray, isId, areas, adcode))
-  return shellArray(oldArray, isId, areas, adcode).map((res) => res[adcode])
+  return shellArray(oldArray, isId, areas, adcode).map((res: { [x: string]: any }) => res[adcode])
 }
+
 export const echoData = (oldArray: Array<any>, data: string) => {
   data.split(',').map((res) => {
     return analysisId(oldArray, res)
   })
 }
 /**
- * @description:  最后一个join string
+ * @description:  array length last join 
  * @param {*} array
  * @return {*}
  */
-export const lastOneJoin = (array) => {
+export const lastOneJoin = (array: any[]) => {
   return array
-    .map((item) => {
+    .map((item: string | any[]) => {
       return item[item.length - 1]
     })
     .join(',')
 }
 
-export const arrayNameJoin = (array, area, areas = 'areas', adcode = 'adcode') => {
+/**
+ * @description: 
+ * @param {function} array
+ * @param {any} area
+ * @return {*} 'name,name'
+ */
+export const arrayNameJoin = (array: (string | any[])[], area: any[], areas = 'areas', adcode = 'adcode') => {
   return array
-    .map((item) => {
+    .map((item: string | any[]) => {
       return analysisName(area, item[item.length - 1], areas, adcode)
     })
     .join(',')
 }
-export const regionsCodeArray = (array, area, areas = 'areas', adcode = 'adcode') => {
-console.log(array,'xxx')
+/**
+ * @description:  code array 用于回显 根据  最后一级 
+ * @param {string} array
+ * @param {any} area [id,id]
+ * @param {*} areas
+ * @param {*} adcode
+ * @return {*} [[pid,cid],[pid,cid]]
+ */
+export const regionsCodeArray = (array: string, area: any[], areas = 'areas', adcode = 'adcode') => {
   return array.split(',')
-    .map((item) => {
+    .map((item: string) => {
       return analysisId(area, item, areas, adcode)
     })
 }
+
+/**
+ * @description:  根据所有id string 获取对应的tree数据
+ * @param {*}
+ * @return {*}
+ */
+//  export const getChild =(arr:  any[],stringId): any=>{
+ 
+// }

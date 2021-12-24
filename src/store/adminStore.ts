@@ -1,3 +1,4 @@
+
 import { getMenus } from '@/service/menu'
 import { UserService } from '@/service/user'
 import { isUserLogin, setJWT } from '@/utils/biz'
@@ -36,7 +37,7 @@ class AdminData {
     /// init menu
     const res = await getMenus()
     this.setMenu(res.data.menus)
-    console.log(JSON.stringify(res))
+    // console.log(JSON.stringify(res))
 
     if (!isUserLogin()) {
       // 未登录，去登录页面

@@ -1,6 +1,6 @@
 /*
  * @Description: 用户列表
- * @LastEditTime: 2021-12-22 11:29:17
+ * @LastEditTime: 2021-12-24 13:33:39
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space } from 'antd'
@@ -57,7 +57,7 @@ const BannerListPage: React.FC = () => {
     {
       title: '注册时间',
       dataIndex: 'registerTime',
-      render: (record: any) => <div>{dayjs(record?.registerTime).format('YYYY-MM-DD HH:mm:ss')}</div>,
+      render: (_text,record: any) => <div>{dayjs(record?.registerTime).format('YYYY-MM-DD HH:mm:ss')}</div>,
     },
     {
       title: '姓名',
@@ -80,7 +80,7 @@ const BannerListPage: React.FC = () => {
       dataIndex: 'relationChannel',
     },
     {
-      title: '注册渠道',
+      title: '注册途径',
       dataIndex: 'registerChannel',
       render: (text: any, record: any) => {
         return regCode[record.registerChannel]
@@ -153,20 +153,20 @@ const BannerListPage: React.FC = () => {
             <Col span={3}>
               <SelectRegisterChannel name="registerChannel" />
             </Col>
-            <Col span={1} className="table-from-label">
+            {/* <Col span={1} className="table-from-label">
               关键词
             </Col>
             <Col span={3}>
               <InputTemp name="keyword" />
-            </Col>
+            </Col> */}
             <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
               <Space>
                 <Button type="primary" htmlType="submit" onClick={() => onValuesFailed(1)}>
                   查询
                 </Button>
-                <Button type="primary" htmlType="submit" onClick={onFinish}>
+                {/* <Button type="primary" htmlType="submit" onClick={onFinish}>
                   添加
-                </Button>
+                </Button> */}
               </Space>
             </Form.Item>
           </Row>

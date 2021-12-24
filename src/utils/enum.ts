@@ -1,6 +1,6 @@
 /*
  * @Description: 字典
- * @LastEditTime: 2021-12-23 11:55:46
+ * @LastEditTime: 2021-12-24 14:34:06
  */
 
 export const status = {
@@ -11,8 +11,8 @@ export const status = {
 
 export const enumState = {
   '': '全部',
-  0: '正常',
-  1: '关闭',
+  0: '关闭',
+  1: '开启',
 }
 
 export const regCode = {
@@ -21,4 +21,20 @@ export const regCode = {
   3: '商品分享',
   4: 'app自然流量',
   5: '小程序自然流量',
+}
+/**
+ * @description:  按钮权限
+ */
+export const btnPermission = {
+  'edit': 'edit',
+  'add': 'add',
+  'del': 'del',
+}
+/**
+ * @description:  按钮类型
+ */
+ export const typePermission = {
+  'edit': 'edit',
+  'add': 'add',
+  'del': 'del',
 }

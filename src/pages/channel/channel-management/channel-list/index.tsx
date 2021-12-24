@@ -1,23 +1,24 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道列表
- * @LastEditTime: 2021-12-23 16:58:06
+ * @LastEditTime: 2021-12-24 14:57:18
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
 import { InputTemp } from '@/components/filter/formItem'
 import AddChannelDialog, { DialogMode } from './components/AddChannelDialog'
+import { analysisName } from '@/utils/tree'
 import ChannelListTree from '../components/ChannelListTree'
 import ChannelService from '@/service/ChannelService'
-import { cityDispose } from '@/utils/city'
+import { cityDispose } from '@/utils/tree'
 import { enumState } from '@/utils/enum'
-
 import './index.less'
 const ChannelPage: React.FC = () => {
   const [form] = Form.useForm()
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
   const [pageSize] = useState(10)
-  const [total] = useState()
+  const [total, setTotal] = useState()
   const [showDialog, setShowDialog] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
   const [channelId, setChannelId] = useState(null)
@@ -30,6 +31,10 @@ const ChannelPage: React.FC = () => {
       state: '',
     })
   }, [])
+  useEffect(() => {
+    loadData()
+  }, [pageIndex])
+
   const getStructure = () => {
     ChannelService.getStructure().then((res) => {
       setStructure(cityDispose([res?.data], 'children'))
@@ -40,13 +45,14 @@ const ChannelPage: React.FC = () => {
       const postForm = { pages: pageIndex, size: pageSize, ...query, id: channelId }
       ChannelService.list(postForm).then((res) => {
         setData(res.data?.records ?? [])
+        setTotal(res.data?.total)
       })
     })
   }
   const columns = [
     {
       title: 'id',
-      render: (text, record, index) => `${index + 1}`,
+      render: (_text, _record, index) => `${index + 1}`,
     },
     {
       title: '渠道编号',
@@ -71,16 +77,22 @@ const ChannelPage: React.FC = () => {
     {
       title: '归属',
       dataIndex: 'title',
+      render: (text, recode) =>
+        `${
+          !analysisName(structure, recode?.id, 'children', 'id')
+            ? recode?.name
+            : analysisName(structure, recode?.id, 'children', 'id')
+        }`,
     },
     {
       title: '状态',
       dataIndex: 'state',
-      render: (text, record, index) => `${enumState[record.state]} `,
+      render: (_text, record) => `${enumState[record.state]} `,
     },
 
     {
       title: '操作',
-      render: (text: any, record: any) => (
+      render: (_text: any, record: any) => (
         <Space size="middle">
           {/* <Button >查看</Button> */}
           <Button onClick={() => showAddDialog(record, false)}>编辑</Button>
@@ -106,7 +118,7 @@ const ChannelPage: React.FC = () => {
   const showAddDialog = (record, add = true) => {
     setDialogMode(add ? 'add' : 'edit')
     setShowDialog(true)
-    setSelectedData(record)
+    setSelectedData(add ? { state: true, isOpenAccount: true } : record)
   }
 
   const _onDialogSuccess = () => {
@@ -130,7 +142,7 @@ const ChannelPage: React.FC = () => {
     <div className="channel-list">
       <Row gutter={[10, 0]}>
         <Col span={3}>
-          <ChannelListTree structure={structure} onSelectStructure={_onSelectStructure} />
+          {structure.length > 0 ? <ChannelListTree structure={structure} onSelectStructure={_onSelectStructure} /> : ''}
         </Col>
         <Col span={21}>
           <div>
@@ -184,7 +196,7 @@ const ChannelPage: React.FC = () => {
           </div>
           <Table
             rowKey="id"
-            childrenColumnName="childrens"
+            childrenColumnName="childrenArray"
             columns={columns}
             scroll={{ x: 'max-content' }}
             dataSource={[...data]}
@@ -192,7 +204,7 @@ const ChannelPage: React.FC = () => {
               onChange: setPageIndex,
               showSizeChanger: true,
               showQuickJumper: true,
-              current: pageSize,
+              current: pageIndex,
               pageSize: pageSize,
               total: total,
             }}
