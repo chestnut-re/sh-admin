@@ -1,8 +1,7 @@
 /*
  * @Description: 城市数据处理
- * @LastEditTime: 2021-12-24 14:56:47
+ * @LastEditTime: 2021-12-24 16:43:26
  */
-
 
 /**
  * @description: 把city 数据的children 为null 的去掉
@@ -10,7 +9,7 @@
  * @param {*} children
  * @return {*}
  */
-export const cityDispose = (city: Array<any>, children: string): any => {
+ export const cityDispose = (city: Array<any>, children: string): any => {
   city.forEach((item) => {
     if (item[children] && item[children].length > 0) {
       item = cityDispose(item[children], children)
@@ -28,6 +27,31 @@ export const cityDispose = (city: Array<any>, children: string): any => {
  * @return {Array}
  */
 
+export const shellArrayDuo = (arr, id, areas = 'areas', adcode = 'adcode', pid = 'adcode') => {
+  // eslint-disable-next-line prefer-const
+  let temp: any[]
+  // eslint-disable-next-line prefer-const
+  temp = []
+  const callback = function (nowArr, id) {
+    for (let i = 0; i < nowArr.length; i++) {
+      const item = nowArr[i]
+
+      if (item[adcode] == id) {
+        temp.push(item)
+        callback(arr, item[pid])
+        break
+      } else {
+        // item.pid = id
+        if (item[areas]) {
+          callback(item[areas], id)
+        }
+      }
+    }
+  }
+  callback(arr, id)
+
+  return temp //最后返回
+}
 export const shellArray = (oldArray: Array<any>, isId: string, areas = 'areas', adcode = 'adcode') => {
   const newArray: any = []
   const shellArr = (oldArray: Array<any>, id: string): any => {
@@ -59,6 +83,19 @@ export const shellArray = (oldArray: Array<any>, isId: string, areas = 'areas', 
  * @param {string} isId
  * @return {string}
  */
+export const analysisNameDuo = (
+  oldArray: Array<any>,
+  isId: string,
+  areas = 'areas',
+  adcode = 'adcode',
+  pid = 'adcode'
+): string => {
+  return shellArrayDuo(oldArray, isId, areas, adcode, pid)
+    .map((res: { name: any }) => {
+      return res?.name
+    })
+    .join('-')
+}
 
 export const analysisName = (oldArray: Array<any>, isId: string, areas = 'areas', adcode = 'adcode'): string => {
   return shellArray(oldArray, isId, areas, adcode)
@@ -84,7 +121,7 @@ export const echoData = (oldArray: Array<any>, data: string) => {
   })
 }
 /**
- * @description:  array length last join 
+ * @description:  array length last join
  * @param {*} array
  * @return {*}
  */
@@ -97,7 +134,7 @@ export const lastOneJoin = (array: any[]) => {
 }
 
 /**
- * @description: 
+ * @description:
  * @param {function} array
  * @param {any} area
  * @return {*} 'name,name'
@@ -110,7 +147,7 @@ export const arrayNameJoin = (array: (string | any[])[], area: any[], areas = 'a
     .join(',')
 }
 /**
- * @description:  code array 用于回显 根据  最后一级 
+ * @description:  code array 用于回显 根据  最后一级
  * @param {string} array
  * @param {any} area [id,id]
  * @param {*} areas
@@ -118,10 +155,9 @@ export const arrayNameJoin = (array: (string | any[])[], area: any[], areas = 'a
  * @return {*} [[pid,cid],[pid,cid]]
  */
 export const regionsCodeArray = (array: string, area: any[], areas = 'areas', adcode = 'adcode') => {
-  return array.split(',')
-    .map((item: string) => {
-      return analysisId(area, item, areas, adcode)
-    })
+  return array.split(',').map((item: string) => {
+    return analysisId(area, item, areas, adcode)
+  })
 }
 
 /**
@@ -130,5 +166,5 @@ export const regionsCodeArray = (array: string, area: any[], areas = 'areas', ad
  * @return {*}
  */
 //  export const getChild =(arr:  any[],stringId): any=>{
- 
+
 // }

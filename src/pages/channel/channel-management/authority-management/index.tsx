@@ -1,6 +1,6 @@
 /*
  * @Description: 渠道权限
- * @LastEditTime: 2021-12-24 14:45:48
+ * @LastEditTime: 2021-12-24 15:22:13
  */
 import React, { useState, useEffect } from 'react'
 import { Menu, Col, Row, Checkbox, Radio, Input, Tooltip } from 'antd'
@@ -14,7 +14,7 @@ import './index.less'
 const AuthorityManagement: React.FC = () => {
   const [radioValue, setValue] = useState('')
   const [current, setCurrent] = useState('one')
-  const [switchFunc, setSwitchFunc] = useState('one')
+  const [switchFunc, setSwitchFunc] = useState('admin')
 
   const [channelId, setChannelId] = useState(null)
   const [structure, setStructure] = useState([])
@@ -27,7 +27,7 @@ const AuthorityManagement: React.FC = () => {
     })
   }
   const _onSelectStructure = (id) => {
-    console.log(id,'ccc')
+    console.log(id, 'ccc')
     setChannelId(id)
   }
 
@@ -55,10 +55,10 @@ const AuthorityManagement: React.FC = () => {
                 selectedKeys={[switchFunc]}
                 mode="horizontal"
               >
-                <Menu.Item key="one">管理后台权限</Menu.Item>
-                <Menu.Item key="two">B端权限</Menu.Item>
+                <Menu.Item key="admin">管理后台权限</Menu.Item>
+                <Menu.Item key="toB">B端权限</Menu.Item>
               </Menu>
-              <TableScheme chanId={channelId} />
+              <TableScheme chanId={channelId} switchFc={switchFunc} />
             </>
           ) : (
             <>
