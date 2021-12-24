@@ -1,6 +1,6 @@
 /*
  * @Description: 城市数据处理
- * @LastEditTime: 2021-12-24 16:43:26
+ * @LastEditTime: 2021-12-24 17:52:24
  */
 
 /**
@@ -9,7 +9,7 @@
  * @param {*} children
  * @return {*}
  */
- export const cityDispose = (city: Array<any>, children: string): any => {
+export const cityDispose = (city: Array<any>, children: string): any => {
   city.forEach((item) => {
     if (item[children] && item[children].length > 0) {
       item = cityDispose(item[children], children)
@@ -168,3 +168,27 @@ export const regionsCodeArray = (array: string, area: any[], areas = 'areas', ad
 //  export const getChild =(arr:  any[],stringId): any=>{
 
 // }
+
+/**
+ * @description: 最深层级
+ * @param {*}
+ * @return {*}
+ */
+export const getMaxFloor = (treeData: any[] = []) => {
+  let max = 0
+  const arrayList=[]
+  const each = (data: any[] = [], floor: number) => {
+    data.forEach((e) => {
+      e.floor = floor
+      if (floor > max) {
+        max = floor
+      }
+      if (e.children?.length > 0) {
+        arrayList.push(e)
+        each(e.children, floor + 1)
+      }
+    })
+  }
+  each(treeData, 1)
+  return arrayList
+}

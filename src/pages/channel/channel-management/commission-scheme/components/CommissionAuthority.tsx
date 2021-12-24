@@ -1,13 +1,23 @@
 /*
  * @Description:
- * @LastEditTime: 2021-12-24 12:00:57
+ * @LastEditTime: 2021-12-24 17:58:14
  */
 import { Table, Switch, Space, Form } from 'antd'
 import React, { useState, useEffect } from 'react'
 import { QuestionCircleOutlined } from '@ant-design/icons'
 import { Menu, Col, Row, Checkbox, Radio, Input, Button, Tooltip } from 'antd'
 import ChannelService from '@/service/ChannelService'
-const CommissionAuthority: React.FC = () => {
+import { cityDispose, getMaxFloor } from '@/utils/tree'
+interface Props {
+  chanId: any
+  structure: any
+  ranked: any
+}
+const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked }) => {
+  const [dataObj, setDataObj] = useState({})
+  useEffect(() => {
+    // setArrayNum()
+  }, [ranked])
   const onChangeRadio = (e) => {
     // setValue(e.target.value)
   }
@@ -67,17 +77,24 @@ const CommissionAuthority: React.FC = () => {
           </Radio.Group>
         </Form.Item>
         <span>分销分佣：所属所有下级卖出去商品后，是否获得佣金</span>
-        <Form.Item
-          label="二级渠道（二级渠道名称）"
-          name="remember"
-          rules={[{ required: true, message: 'Please input your 发团服务结算要求!' }]}
-        >
-          佣金权限 : &nbsp; &nbsp;{' '}
-          <Radio.Group onChange={onChangeRadio} value={''}>
-            <Radio value={2}>销售分佣</Radio>
-            <Radio value={3}>销售分佣</Radio>
-          </Radio.Group>
-        </Form.Item>
+        {ranked.map((res, index) => {
+          return (
+            <div key={index}>
+              <Form.Item
+                label={`${index + 2}级渠道（${res.name}）`}
+                name={`${index}`}
+                rules={[{ required: true, message: 'Please input your 发团服务结算要求!' }]}
+              >
+                佣金权限 : &nbsp; &nbsp;{' '}
+                <Radio.Group>
+                  <Radio value={2}>销售分佣</Radio>
+                  <Radio value={3}>销售分佣</Radio>
+                </Radio.Group>
+              </Form.Item>
+            </div>
+          )
+        })}
+
         <Form.Item
           label="直销/分销结算要求"
           name="remember"
