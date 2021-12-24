@@ -1,6 +1,6 @@
 /*
  * @Description: 城市数据处理
- * @LastEditTime: 2021-12-24 16:35:35
+ * @LastEditTime: 2021-12-24 16:43:26
  */
 
 /**
@@ -9,7 +9,7 @@
  * @param {*} children
  * @return {*}
  */
-export const cityDispose = (city: Array<any>, children: string): any => {
+ export const cityDispose = (city: Array<any>, children: string): any => {
   city.forEach((item) => {
     if (item[children] && item[children].length > 0) {
       item = cityDispose(item[children], children)
@@ -27,7 +27,32 @@ export const cityDispose = (city: Array<any>, children: string): any => {
  * @return {Array}
  */
 
- export const shellArray = (oldArray: Array<any>, isId: string, areas = 'areas', adcode = 'adcode') => {
+export const shellArrayDuo = (arr, id, areas = 'areas', adcode = 'adcode', pid = 'adcode') => {
+  // eslint-disable-next-line prefer-const
+  let temp: any[]
+  // eslint-disable-next-line prefer-const
+  temp = []
+  const callback = function (nowArr, id) {
+    for (let i = 0; i < nowArr.length; i++) {
+      const item = nowArr[i]
+
+      if (item[adcode] == id) {
+        temp.push(item)
+        callback(arr, item[pid])
+        break
+      } else {
+        // item.pid = id
+        if (item[areas]) {
+          callback(item[areas], id)
+        }
+      }
+    }
+  }
+  callback(arr, id)
+
+  return temp //最后返回
+}
+export const shellArray = (oldArray: Array<any>, isId: string, areas = 'areas', adcode = 'adcode') => {
   const newArray: any = []
   const shellArr = (oldArray: Array<any>, id: string): any => {
     if (oldArray.length) {
@@ -52,22 +77,28 @@ export const cityDispose = (city: Array<any>, children: string): any => {
   shellArr(oldArray, isId)
   return newArray
 }
-
 /**
  * @description:  获取城市名字 列表展示 省-市
  * @param {Array} oldArray
  * @param {string} isId
  * @return {string}
  */
-
-export const analysisName = (
+export const analysisNameDuo = (
   oldArray: Array<any>,
   isId: string,
   areas = 'areas',
   adcode = 'adcode',
   pid = 'adcode'
 ): string => {
-  return shellArray(oldArray, isId, areas, adcode, pid)
+  return shellArrayDuo(oldArray, isId, areas, adcode, pid)
+    .map((res: { name: any }) => {
+      return res?.name
+    })
+    .join('-')
+}
+
+export const analysisName = (oldArray: Array<any>, isId: string, areas = 'areas', adcode = 'adcode'): string => {
+  return shellArray(oldArray, isId, areas, adcode)
     .map((res: { name: any }) => {
       return res?.name
     })
