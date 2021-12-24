@@ -1,6 +1,6 @@
 /*
  * @Description: 城市数据处理
- * @LastEditTime: 2021-12-24 16:07:37
+ * @LastEditTime: 2021-12-24 16:35:35
  */
 
 /**
@@ -27,30 +27,30 @@ export const cityDispose = (city: Array<any>, children: string): any => {
  * @return {Array}
  */
 
-export const shellArray = (arr, id, areas = 'areas', adcode = 'adcode', pid = 'adcode') => {
-  // eslint-disable-next-line prefer-const
-  let temp: any[]
-  // eslint-disable-next-line prefer-const
-  temp = []
-  const callback = function (nowArr, id) {
-    for (let i = 0; i < nowArr.length; i++) {
-      const item = nowArr[i]
-
-      if (item[adcode] === id) {
-        temp.push(item)
-        callback(arr, item[pid])
-        break
-      } else {
-        // item.pid = id
-        if (item[areas]) {
-          callback(item[areas], id)
+ export const shellArray = (oldArray: Array<any>, isId: string, areas = 'areas', adcode = 'adcode') => {
+  const newArray: any = []
+  const shellArr = (oldArray: Array<any>, id: string): any => {
+    if (oldArray.length) {
+      oldArray.forEach((item) => {
+        if (item[areas] && item[areas].length) {
+          if (item[areas].some((row: { [x: string]: string }) => row[adcode] == id)) {
+            newArray.push(item)
+            shellArr(oldArray, item[adcode])
+            return item
+          } else {
+            shellArr(item[areas], id)
+          }
+        } else {
+          if (item[adcode] == isId) {
+            newArray.push(item)
+          }
+          return
         }
-      }
+      })
     }
   }
-  callback(arr, id)
-
-  return temp //最后返回
+  shellArr(oldArray, isId)
+  return newArray
 }
 
 /**
