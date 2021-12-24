@@ -1,6 +1,6 @@
 /*
  * @Description:功能权限
- * @LastEditTime: 2021-12-24 14:45:11
+ * @LastEditTime: 2021-12-24 15:22:29
  */
 import { Table, Switch, Space, message } from 'antd'
 import React, { useState, useEffect } from 'react'
@@ -8,10 +8,11 @@ import { getMenus } from '@/service/menu'
 
 import ChannelService from '@/service/ChannelService'
 interface Props {
-  channelId: any
+  chanId: any
+  switchFc: any
 }
 
-const TableScheme: React.FC<Props> = ({ channelId }) => {
+const TableScheme: React.FC<Props> = ({ chanId, switchFc }) => {
   const [checkStrictly, setCheckStrictly] = useState(false)
   const [selectedRowKeys, setSelectedRowKeys] = useState('')
   const [menu, setMenu] = useState(false)
@@ -46,6 +47,7 @@ const TableScheme: React.FC<Props> = ({ channelId }) => {
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
+      setSelectedRowKeys(selectedRowKeys)
       console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
     },
 
@@ -59,14 +61,19 @@ const TableScheme: React.FC<Props> = ({ channelId }) => {
     defaultSelectedRowKeys: [],
   }
   const save = () => {
-    console.log(!channelId, 'channelId')
-    if (!channelId) {
+    console.log(!chanId, 'chanId')
+    if (!chanId) {
       message.error('请选择渠道!')
     } else {
       const query = {
-        menuAuthority: [selectedRowKeys],
-        id: channelId,
+        id: chanId,
       }
+      if (switchFc == 'admin') {
+        query['menuAuthority'] = [selectedRowKeys]
+      } else {
+        query['businessAuthority'] = [selectedRowKeys]
+      }
+
       ChannelService.edit(query).then((res) => {
         console.log(res, '----')
       })
