@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Button, Col, Row, Form, Table, Pagination, Space, Input, Select } from 'antd'
+import { Button, Col, Row, Form, Table, Modal, Space, Input, Select } from 'antd'
 import './index.less'
 import CreateAdminDialog, { DialogMode } from './components/createAdministrators'
 import { AdminService } from '@/service/AdminService'
@@ -20,6 +20,7 @@ const AdminListPage: React.FC = () => {
   const [pageSize, setPageSize] = useState(10)
   const [total, setTotal] = useState()
   const [showDialog, setShowDialog] = useState(false)
+  const [visible, setVisible] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
   const [dialogMode, setDialogMode] = useState<DialogMode>('add')
 
@@ -78,7 +79,7 @@ const AdminListPage: React.FC = () => {
       render: (text: any, record: any) => (
         <Space size="middle">
           <Button onClick={() => _editDialog(record)}>编辑</Button>
-          <Button>删除</Button>
+          <Button onClick={_delete}>删除</Button>
         </Space>
       ),
     },
@@ -106,12 +107,18 @@ const AdminListPage: React.FC = () => {
     console.log('Failed:', errorInfo)
   }
 
-  const onChange = (pageNum: number) => {
-    console.log(pageNum)
+  const handleCancel = () => {
+    setVisible(false)
   }
-  const handleChange = (value: any) => {
-    console.log(`selected ${value}`)
+
+  const _delete = () => {
+    setVisible(true)
   }
+
+  const _comDelete = () => {
+    setVisible(false)
+  }
+
   const _onDialogSuccess = () => {
     setSelectedData(null)
     setShowDialog(false)
@@ -203,15 +210,6 @@ const AdminListPage: React.FC = () => {
               </Space>
             </Form.Item>
           </Row>
-          <Row style={{ paddingLeft: '40px' }}>
-            <Form.Item>
-              <Space>
-                <Button type="primary" htmlType="button">
-                  添加
-                </Button>
-              </Space>
-            </Form.Item>
-          </Row>
         </Form>
       </div>
       <Table
@@ -234,6 +232,16 @@ const AdminListPage: React.FC = () => {
         show={showDialog}
         onClose={_onDialogClose}
       />
+      <Modal
+        title="提示"
+        visible={visible}
+        okText="确认删除"
+        cancelText="取消"
+        onOk={_comDelete}
+        onCancel={handleCancel}
+      >
+        <span>是否确认删除?</span>
+      </Modal>
     </div>
   )
 }

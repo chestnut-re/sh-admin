@@ -80,7 +80,14 @@ const CreateAdminDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onC
   }
 
   return (
-    <Modal title="用户" visible={show} onOk={_handleUpdate} onCancel={_formClose} okText="保存提交">
+    <Modal
+      title="添加管理员"
+      visible={show}
+      onOk={_handleUpdate}
+      onCancel={_formClose}
+      cancelText="取消"
+      okText="保存提交"
+    >
       <Form
         name="basic"
         labelCol={{ span: 4 }}
@@ -90,9 +97,10 @@ const CreateAdminDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onC
         onFinishFailed={(errorInfo: any) => {}}
         autoComplete="off"
         form={form}
+        style={{ paddingLeft: 30 }}
       >
         <Form.Item label="角色" name="roleName">
-          <Select placeholder="请选择角色" style={{ width: 120 }} onChange={(value, e) => setRoleId(e.key)}>
+          <Select placeholder="请选择角色" onChange={(value, e) => setRoleId(e.key)}>
             {roleList.map((item) => {
               return (
                 <Option value={item.roleName} key={item.id}>
@@ -105,8 +113,13 @@ const CreateAdminDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onC
         <Form.Item label="姓名" name="nickName" rules={[{ required: true, message: '请输入姓名' }]}>
           <Input />
         </Form.Item>
-        <Form.Item label="手机号/账号" name="mobile" rules={[{ required: true, message: '请输入手机号/账号' }]}>
-          <Input />
+        <Form.Item
+          label="手机号/账号"
+          style={{ width: 560 }}
+          name="mobile"
+          rules={[{ required: true, message: '请输入手机号/账号' }]}
+        >
+          <Input style={{ width: 276 }} />
         </Form.Item>
         <Form.Item label="状态" name="state" rules={[{ required: true, message: '请选择状态' }]}>
           <Radio.Group onChange={(e) => setState(e.target.value)} value={state}>

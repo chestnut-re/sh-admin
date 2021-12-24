@@ -60,31 +60,34 @@ const BannerListPage: React.FC = () => {
       render: (text: any, record: any) => {
         if (record.state == 0) {
           return `下线`
-        } else {
+        } else if (record.state == 1) {
           return `上线`
+        } else {
+          return `待上线`
         }
       },
     },
     {
       title: '展示时段',
       dataIndex: 'endDate',
-      render: (text: any, record: any) =>
-        record.startDate && record.endDate
-          ? `${dayjs(record.startDate.split('+')[0]).format('YYYY-MM-DD HH:mm:ss')}~${dayjs(
-              record.endDate.split('+')[0]
-            ).format('YYYY-MM-DD HH:mm:ss')}`
-          : null,
+      render: (text: any, record: any) => `${record.startDate}~${record.endDate}`,
+      // render: (text: any, record: any) =>
+      //   record.startDate && record.endDate
+      //     ? `${dayjs(record.startDate.split('+')[0]).format('YYYY-MM-DD HH:mm:ss')}~${dayjs(
+      //         record.endDate.split('+')[0]
+      //       ).format('YYYY-MM-DD HH:mm:ss')}`
+      //     : null,
     },
     {
       title: '剩余展示时长',
-      dataIndex: 'startDate',
-      render: (text: any, record: any) => {
-        return <RemainTime endDate={record.endDate} />
-      },
+      dataIndex: 'remainingDisplayTime',
+      // render: (text: any, record: any) => {
+      //   return <RemainTime endDate={record.endDate} />
+      // },
     },
     {
       title: '添加人',
-      dataIndex: 'updateUser',
+      dataIndex: 'createUserName',
     },
     {
       title: '添加时间',
