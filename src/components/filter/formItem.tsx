@@ -1,5 +1,6 @@
+import { CommonService } from '@/service/CommonService'
 import { Form, Input, Select, DatePicker, TimePicker } from 'antd'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FC } from 'react'
 
 /**
@@ -109,6 +110,49 @@ export const OrderRoute: FC<any> = ({ name, ...props }) => {
         <Select.Option value={2}>分享链接</Select.Option>
         <Select.Option value={3}>分享任务</Select.Option>
         <Select.Option value={4}>线下扫码</Select.Option>
+      </Select>
+    </Form.Item>
+  )
+}
+
+/**
+ * 下单途径 模版
+ */
+export const SubCenterSelect: FC<any> = ({ name, ...props }) => {
+  const [subCenters, setSubCenters] = useState<any[]>([])
+
+  useEffect(() => {
+    CommonService.getStructure().then((res) => {
+      console.log(res)
+      setSubCenters(res.data.children)
+    })
+  }, [])
+
+  return (
+    <Form.Item name={name}>
+      <Select {...props}>
+        {subCenters.map((item) => {
+          return (
+            <Select.Option key={`${item.id}`} value={`${item.id}`}>
+              {item.name}
+            </Select.Option>
+          )
+        })}
+      </Select>
+    </Form.Item>
+  )
+}
+
+/**
+ * 使用中/未使用
+ */
+export const StatusRoute: FC<any> = ({ name, ...props }) => {
+  return (
+    <Form.Item name={name}>
+      <Select allowClear {...props}>
+        <Select.Option value={''}>全部</Select.Option>
+        <Select.Option value={1}>使用中</Select.Option>
+        <Select.Option value={0}>未使用</Select.Option>
       </Select>
     </Form.Item>
   )

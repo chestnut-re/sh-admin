@@ -1,15 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道列表
- * @LastEditTime: 2021-12-24 10:55:02
+ * @LastEditTime: 2021-12-24 15:59:15
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
 import { InputTemp } from '@/components/filter/formItem'
 import AddChannelDialog, { DialogMode } from './components/AddChannelDialog'
+import { analysisName } from '@/utils/tree'
 import ChannelListTree from '../components/ChannelListTree'
 import ChannelService from '@/service/ChannelService'
-import { cityDispose } from '@/utils/city'
+import { cityDispose } from '@/utils/tree'
 import { enumState } from '@/utils/enum'
 import './index.less'
 const ChannelPage: React.FC = () => {
@@ -76,6 +77,12 @@ const ChannelPage: React.FC = () => {
     {
       title: '归属',
       dataIndex: 'title',
+      render: (text, recode) =>
+        `${
+          !analysisName(structure, recode?.id, 'children', 'id', 'pid')
+            ? recode?.name
+            : analysisName(structure, recode?.id, 'children', 'id', 'pid')
+        }`,
     },
     {
       title: '状态',
@@ -111,7 +118,7 @@ const ChannelPage: React.FC = () => {
   const showAddDialog = (record, add = true) => {
     setDialogMode(add ? 'add' : 'edit')
     setShowDialog(true)
-    setSelectedData(record)
+    setSelectedData(add ? { state: true, isOpenAccount: true } : record)
   }
 
   const _onDialogSuccess = () => {

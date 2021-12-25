@@ -1,14 +1,15 @@
 /*
  * @Description: 用户列表
- * @LastEditTime: 2021-12-22 11:29:17
+ * @LastEditTime: 2021-12-24 13:33:39
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space } from 'antd'
 import AEUserDialog, { DialogMode } from './components/aeUserDialog'
 import { usersQueryList, userGet } from '@/service/user'
-import dayjs from 'dayjs'
 import { regCode } from '@/utils/enum'
-import { InputTemp, SelectEmployeeStatusTemp, SelectRegisterChannel } from '@/components/filter/formItem'
+import { SelectEmployeeStatusTemp, SelectRegisterChannel } from '@/components/filter/formItem'
+import TimeColumn from '@/components/tableColumn/TimeColumn'
+
 const BannerListPage: React.FC = () => {
   const [form] = Form.useForm()
   const [data, setData] = useState([])
@@ -19,6 +20,7 @@ const BannerListPage: React.FC = () => {
   const [showDialog, setShowDialog] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
   const [dialogMode, setDialogMode] = useState<DialogMode>('add')
+
   useEffect(() => {
     form.setFieldsValue({
       employeeStatus: 99,
@@ -26,6 +28,7 @@ const BannerListPage: React.FC = () => {
       keyword: '',
     })
   }, [])
+
   useEffect(() => {
     loadData(pageIndex)
   }, [])
@@ -57,7 +60,7 @@ const BannerListPage: React.FC = () => {
     {
       title: '注册时间',
       dataIndex: 'registerTime',
-      render: (record: any) => <div>{dayjs(record?.registerTime).format('YYYY-MM-DD HH:mm:ss')}</div>,
+      render: (_text, record: any) => <TimeColumn time={record?.registerTime} />,
     },
     {
       title: '姓名',
@@ -80,7 +83,7 @@ const BannerListPage: React.FC = () => {
       dataIndex: 'relationChannel',
     },
     {
-      title: '注册渠道',
+      title: '注册途径',
       dataIndex: 'registerChannel',
       render: (text: any, record: any) => {
         return regCode[record.registerChannel]
@@ -117,12 +120,9 @@ const BannerListPage: React.FC = () => {
     })
   }
 
-  const onValuesFailed = (value) => {
-    setPageIndex(value)
-    loadData(pageIndex)
-  }
   const onFinish = () => {
-    setShowDialog(true)
+    setPageIndex(1)
+    loadData(1)
   }
 
   const _onDialogSuccess = () => {
@@ -139,34 +139,34 @@ const BannerListPage: React.FC = () => {
   return (
     <div className="channel-list">
       <div>
-        <Form name="basic" initialValues={{ remember: true }} form={form}>
+        <Form name="basic" initialValues={{ remember: true }} form={form} onFinish={onFinish}>
           <Row gutter={[10, 0]}>
-            <Col span={1} className="table-from-label">
+            <Col span={2} className="table-from-label">
               用户类型
             </Col>
             <Col span={4}>
               <SelectEmployeeStatusTemp name="employeeStatus" />
             </Col>
-            <Col span={1} className="table-from-label">
+            <Col span={2} className="table-from-label">
               注册途径
             </Col>
             <Col span={3}>
               <SelectRegisterChannel name="registerChannel" />
             </Col>
-            <Col span={1} className="table-from-label">
+            {/* <Col span={1} className="table-from-label">
               关键词
             </Col>
             <Col span={3}>
               <InputTemp name="keyword" />
-            </Col>
+            </Col> */}
             <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
               <Space>
-                <Button type="primary" htmlType="submit" onClick={() => onValuesFailed(1)}>
+                <Button type="primary" htmlType="submit">
                   查询
                 </Button>
-                <Button type="primary" htmlType="submit" onClick={onFinish}>
+                {/* <Button type="primary" htmlType="submit" onClick={onFinish}>
                   添加
-                </Button>
+                </Button> */}
               </Space>
             </Form.Item>
           </Row>

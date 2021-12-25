@@ -1,10 +1,10 @@
 /*
  * @Description: 渠道权限
- * @LastEditTime: 2021-12-23 19:28:53
+ * @LastEditTime: 2021-12-24 15:22:13
  */
 import React, { useState, useEffect } from 'react'
 import { Menu, Col, Row, Checkbox, Radio, Input, Tooltip } from 'antd'
-import { cityDispose } from '@/utils/city'
+import { cityDispose } from '@/utils/tree'
 import ChannelService from '@/service/ChannelService'
 import ChannelListTree from '../components/ChannelListTree'
 import TableScheme from '../commission-scheme/components/TableScheme'
@@ -14,7 +14,7 @@ import './index.less'
 const AuthorityManagement: React.FC = () => {
   const [radioValue, setValue] = useState('')
   const [current, setCurrent] = useState('one')
-  const [switchFunc, setSwitchFunc] = useState('one')
+  const [switchFunc, setSwitchFunc] = useState('admin')
 
   const [channelId, setChannelId] = useState(null)
   const [structure, setStructure] = useState([])
@@ -27,6 +27,7 @@ const AuthorityManagement: React.FC = () => {
     })
   }
   const _onSelectStructure = (id) => {
+    console.log(id, 'ccc')
     setChannelId(id)
   }
 
@@ -54,14 +55,14 @@ const AuthorityManagement: React.FC = () => {
                 selectedKeys={[switchFunc]}
                 mode="horizontal"
               >
-                <Menu.Item key="one">管理后台权限</Menu.Item>
-                <Menu.Item key="two">B端权限</Menu.Item>
+                <Menu.Item key="admin">管理后台权限</Menu.Item>
+                <Menu.Item key="toB">B端权限</Menu.Item>
               </Menu>
-              <TableScheme />
+              <TableScheme chanId={channelId} switchFc={switchFunc} />
             </>
           ) : (
             <>
-              <CommissionAuthority />
+              <CommissionAuthority chanId={channelId} />
             </>
           )}
           {/* <TableScheme /> */}

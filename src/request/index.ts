@@ -27,6 +27,7 @@ const instance = axios.create({
       try {
         return JSONbigString.parse(data)
       } catch (error) {
+        console.log(error);
         return data
       }
     },
