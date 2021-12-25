@@ -148,7 +148,7 @@ const AuditScreen: React.FC<Props> = ({ type }) => {
         </Form>
       </div>
       <Table
-        rowKey="id"
+        rowKey="goodsNo"
         columns={columns}
         scroll={{ x: 'max-content' }}
         dataSource={[...data]}
