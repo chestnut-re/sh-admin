@@ -1,17 +1,18 @@
 import axios from '@/request'
 
 /**
- * 模版 数据
+ * 商品分佣 数据
  */
-export class TemplateService {
+export class ProductionCommission {
   /**
    * 列表
    */
-  static list({ size = 30, current }): Promise<any> {
-    return axios.get('/api/operation/banner/page', {
+  static list({ size = 30, current, ...params }): Promise<any> {
+    return axios.get('/api/market/channel/getChannelPlan', {
       params: {
         size,
         current,
+        ...params
       },
     })
   }
@@ -20,7 +21,7 @@ export class TemplateService {
    * get
    */
   static get({ id }): Promise<any> {
-    return axios.get(`/api/operation/banner/get`, { params: {} })
+    return axios.get(`/api/market/channel/getChannelPlan`, { params: {} })
   }
 
   /**
@@ -34,13 +35,17 @@ export class TemplateService {
    * 新增
    */
   static add(data): Promise<any> {
-    return axios.post(`/api/operation/banner/save`, data)
+    return axios.post(`/api/market/channel/saveChannelPlan`, data)
   }
 
   /**
    * 编辑
    */
   static edit(data): Promise<any> {
-    return axios.put(`/api/operation/banner/update`, data)
+    return axios.put(`/api/operation/banner/update`, {
+      params: {
+        data,
+      },
+    })
   }
 }

@@ -52,6 +52,13 @@ export default [
                       componentPath: '/operation/production/commodity-allocation',
                       path: '/operation/production/commodity-allocation',
                     },
+                    {
+                      name: '商品分佣方案',
+                      id: 115,
+                      type: 'menu',
+                      componentPath: '/operation/production/commission',
+                      path: '/operation/production/commission',
+                    },
                   ],
                 },
               ],
