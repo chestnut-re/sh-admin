@@ -1,14 +1,14 @@
 import axios from '@/request'
 
 /**
- * 模版 数据
+ * 商品发布审核 数据
  */
-export class TemplateService {
+export class ProductionAuditService {
   /**
    * 列表
    */
   static list({ size = 30, current, ...params }): Promise<any> {
-    return axios.get('/api/operation/banner/page', {
+    return axios.get('/api/operation/check/publishCheckList', {
       params: {
         size,
         current,

@@ -19,6 +19,37 @@ export const SelectTemp: FC<any> = ({ name, ...props }) => {
 }
 
 /**
+ * 商品状态：产品状态（0:禁用，1:待发布，2:已发布，3:已下架, 4:失效）
+ */
+export const ProductionState: FC<any> = ({ name, ...props }) => {
+  return (
+    <Form.Item name={name}>
+      <Select allowClear {...props}>
+        <Select.Option value={0}>禁用</Select.Option>
+        <Select.Option value={1}>待发布</Select.Option>
+        <Select.Option value={2}>已发布</Select.Option>
+        <Select.Option value={3}>已下架</Select.Option>
+        <Select.Option value={4}>失效</Select.Option>
+      </Select>
+    </Form.Item>
+  )
+}
+
+/**
+ * 商品出行类型 0是固定时间出行，1是约定时间出行
+ */
+export const TravelMode: FC<any> = ({ name, ...props }) => {
+  return (
+    <Form.Item name={name}>
+      <Select allowClear {...props}>
+        <Select.Option value={'0'}>固定时间出行</Select.Option>
+        <Select.Option value={'1'}>约定时间出行</Select.Option>
+      </Select>
+    </Form.Item>
+  )
+}
+
+/**
  * 用户类型选择框, 模版
  */
 export const SelectEmployeeStatusTemp: FC<any> = ({ name, ...props }) => {

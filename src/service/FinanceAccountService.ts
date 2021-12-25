@@ -1,14 +1,14 @@
 import axios from '@/request'
 
 /**
- * 模版 数据
+ * 财务中心-账户中心
  */
-export class TemplateService {
+export class FinanceAccountService {
   /**
    * 列表
    */
   static list({ size = 30, current, ...params }): Promise<any> {
-    return axios.get('/api/operation/banner/page', {
+    return axios.get('/api/wallet/a/userBillPage', {
       params: {
         size,
         current,

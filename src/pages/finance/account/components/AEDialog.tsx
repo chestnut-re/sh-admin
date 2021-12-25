@@ -1,5 +1,4 @@
-import { BannerService } from '@/service/BannerService'
-import { Form, Input, Modal, DatePicker, Row, Col } from 'antd'
+import { Form, Input, Modal, DatePicker, Row, Col, InputNumber } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
 import { HttpCode } from '@/constants/HttpCode'
 import { SubCenterSelect } from '@/components/formItem/SubCenterSelect'
@@ -26,7 +25,10 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
     form.setFieldsValue({
       planName: data?.planName,
       saleScale: data?.saleScale,
-      channelPlanList: data?.saleScale,
+      channelPlanList: data?.channelPlanList.map((item, index) => {
+        item.key = `${Date.now()}-${index}`
+        return item
+      }),
     })
   }, [show])
 
@@ -61,7 +63,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
   }
 
   return (
-    <Modal title="用户" visible={show} onOk={_handleUpdate} onCancel={_formClose}>
+    <Modal title="商品分佣方案" visible={show} onOk={_handleUpdate} onCancel={_formClose}>
       <Form
         name="basic"
         labelCol={{ span: 10 }}
@@ -80,7 +82,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
         </Form.Item>
         <p>分销商品分佣方案配置</p>
         <Form.Item label="分佣比例" name="saleScale">
-          <Input style={{ width: '100px' }} addonAfter="%" />
+          <InputNumber style={{ width: '100px' }} addonAfter="%" type="number" />
         </Form.Item>
       </Form>
     </Modal>

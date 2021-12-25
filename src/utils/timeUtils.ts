@@ -7,6 +7,7 @@ import dayjs from 'dayjs'
  * 时间格式化
  */
 export const formateTime = (date, formate = 'YYYY-MM-DD HH:mm:ss') => {
+  if (!date) return
   return dayjs(date).format(formate)
 }
 

@@ -1,6 +1,6 @@
 import { CommonService } from '@/service/CommonService'
-import { Input, Select, Button, Space } from 'antd'
-import React, { useEffect, useState } from 'react'
+import { Input, Select, Button, Space, InputNumber } from 'antd'
+import React, { useEffect, useRef, useState } from 'react'
 import { FC } from 'react'
 
 import './index.less'
@@ -14,12 +14,15 @@ interface Props {
  * 商品分佣金设置
  */
 export const SubCenterSelect: FC<Props> = ({ ...props }) => {
-  const { onChange, value = [{ key: `${Date.now()}` }] } = props
+  const { onChange, value } = props
   const [subCenters, setSubCenters] = useState<any[]>([])
   const [projects, setProject] = useState<any[]>([{ key: `${Date.now()}` }])
 
   useEffect(() => {
-    setProject(value)
+    if (value) {
+      console.log(value)
+      setProject(value)
+    }
   }, [value])
 
   useEffect(() => {
@@ -60,11 +63,30 @@ export const SubCenterSelect: FC<Props> = ({ ...props }) => {
   return (
     <div className="SubCenterSelect__root">
       {projects?.map((pItem, index) => {
-        const selectValue = subCenters.filter((item) => item.id === pItem.id)[0]?.value
+        console.log('pItem', pItem)
+        console.log('item', subCenters)
+        let selectValue
+        for (const i in subCenters) {
+          if (subCenters[i].id === pItem.id) {
+            selectValue = subCenters[i].name
+          }
+        }
+        console.log('selectValue', selectValue)
+
         return (
           <div key={pItem.key}>
             <Space>
-              分佣比例 <Input type="number" style={{ width: 80 }} /> %
+              分佣比例
+              <InputNumber
+                type="number"
+                style={{ width: 100 }}
+                addonAfter="%"
+                defaultValue={projects[index]['directScale']}
+                onChange={(value) => {
+                  projects[index]['directScale'] = value
+                  setProject([...projects])
+                }}
+              />
               <Select
                 style={{ width: 100 }}
                 value={selectValue}
