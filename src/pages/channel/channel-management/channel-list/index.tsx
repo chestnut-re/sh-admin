@@ -17,7 +17,7 @@ const ChannelPage: React.FC = () => {
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
   const [pageSize] = useState(10)
-  const [total,setTotal] = useState()
+  const [total, setTotal] = useState()
   const [showDialog, setShowDialog] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
   const [channelId, setChannelId] = useState(null)
@@ -135,7 +135,7 @@ const ChannelPage: React.FC = () => {
     <div className="channel-list">
       <Row gutter={[10, 0]}>
         <Col span={3}>
-          {structure.length>0? <ChannelListTree structure={structure} onSelectStructure={_onSelectStructure} />:''}
+          {structure.length > 0 ? <ChannelListTree structure={structure} onSelectStructure={_onSelectStructure} /> : ''}
         </Col>
         <Col span={21}>
           <div>

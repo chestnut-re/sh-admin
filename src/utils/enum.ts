@@ -38,3 +38,19 @@ export const btnPermission = {
   'add': 'add',
   'del': 'del',
 }
+/**
+//  * 人员管理 类型
+ */
+export const personState ={
+  0: '禁用',
+  1: '正常',
+  2: '全部'
+}
+/**
+ * 人员类型
+ */
+export const personType = {
+  0: '渠道账户',
+  1: '内部渠道',
+  2: '外部渠道'
+}

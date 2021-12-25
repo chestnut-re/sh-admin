@@ -1,12 +1,21 @@
+/*
+ * @Description: 添加人员
+ * @LastEditTime: 2021-12-24 10:52:27
+ */
 import React from 'react'
-import { Form, Input, Button, Checkbox, Modal, Cascader, Divider, Space } from 'antd'
+import { Button, Modal, Space } from 'antd'
 import './index.less'
 import FromData from '../component/FromData'
-/**
- * 添加人员
- * @returns
- */
-const CreatePerson: React.FC = (menus) => {
+export type DialogMode = 'add' | 'edit'
+interface Props {
+  data: any
+  mode: DialogMode
+  structure: Array<any>
+  show: boolean
+  onSuccess: () => void
+  onClose: () => void
+}
+const CreatePerson: React.FC<Props> = ({ data, mode, structure, show = false, onSuccess, onClose }) => {
   const [visible, setVisible] = React.useState(false)
   const [confirmLoading, setConfirmLoading] = React.useState(false)
 
@@ -41,7 +50,18 @@ const CreatePerson: React.FC = (menus) => {
         onCancel={handleCancel}
       >
         <Space>基本信息</Space>
-        <FromData />
+        <FromData
+          data={undefined}
+          mode={'add'}
+          structure={[]}
+          show={false}
+          onSuccess={function (): void {
+            throw new Error('Function not implemented.')
+          }}
+          onClose={function (): void {
+            throw new Error('Function not implemented.')
+          }}
+        />
       </Modal>
     </div>
   )

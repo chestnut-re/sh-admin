@@ -1,48 +1,50 @@
-import { Cascader } from 'antd'
-import React from 'react'
+import { getAreas } from '@/service/PersonService'
+import { Cascader, TreeSelect } from 'antd'
+import React, { useEffect, useState } from 'react'
 /**
  * 责任区域
  */
-const Prefecture: React.FC = () => {
-  const options = [
-    {
-      label: 'Light',
-      value: 'light',
-      children: new Array(20).fill(null).map((_, index) => ({ label: `Number ${index}`, value: index })),
-    },
-    {
-      label: 'Bamboo',
-      value: 'bamboo',
-      children: [
-        {
-          label: 'Little',
-          value: 'little',
-          children: [
-            {
-              label: 'Toy Fish',
-              value: 'fish',
-            },
-            {
-              label: 'Toy Cards',
-              value: 'cards',
-            },
-            {
-              label: 'Toy Bird',
-              value: 'bird',
-            },
-          ],
-        },
-      ],
-    },
-  ]
+interface Props {
+  props: any
+}
 
-  function onChange(value) {
-    console.log(value)
+const Prefecture: React.FC<Props> = () => {
+  const [treeData, setTreeData] = useState([])
+  const [state, setState] = useState([0 - 0 - 0])
+  const { SHOW_PARENT } = TreeSelect
+  useEffect(() => {
+    getAreas().then((res) => {
+      console.log(res.data)
+      setTreeData(res.data)
+    })
+    return () => {
+      setTreeData([])
+    }
+  }, [])
+  const onChange = (value) => {
+    console.log('onChange ', value)
+    setState([])
+  }
+  const tProps = {
+    treeData,
+    value: state,
+    onChange: { onChange },
+    treeCheckable: true,
+    showCheckedStrategy: SHOW_PARENT,
+    placeholder: 'Please select',
+    style: {
+      width: '100%',
+    },
   }
   return (
-    <div>
-      <Cascader style={{ width: 433 }} options={options} onChange={onChange} multiple maxTagCount="responsive" />
-    </div>
+    <TreeSelect
+      options={treeData}
+      value={state}
+      treeCheckable={true}
+      showCheckedStrategy={SHOW_PARENT}
+      style={{ width: '285px' }}
+      onChange={onChange}
+    />
   )
 }
 export default Prefecture

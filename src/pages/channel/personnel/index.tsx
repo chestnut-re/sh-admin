@@ -1,60 +1,100 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Col, Row, Button, Table, Space, Pagination } from 'antd'
-import { InputTemp, SelectTemp, LowAndHighTemp } from '@/components/filter/formItem'
+import { Form, Col, Row, Button, Table, Space, message, Select } from 'antd'
+import { InputTemp, SelectTemp } from '@/components/filter/formItem'
 import './component/StructureTree'
 import './index.less'
 import CreatePerson from './add'
 import StructureTree from './component/StructureTree'
-import { getPerson, getRoles } from '@/service/PersonService'
-import Prefecture from './component/Prefecture'
+import { getPerson, getStructure, getSubordinate } from '@/service/PersonService'
+import { cityDispose } from '@/utils/city'
+import { personType, personState } from '@/utils/enum'
+
 /*
  * 人员管理
  */
 const PersonnelManagement: React.FC = () => {
   const [form] = Form.useForm()
-  const [data, setData] = useState([])
+  const [personList, setPersonList] = useState([])
+  const [current, setCurrent] = useState(1)
+  const [pageSize, setPagesize] = useState(10)
+  const [channelId, setChannelId] = useState([])
+  const [structure, setStructure] = useState([])
+  const [total, setTotal] = useState()
 
+  // const loadData = () => {
+  //   form.validateFields().then((query) => {
+  //     const postForm = { pages: pageSize, size: pageSize }
+  //     getPerson(postForm).then((res) => {
+  //       setPersonList(res.data?.records ?? [])
+  //       setTotal(res.data?.total)
+  //     })
+  //   })
+  // }
+  useEffect(() => {
+    getStructure().then((res) => {
+      setStructure(cityDispose([res?.data], 'children'))
+    })
+  }, [])
+  useEffect(() => {
+    getPerson({ pageSize, current, total }).then((res) => {
+      setPersonList(res.data?.records)
+      setTotal(res.data?.total)
+    })
+  }, [pageSize])
+  // useEffect(() => {
+  //   loadData
+  // }, [pageSize])
   const columns = [
     {
       title: '人员ID',
+      dataIndex: 'userId',
       render: (text, record, index) => `${index + 1}`,
     },
     {
-      title: '姓名',
-      dataIndex: 'name',
+      title: '人员名称',
+      dataIndex: 'userName',
     },
     {
       title: '手机号',
-      dataIndex: 'tel',
+      dataIndex: 'phone',
     },
     {
       title: '责任区域',
-      dataIndex: 'prefecture',
+      dataIndex: 'address',
     },
     {
       title: '人员类型',
-      dataIndex: 'type',
+      dataIndex: 'accountType',
+      render: (text: any, record: any) => {
+        if (record.state == 0) {
+          return `渠道账户`
+        } else if (record.state == 1) {
+          return `内部渠道`
+        } else {
+          return `外部渠道s`
+        }
+      },
     },
     {
-      title: '角色权限',
-      dataIndex: 'role',
+      title: '角色名称',
+      dataIndex: 'roleName',
     },
     {
-      title: '创建方',
-      dataIndex: 'Creator',
+      title: '归属渠道',
+      dataIndex: 'channelName',
     },
     {
       title: '创建平台',
-      dataIndex: 'platform',
+      dataIndex: 'createChannel',
     },
     {
       title: '状态',
       dataIndex: 'state',
       render: (text: any, record: any) => {
         if (record.state == 0) {
-          return `下线`
+          return `禁用`
         } else {
-          return `上线`
+          return `正常`
         }
       },
     },
@@ -81,11 +121,10 @@ const PersonnelManagement: React.FC = () => {
   const onChange = () => {
     console.log(1)
   }
-  // useEffect(() => {
-  //   getPerson().then((res) => {
-  //     setData(res.data)
-  //   })
-  // }, [])
+
+  const onReset = () => {
+    form.resetFields()
+  }
   return (
     <div className="channel-list">
       <div className="person-top">
@@ -100,53 +139,88 @@ const PersonnelManagement: React.FC = () => {
           form={form}
         >
           <Row gutter={[12, 12]}>
-            <Col span={7}>
+            <Col span={5}>
               <InputTemp name="username" placeholder="渠道名称/责任区域" />
             </Col>
             <Col span={1} className="table-from-label">
               状态
             </Col>
-            <Col span={3}>
-              <SelectTemp name="state" />
+            <Col span={2}>
+              <Form.Item name="state">
+                <Select allowClear placeholder="全部">
+                  {Object.keys(personState).map((item) => {
+                    return (
+                      <Select.Option key={item} value={item}>
+                        {personState[item]}
+                      </Select.Option>
+                    )
+                  })}
+                </Select>
+              </Form.Item>
             </Col>
             <Col span={2} className="table-from-label">
               人员类型
             </Col>
-            <Col span={3}>
-              <SelectTemp name="type" />
+            <Col span={2}>
+              <Form.Item name="type">
+                <Select allowClear placeholder="全部">
+                  {Object.keys(personType).map((item) => {
+                    return (
+                      <Select.Option key={item} value={item}>
+                        {personType[item]}
+                      </Select.Option>
+                    )
+                  })}
+                </Select>
+              </Form.Item>
             </Col>
             <Form.Item wrapperCol={{ offset: 12, span: 0 }}>
               <Space size={16}>
                 <Button type="primary" htmlType="submit">
                   查询
                 </Button>
-                <Button htmlType="button">重置</Button>
+                <Button htmlType="button" onClick={onReset}>
+                  重置
+                </Button>
               </Space>
             </Form.Item>
           </Row>
         </Form>
       </div>
       <div className="person-button">
-        <CreatePerson />
+        <CreatePerson
+          data={undefined}
+          mode={'add'}
+          structure={[]}
+          show={false}
+          onSuccess={function (): void {
+            throw new Error('Function not implemented.')
+          }}
+          onClose={function (): void {
+            throw new Error('Function not implemented.')
+          }}
+        />
       </div>
       <div></div>
       <Row gutter={[24, 0]}>
         <Col span={4}>
-          <StructureTree />
+          <StructureTree
+            structure={structure}
+            onSelectStructure={function (): void {
+              throw new Error('Function not implemented.')
+            }}
+          />
         </Col>
         <Col span={20}>
           <Table
-            rowKey="id"
+            rowKey="userId"
             columns={columns}
             scroll={{ x: 'max-content' }}
-            dataSource={[...data]}
+            dataSource={personList}
             pagination={{ onChange: onChange }}
           />
         </Col>
       </Row>
-      <div className="page">
-        <Pagination total={50} showSizeChanger showQuickJumper showTotal={(total) => `Total ${total} items`} />
-      </div>
     </div>
   )
 }
