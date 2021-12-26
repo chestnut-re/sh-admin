@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description:
- * @LastEditTime: 2021-12-26 16:13:12
+ * @LastEditTime: 2021-12-26 17:32:25
  */
 
 import React, { useState, useEffect } from 'react'
@@ -80,6 +80,7 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
       }
       ChannelService.edit(query).then((res) => {
         console.log(res, '----')
+        message.success('成功了!')
       })
     }
   }

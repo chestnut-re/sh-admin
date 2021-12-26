@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description:功能权限
- * @LastEditTime: 2021-12-26 17:15:12
+ * @LastEditTime: 2021-12-26 17:32:10
  */
 import { Table, Switch, Space, message, Button } from 'antd'
 import React, { useState, useEffect } from 'react'
@@ -108,6 +108,7 @@ const TableScheme: React.FC<Props> = ({ chanId, switchFc, channelDetail }) => {
 
       ChannelService.edit(query).then((res) => {
         console.log(res, '----')
+        message.success('成功了!')
       })
     }
   }
