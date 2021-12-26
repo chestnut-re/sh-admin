@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description:功能权限
- * @LastEditTime: 2021-12-26 16:07:15
+ * @LastEditTime: 2021-12-26 17:15:12
  */
-import { Table, Switch, Space, message,Button } from 'antd'
+import { Table, Switch, Space, message, Button } from 'antd'
 import React, { useState, useEffect } from 'react'
-import { getMenus } from '@/service/menu'
-
+import { getMenusType } from '@/service/menu'
+import {cityDispose} from '@/utils/tree'
 import ChannelService from '@/service/ChannelService'
 interface Props {
   chanId: any
@@ -20,7 +20,7 @@ const TableScheme: React.FC<Props> = ({ chanId, switchFc, channelDetail }) => {
   const [menu, setMenu] = useState(false)
   const [isOpen, setIdOPen] = useState(false)
   useEffect(() => {
-    init()
+    // init()
     if (channelDetail != '') {
       const newChannelDetail = JSON.parse(channelDetail)
       if (switchFc == 'admin') {
@@ -44,11 +44,14 @@ const TableScheme: React.FC<Props> = ({ chanId, switchFc, channelDetail }) => {
   }, [channelDetail])
   useEffect(() => {
     setSelectedRowKeys([])
+    init()
   }, [switchFc])
 
   const init = async () => {
-    const res = await getMenus()
-    setMenu(res.data?.menus)
+    const res = await getMenusType({
+      platformType: switchFc == 'admin' ? 0 : 1,
+    })
+    setMenu(cityDispose(res?.data,'children'))
   }
   const columns = [
     {
@@ -97,10 +100,10 @@ const TableScheme: React.FC<Props> = ({ chanId, switchFc, channelDetail }) => {
       }
       if (switchFc == 'admin') {
         query['menuAuthority'] = selectedRowKeys
-        query['menuIsOpen'] = isOpen==true?1:0
+        query['menuIsOpen'] = isOpen == true ? 1 : 0
       } else {
         query['businessAuthority'] = selectedRowKeys
-        query['businessIsOpen'] = isOpen==true?1:0
+        query['businessIsOpen'] = isOpen == true ? 1 : 0
       }
 
       ChannelService.edit(query).then((res) => {
@@ -112,8 +115,9 @@ const TableScheme: React.FC<Props> = ({ chanId, switchFc, channelDetail }) => {
     <>
       <Space align="center" style={{ marginBottom: 16 }}>
         是否开启: <Switch checked={isOpen} onChange={setIdOPen} />
-        <Button type="primary" onClick={save}>保存</Button>
-      
+        <Button type="primary" onClick={save}>
+          保存
+        </Button>
       </Space>
       <Table
         columns={columns}

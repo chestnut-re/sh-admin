@@ -2,11 +2,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description:功能权限
- * @LastEditTime: 2021-12-26 16:46:16
+ * @LastEditTime: 2021-12-26 17:14:12
  */
 import { Table, Switch, Space, message, Menu } from 'antd'
 import React, { useState, useEffect } from 'react'
 import { getMenusType } from '@/service/menu'
+import { cityDispose } from '@/utils/tree'
 import ChannelService from '@/service/ChannelService'
 import { getRenderPropValue } from 'antd/lib/_util/getRenderPropValue'
 interface Props {
@@ -43,7 +44,7 @@ const TableMenu: React.FC<Props> = ({
     const res = await getMenusType({
       platformType: switchFc == 'admin' ? 0 : 1,
     })
-    setMenu(res?.data)
+    setMenu(cityDispose(res?.data, 'children'))
   }
   const columns = [
     {
