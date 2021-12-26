@@ -1,6 +1,6 @@
 /*
  * @Description: 字典
- * @LastEditTime: 2021-12-24 14:34:06
+ * @LastEditTime: 2021-12-26 16:03:33
  */
 
 export const status = {
@@ -14,7 +14,11 @@ export const enumState = {
   0: '关闭',
   1: '开启',
 }
-
+export const enumRoleState = {
+  '': '全部',
+  0: '启用',
+  1: '禁用',
+}
 export const regCode = {
   1: '扫码',
   2: '任务分享',
@@ -26,15 +30,15 @@ export const regCode = {
  * @description:  按钮权限
  */
 export const btnPermission = {
-  'edit': 'edit',
-  'add': 'add',
-  'del': 'del',
+  edit: 'edit',
+  add: 'add',
+  del: 'del',
 }
 /**
  * @description:  按钮类型
  */
- export const typePermission = {
-  'edit': 'edit',
-  'add': 'add',
-  'del': 'del',
+export const typePermission = {
+  edit: 'edit',
+  add: 'add',
+  del: 'del',
 }

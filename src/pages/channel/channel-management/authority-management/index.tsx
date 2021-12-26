@@ -1,40 +1,41 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道权限
- * @LastEditTime: 2021-12-24 17:53:46
+ * @LastEditTime: 2021-12-26 12:57:21
  */
 import React, { useState, useEffect } from 'react'
 import { Menu, Col, Row, Checkbox, Radio, Input, Tooltip } from 'antd'
 import { cityDispose, getMaxFloor } from '@/utils/tree'
 import ChannelService from '@/service/ChannelService'
 import ChannelListTree from '../components/ChannelListTree'
-import TableScheme from '../commission-scheme/components/TableScheme'
-import CommissionAuthority from '../commission-scheme/components/CommissionAuthority'
+import TableScheme from './components/TableScheme'
+import CommissionAuthority from './components/CommissionAuthority'
 import './index.less'
 
 const AuthorityManagement: React.FC = () => {
-  const [radioValue, setValue] = useState('')
   const [current, setCurrent] = useState('one')
   const [switchFunc, setSwitchFunc] = useState('admin')
   const [ranked, setRanked] = useState([])
   const [channelId, setChannelId] = useState(null)
   const [structure, setStructure] = useState([])
+  const [channelDetail, setChannelDetail] = useState('')
   useEffect(() => {
     getStructure()
   }, [])
   useEffect(() => {
     getDetail()
   }, [channelId])
+
   const getStructure = () => {
     ChannelService.getStructure().then((res) => {
       setStructure(cityDispose([res?.data], 'children'))
-      console.log(getMaxFloor([res?.data]),'getMaxFloor([res?.data])')
-      setRanked(getMaxFloor([res?.data]))
+      setRanked(getMaxFloor([res?.data]).slice(1))
     })
   }
   const getDetail = () => {
     if (!!channelId) {
       ChannelService.get(channelId).then((res) => {
+        setChannelDetail(JSON.stringify(res?.data))
         // setStructure(cityDispose([res?.data], 'children'))
       })
     }
@@ -71,10 +72,21 @@ const AuthorityManagement: React.FC = () => {
                 <Menu.Item key="admin">管理后台权限</Menu.Item>
                 <Menu.Item key="toB">B端权限</Menu.Item>
               </Menu>
-              <TableScheme chanId={channelId} switchFc={switchFunc} />
+              <TableScheme channelDetail={channelDetail} chanId={channelId} switchFc={switchFunc} />
             </>
           ) : (
-            <>{ranked.length== 0 ? '' : <CommissionAuthority chanId={channelId} ranked={ranked} structure={structure} />}</>
+            <>
+              {ranked.length == 0 ? (
+                ''
+              ) : (
+                <CommissionAuthority
+                  channelDetail={channelDetail}
+                  chanId={channelId}
+                  ranked={ranked}
+                  structure={structure}
+                />
+              )}
+            </>
           )}
           {/* <TableScheme /> */}
         </Col>

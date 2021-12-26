@@ -1,6 +1,6 @@
 /*
  * @Description: 城市数据处理
- * @LastEditTime: 2021-12-24 17:52:24
+ * @LastEditTime: 2021-12-26 15:52:10
  */
 
 /**
@@ -156,6 +156,7 @@ export const arrayNameJoin = (array: (string | any[])[], area: any[], areas = 'a
  */
 export const regionsCodeArray = (array: string, area: any[], areas = 'areas', adcode = 'adcode') => {
   return array.split(',').map((item: string) => {
+   
     return analysisId(area, item, areas, adcode)
   })
 }
