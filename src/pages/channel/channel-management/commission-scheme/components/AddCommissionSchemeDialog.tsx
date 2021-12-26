@@ -1,11 +1,11 @@
 /*
  * @Description: 添加分佣方案
- * @LastEditTime: 2021-12-26 16:35:59
+ * @LastEditTime: 2021-12-26 17:21:54
  */
 
-import { Form, Input, Modal, Cascader, Switch, message, Row, Col ,InputNumber} from 'antd'
+import { Form, Input, Modal, Cascader, message, Row, Col ,InputNumber} from 'antd'
 import React, { FC, useEffect, useState } from 'react'
-import { cityDispose, analysisName, lastOneJoin, arrayNameJoin, regionsCodeArray } from '@/utils/tree'
+import {  analysisName,  } from '@/utils/tree'
 import ChannelService from '@/service/ChannelService'
 export type DialogMode = 'add' | 'edit'
 interface Props {

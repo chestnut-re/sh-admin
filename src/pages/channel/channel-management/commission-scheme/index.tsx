@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道分佣列表
- * @LastEditTime: 2021-12-26 16:37:22
+ * @LastEditTime: 2021-12-26 17:22:23
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
@@ -13,7 +13,7 @@ import ChannelService from '@/service/ChannelService'
 import { cityDispose, getMaxFloor } from '@/utils/tree'
 import { enumState } from '@/utils/enum'
 import './index.less'
-const ChannelPage: React.FC = () => {
+const CommissionSchemePage: React.FC = () => {
   const [form] = Form.useForm()
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
@@ -214,4 +214,4 @@ const ChannelPage: React.FC = () => {
   )
 }
 
-export default ChannelPage
+export default CommissionSchemePage

@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description:功能权限
- * @LastEditTime: 2021-12-26 17:14:12
+ * @LastEditTime: 2021-12-26 17:18:23
  */
 import { Table, Switch, Space, message, Menu } from 'antd'
 import React, { useState, useEffect } from 'react'
@@ -95,10 +95,12 @@ const TableMenu: React.FC<Props> = ({
   }
   return (
     <>
+  
       <Menu onClick={(e) => setSwitchFunc(e.key)} className="mb20" selectedKeys={[switchFc]} mode="horizontal">
         <Menu.Item key="admin">管理后台权限</Menu.Item>
         <Menu.Item key="toB">B端权限</Menu.Item>
       </Menu>
+      <div style={{marginTop:'20px'}}></div>
       {switchFc == 'admin' ? (
         <Space align="center" style={{ marginBottom: 16 }}>
           是否开启: <Switch className="Ad" checked={!!bType} onChange={setBType} />

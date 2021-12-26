@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道列表
- * @LastEditTime: 2021-12-26 16:44:46
+ * @LastEditTime: 2021-12-26 17:28:33
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
 import { InputTemp } from '@/components/filter/formItem'
-import AddCommissionSchemeDialog, { DialogMode } from './components/AddCommissionSchemeDialog'
+import AddUserDialog, { DialogMode } from './components/AddUserDialog'
 import { analysisName } from '@/utils/tree'
 import ChannelListTree from '@/components/components/ChannelListTree'
 import ChannelService from '@/service/ChannelService'
@@ -205,7 +205,7 @@ const RolePage: React.FC = () => {
           />
         </Col>
       </Row>
-      <AddCommissionSchemeDialog
+      <AddUserDialog
         data={selectedData}
         mode={dialogMode}
         structure={structure}

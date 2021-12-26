@@ -1,6 +1,6 @@
 /*
  * @Description: 添加角色
- * @LastEditTime: 2021-12-26 17:06:04
+ * @LastEditTime: 2021-12-26 17:19:30
  */
 
 import { Form, Input, Modal, Cascader, Switch, message } from 'antd'
@@ -135,7 +135,7 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
     // _getFucValue
   }
   return (
-    <Modal title={mode == 'add' ? '创建角色' : '角色详情'} visible={show} onOk={_handleUpdate} onCancel={_formClose}>
+    <Modal title={mode == 'add' ? '创建角色' : '角色详情'} width={700} visible={show} onOk={_handleUpdate} onCancel={_formClose}>
       <Form
         name="basic"
         labelCol={{ span: 6 }}
