@@ -1,5 +1,6 @@
+import { CommonService } from '@/service/CommonService'
 import { Form, Input, Select, DatePicker, TimePicker } from 'antd'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FC } from 'react'
 
 /**
@@ -12,6 +13,37 @@ export const SelectTemp: FC<any> = ({ name, ...props }) => {
         <Select.Option value="male">male</Select.Option>
         <Select.Option value="female">female</Select.Option>
         <Select.Option value="other">other</Select.Option>
+      </Select>
+    </Form.Item>
+  )
+}
+
+/**
+ * 商品状态：产品状态（0:禁用，1:待发布，2:已发布，3:已下架, 4:失效）
+ */
+export const ProductionState: FC<any> = ({ name, ...props }) => {
+  return (
+    <Form.Item name={name}>
+      <Select allowClear {...props}>
+        <Select.Option value={0}>禁用</Select.Option>
+        <Select.Option value={1}>待发布</Select.Option>
+        <Select.Option value={2}>已发布</Select.Option>
+        <Select.Option value={3}>已下架</Select.Option>
+        <Select.Option value={4}>失效</Select.Option>
+      </Select>
+    </Form.Item>
+  )
+}
+
+/**
+ * 商品出行类型 0是固定时间出行，1是约定时间出行
+ */
+export const TravelMode: FC<any> = ({ name, ...props }) => {
+  return (
+    <Form.Item name={name}>
+      <Select allowClear {...props}>
+        <Select.Option value={'0'}>固定时间出行</Select.Option>
+        <Select.Option value={'1'}>约定时间出行</Select.Option>
       </Select>
     </Form.Item>
   )
@@ -109,6 +141,49 @@ export const OrderRoute: FC<any> = ({ name, ...props }) => {
         <Select.Option value={2}>分享链接</Select.Option>
         <Select.Option value={3}>分享任务</Select.Option>
         <Select.Option value={4}>线下扫码</Select.Option>
+      </Select>
+    </Form.Item>
+  )
+}
+
+/**
+ * 下单途径 模版
+ */
+export const SubCenterSelect: FC<any> = ({ name, ...props }) => {
+  const [subCenters, setSubCenters] = useState<any[]>([])
+
+  useEffect(() => {
+    CommonService.getStructure().then((res) => {
+      console.log(res)
+      setSubCenters(res.data.children)
+    })
+  }, [])
+
+  return (
+    <Form.Item name={name}>
+      <Select {...props}>
+        {subCenters.map((item) => {
+          return (
+            <Select.Option key={`${item.id}`} value={`${item.id}`}>
+              {item.name}
+            </Select.Option>
+          )
+        })}
+      </Select>
+    </Form.Item>
+  )
+}
+
+/**
+ * 使用中/未使用
+ */
+export const StatusRoute: FC<any> = ({ name, ...props }) => {
+  return (
+    <Form.Item name={name}>
+      <Select allowClear {...props}>
+        <Select.Option value={''}>全部</Select.Option>
+        <Select.Option value={1}>使用中</Select.Option>
+        <Select.Option value={0}>未使用</Select.Option>
       </Select>
     </Form.Item>
   )

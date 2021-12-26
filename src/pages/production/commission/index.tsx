@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space } from 'antd'
 import './index.less'
-import AEBannerDialog, { DialogMode } from './components/AEBannerDialog'
-import { BannerService } from '@/service/BannerService'
 import { HttpCode } from '@/constants/HttpCode'
-import dayjs from 'dayjs'
-import duration from 'dayjs/plugin/duration'
-import ImageColumn from '@/components/tableColumn/ImageColumn'
-import RemainTime from '@/components/tableColumn/RemainTime'
+import AEDialog, { DialogMode } from './components/AEDialog'
+import { InputTemp, StatusRoute } from '@/components/filter/formItem'
+import { ProductionCommission } from '@/service/ProductionCommission'
+import TimeColumn from '@/components/tableColumn/TimeColumn'
 
 /**
- * App营销-Banner管理-List
+ * 商品管理-添加商品佣金
  */
-const BannerListPage: React.FC = () => {
-  dayjs.extend(duration)
+const ProductionCommissionListPage: React.FC = () => {
   const [form] = Form.useForm()
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
@@ -29,8 +26,10 @@ const BannerListPage: React.FC = () => {
   }, [pageIndex])
 
   const loadData = (pageIndex) => {
-    BannerService.list({ current: pageIndex, size: pageSize }).then((res) => {
-      console.log(res)
+    const params = form.getFieldsValue()
+    console.log(params)
+
+    ProductionCommission.list({ current: pageIndex, size: pageSize, ...params }).then((res) => {
       setData(res.data.records)
       setTotal(res.data.total)
     })
@@ -41,64 +40,34 @@ const BannerListPage: React.FC = () => {
       title: '序号',
       render: (text, record, index) => `${index + 1}`,
     },
+
     {
-      title: '主题图',
-      dataIndex: 'bannerImg',
-      render: (text: any, record: any) => <ImageColumn url={record.bannerImg} />,
-    },
-    {
-      title: '主题名称',
-      dataIndex: 'title',
-    },
-    {
-      title: '链接',
-      dataIndex: 'bannerUrl',
+      title: '方案名称',
+      dataIndex: 'planName',
     },
     {
       title: '状态',
       dataIndex: 'state',
-      render: (text: any, record: any) => {
-        if (record.state == 0) {
-          return `下线`
-        } else if (record.state == 1) {
-          return `上线`
-        } else {
-          return `待上线`
-        }
-      },
     },
     {
-      title: '展示时段',
-      dataIndex: 'endDate',
-      render: (text: any, record: any) => `${record.startDate}~${record.endDate}`,
-      // render: (text: any, record: any) =>
-      //   record.startDate && record.endDate
-      //     ? `${dayjs(record.startDate.split('+')[0]).format('YYYY-MM-DD HH:mm:ss')}~${dayjs(
-      //         record.endDate.split('+')[0]
-      //       ).format('YYYY-MM-DD HH:mm:ss')}`
-      //     : null,
+      title: '现关联商品量',
+      dataIndex: 'bannerUrl',
     },
     {
-      title: '剩余展示时长',
-      dataIndex: 'remainingDisplayTime',
-      // render: (text: any, record: any) => {
-      //   return <RemainTime endDate={record.endDate} />
-      // },
+      title: '关联分中心',
+      dataIndex: 'bannerUrl',
     },
     {
-      title: '添加人',
-      dataIndex: 'createUserName',
-    },
-    {
-      title: '添加时间',
+      title: '创建时间',
       dataIndex: 'updateTime',
+      render: (text, record, index) => <TimeColumn time={record?.updateTime} />,
     },
     {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
           <Button onClick={() => _editDialog(record)}>编辑</Button>
-          <Button onClick={() => _delItem(record)}>删除</Button>
+          {/* <Button onClick={() => _delItem(record)}>删除</Button> */}
         </Space>
       ),
     },
@@ -106,7 +75,7 @@ const BannerListPage: React.FC = () => {
 
   /**删除 */
   const _delItem = (record) => {
-    BannerService.del({ id: record.id }).then((res) => {
+    ProductionCommission.del({ id: record.id }).then((res) => {
       if (res.code === HttpCode.success) {
         loadData(pageIndex)
       }
@@ -120,13 +89,23 @@ const BannerListPage: React.FC = () => {
     setShowDialog(true)
   }
 
-  const onFinish = (values: any) => {
+  /**添加 */
+  const showAdd = () => {
     setShowDialog(true)
     setDialogMode('add')
   }
 
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo)
+  /**筛选 */
+  const onFinish = () => {
+    setPageIndex(1)
+    loadData(1)
+  }
+
+  /**重置 */
+  const resetTable = () => {
+    form.resetFields()
+    setPageIndex(1)
+    loadData(1)
   }
 
   const _onDialogSuccess = () => {
@@ -146,20 +125,32 @@ const BannerListPage: React.FC = () => {
   }
 
   return (
-    <div className="channel-list">
+    <div className="ProductionCommissionListPage__root">
       <div>
-        <Form
-          name="basic"
-          initialValues={{ remember: true }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          form={form}
-        >
+        <Form name="basic" initialValues={{ remember: true }} onFinish={onFinish} form={form}>
           <Row gutter={[10, 0]}>
+            <Col span={1} className="table-from-label"></Col>
+            <Col span={5}>
+              <InputTemp name="planName" placeholder="请输入方案名称" />
+            </Col>
+
+            <Col span={1} className="table-from-label">
+              状态
+            </Col>
+            <Col span={3}>
+              <StatusRoute name="state" />
+            </Col>
+
             <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
               <Space>
-                <Button type="primary" htmlType="submit">
+                <Button type="primary" onClick={showAdd}>
                   添加
+                </Button>
+                <Button type="primary" htmlType="submit">
+                  查询
+                </Button>
+                <Button type="primary" onClick={resetTable}>
+                  重置
                 </Button>
               </Space>
             </Form.Item>
@@ -179,7 +170,7 @@ const BannerListPage: React.FC = () => {
           total: total,
         }}
       />
-      <AEBannerDialog
+      <AEDialog
         data={selectedData}
         mode={dialogMode}
         onSuccess={_onDialogSuccess}
@@ -190,4 +181,4 @@ const BannerListPage: React.FC = () => {
   )
 }
 
-export default BannerListPage
+export default ProductionCommissionListPage

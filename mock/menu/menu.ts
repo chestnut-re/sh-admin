@@ -9,50 +9,56 @@ export default [
         code: '200',
         data: {
           menus: [
-            {
-              name: '运营中心',
-              id: 1,
-              type: 'menu',
-              componentPath: 'operation',
-              path: '/operation',
+            // {
+            //   name: '运营中心',
+            //   id: 1,
+            //   type: 'menu',
+            //   componentPath: 'operation',
+            //   path: '/operation',
 
+            //   children: [],
+            // },
+            {
+              name: '商品管理',
+              id: 11,
+              type: 'menu',
+              componentPath: '/production',
+              path: '/production',
               children: [
                 {
-                  name: '商品管理',
-                  id: 11,
+                  name: '商品列表',
+                  id: 111,
                   type: 'menu',
-                  componentPath: '/operation',
-                  path: '/production',
-                  children: [
-                    {
-                      name: '商品列表',
-                      id: 111,
-                      type: 'menu',
-                      componentPath: '/operation/production/production-list',
-                      path: '/operation/production/production-list',
-                    },
-                    {
-                      name: '发布商品',
-                      id: 112,
-                      type: 'menu',
-                      componentPath: '/operation/production/release-product',
-                      path: '/operation/production/release-product',
-                    },
-                    {
-                      name: '商品审核',
-                      id: 113,
-                      type: 'menu',
-                      componentPath: '/operation/production/commodity-audit',
-                      path: '/operation/production/commodity-audit',
-                    },
-                    {
-                      name: '商品配置',
-                      id: 114,
-                      type: 'menu',
-                      componentPath: '/operation/production/commodity-allocation',
-                      path: '/operation/production/commodity-allocation',
-                    },
-                  ],
+                  componentPath: '/production/production-list',
+                  path: '/production/production-list',
+                },
+                {
+                  name: '发布商品',
+                  id: 112,
+                  type: 'menu',
+                  componentPath: '/production/release-product',
+                  path: '/production/release-product',
+                },
+                {
+                  name: '商品审核',
+                  id: 113,
+                  type: 'menu',
+                  componentPath: '/production/commodity-audit',
+                  path: '/production/commodity-audit',
+                },
+                {
+                  name: '商品配置',
+                  id: 114,
+                  type: 'menu',
+                  componentPath: '/production/commodity-allocation',
+                  path: '/production/commodity-allocation',
+                },
+                {
+                  name: '商品分佣方案',
+                  id: 115,
+                  type: 'menu',
+                  componentPath: '/production/commission',
+                  path: '/production/commission',
                 },
               ],
             },
@@ -149,6 +155,13 @@ export default [
               componentPath: '/finance',
               path: '/finance',
               children: [
+                {
+                  name: '账户中心',
+                  id: 42,
+                  type: 'menu',
+                  componentPath: '/finance/account',
+                  path: '/finance/account',
+                },
                 {
                   name: '销售业绩',
                   id: 41,
