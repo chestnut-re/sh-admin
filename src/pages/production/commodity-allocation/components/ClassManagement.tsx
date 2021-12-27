@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Button, Tree, Modal, Input, Row, Col, Select } from 'antd'
 import './index.less'
-import AddDialog from './AEDialog'
 import { AllocationService } from '@/service/AllocationService'
 import TreePage from './tree'
 import { HttpCode } from '@/constants/HttpCode'
+
 /**
  * 分类管理
  */

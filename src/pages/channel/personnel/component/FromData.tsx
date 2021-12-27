@@ -3,8 +3,6 @@ import { Button, Form, Input, InputNumber, message, Select, Space, Switch, TreeS
 import React, { useEffect, useState } from 'react'
 import { personType } from '@/utils/enum'
 
-// export type DialogMode = 'add' | 'edit'
-
 const FromData: React.FC = () => {
   const [leader, setLeader] = useState([])
   // const [channelId, setChannelId] = useState('1')

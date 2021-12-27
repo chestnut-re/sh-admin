@@ -1,11 +1,11 @@
 /*
  * @Description: 添加渠道
- * @LastEditTime: 2021-12-24 15:59:41
+ * @LastEditTime: 2021-12-26 15:47:07
  */
 
-import { Form, Input, Modal, Cascader, Switch,message } from 'antd'
+import { Form, Input, Modal, Cascader, Switch, message } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
-import { cityDispose, analysisName, lastOneJoin, arrayNameJoin, regionsCodeArray } from '@/utils/tree'
+import { cityDispose, analysisName, analysisNameDuo,lastOneJoin, arrayNameJoin, regionsCodeArray } from '@/utils/tree'
 import ChannelService from '@/service/ChannelService'
 export type DialogMode = 'add' | 'edit'
 interface Props {
@@ -38,8 +38,7 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
     if (!dataId === false) {
       ChannelService.get(dataId).then((res) => {
         const data = res.data
-        setNameDefault(analysisName(structure, data?.pid, 'children', 'id','pid'))
-        console.log(analysisName(structure, data?.pid, 'children', 'id','pid'))
+        setNameDefault(analysisNameDuo(structure, data?.id, 'children', 'id', 'pid'))
         setLevel(data?.level)
         form.setFieldsValue({
           level: data?.level,
@@ -90,10 +89,9 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
               message.success('渠道创建成功')
               setTimeout(() => {
                 onSuccess()
-              }, 500);
-            }else{
+              }, 500)
+            } else {
               message.error('渠道创建失败，请重试')
-              
             }
           })
         } else {
@@ -107,7 +105,7 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
               message.success('渠道编辑成功')
               setTimeout(() => {
                 onSuccess()
-              }, 500);
+              }, 500)
             }
           })
         }

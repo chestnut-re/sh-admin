@@ -160,23 +160,7 @@ const PersonnelManagement: React.FC = () => {
    */
   const getChannel = async () => {
     getStructure().then((res) => {
-      console.log(res.data.children)
-      // setChannelId(res.data.id)
       setStructure(cityDispose([res?.data], 'children'))
-      setChannels(
-        res.data.children.map((item) => {
-          return {
-            label: item.name,
-            key: item.id,
-            children: item.children?.map((item) => {
-              return {
-                label: item.name,
-                key: item.id,
-              }
-            }),
-          }
-        })
-      )
     })
   }
   useEffect(() => {

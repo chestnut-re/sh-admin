@@ -1,6 +1,6 @@
 /*
  * @Description:渠道管理
- * @LastEditTime: 2021-12-24 16:28:05
+ * @LastEditTime: 2021-12-26 14:57:13
  */
 import axios from '@/request'
 
@@ -26,13 +26,26 @@ export default class ChannelService {
     return axios.put('/api/market/channel/update', data)
   }
   static getProvinceCity(): Promise<any> {
-    return axios.get(`/api/area/provinceCity `)
+    return axios.get(`/api/area/provinceCity`)
   }
 
-  // 权限相关
-  static authority = {
-    // edit(data): Promise<any> {
-    //   return axios.put('/api/market/channel/update', data)
-    // },
+  static ChannelPlan = {
+    /**
+     * 商品-分佣方案列表
+     */
+     getChannelDistPlan(data): Promise<any> {
+      return axios.get(`/api/market/channel/getChannelDistPlan`, {
+        params: data,
+      })
+    },
+    /**
+     * 商品-创建分佣方案列表
+     */
+    saveChannelPlan(data): Promise<any> {
+      return axios.post(`/api/market/channel/saveChannelDistPlan`, data)
+    },
+     edit(data): Promise<any> {
+      return axios.put(`/api/market/channel/dist/plan/update`, data)
+    }
   }
 }

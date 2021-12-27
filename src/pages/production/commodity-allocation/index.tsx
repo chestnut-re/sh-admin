@@ -10,9 +10,6 @@ const CommoditAllocationPage: React.FC = () => {
   const { TabPane } = Tabs
   return (
     <div className="allocation__root">
-      <div className="allocation-header">
-        <span>账户中心</span>
-      </div>
       <div className="allocation__root-tabs">
         <Tabs defaultActiveKey="1">
           <TabPane tab="分类管理" key="1">
