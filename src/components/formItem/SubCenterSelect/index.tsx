@@ -78,6 +78,7 @@ export const SubCenterSelect: FC<Props> = ({ ...props }) => {
             <Space>
               分佣比例
               <InputNumber
+                readOnly
                 type="number"
                 style={{ width: 100 }}
                 addonAfter="%"
@@ -88,6 +89,7 @@ export const SubCenterSelect: FC<Props> = ({ ...props }) => {
                 }}
               />
               <Select
+                disabled
                 style={{ width: 100 }}
                 value={selectValue}
                 onChange={(value) => {
@@ -104,7 +106,7 @@ export const SubCenterSelect: FC<Props> = ({ ...props }) => {
                   )
                 })}
               </Select>
-              {index === projects.length - 1 && (
+              {/* {index === projects.length - 1 && (
                 <Button type="primary" onClick={_addNewItem}>
                   添加
                 </Button>
@@ -118,7 +120,7 @@ export const SubCenterSelect: FC<Props> = ({ ...props }) => {
                 >
                   删除
                 </Button>
-              )}
+              )} */}
             </Space>
           </div>
         )

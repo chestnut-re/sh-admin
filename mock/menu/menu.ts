@@ -199,6 +199,12 @@ export default [
                   componentPath: '/order/order-list',
                   path: '/order/order-list',
                 },
+                {
+                  name: '订单详情',
+                  type: 'menu',
+                  componentPath: '/order/order-list/components/order-details/OrderDetails',
+                  path: '/order/order-list/order-details',
+                },
               ],
             },
             {
