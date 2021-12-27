@@ -1,6 +1,6 @@
 /*
  * @Description: 添加渠道
- * @LastEditTime: 2021-12-27 15:27:53
+ * @LastEditTime: 2021-12-27 16:16:24
  */
 
 import { Form, Input, Modal, Cascader, Switch, message } from 'antd'
@@ -164,7 +164,7 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
             <div>{nameDefault}</div>
           )}
         </Form.Item>
-        <Form.Item label="分中心名称" name="name" rules={[{ required: true, message: '请输入' }]}>
+        <Form.Item label="分中心名称" name="name" rules={[{ required: true, message: '请输入' },{max:20,message:'最大不可超过20个字符'}]}>
           <Input />
         </Form.Item>
         <Form.Item label="责任区域" name="regions" rules={[{ required: true, message: '请输入' }]}>
@@ -175,7 +175,7 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
             fieldNames={{ label: 'name', value: 'adcode', children: 'areas' }}
           />
         </Form.Item>
-        <Form.Item label="责任人姓名" name="person" rules={[{ required: true, message: '请输入' }]}>
+        <Form.Item label="责任人姓名" name="person" rules={[{ required: true, message: '请输入' },{max:10,message:'最大不可超过20个字符'}]}>
           <Input />
         </Form.Item>
         <Form.Item label="手机号" name="phoneNumber" rules={[{ required: true, message: '请输入' },{pattern:/^1[3456789]\d{9}$/, message:'请输入正确的手机号'}]}>

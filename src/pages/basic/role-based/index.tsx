@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道列表
- * @LastEditTime: 2021-12-27 15:52:09
+ * @LastEditTime: 2021-12-27 16:23:11
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
@@ -148,11 +148,11 @@ const RolePage: React.FC = () => {
               form={form}
             >
               <Row gutter={[10, 0]}>
-                <Col span={3} className="table-from-label">
-                  角色名称
+                <Col  className="table-from-label">
+                  搜索条件
                 </Col>
-                <Col span={4}>
-                  <InputTemp name="roleName" />
+                <Col >
+                  <InputTemp name="roleName" placeholder="角色名称" />
                 </Col>
                 {/* <Col span={1} className="table-from-label">
                   状态

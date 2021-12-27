@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 用户列表
- * @LastEditTime: 2021-12-27 14:46:17
+ * @LastEditTime: 2021-12-27 16:12:21
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space } from 'antd'
@@ -10,7 +10,7 @@ import { usersQueryList, userGet } from '@/service/user'
 import { regCode } from '@/utils/enum'
 import { SelectEmployeeStatusTemp, SelectRegisterChannel } from '@/components/filter/formItem'
 import TimeColumn from '@/components/tableColumn/TimeColumn'
-import './index.less'
+
 const BannerListPage: React.FC = () => {
   const [form] = Form.useForm()
   const [data, setData] = useState([])
@@ -138,7 +138,7 @@ const BannerListPage: React.FC = () => {
   }
 
   return (
-    <div className="user-list">
+    <div className="channel-list">
       <div>
         <Form name="basic" initialValues={{ remember: true }} form={form} onFinish={onFinish}>
           <Row gutter={[10, 0]}>
