@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道列表
- * @LastEditTime: 2021-12-27 16:23:11
+ * @LastEditTime: 2021-12-27 16:33:21
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
@@ -196,7 +196,7 @@ const RolePage: React.FC = () => {
             dataSource={[...data]}
             pagination={{
               onChange: setPageIndex,
-              showSizeChanger: true,
+              showSizeChanger: false,
               showQuickJumper: true,
               current: pageIndex,
               pageSize: pageSize,
