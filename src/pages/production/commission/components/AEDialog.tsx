@@ -38,12 +38,12 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
       .validateFields()
       .then((formData) => {
         console.log(formData)
+        onSuccess()
         if (mode === 'add') {
-          ProductionCommission.add({ ...formData }).then((res) => {
-            if (res.code === HttpCode.success) {
-              onSuccess()
-            }
-          })
+          // ProductionCommission.add({ ...formData }).then((res) => {
+          //   if (res.code === HttpCode.success) {
+          //   }
+          // })
         } else {
           // ProductionCommission.edit({ ...formData, id: data.id }).then((res) => {
           //   if (res.code === HttpCode.success) {
@@ -73,7 +73,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
         form={form}
       >
         <Form.Item label="方案名称" name="planName" rules={[{ required: true, message: '请输入' }]}>
-          <Input />
+          <Input readOnly />
         </Form.Item>
         <p>直销商品分佣方案配置</p>
 
@@ -82,7 +82,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
         </Form.Item>
         <p>分销商品分佣方案配置</p>
         <Form.Item label="分佣比例" name="saleScale">
-          <InputNumber style={{ width: '100px' }} addonAfter="%" type="number" />
+          <InputNumber style={{ width: '100px' }} addonAfter="%" type="number" readOnly />
         </Form.Item>
       </Form>
     </Modal>

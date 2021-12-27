@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import { Radio, Row, Col, Space, Input, Select, Button, Form, DatePicker, Table } from 'antd'
 import { SelectState, OrderRoute, OrderType, OrderState } from '@/components/filter/formItem'
 import './index.less'
+import OrderDetailsPage from './components/order-details/OrderDetails'
+import { OrderService } from '@/service/OrderService'
 /**
  * 订单列表
  */
 const OrderListPage: React.FC = () => {
+  const history = useHistory()
   const [form] = Form.useForm()
   const { Option } = Select
   const { RangePicker } = DatePicker
@@ -29,44 +33,44 @@ const OrderListPage: React.FC = () => {
   }, [pageIndex])
 
   const loadData = (pageIndex) => {
-    // AdminService.list({ current: pageIndex, pageSize: pageSize, }).then((res) => {
-    //   setData(res.data.records)
-    //   setTotal(res.data.total)
-    // })
+    OrderService.list({ current: pageIndex, size: pageSize }).then((res) => {
+      setData(res.data.records)
+      setTotal(res.data.total)
+    })
   }
 
   const columns = [
     {
       title: '订单编号',
-      dataIndex: 'systemUserId',
+      dataIndex: 'orderNo',
     },
     {
       title: '下单时间',
-      dataIndex: 'nickName',
+      dataIndex: 'orderTime',
     },
     {
       title: '商品名称',
-      dataIndex: 'mobile',
+      dataIndex: 'goodsName',
     },
     {
       title: '单价',
-      dataIndex: 'roleName',
+      dataIndex: 'originPrice', //无
     },
     {
       title: '营销活动',
-      dataIndex: 'state',
+      dataIndex: 'state', //无
     },
     {
       title: '下单数量',
-      dataIndex: 'createTime',
+      dataIndex: 'createTime', //无
     },
     {
       title: '应付款',
-      dataIndex: 'createTime',
+      dataIndex: 'createTime', //无
     },
     {
       title: '实付款',
-      dataIndex: 'createTime',
+      dataIndex: 'payAmount',
     },
     {
       title: '付款方式',
@@ -74,11 +78,11 @@ const OrderListPage: React.FC = () => {
     },
     {
       title: '付款时间',
-      dataIndex: 'createTime',
+      dataIndex: 'payTime',
     },
     {
       title: '买家手机号',
-      dataIndex: 'createTime',
+      dataIndex: 'orderUserPhone',
     },
     {
       title: '下单途径',
@@ -96,7 +100,13 @@ const OrderListPage: React.FC = () => {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button>详情</Button>
+          <Button
+            onClick={() => {
+              toDetails(record)
+            }}
+          >
+            详情
+          </Button>
         </Space>
       ),
     },
@@ -124,6 +134,12 @@ const OrderListPage: React.FC = () => {
       value: '始发地',
     },
   ]
+
+  const toDetails = (record: any) => {
+    history.push('/order/order-list/order-details', {
+      record: record,
+    })
+  }
 
   const onFinish = (values: any) => {
     console.log('Success:', values)
@@ -191,7 +207,7 @@ const OrderListPage: React.FC = () => {
               下单时间
             </Col>
             <Col span={4}>
-              <Form.Item>
+              <Form.Item name="time">
                 <RangePicker showTime />
               </Form.Item>
             </Col>

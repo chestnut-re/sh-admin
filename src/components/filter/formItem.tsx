@@ -105,10 +105,12 @@ export const OrderState: FC<any> = ({ name, ...props }) => {
       <Select allowClear {...props}>
         <Select.Option value={''}>全部</Select.Option>
         <Select.Option value={1}>待付款</Select.Option>
-        <Select.Option value={2}>待确认</Select.Option>
-        <Select.Option value={3}>已完成</Select.Option>
-        <Select.Option value={4}>已失效</Select.Option>
-        <Select.Option value={5}>退款成功</Select.Option>
+        <Select.Option value={3}>待确认</Select.Option>
+        <Select.Option value={4}>已完成</Select.Option>
+        <Select.Option value={2}>已失效</Select.Option>
+        <Select.Option value={5}>退款中</Select.Option>
+        <Select.Option value={6}>退款成功</Select.Option>
+        <Select.Option value={7}>退款失败</Select.Option>
       </Select>
     </Form.Item>
   )
@@ -122,8 +124,8 @@ export const OrderType: FC<any> = ({ name, ...props }) => {
     <Form.Item name={name}>
       <Select allowClear {...props}>
         <Select.Option value={''}>全部</Select.Option>
-        <Select.Option value={1}>直销</Select.Option>
-        <Select.Option value={2}>分销</Select.Option>
+        <Select.Option value={0}>直销</Select.Option>
+        <Select.Option value={1}>分销</Select.Option>
       </Select>
     </Form.Item>
   )

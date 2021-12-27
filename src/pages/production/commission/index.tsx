@@ -66,7 +66,7 @@ const ProductionCommissionListPage: React.FC = () => {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button onClick={() => _editDialog(record)}>编辑</Button>
+          <Button onClick={() => _editDialog(record)}>查看详情</Button>
           {/* <Button onClick={() => _delItem(record)}>删除</Button> */}
         </Space>
       ),
