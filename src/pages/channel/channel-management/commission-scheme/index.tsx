@@ -130,10 +130,10 @@ const CommissionSchemePage: React.FC = () => {
   return (
     <div className="channel-list">
       <Row gutter={[10, 0]}>
-        <Col span={3}>
+        <Col >
           {structure.length > 0 ? <ChannelListTree structure={structure} onSelectStructure={_onSelectStructure} /> : ''}
         </Col>
-        <Col span={21}>
+        <Col span={18}>
           <div>
             <Form
               name="basic"

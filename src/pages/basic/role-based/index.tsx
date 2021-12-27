@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道列表
- * @LastEditTime: 2021-12-27 13:51:29
+ * @LastEditTime: 2021-12-27 14:45:02
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
@@ -133,9 +133,9 @@ const RolePage: React.FC = () => {
     setChannelId(id)
   }
   return (
-    <div className="channel-list">
+    <div className="role-list">
       <Row gutter={[10, 0]}>
-        <Col span={3}>
+        <Col >
           {structure.length > 0 ? <ChannelListTree structure={structure} onSelectStructure={_onSelectStructure} /> : ''}
         </Col>
         <Col span={21}>

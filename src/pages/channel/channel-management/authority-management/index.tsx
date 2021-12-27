@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道权限
- * @LastEditTime: 2021-12-27 14:32:40
+ * @LastEditTime: 2021-12-27 14:44:15
  */
 import React, { useState, useEffect } from 'react'
 import { Menu, Col, Row, Checkbox, Radio, Input, Tooltip } from 'antd'
@@ -57,10 +57,10 @@ const AuthorityManagement: React.FC = () => {
       </Row>
 
       <Row gutter={[10, 0]}>
-        <Col span={3}>
+        <Col>
           {structure.length > 0 ? <ChannelListTree structure={structure} onSelectStructure={_onSelectStructure} /> : ''}
         </Col>
-        <Col span={21}>
+        <Col span={18}>
           {current == 'one' ? (
             <>
               <Menu
