@@ -36,26 +36,26 @@
  * 获取人员详情
  */
 export function getInfo(userId):Promise<any> {
-  return axios.get(`/api/users/admin/user/get/{userId}`,userId)
+  return axios.get(`/api/users/admin/user/get/${userId}`,userId)
 }
  /**
   * 添加人员
   */
  export function add(data): Promise<any> {
-   return axios.post('/api/users/admin/user/add', data)
+   return axios.post('/api/users/admin/user/add',data)
  }
  
  /**
   * 删除人员
   */
  export function del(userId): Promise<any> {
-   return axios.delete('/api/users/admin/user/delete/{userId}', userId)
+   return axios.delete(`/api/users/admin/user/delete/${userId["userId"]}`, userId)
  }
  
  /**
   * 编辑人员
   */
  export function edit(data): Promise<any> {
-   return axios.put('/api/users/admin/user/update', data)
+   return axios.put(`/api/users/admin/user/update`, data)
  }
  

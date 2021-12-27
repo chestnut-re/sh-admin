@@ -1,6 +1,6 @@
 /*
  * @Description: 添加渠道
- * @LastEditTime: 2021-12-26 15:47:07
+ * @LastEditTime: 2021-12-27 16:16:24
  */
 
 import { Form, Input, Modal, Cascader, Switch, message } from 'antd'
@@ -49,13 +49,13 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
           regionsName: data?.regionsName,
           phoneNumber: data?.phoneNumber,
           hotLine: data?.hotLine,
-          state: data?.state == 1 ? true : false,
+          // state: data?.state == 1 ? true : false,
           isOpenAccount: data?.isOpenAccount == 1 ? true : false,
         })
       })
     } else {
       form.setFieldsValue({
-        state: true,
+        // state: true,
         isOpenAccount: true,
       })
     }
@@ -79,7 +79,7 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
         const postData = { ...formData }
         postData.regions = lastOneJoin(formData.regions)
         postData.regionsName = arrayNameJoin(formData.regions, area)
-        postData.state = formData.state ? 1 : 0
+        // postData.state = formData.state ? 1 : 0
         postData.isOpenAccount = formData.isOpenAccount ? 1 : 0
         if (mode === 'add') {
           postData.id = formData.structureId[formData.structureId.length - 1]
@@ -129,6 +129,7 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
   const changeStructure = (e, data) => {
     console.log(data, '---')
     setLevel(data[data.length - 1]?.level)
+    console.log(data[data.length - 1]?.level)
     form.setFieldsValue({
       id: e[e.length - 1],
       level: data[data.length - 1]?.level,
@@ -136,7 +137,7 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
   }
 
   return (
-    <Modal title={mode == 'add' ? '创建渠道' : '渠道详情'} visible={show} onOk={_handleUpdate} onCancel={_formClose}>
+    <Modal title={mode == 'add' ? '创建渠道' : '编辑渠道'} visible={show} onOk={_handleUpdate} onCancel={_formClose}>
       <Form
         name="basic"
         labelCol={{ span: 6 }}
@@ -163,7 +164,7 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
             <div>{nameDefault}</div>
           )}
         </Form.Item>
-        <Form.Item label="分中心名称" name="name" rules={[{ required: true, message: '请输入' }]}>
+        <Form.Item label="分中心名称" name="name" rules={[{ required: true, message: '请输入' },{max:20,message:'最大不可超过20个字符'}]}>
           <Input />
         </Form.Item>
         <Form.Item label="责任区域" name="regions" rules={[{ required: true, message: '请输入' }]}>
@@ -174,27 +175,27 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
             fieldNames={{ label: 'name', value: 'adcode', children: 'areas' }}
           />
         </Form.Item>
-        <Form.Item label="责任人姓名" name="person" rules={[{ required: true, message: '请输入' }]}>
+        <Form.Item label="责任人姓名" name="person" rules={[{ required: true, message: '请输入' },{max:10,message:'最大不可超过20个字符'}]}>
           <Input />
         </Form.Item>
-        <Form.Item label="手机号" name="phoneNumber" rules={[{ required: true, message: '请输入' }]}>
+        <Form.Item label="手机号" name="phoneNumber" rules={[{ required: true, message: '请输入' },{pattern:/^1[3456789]\d{9}$/, message:'请输入正确的手机号'}]}>
           <Input />
         </Form.Item>
-        <Form.Item label="渠道账户" name="isOpenAccount" style={{ display: level == 1 ? 'flex' : 'none' }}>
+        <Form.Item label="渠道账户" name="isOpenAccount" style={{ display: level == 2 ? 'flex' : 'none' }}>
           <Switch defaultChecked={!!data?.isOpenAccount} />
         </Form.Item>
         <Form.Item
           label="客服热线"
           name="hotLine"
-          rules={[{ required: level == 1, message: '请输入' }]}
-          style={{ display: level == 1 ? 'flex' : 'none' }}
+          rules={[{ required: (level == 2), message: '请输入' }]}
+          style={{ display: level == 2 ? 'flex' : 'none' }}
         >
           <Input />
         </Form.Item>
 
-        <Form.Item label="是否开启" name="state">
+        {/* <Form.Item label="是否开启" name="state">
           <Switch defaultChecked={!!data?.state} />
-        </Form.Item>
+        </Form.Item> */}
 
         <Form.Item
           label="level"

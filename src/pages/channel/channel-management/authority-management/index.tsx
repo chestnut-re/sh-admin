@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道权限
- * @LastEditTime: 2021-12-26 12:57:21
+ * @LastEditTime: 2021-12-27 15:52:37
  */
 import React, { useState, useEffect } from 'react'
 import { Menu, Col, Row, Checkbox, Radio, Input, Tooltip } from 'antd'
@@ -29,7 +29,7 @@ const AuthorityManagement: React.FC = () => {
   const getStructure = () => {
     ChannelService.getStructure().then((res) => {
       setStructure(cityDispose([res?.data], 'children'))
-      setRanked(getMaxFloor([res?.data]).slice(1))
+      setRanked(getMaxFloor([res?.data]))
     })
   }
   const getDetail = () => {
@@ -57,10 +57,11 @@ const AuthorityManagement: React.FC = () => {
       </Row>
 
       <Row gutter={[10, 0]}>
-        <Col span={3}>
+      <Col xxl={3} xl={5} lg={7} md={8}>
           {structure.length > 0 ? <ChannelListTree structure={structure} onSelectStructure={_onSelectStructure} /> : ''}
         </Col>
-        <Col span={21}>
+    
+        <Col xxl={21} xl={19} lg={17} md={16}>
           {current == 'one' ? (
             <>
               <Menu

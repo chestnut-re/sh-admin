@@ -58,3 +58,10 @@ export const personType = {
   1: '内部渠道',
   2: '外部渠道'
 }
+/**
+ *创建平台
+ */
+export const createChannel ={
+  0: '管理后台',
+  1: 'biz山海',
+}

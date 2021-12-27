@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道列表
- * @LastEditTime: 2021-12-24 15:59:15
+ * @LastEditTime: 2021-12-27 15:53:04
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
@@ -84,11 +84,11 @@ const ChannelPage: React.FC = () => {
             : analysisName(structure, recode?.id, 'children', 'id', 'pid')
         }`,
     },
-    {
-      title: '状态',
-      dataIndex: 'state',
-      render: (_text, record) => `${enumState[record.state]} `,
-    },
+    // {
+    //   title: '状态',
+    //   dataIndex: 'state',
+    //   render: (_text, record) => `${enumState[record.state]} `,
+    // },
 
     {
       title: '操作',
@@ -141,10 +141,10 @@ const ChannelPage: React.FC = () => {
   return (
     <div className="channel-list">
       <Row gutter={[10, 0]}>
-        <Col span={3}>
+      <Col xxl={3} xl={5} lg={7} md={8}>
           {structure.length > 0 ? <ChannelListTree structure={structure} onSelectStructure={_onSelectStructure} /> : ''}
         </Col>
-        <Col span={21}>
+        <Col xxl={21} xl={19} lg={17} md={16}>
           <div>
             <Form
               name="basic"
@@ -154,13 +154,13 @@ const ChannelPage: React.FC = () => {
               form={form}
             >
               <Row gutter={[10, 0]}>
-                <Col span={1} className="table-from-label">
+                <Col span={2} className="table-from-label">
                   渠道名称
                 </Col>
                 <Col span={3}>
                   <InputTemp name="channel" />
                 </Col>
-                <Col span={1} className="table-from-label">
+                {/* <Col span={1} className="table-from-label">
                   状态
                 </Col>
                 <Col span={3}>
@@ -175,8 +175,8 @@ const ChannelPage: React.FC = () => {
                       })}
                     </Select>
                   </Form.Item>
-                </Col>
-                <Col span={5}>
+                </Col> */}
+                <Col span={6}>
                   <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
                     <Space>
                       <Button type="primary" htmlType="submit">
