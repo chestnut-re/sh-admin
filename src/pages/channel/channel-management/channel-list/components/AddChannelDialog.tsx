@@ -1,6 +1,6 @@
 /*
  * @Description: 添加渠道
- * @LastEditTime: 2021-12-27 15:21:01
+ * @LastEditTime: 2021-12-27 15:27:53
  */
 
 import { Form, Input, Modal, Cascader, Switch, message } from 'antd'
@@ -181,14 +181,14 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
         <Form.Item label="手机号" name="phoneNumber" rules={[{ required: true, message: '请输入' },{pattern:/^1[3456789]\d{9}$/, message:'请输入正确的手机号'}]}>
           <Input />
         </Form.Item>
-        <Form.Item label="渠道账户" name="isOpenAccount" style={{ display: level == 1 ? 'none' : 'flex' }}>
+        <Form.Item label="渠道账户" name="isOpenAccount" style={{ display: level == 2 ? 'flex' : 'none' }}>
           <Switch defaultChecked={!!data?.isOpenAccount} />
         </Form.Item>
         <Form.Item
           label="客服热线"
           name="hotLine"
-          rules={[{ required: !(level == 1), message: '请输入' }]}
-          style={{ display: level == 1 ? 'none' : 'flex' }}
+          rules={[{ required: (level == 2), message: '请输入' }]}
+          style={{ display: level == 2 ? 'flex' : 'none' }}
         >
           <Input />
         </Form.Item>
