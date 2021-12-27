@@ -128,7 +128,7 @@ const CommissionSchemePage: React.FC = () => {
     setChannelId(id)
   }
   return (
-    <div className="channel-list">
+    <div className="scheme-list">
       <Row gutter={[10, 0]}>
         <Col >
           {structure.length > 0 ? <ChannelListTree structure={structure} onSelectStructure={_onSelectStructure} /> : ''}
