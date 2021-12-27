@@ -6,20 +6,20 @@ import React from 'react'
  */
 interface Props {
   structure: Array<any>
-  onSelectStructure: () => void
+  onSelectStructure: (e: any) => void
 }
 const StructureTree: React.FC<Props> = ({ structure, onSelectStructure }) => {
-  const onSelect = (selectedKeys, info) => {
-    console.log('selected', selectedKeys, info)
-    onSelectStructure
+  const onSelect = (selectedKeys) => {
+    onSelectStructure(selectedKeys[selectedKeys.length - 1])
   }
   return (
     <Tree
-      showLine={false}
+      // showLine={false}
       fieldNames={{ title: 'name', key: 'id', children: 'children' }}
       switcherIcon={<CaretDownOutlined />}
       onSelect={onSelect}
       treeData={structure}
+      defaultExpandAll={true}
     />
   )
 }

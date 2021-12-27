@@ -1,27 +1,104 @@
-import { add, edit, getAreas, getPerson, getRoles, getStructure, getSubordinate } from '@/service/PersonService'
-import { Button, Cascader, Form, Input, InputNumber, Select, Space, Switch } from 'antd'
+import { add, getAreas, getPerson, getRoles, getStructure, getSubordinate } from '@/service/PersonService'
+import { Button, Form, Input, InputNumber, message, Select, Space, Switch, TreeSelect } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { cityDispose } from '@/utils/tree'
-import Prefecture from './Prefecture'
 import { personType } from '@/utils/enum'
 
-export type DialogMode = 'add' | 'edit'
-
-interface Props {
-  data: any
-  mode: DialogMode
-  structure: Array<any>
-  show: boolean
-  onSuccess: () => void
-  onClose: () => void
-}
-const FromData: React.FC<Props> = ({ data, mode, structure, show = false, onSuccess, onClose }) => {
+const FromData: React.FC = () => {
   const [leader, setLeader] = useState([])
   // const [channelId, setChannelId] = useState('1')
-  const [state, setState] = useState([])
-  const [form] = Form.useForm()
+  const [channel, setChannels] = useState([])
+  const [checkedChannel, setCheckedChannel] = useState([])
+  const [checkedAreas, setCheckedAreas] = useState([])
+  const { SHOW_PARENT } = TreeSelect
   const [roleName, setRoleName] = useState([])
-  const [area, setArea] = useState<Array<any>>([])
+  const [areas, setAreas] = useState<Array<any>>([])
+  const [address, setAddress] = useState('')
+  // 上级用户Id
+  const [supUserId, setSupUserId] = useState(1)
+  const [realName, setRealName] = useState('')
+  const [wechatNum, setWechatNum] = useState('')
+  const [phone, setphone] = useState('')
+  const [subsidy, setsubsidy] = useState('')
+  const [roleId, setroleId] = useState(1)
+  const [state, setstate] = useState('')
+  const [accountType, setAccountType] = useState(0)
+  /**
+   * 添加人员
+   */
+  // const addPerson = () => {
+  //   const data = {
+  //     address,
+  //     supUserId,
+  //     realName,
+  //     wechatNum,
+  //     phone,
+  //     subsidy,
+  //     roleId,
+  //     state,
+  //     accountType,
+  //   }
+  //   add(data).then((res) => {
+  //     if (res.data.code === '10004') {
+  //       message.warning('该人员已存在')
+  //     } else {
+  //       setAddress('')
+  //       setSupUserId(1)
+  //       setRealName('')
+  //       setWechatNum('')
+  //       setphone('')
+  //       setsubsidy('')
+  //       setroleId(1)
+  //       setstate('')
+  //       setAccountType(0)
+  //       setCheckedAreas([])
+  //       // setVisible(false)
+  //       getPerson().then((res) => setPersonList(res.data))
+  //     }
+  //   })
+  // }
+  /**
+   * 请求责任区域
+   */
+  const getProvinceCity = async () => {
+    getAreas().then((res) => {
+      setAreas(
+        res.data.map((item) => {
+          return {
+            label: item.name,
+            key: item.adcode,
+            children: item.areas.map((item) => {
+              return {
+                label: item.name,
+                key: item.adcode,
+              }
+            }),
+          }
+        })
+      )
+    })
+  }
+  /**
+   * 请求渠道名称
+   */
+  const getChannel = async () => {
+    getStructure().then((res) => {
+      console.log(res.data.children)
+      setChannels(
+        res.data.children.map((item) => {
+          return {
+            label: item.name,
+            key: item.id,
+            children: item.children?.map((item) => {
+              return {
+                label: item.name,
+                key: item.id,
+              }
+            }),
+          }
+        })
+      )
+    })
+  }
   useEffect(() => {
     // getStructure().then((res) => {
     // setChannelId(res.data.id)
@@ -29,6 +106,8 @@ const FromData: React.FC<Props> = ({ data, mode, structure, show = false, onSucc
     //   setLeader(res.data.username)
     // })
     // })
+    getChannel()
+    getProvinceCity()
     getSubordinate({ channelId: 1 }).then((res) => {
       // console.log(res)
       setLeader(
@@ -41,7 +120,6 @@ const FromData: React.FC<Props> = ({ data, mode, structure, show = false, onSucc
       )
     })
     getRoles().then((res) => {
-      console.log(res.data.data)
       setRoleName(
         res.data.map((item) => {
           return {
@@ -81,24 +159,44 @@ const FromData: React.FC<Props> = ({ data, mode, structure, show = false, onSucc
   }
   return (
     <div>
-      <Form {...layout} name="nest-messages" size="large" onFinish={onFinish} validateMessages={validateMessages}>
+      <Form {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
         <Form.Item name={['person', 'channel']} label="归属渠道">
-          <Input placeholder="渠道名称" onChange={onInput} />
+          <TreeSelect
+            treeData={channel}
+            value={checkedChannel}
+            treeCheckable={true}
+            // treeDefaultExpandAll={true}
+            style={{ width: '285px' }}
+            onChange={(checkedChannel) => {
+              setCheckedChannel(checkedChannel)
+            }}
+            showCheckedStrategy={SHOW_PARENT}
+          />
         </Form.Item>
         <Form.Item name={['person', 'leader']} label="上级人员" rules={[{ required: true }]}>
           <Select placeholder="无" options={leader} />
         </Form.Item>
-        <Form.Item name={['person', 'prefecture']} label="责任区域" rules={[{ required: true }]}>
-          {/* <Prefecture props={undefined} /> */}
+        <Form.Item name={['person', 'address']} label="责任区域" rules={[{ required: true }]}>
+          <TreeSelect
+            treeData={areas}
+            value={checkedAreas}
+            treeCheckable={true}
+            // treeDefaultExpandAll={true}
+            style={{ width: '285px' }}
+            onChange={(checkedAreas) => {
+              setCheckedAreas(checkedAreas)
+            }}
+            showCheckedStrategy={SHOW_PARENT}
+          />
         </Form.Item>
-        <Form.Item name={['person', 'userName']} label="姓名" rules={[{ required: true }]}>
+        <Form.Item name={['person', 'realName']} label="姓名" rules={[{ required: true }]}>
           <Input
             onChange={(event) => {
               event.target.value
             }}
           />
         </Form.Item>
-        <Form.Item name={['person', 'weChat']} label="微信号">
+        <Form.Item name={['person', 'wechatNum']} label="微信号">
           <Input onChange={onInput} />
         </Form.Item>
         <Form.Item name={['person', 'phone']} label="手机号/账号" rules={[{ required: true }]}>
@@ -119,18 +217,18 @@ const FromData: React.FC<Props> = ({ data, mode, structure, show = false, onSucc
             })}
           </Select>
         </Form.Item>
-        <Space>权限配置</Space>
-        <Form.Item name={['person', 'roleName']} label="角色名称" rules={[{ required: true }]}>
+        {/* <Space>权限配置</Space> */}
+        <Form.Item name={['person', 'roleId']} label="角色名称" rules={[{ required: true }]}>
           <Select options={roleName} />
         </Form.Item>
-        <Form.Item name={['person', 'switch']} label="是否启用" rules={[{ required: true }]}>
+        <Form.Item name={['person', 'state']} label="是否启用" rules={[{ required: true }]}>
           <Switch onChange={onChange} defaultChecked={false} />
         </Form.Item>
         <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
           <Button htmlType="submit" type="primary">
             保存
           </Button>
-          <Button htmlType="button" style={{ margin: '50px 80px' }}>
+          <Button htmlType="button" style={{ margin: '0 80px' }}>
             提交
           </Button>
         </Form.Item>
