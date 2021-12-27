@@ -1,7 +1,7 @@
 import { add, edit, getAreas, getPerson, getRoles, getStructure, getSubordinate } from '@/service/PersonService'
 import { Button, Cascader, Form, Input, InputNumber, Select, Space, Switch } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { cityDispose } from '@/utils/city'
+// import { cityDispose } from '@/utils/city'
 import Prefecture from './Prefecture'
 import { personType } from '@/utils/enum'
 

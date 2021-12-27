@@ -1,4 +1,3 @@
-import data from '@/pages/channel/channel-management/channel-list/data'
 import { FileService } from '@/service/FileService'
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
 import { Form, FormInstance, Upload } from 'antd'
@@ -49,7 +48,7 @@ const UploadImage: React.FC<UploadImageProps> = ({ onChange, value }) => {
   const uploadButton = (
     <div>
       {loading ? <LoadingOutlined /> : <PlusOutlined />}
-      <div style={{ marginTop: 8 }}>Upload</div>
+      <div style={{ marginTop: 8 }}>上传图片</div>
     </div>
   )
 

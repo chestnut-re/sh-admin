@@ -6,7 +6,7 @@ import './index.less'
 import CreatePerson from './add'
 import StructureTree from './component/StructureTree'
 import { getPerson, getStructure, getSubordinate } from '@/service/PersonService'
-import { cityDispose } from '@/utils/city'
+// import { cityDispose } from '@/utils/city'
 import { personType, personState } from '@/utils/enum'
 
 /*
@@ -32,7 +32,7 @@ const PersonnelManagement: React.FC = () => {
   // }
   useEffect(() => {
     getStructure().then((res) => {
-      setStructure(cityDispose([res?.data], 'children'))
+      // setStructure(cityDispose([res?.data], 'children'))
     })
   }, [])
   useEffect(() => {
