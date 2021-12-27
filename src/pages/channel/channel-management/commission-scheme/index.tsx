@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道分佣列表
- * @LastEditTime: 2021-12-26 17:22:23
+ * @LastEditTime: 2021-12-27 15:53:33
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
@@ -130,10 +130,10 @@ const CommissionSchemePage: React.FC = () => {
   return (
     <div className="scheme-list">
       <Row gutter={[10, 0]}>
-        <Col >
+      <Col xxl={3} xl={5} lg={7} md={8}>
           {structure.length > 0 ? <ChannelListTree structure={structure} onSelectStructure={_onSelectStructure} /> : ''}
         </Col>
-        <Col span={18}>
+        <Col xxl={21} xl={19} lg={17} md={16}>
           <div>
             <Form
               name="basic"
@@ -143,7 +143,7 @@ const CommissionSchemePage: React.FC = () => {
               form={form}
             >
               <Row gutter={[10, 0]}>
-                <Col span={1} className="table-from-label">
+                <Col span={2} className="table-from-label">
                   方案名称
                 </Col>
                 <Col span={3}>

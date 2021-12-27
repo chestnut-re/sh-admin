@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道列表
- * @LastEditTime: 2021-12-27 14:45:02
+ * @LastEditTime: 2021-12-27 15:52:09
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
@@ -135,10 +135,10 @@ const RolePage: React.FC = () => {
   return (
     <div className="role-list">
       <Row gutter={[10, 0]}>
-        <Col >
+        <Col xxl={3} xl={5} lg={7} md={8}>
           {structure.length > 0 ? <ChannelListTree structure={structure} onSelectStructure={_onSelectStructure} /> : ''}
         </Col>
-        <Col span={21}>
+        <Col xxl={21} xl={19} lg={17} md={16}>
           <div>
             <Form
               name="basic"
@@ -148,10 +148,10 @@ const RolePage: React.FC = () => {
               form={form}
             >
               <Row gutter={[10, 0]}>
-                <Col span={1} className="table-from-label">
+                <Col span={3} className="table-from-label">
                   角色名称
                 </Col>
-                <Col span={3}>
+                <Col span={4}>
                   <InputTemp name="roleName" />
                 </Col>
                 {/* <Col span={1} className="table-from-label">

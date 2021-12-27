@@ -1,6 +1,6 @@
 /*
  * @Description: 添加分佣方案
- * @LastEditTime: 2021-12-26 17:21:54
+ * @LastEditTime: 2021-12-27 16:04:09
  */
 
 import { Form, Input, Modal, Cascader, message, Row, Col ,InputNumber} from 'antd'
@@ -174,7 +174,7 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
         autoComplete="off"
         form={form}
       >
-        {level == 1 ? (
+        {level == 1||mode=='add' ? (
           <Form.Item label="归属分佣方案" name="structureId" rules={[{ required: true, message: '请输入' }]}>
             {mode == 'add' ? (
               <Cascader

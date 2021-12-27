@@ -137,7 +137,7 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
   }
 
   return (
-    <Modal title={mode == 'add' ? '创建渠道' : '渠道详情'} visible={show} onOk={_handleUpdate} onCancel={_formClose}>
+    <Modal title={mode == 'add' ? '创建渠道' : '编辑渠道'} visible={show} onOk={_handleUpdate} onCancel={_formClose}>
       <Form
         name="basic"
         labelCol={{ span: 6 }}
