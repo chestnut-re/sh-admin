@@ -1,11 +1,11 @@
 /*
  * @Description: 添加分佣方案
- * @LastEditTime: 2021-12-27 18:50:05
+ * @LastEditTime: 2021-12-27 19:43:14
  */
 
 import { Form, Input, Modal, Cascader, message, Row, Col, InputNumber } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
-import { analysisName } from '@/utils/tree'
+import { analysisNameDuo } from '@/utils/tree'
 import ChannelService from '@/service/ChannelService'
 export type DialogMode = 'add' | 'edit'
 interface Props {
@@ -26,24 +26,27 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
   const [level, setLevel] = useState(1)
   const [nameDefault, setNameDefault] = useState('')
   const [channelDistAuth, setChannelDistAuth] = useState([])
+
   useEffect(() => {
     if (show) {
       if (mode == 'add') {
         setLevel(structure[0].level)
         ChannelService.get(form.getFieldValue('id')).then((res) => {
           const resData = res?.data
-          const mapData = (res.data?.channelDistAuth ?? [])
-          const dataList = mapData.map((res, index, array) => {
-            const mapList = array.slice(0, index) ?? []
-            res.saleScalePlan = mapList.filter((mRes, Ci) => {
-              if (mRes.saleAuth == 1) {
-                return res
-              }
+          const mapData = res.data?.channelDistAuth ?? []
+          const dataList = mapData
+            .map((res, index, array) => {
+              const mapList = array.slice(0, index) ?? []
+              res.saleScalePlan = mapList.filter((mRes, Ci) => {
+                if (mRes.saleAuth == 1) {
+                  return res
+                }
+              })
+              res.isGroupServiceFee = resData?.isGroupServiceFee
+
+              return res
             })
-            res.isGroupServiceFee = resData?.isGroupServiceFee
-          
-            return res
-          }).filter(res=>res?.directAuth == 1)
+            .filter((res) => res?.directAuth == 1)
           console.log(dataList, 'dataList')
           setChannelDistAuth(dataList)
         })
@@ -55,7 +58,6 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
   }, [level])
   useEffect(() => {
     if (show) {
-      console.log(data, '------')
       getDetail()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -66,10 +68,9 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
   const getDetail = () => {
     const dataId = data?.id
     if (!dataId === false) {
-      // setNameDefault(analysisName(structure, data?.pid, 'children', 'id', 'pid'))
-      console.log(analysisName(structure, data?.channelId, 'children', 'id', 'pid'))
-      console.log('structure', 'structure', structure)
       setChannelDistAuth(data?.channelPlanList)
+      setNameDefault(analysisNameDuo(structure, data?.channelId, 'children', 'id', 'pid'))
+      console.log(analysisNameDuo(structure, data?.channelId, 'children', 'id', 'pid'), 'sss')
       form.setFieldsValue({
         structureId: data?.id,
         channelPlanList: data?.channelPlanList,
