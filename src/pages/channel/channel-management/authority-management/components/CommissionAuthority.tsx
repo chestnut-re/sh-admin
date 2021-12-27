@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description:
- * @LastEditTime: 2021-12-27 16:33:07
+ * @LastEditTime: 2021-12-27 18:40:45
  */
 
 import React, { useState, useEffect } from 'react'
@@ -21,8 +21,6 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
   const [isGroupServiceFee, setIsGroupServiceFee] = useState(0)
   const [form] = Form.useForm()
   useEffect(() => {
-    console.log(channelDetail, 'channelDetailchannelDetail')
-
     if (channelDetail == '') {
       form.setFieldsValue({
         saleSettleDay: 0,
@@ -32,9 +30,9 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
     } else {
       const Data = JSON.parse(channelDetail)
       let listDit: any
+      const mapList = Data.channelDistAuth ??[]
       listDit =
-        Data.channelDistAuth ??
-        [].map((res) => {
+      mapList.map((res) => {
           let list = []
           res?.saleAuth == 1 ? list.push(0) : ''
           res?.directAuth == 1 ? list.push(1) : ''
@@ -67,8 +65,8 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
     PostData['isGroupServiceFee'] = values['isGroupServiceFee'].length > 0 ? 1 : 0
     PostData['channelDistAuth'] = values['channelDistAuth'].map((res, index) => {
       return {
-        directAuth: res ?? ''.indexOf(1) == -1 ? 0 : 1,
-        saleAuth: res ?? ''.indexOf(0) == -1 ? 0 : 1,
+        directAuth: res.indexOf(1) == -1 ? 0 : 1,
+        saleAuth: res.indexOf(0) == -1 ? 0 : 1,
         level: ranked[index].level,
       }
     })
@@ -110,41 +108,40 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
           </div>
         </Form.Item>
         <Form.Item name="isGroupServiceFee">
-          <Checkbox.Group onChange={changeCheckout}>
-            <Checkbox value="1">
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                发团服务费&nbsp; &nbsp;
-                <Tooltip placement="right" title={'发团后是否获取佣金'}>
-                  <QuestionCircleOutlined />
-                </Tooltip>
-              </div>
-            </Checkbox>
-          </Checkbox.Group>
-        </Form.Item>
-        {isGroupServiceFee == 1 ? (
-          <Form.Item
-            label="发团服务结算要求"
-            name="groupSettleType"
-            rules={[{ required: true, message: '请选择佣金权限 !' }]}
-          >
-            <Radio.Group onChange={onChangeRadio} value={''}>
-              <Radio value={1}>核销</Radio>
-              {/* <Radio value={3}>行程结束</Radio> */}
-              <Radio value={2}>
+            <Checkbox.Group onChange={changeCheckout}>
+              <Checkbox value="1">
                 <div style={{ display: 'flex', alignItems: 'center' }}>
-                  行程结束 &nbsp; &nbsp;且需满&nbsp; &nbsp;
-                  <Form.Item name="groupSettleDay" style={{ marginBottom: '0' }}>
-                    <InputNumber addonAfter="天" defaultValue={0} />
-                  </Form.Item>
-                </div>{' '}
-                &nbsp; &nbsp;
-              </Radio>
-            </Radio.Group>
+                  发团服务费&nbsp; &nbsp;
+                  <Tooltip placement="right" title={'发团后是否获取佣金'}>
+                    <QuestionCircleOutlined />
+                  </Tooltip>
+                </div>
+              </Checkbox>
+            </Checkbox.Group>
           </Form.Item>
+        {isGroupServiceFee == 1 ? (
+      <Form.Item
+      label="发团服务结算要求"
+      name="groupSettleType"
+      rules={[{ required: true, message: '请选择佣金权限 !' }]}
+    >
+      <Radio.Group onChange={onChangeRadio} value={''}>
+        <Radio value={1}>核销</Radio>
+        {/* <Radio value={3}>行程结束</Radio> */}
+        <Radio value={2}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            行程结束 &nbsp; &nbsp;且需满&nbsp; &nbsp;
+            <Form.Item name="groupSettleDay" style={{ marginBottom: '0' }}>
+              <InputNumber addonAfter="天" defaultValue={0} />
+            </Form.Item>
+          </div>{' '}
+          &nbsp; &nbsp;
+        </Radio>
+      </Radio.Group>
+    </Form.Item>
         ) : (
           ''
         )}
-
         <span style={{ marginBottom: '10px', display: 'block' }}>分销分佣：所属所有下级卖出去商品后，是否获得佣金</span>
         {ranked.map((res, index) => {
           return (

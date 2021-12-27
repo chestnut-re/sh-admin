@@ -1,6 +1,6 @@
 /*
  * @Description: 城市数据处理
- * @LastEditTime: 2021-12-27 14:34:00
+ * @LastEditTime: 2021-12-27 18:22:36
  */
 
 /**
@@ -184,7 +184,6 @@ export const getMaxFloor = (treeData: any[] = []) => {
       if (floor > max) {
         max = floor
         if(e.level!=1){
-
           arrayList.push(e)
         }
       }
@@ -196,4 +195,24 @@ export const getMaxFloor = (treeData: any[] = []) => {
   }
   each(treeData, 1)
   return arrayList
+}
+
+/**
+ * @description: level 小于2 的全部删除
+ * @param {Array} city
+ * @param {string} children
+ * @return {*}
+ */
+export const getTwoTier = (city: Array<any>, children: string): any => {
+  city.forEach((item) => {
+    if(item['level']<2){
+      item = getTwoTier(item[children], children)
+    } else {
+        console.log(item,'------')
+        delete item[children]
+      
+    }
+    return item
+  })
+  return city
 }

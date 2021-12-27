@@ -1,11 +1,11 @@
 /*
  * @Description: 添加分佣方案
- * @LastEditTime: 2021-12-27 16:04:09
+ * @LastEditTime: 2021-12-27 18:50:05
  */
 
-import { Form, Input, Modal, Cascader, message, Row, Col ,InputNumber} from 'antd'
+import { Form, Input, Modal, Cascader, message, Row, Col, InputNumber } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
-import {  analysisName,  } from '@/utils/tree'
+import { analysisName } from '@/utils/tree'
 import ChannelService from '@/service/ChannelService'
 export type DialogMode = 'add' | 'edit'
 interface Props {
@@ -31,18 +31,20 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
       if (mode == 'add') {
         setLevel(structure[0].level)
         ChannelService.get(form.getFieldValue('id')).then((res) => {
-          const dataList = (res.data?.channelDistAuth ?? []).map((res, index, array) => {
-            res.saleScalePlan =
-              array.slice(0, index) ??
-              [].map((mRes, Ci) => {
-                if (mRes.saleAuth == 1) {
-                  return res
-                }
-              })
-            if (res.directAuth == 1) {
-              return res
-            }
-          })
+          const resData = res?.data
+          const mapData = (res.data?.channelDistAuth ?? [])
+          const dataList = mapData.map((res, index, array) => {
+            const mapList = array.slice(0, index) ?? []
+            res.saleScalePlan = mapList.filter((mRes, Ci) => {
+              if (mRes.saleAuth == 1) {
+                return res
+              }
+            })
+            res.isGroupServiceFee = resData?.isGroupServiceFee
+          
+            return res
+          }).filter(res=>res?.directAuth == 1)
+          console.log(dataList, 'dataList')
           setChannelDistAuth(dataList)
         })
       } else {
@@ -174,8 +176,8 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
         autoComplete="off"
         form={form}
       >
-        {level == 1||mode=='add' ? (
-          <Form.Item label="归属分佣方案" name="structureId" rules={[{ required: true, message: '请输入' }]}>
+        {level == 1 || mode == 'add' ? (
+          <Form.Item label="所属渠道" name="structureId" rules={[{ required: true, message: '请输入' }]}>
             {mode == 'add' ? (
               <Cascader
                 options={structure}
@@ -209,23 +211,28 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
                       label="直销分佣比例"
                       name={['channelPlanList', index, 'directScale']}
                     >
-                       <InputNumber max={100} min={0} addonAfter="%" />
-                    </Form.Item>
-                  </Col>
-                  <Col span={12} style={{ textAlign: 'right' }}>
-                    <Form.Item
-                      labelCol={{ offset: 4 }}
-                      label="发团服务费"
-                      name={['channelPlanList', index, 'teamPrice']}
-                    >
                       <InputNumber max={100} min={0} addonAfter="%" />
                     </Form.Item>
                   </Col>
+                  {res.isGroupServiceFee == 1 ? (
+                    <Col span={12} style={{ textAlign: 'right' }}>
+                      <Form.Item
+                        labelCol={{ offset: 4 }}
+                        label="发团服务费"
+                        name={['channelPlanList', index, 'teamPrice']}
+                      >
+                        <InputNumber max={100} min={0} addonAfter="%" />
+                      </Form.Item>
+                    </Col>
+                  ) : (
+                    ''
+                  )}
+
                   {array.slice(0, index).map((mRes, Ci) => {
                     return (
                       <Col span={12} style={{ textAlign: 'right' }} key={Ci}>
                         <Form.Item
-                         labelCol={{ offset: 4 }}
+                          labelCol={{ offset: 4 }}
                           label={mRes.level + '级渠道分销分佣比例'}
                           name={['channelPlanList', index, 'saleScalePlan', Ci, 'saleScale']}
                         >
