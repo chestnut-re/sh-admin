@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道列表
- * @LastEditTime: 2021-12-24 15:59:15
+ * @LastEditTime: 2021-12-27 13:42:08
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
@@ -84,11 +84,11 @@ const ChannelPage: React.FC = () => {
             : analysisName(structure, recode?.id, 'children', 'id', 'pid')
         }`,
     },
-    {
-      title: '状态',
-      dataIndex: 'state',
-      render: (_text, record) => `${enumState[record.state]} `,
-    },
+    // {
+    //   title: '状态',
+    //   dataIndex: 'state',
+    //   render: (_text, record) => `${enumState[record.state]} `,
+    // },
 
     {
       title: '操作',
@@ -160,7 +160,7 @@ const ChannelPage: React.FC = () => {
                 <Col span={3}>
                   <InputTemp name="channel" />
                 </Col>
-                <Col span={1} className="table-from-label">
+                {/* <Col span={1} className="table-from-label">
                   状态
                 </Col>
                 <Col span={3}>
@@ -175,7 +175,7 @@ const ChannelPage: React.FC = () => {
                       })}
                     </Select>
                   </Form.Item>
-                </Col>
+                </Col> */}
                 <Col span={5}>
                   <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
                     <Space>

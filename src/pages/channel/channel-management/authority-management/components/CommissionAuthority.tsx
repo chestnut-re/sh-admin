@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description:
- * @LastEditTime: 2021-12-26 17:32:25
+ * @LastEditTime: 2021-12-27 14:32:16
  */
 
 import React, { useState, useEffect } from 'react'
@@ -18,6 +18,7 @@ interface Props {
 }
 const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, channelDetail }) => {
   const [dataObj, setDataObj] = useState({})
+  const [isGroupServiceFee, setIsGroupServiceFee] = useState(0)
   const [form] = Form.useForm()
   useEffect(() => {
     console.log(channelDetail, 'channelDetailchannelDetail')
@@ -29,17 +30,16 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
         groupSettleDay: 0,
       })
     } else {
-      console.log(JSON.parse(channelDetail))
       const Data = JSON.parse(channelDetail)
       let listDit: any
-      console.log(Data.channelDistAuth)
-      listDit = Data.channelDistAuth.map((res) => {
-        let list = []
-        res?.saleAuth == 1 ? list.push(0) : ''
-        res?.directAuth == 1 ? list.push(1) : ''
-        return list
-      })
-      console.log(listDit, 'listDit')
+      listDit =
+        Data.channelDistAuth ??
+        [].map((res) => {
+          let list = []
+          res?.saleAuth == 1 ? list.push(0) : ''
+          res?.directAuth == 1 ? list.push(1) : ''
+          return list
+        })
       form.setFieldsValue({
         channelDistAuth: listDit,
         isGroupServiceFee: Data?.isGroupServiceFee == 1 ? ['1'] : [],
@@ -50,6 +50,7 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
         saleSettleType: Data?.saleSettleType,
         saleSettleDay: Data?.saleSettleDay,
       })
+      setIsGroupServiceFee(Data?.isGroupServiceFee)
     }
   }, [channelDetail])
   const onChangeRadio = (e) => {
@@ -84,6 +85,10 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
       })
     }
   }
+  const changeCheckout = (e) => {
+    console.log(e)
+    setIsGroupServiceFee(e.length)
+  }
   return (
     <>
       <Form name="normal_login" onFinish={onFinish} form={form} initialValues={{ remember: true }}>
@@ -105,38 +110,43 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
           </div>
         </Form.Item>
         <Form.Item name="isGroupServiceFee">
-          <Checkbox.Group>
-            <Checkbox value="1">
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                发团服务费&nbsp; &nbsp;
-                <Tooltip placement="right" title={'发团后是否获取佣金'}>
-                  <QuestionCircleOutlined />
-                </Tooltip>
-              </div>
-            </Checkbox>
-          </Checkbox.Group>
-        </Form.Item>
-        <Form.Item
-          label="发团服务结算要求"
-          name="groupSettleType"
-          rules={[{ required: true, message: '请选择佣金权限 !' }]}
-        >
-          <Radio.Group onChange={onChangeRadio} value={''}>
-            <Radio value={1}>核销</Radio>
-            {/* <Radio value={3}>行程结束</Radio> */}
-            <Radio value={2}>
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                行程结束 &nbsp; &nbsp;且需满&nbsp; &nbsp;
-                <Form.Item name="groupSettleDay"  style={{ marginBottom: '0' }}>
-                
-                  <InputNumber  addonAfter="天" defaultValue={0} />
-                </Form.Item>
-              </div>{' '}
-              &nbsp; &nbsp;
-            </Radio>
-          </Radio.Group>
-        </Form.Item>
-        <span style={{'marginBottom':'10px','display':'block'}}>分销分佣：所属所有下级卖出去商品后，是否获得佣金</span>
+            <Checkbox.Group onChange={changeCheckout}>
+              <Checkbox value="1">
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  发团服务费&nbsp; &nbsp;
+                  <Tooltip placement="right" title={'发团后是否获取佣金'}>
+                    <QuestionCircleOutlined />
+                  </Tooltip>
+                </div>
+              </Checkbox>
+            </Checkbox.Group>
+          </Form.Item>
+        {isGroupServiceFee == 1 ? (
+      <Form.Item
+      label="发团服务结算要求"
+      name="groupSettleType"
+      rules={[{ required: true, message: '请选择佣金权限 !' }]}
+    >
+      <Radio.Group onChange={onChangeRadio} value={''}>
+        <Radio value={1}>核销</Radio>
+        {/* <Radio value={3}>行程结束</Radio> */}
+        <Radio value={2}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            行程结束 &nbsp; &nbsp;且需满&nbsp; &nbsp;
+            <Form.Item name="groupSettleDay" style={{ marginBottom: '0' }}>
+              <InputNumber addonAfter="天" defaultValue={0} />
+            </Form.Item>
+          </div>{' '}
+          &nbsp; &nbsp;
+        </Radio>
+      </Radio.Group>
+    </Form.Item>
+        ) : (
+          ''
+        )}
+
+     
+        <span style={{ marginBottom: '10px', display: 'block' }}>分销分佣：所属所有下级卖出去商品后，是否获得佣金</span>
         {ranked.map((res, index) => {
           return (
             <div key={index}>
@@ -165,9 +175,8 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
             <Radio value={3}>
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 行程结束 &nbsp; &nbsp;且需满&nbsp; &nbsp;
-                <Form.Item name="saleSettleDay"  style={{ marginBottom: '0' }}>
-            
-                  <InputNumber  addonAfter="天" defaultValue={0} />
+                <Form.Item name="saleSettleDay" style={{ marginBottom: '0' }}>
+                  <InputNumber addonAfter="天" defaultValue={0} />
                 </Form.Item>
               </div>{' '}
               &nbsp; &nbsp;
@@ -179,7 +188,7 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
             wrapperCol: { offset: 8, span: 16 },
           }}
         >
-          <Button htmlType="submit" size='large' type="primary">
+          <Button htmlType="submit" size="large" type="primary">
             保存
           </Button>
           {/* <Button htmlType="button" onClick={onClose} style={{ margin: '0 8px' }}>

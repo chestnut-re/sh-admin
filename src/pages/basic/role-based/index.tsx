@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道列表
- * @LastEditTime: 2021-12-26 17:28:33
+ * @LastEditTime: 2021-12-27 13:51:29
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
@@ -80,10 +80,10 @@ const RolePage: React.FC = () => {
       title: '创建时间',
       dataIndex: 'createTime',
     },
-    {
-      title: '状态',
-      dataIndex: 'stateVal',
-    },
+    // {
+    //   title: '状态',
+    //   dataIndex: 'stateVal',
+    // },
     {
       title: '操作',
       render: (_text: any, record: any) => (
@@ -154,7 +154,7 @@ const RolePage: React.FC = () => {
                 <Col span={3}>
                   <InputTemp name="roleName" />
                 </Col>
-                <Col span={1} className="table-from-label">
+                {/* <Col span={1} className="table-from-label">
                   状态
                 </Col>
                 <Col span={3}>
@@ -169,7 +169,7 @@ const RolePage: React.FC = () => {
                       })}
                     </Select>
                   </Form.Item>
-                </Col>
+                </Col> */}
                 <Col span={5}>
                   <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
                     <Space>

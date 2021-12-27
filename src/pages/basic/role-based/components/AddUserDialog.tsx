@@ -1,6 +1,6 @@
 /*
  * @Description: 添加角色
- * @LastEditTime: 2021-12-26 17:19:30
+ * @LastEditTime: 2021-12-27 13:52:41
  */
 
 import { Form, Input, Modal, Cascader, Switch, message } from 'antd'
@@ -171,9 +171,9 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
           <Input />
         </Form.Item>
 
-        <Form.Item label="角色状态" name="state">
+        {/* <Form.Item label="角色状态" name="state">
           <Switch checked={stateCheckout} onChange={setCheckout}  /> 
-        </Form.Item>
+        </Form.Item> */}
 
         <TableMenu
           adminType={adminType}

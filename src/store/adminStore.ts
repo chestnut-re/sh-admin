@@ -4,19 +4,6 @@ import { UserService } from '@/service/user'
 import { isUserLogin, setJWT } from '@/utils/biz'
 import { action, makeObservable, observable } from 'mobx'
 
-// const adminStore = observable({
-//   menu: [],
-//   async init() {
-//     //init menu
-//     const res = await getMenus()
-//     this.setMenu(res.data.menus)
-//     console.log(JSON.stringify(res))
-//   },
-//   setMenu(_menu: any) {
-//     this.menu = _menu
-//   },
-// })
-
 /**
  * 管理后台必备 Store
  * 1. 菜单

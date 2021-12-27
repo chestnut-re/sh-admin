@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道权限
- * @LastEditTime: 2021-12-26 12:57:21
+ * @LastEditTime: 2021-12-27 14:32:40
  */
 import React, { useState, useEffect } from 'react'
 import { Menu, Col, Row, Checkbox, Radio, Input, Tooltip } from 'antd'
@@ -29,7 +29,7 @@ const AuthorityManagement: React.FC = () => {
   const getStructure = () => {
     ChannelService.getStructure().then((res) => {
       setStructure(cityDispose([res?.data], 'children'))
-      setRanked(getMaxFloor([res?.data]).slice(1))
+      setRanked(getMaxFloor([res?.data]))
     })
   }
   const getDetail = () => {

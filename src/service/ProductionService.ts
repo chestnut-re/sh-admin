@@ -5,13 +5,18 @@ export class ProductionService {
    * 保存草稿/提交至待发布
    */
 
-  
-
   // static save(data): Promise<any> {
   //   return axios.post(`/api/operation/goods/save`, { params: {
   //     data,
   //   }})
   // }
+
+  /**
+   * 标签列表
+   */
+  static tagList(data): Promise<any> {
+    return axios.post('/api/operation/goods/sortManagement/query', data)
+  }
 }
 
 /**
@@ -27,7 +32,7 @@ export const save = (data): Promise<any> => {
 export const releaseRecord = (data): Promise<any> => {
   return axios.get('/api/operation/goods/release/page', {
     params: {
-      ...data
+      ...data,
     },
   })
 }
@@ -43,7 +48,6 @@ export const sortList = (data): Promise<any> => {
 /**
  * 商品列表
  */
- export const goodsList = (data): Promise<any> => {
+export const goodsList = (data): Promise<any> => {
   return axios.post('/api/operation/goods/platform/page', data)
 }
-

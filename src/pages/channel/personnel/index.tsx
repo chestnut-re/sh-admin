@@ -32,7 +32,7 @@ const PersonnelManagement: React.FC = () => {
   // }
   useEffect(() => {
     getStructure().then((res) => {
-      setStructure(cityDispose([res?.data], 'children'))
+      // setStructure(cityDispose([res?.data], 'children'))
     })
   }, [])
   useEffect(() => {

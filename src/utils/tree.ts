@@ -1,6 +1,6 @@
 /*
  * @Description: 城市数据处理
- * @LastEditTime: 2021-12-26 15:52:10
+ * @LastEditTime: 2021-12-27 14:34:00
  */
 
 /**
@@ -171,7 +171,7 @@ export const regionsCodeArray = (array: string, area: any[], areas = 'areas', ad
 // }
 
 /**
- * @description: 最深层级
+ * @description: 找最多层级，去掉等级为1 的
  * @param {*}
  * @return {*}
  */
@@ -183,9 +183,13 @@ export const getMaxFloor = (treeData: any[] = []) => {
       e.floor = floor
       if (floor > max) {
         max = floor
+        if(e.level!=1){
+
+          arrayList.push(e)
+        }
       }
       if (e.children?.length > 0) {
-        arrayList.push(e)
+    
         each(e.children, floor + 1)
       }
     })

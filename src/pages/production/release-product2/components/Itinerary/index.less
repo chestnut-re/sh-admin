@@ -1,0 +1,67 @@
+.Itinerary__root {
+  .content {
+    background-color: #fff;
+    padding: '24px 16px 0';
+    min-width: 100%;
+    min-height: 500px;
+    border-radius: 10px;
+    border: 1px solid #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    .body {
+      flex: 1;
+      padding: 20px;
+      .dataItem {
+        margin-left: 20px;
+        .title {
+          font-size: 14px;
+          font-weight: 500;
+          color: #676767;
+          margin-right: 15px;
+          // margin: 0 14px;
+        }
+      }
+      
+    }
+    .footer {
+      height: 40px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding-right: 15px;
+    }
+
+  }
+  .must {
+    color: red;
+    font-size: 14px;
+    margin: 0 10px;
+  }
+ 
+  .addDataView {
+    .itineraryTitle {
+      font-size: 14px;
+      color: #202020;
+      font-weight: 600;
+      padding: 10px;
+    }
+    .addDataTime {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+}
+.mapView {
+  width: 100%;
+  height: 100%;
+  height: 500px;
+  border-radius: 10px;
+  line-height: 500px;
+  text-align: center;
+  background-color: #f4f4f4;
+}
+.ant-tabs > .ant-tabs-nav .ant-tabs-nav-wrap {
+  flex: none;
+}
