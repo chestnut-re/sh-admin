@@ -1,6 +1,6 @@
 /*
  * @Description: 添加渠道
- * @LastEditTime: 2021-12-27 14:02:46
+ * @LastEditTime: 2021-12-27 15:21:01
  */
 
 import { Form, Input, Modal, Cascader, Switch, message } from 'antd'
@@ -178,7 +178,7 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
         <Form.Item label="责任人姓名" name="person" rules={[{ required: true, message: '请输入' }]}>
           <Input />
         </Form.Item>
-        <Form.Item label="手机号" name="phoneNumber" rules={[{ required: true, message: '请输入' },{pattern:/^1[0-9]{10}/, message:'请输入正确的手机号'}]}>
+        <Form.Item label="手机号" name="phoneNumber" rules={[{ required: true, message: '请输入' },{pattern:/^1[3456789]\d{9}$/, message:'请输入正确的手机号'}]}>
           <Input />
         </Form.Item>
         <Form.Item label="渠道账户" name="isOpenAccount" style={{ display: level == 1 ? 'none' : 'flex' }}>
