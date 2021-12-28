@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道分佣列表
- * @LastEditTime: 2021-12-27 15:53:33
+ * @LastEditTime: 2021-12-28 17:49:28
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
@@ -64,11 +64,11 @@ const CommissionSchemePage: React.FC = () => {
       title: '方案名称',
       dataIndex: 'planName',
     },
-    {
-      title: '状态',
-      dataIndex: 'state',
-      render: (_text, record) => `${enumState[record.state]} `,
-    },
+    // {
+    //   title: '状态',
+    //   dataIndex: 'state',
+    //   render: (_text, record) => `${enumState[record.state]} `,
+    // },
     {
       title: '现关联商品量',
       dataIndex: 'goodsNumber',
@@ -106,7 +106,6 @@ const CommissionSchemePage: React.FC = () => {
   const showAddDialog = (record, add = true) => {
     setDialogMode(add ? 'add' : 'edit')
     setShowDialog(true)
-    console.log(record, '---sss')
     setSelectedData(record)
   }
 
@@ -149,7 +148,7 @@ const CommissionSchemePage: React.FC = () => {
                 <Col span={3}>
                   <InputTemp name="planName" />
                 </Col>
-                <Col span={1} className="table-from-label">
+                {/* <Col span={1} className="table-from-label">
                   状态
                 </Col>
                 <Col span={3}>
@@ -164,7 +163,7 @@ const CommissionSchemePage: React.FC = () => {
                       })}
                     </Select>
                   </Form.Item>
-                </Col>
+                </Col> */}
                 <Col span={5}>
                   <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
                     <Space>
@@ -175,7 +174,7 @@ const CommissionSchemePage: React.FC = () => {
                         清除
                       </Button>
                       <Button type="primary" onClick={showAddDialog}>
-                        添加分佣方案
+                        创建分佣方案
                       </Button>
                     </Space>
                   </Form.Item>

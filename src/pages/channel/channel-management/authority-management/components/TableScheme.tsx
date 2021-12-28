@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description:功能权限
- * @LastEditTime: 2021-12-27 18:40:29
+ * @LastEditTime: 2021-12-28 17:44:40
  */
 import { Table, Switch, Space, message, Button } from 'antd'
 import React, { useState, useEffect } from 'react'
 import { getMenusType } from '@/service/menu'
-import {cityDispose} from '@/utils/tree'
+import { cityDispose } from '@/utils/tree'
 import ChannelService from '@/service/ChannelService'
 interface Props {
   chanId: any
@@ -20,7 +20,6 @@ const TableScheme: React.FC<Props> = ({ chanId, switchFc, channelDetail }) => {
   const [menu, setMenu] = useState(false)
   const [isOpen, setIdOPen] = useState(false)
   useEffect(() => {
-    // init()
     if (channelDetail != '') {
       const newChannelDetail = JSON.parse(channelDetail)
       if (switchFc == 'admin') {
@@ -42,16 +41,28 @@ const TableScheme: React.FC<Props> = ({ chanId, switchFc, channelDetail }) => {
       }
     }
   }, [channelDetail])
-  useEffect(() => {
-    setSelectedRowKeys([])
-    init()
-  }, [switchFc])
 
-  const init = async () => {
+  useEffect( () => {
+    setSelectedRowKeys([])
+    if (channelDetail != '') {
+      const channelDe = JSON.parse(channelDetail)
+    init(channelDe)
+    }
+//  
+
+  }, [switchFc,channelDetail])
+
+  const init = async (channelDe) => {
     const res = await getMenusType({
       platformType: switchFc == 'admin' ? 0 : 1,
     })
-    setMenu(cityDispose(res?.data,'children'))
+    if(switchFc == 'admin'){
+      // console.log(nwqRouter(res?.data,))
+      // channelDe?.preMenuAuthority
+    }else{
+
+    }
+    setMenu(cityDispose(res?.data, 'children'))
   }
   const columns = [
     {
@@ -77,20 +88,19 @@ const TableScheme: React.FC<Props> = ({ chanId, switchFc, channelDetail }) => {
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       setSelectedRowKeys(selectedRowKeys)
-      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+      // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
     },
 
     onSelect: (record, selected, selectedRows) => {
-      console.log(record, selected, selectedRows)
+      // console.log(record, selected, selectedRows)
     },
     onSelectAll: (selected, selectedRows, changeRows) => {
-      console.log(selected, selectedRows, changeRows)
+      // console.log(selected, selectedRows, changeRows)
     },
     // 1,11,111,112,113,114
     selectedRowKeys: selectedRowKeys,
   }
   const save = () => {
-
     if (!chanId) {
       message.error('请选择渠道!')
     } else {
@@ -106,7 +116,6 @@ const TableScheme: React.FC<Props> = ({ chanId, switchFc, channelDetail }) => {
       }
 
       ChannelService.edit(query).then((res) => {
-
         message.success('成功了!')
       })
     }

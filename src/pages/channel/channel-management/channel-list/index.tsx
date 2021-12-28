@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道列表
- * @LastEditTime: 2021-12-27 19:29:32
+ * @LastEditTime: 2021-12-28 10:50:12
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
@@ -118,7 +118,7 @@ const ChannelPage: React.FC = () => {
   const showAddDialog = (record, add = true) => {
     setDialogMode(add ? 'add' : 'edit')
     setShowDialog(true)
-    setSelectedData(add ? { state: true, isOpenAccount: true } : record)
+    setSelectedData(add ? { state: true, isOpenAccount: false } : record)
   }
 
   const _onDialogSuccess = () => {

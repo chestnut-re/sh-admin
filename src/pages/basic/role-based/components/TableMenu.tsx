@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description:功能权限
- * @LastEditTime: 2021-12-26 17:18:23
+ * @LastEditTime: 2021-12-28 17:48:54
  */
 import { Table, Switch, Space, message, Menu } from 'antd'
 import React, { useState, useEffect } from 'react'
@@ -101,7 +101,7 @@ const TableMenu: React.FC<Props> = ({
         <Menu.Item key="toB">B端权限</Menu.Item>
       </Menu>
       <div style={{marginTop:'20px'}}></div>
-      {switchFc == 'admin' ? (
+      {/* {switchFc == 'admin' ? (
         <Space align="center" style={{ marginBottom: 16 }}>
           是否开启: <Switch className="Ad" checked={!!bType} onChange={setBType} />
         </Space>
@@ -109,7 +109,7 @@ const TableMenu: React.FC<Props> = ({
         <Space align="center" style={{ marginBottom: 16 }}>
           是否开启: <Switch className="Bc" checked={!!adminType} onChange={setAdminType} />
         </Space>
-      )}
+      )} */}
 
       <Table
         columns={columns}

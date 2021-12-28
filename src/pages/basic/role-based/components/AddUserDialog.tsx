@@ -1,6 +1,6 @@
 /*
  * @Description: 添加角色
- * @LastEditTime: 2021-12-27 19:48:33
+ * @LastEditTime: 2021-12-28 17:48:13
  */
 
 import { Form, Input, Modal, Cascader, Switch, message } from 'antd'
@@ -64,7 +64,6 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
     form
       .validateFields()
       .then((formData) => {
-        console.log(formData, '999999')
         const postData = { ...formData, ...datachannel }
         delete postData.structureId
         postData.state = formData.state == true ? 0 : 1
@@ -115,24 +114,15 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
       channelId: e[e.length - 1],
       channelName: data.map((res) => res.name).join('-'),
     })
-    // form.setFieldsValue({
-    //   channelId: e[e.length - 1],
-    //   channelName: data.map((res) => res.name).join('-'),
-    // })
   }
   const _getFucValue = (e) => {
     setRoleList([...new Set(roleList.concat(e))])
-    // _getFucValue
   }
   const _setAdminType = (e) => {
     setAdminType(e)
-    console.log(e, '----')
-    // _getFucValue
   }
   const _setBType = (e) => {
     setBType(e)
-    console.log(e, '----')
-    // _getFucValue
   }
   return (
     <Modal title={mode == 'add' ? '创建角色' : '角色详情'} width={700} visible={show} onOk={_handleUpdate} onCancel={_formClose}>
