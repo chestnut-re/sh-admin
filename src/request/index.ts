@@ -62,7 +62,7 @@ instance.interceptors.response.use(
       if (res.data.code !== '200') {
         message.error(res.data.msg)
       }
-      if (res.data.code === '010011') {
+      if (res.data.code === '010011' || res.data.code === '000003') {
         // 登录态失效
         userLoginOut()
         return
