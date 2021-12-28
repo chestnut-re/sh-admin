@@ -1,22 +1,24 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道权限
- * @LastEditTime: 2021-12-28 10:43:13
+ * @LastEditTime: 2021-12-28 15:43:52
  */
 import React, { useState, useEffect } from 'react'
 import { Menu, Col, Row, Checkbox, Radio, Input, Tooltip } from 'antd'
-import { cityDispose, getMaxFloor, getTwoTier } from '@/utils/tree'
+import { cityDispose, getMaxFloor, getTwoTier, findIcChild } from '@/utils/tree'
 import ChannelService from '@/service/ChannelService'
 import ChannelListTree from '../components/ChannelListTree'
 import TableScheme from './components/TableScheme'
 import CommissionAuthority from './components/CommissionAuthority'
 import './index.less'
+
 const AuthorityManagement: React.FC = () => {
   const [current, setCurrent] = useState('one')
   const [switchFunc, setSwitchFunc] = useState('admin')
   const [ranked, setRanked] = useState([])
   const [channelId, setChannelId] = useState(null)
   const [structure, setStructure] = useState([])
+  const [staticStructure, setStaticStructure] = useState([])
   const [channelDetail, setChannelDetail] = useState('')
   useEffect(() => {
     getStructure()
@@ -24,28 +26,39 @@ const AuthorityManagement: React.FC = () => {
 
   useEffect(() => {
     getDetail()
+    console.log(channelId, '---')
   }, [channelId])
 
   const getStructure = () => {
     ChannelService.getStructure().then((res) => {
-      setRanked(getMaxFloor([res?.data]))
-      if(current=='one'){
-        setStructure(cityDispose([res?.data], 'children'))
-      }else{
-        setStructure(getTwoTier([res?.data], 'children'))
+      const data = JSON.parse(JSON.stringify(cityDispose([res?.data], 'children')))
+      const twoData = JSON.parse(JSON.stringify(getTwoTier([res?.data], 'children')))
+      setStaticStructure(data)
+      if (current == 'one') {
+        const id = JSON.parse(JSON.stringify(data[0]))?.id
+        setStructure(data)
+        setChannelId(id)
+        getDetail()
+      } else {
+        const id = JSON.parse(JSON.stringify(twoData[0]))?.id
+        setStructure(twoData)
+        setChannelId(id)
+        getDetail()
       }
     })
   }
-
   const getDetail = () => {
     if (!!channelId) {
       ChannelService.get(channelId).then((res) => {
         setChannelDetail(JSON.stringify(res?.data))
+        if (current == 'two') {
+          // 佣金权限 找到对应渠道的最深数据
+          setRanked(getMaxFloor(findIcChild(staticStructure, res?.data.id)))
+        }
       })
     }
   }
   const _onSelectStructure = (id) => {
-
     setChannelId(id)
   }
 
@@ -64,6 +77,7 @@ const AuthorityManagement: React.FC = () => {
           {structure.length > 0 ? (
             <ChannelListTree
               structure={structure}
+              defaultSelectedKeys={structure[0]?.id}
               onSelectStructure={_onSelectStructure}
             />
           ) : (
@@ -94,7 +108,6 @@ const AuthorityManagement: React.FC = () => {
                   chanId={channelId}
                   ranked={ranked}
                   structure={structure}
-                  switchFunc={switchFunc}
                 />
               )}
             </>

@@ -1,6 +1,6 @@
 /*
  * @Description: 添加分佣方案
- * @LastEditTime: 2021-12-27 19:43:14
+ * @LastEditTime: 2021-12-28 16:05:13
  */
 
 import { Form, Input, Modal, Cascader, message, Row, Col, InputNumber } from 'antd'
@@ -22,15 +22,13 @@ interface Props {
  */
 const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = false, onSuccess, onClose }) => {
   const [form] = Form.useForm()
-  // const [area, setArea] = useState<Array<any>>([])
   const [level, setLevel] = useState(1)
   const [nameDefault, setNameDefault] = useState('')
   const [channelDistAuth, setChannelDistAuth] = useState([])
-
+  const [dataId, setDataId] = useState(null)
   useEffect(() => {
     if (show) {
       if (mode == 'add') {
-        setLevel(structure[0].level)
         ChannelService.get(form.getFieldValue('id')).then((res) => {
           const resData = res?.data
           const mapData = res.data?.channelDistAuth ?? []
@@ -43,11 +41,13 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
                 }
               })
               res.isGroupServiceFee = resData?.isGroupServiceFee
-
               return res
             })
             .filter((res) => res?.directAuth == 1)
           console.log(dataList, 'dataList')
+          form.setFieldsValue({
+            teamBonus: resData?.presetBonus,
+          })
           setChannelDistAuth(dataList)
         })
       } else {
@@ -55,10 +55,13 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [level])
+  }, [dataId])
   useEffect(() => {
     if (show) {
       getDetail()
+      if (mode == 'add') {
+        setLevel(structure[0].level)
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [show])
@@ -151,11 +154,15 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
   }
 
   const changeStructure = (e, data) => {
-    setLevel(data[data.length - 1]?.level)
+    const levelData = data[data.length - 1]?.level
+    const dataId = e[e.length - 1]
+    setDataId(dataId)
+    setLevel(levelData)
     form.setFieldsValue({
-      id: e[e.length - 1],
-      level: data[data.length - 1]?.level,
+      id: dataId,
+      level: levelData,
     })
+    //
   }
   const onFinish = (values: any) => {
     console.log('Success:', values)

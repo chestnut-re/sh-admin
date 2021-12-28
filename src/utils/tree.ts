@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /*
  * @Description: 城市数据处理
- * @LastEditTime: 2021-12-27 19:13:20
+ * @LastEditTime: 2021-12-28 15:31:02
  */
 
 /**
@@ -111,7 +112,7 @@ export const analysisName = (oldArray: Array<any>, isId: string, areas = 'areas'
  * @return {Array}
  */
 export const analysisId = (oldArray: Array<any>, isId: string, areas = 'areas', adcode = 'adcode') => {
-  console.log(shellArray(oldArray, isId, areas, adcode))
+  // console.log(shellArray(oldArray, isId, areas, adcode))
   return shellArray(oldArray, isId, areas, adcode).map((res: { [x: string]: any }) => res[adcode])
 }
 
@@ -156,7 +157,6 @@ export const arrayNameJoin = (array: (string | any[])[], area: any[], areas = 'a
  */
 export const regionsCodeArray = (array: string, area: any[], areas = 'areas', adcode = 'adcode') => {
   return array.split(',').map((item: string) => {
-   
     return analysisId(area, item, areas, adcode)
   })
 }
@@ -177,18 +177,17 @@ export const regionsCodeArray = (array: string, area: any[], areas = 'areas', ad
  */
 export const getMaxFloor = (treeData: any[] = []) => {
   let max = 0
-  const arrayList=[]
+  const arrayList = []
   const each = (data: any[] = [], floor: number) => {
     data.forEach((e) => {
       e.floor = floor
       if (floor > max) {
         max = floor
-        if(e.level!=1){
+        if (e.level != 1) {
           arrayList.push(e)
         }
       }
       if (e.children?.length > 0) {
-    
         each(e.children, floor + 1)
       }
     })
@@ -205,27 +204,50 @@ export const getMaxFloor = (treeData: any[] = []) => {
  */
 export const getTwoTier = (city: Array<any>, children: string): any => {
   city.forEach((item) => {
-    if(item['level']<2){
+    if (item['level'] < 2) {
       item = getTwoTier(item[children], children)
     } else {
-        console.log(item,'------')
-        delete item[children]
-      
+      // console.log(item, '------')
+      delete item[children]
     }
     return item
   })
   return city
 }
-export const nwqRouter = (city: Array<any>, arrayId:  any[]) => {
+/**
+ * @description:  根据[id,id] 找到对应的数据树
+ * @param {Array} city
+ * @param {any} arrayId
+ * @return {*}
+ */
+export const nwqRouter = (city: Array<any>, arrayId: any[]) => {
   city.forEach((item) => {
-    if(arrayId.includes(item['arrayId'])){
-      item = nwqRouter(item['children'],arrayId)
+    if (arrayId.includes(item['arrayId'])) {
+      item = nwqRouter(item['children'], arrayId)
     } else {
-        console.log(item,'------')
-        delete item['children']
-      
+      // console.log(item, '------')
+      delete item['children']
     }
     return item
   })
   return city
+}
+
+export const findIcChild = (dataTree: Array<any>, id) => {
+  let arrayList
+  // console.log(dataTree,'dataTree')
+  const each = (dataTree, id) => {
+    dataTree.some((item) => {
+      if ((item['id'] == id)) {
+        // console.log(item,'item,')
+        arrayList = item['children']
+        return true
+      } else {
+      each(item['children'],id)
+      }
+  
+    })
+  }
+  each(dataTree, id)
+return arrayList
 }

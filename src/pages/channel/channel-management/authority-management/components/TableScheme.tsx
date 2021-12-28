@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description:功能权限
- * @LastEditTime: 2021-12-27 18:40:29
+ * @LastEditTime: 2021-12-28 15:30:42
  */
 import { Table, Switch, Space, message, Button } from 'antd'
 import React, { useState, useEffect } from 'react'
 import { getMenusType } from '@/service/menu'
-import {cityDispose} from '@/utils/tree'
+import { cityDispose } from '@/utils/tree'
 import ChannelService from '@/service/ChannelService'
 interface Props {
   chanId: any
@@ -20,7 +20,6 @@ const TableScheme: React.FC<Props> = ({ chanId, switchFc, channelDetail }) => {
   const [menu, setMenu] = useState(false)
   const [isOpen, setIdOPen] = useState(false)
   useEffect(() => {
-    // init()
     if (channelDetail != '') {
       const newChannelDetail = JSON.parse(channelDetail)
       if (switchFc == 'admin') {
@@ -42,16 +41,31 @@ const TableScheme: React.FC<Props> = ({ chanId, switchFc, channelDetail }) => {
       }
     }
   }, [channelDetail])
-  useEffect(() => {
-    setSelectedRowKeys([])
-    init()
-  }, [switchFc])
 
-  const init = async () => {
+  useEffect( () => {
+    setSelectedRowKeys([])
+    if (channelDetail != '') {
+      const channelDe = JSON.parse(channelDetail)
+    // console.log(channelDe,'channelDe')
+    // console.log(channelDe?.preBusinessAuthority)
+    // console.log(channelDe?.preMenuAuthority)
+    init(channelDe)
+    }
+//  
+
+  }, [switchFc,channelDetail])
+
+  const init = async (channelDe) => {
     const res = await getMenusType({
       platformType: switchFc == 'admin' ? 0 : 1,
     })
-    setMenu(cityDispose(res?.data,'children'))
+    if(switchFc == 'admin'){
+      // console.log(nwqRouter(res?.data,))
+      // channelDe?.preMenuAuthority
+    }else{
+
+    }
+    setMenu(cityDispose(res?.data, 'children'))
   }
   const columns = [
     {
@@ -90,7 +104,6 @@ const TableScheme: React.FC<Props> = ({ chanId, switchFc, channelDetail }) => {
     selectedRowKeys: selectedRowKeys,
   }
   const save = () => {
-
     if (!chanId) {
       message.error('请选择渠道!')
     } else {
@@ -106,7 +119,6 @@ const TableScheme: React.FC<Props> = ({ chanId, switchFc, channelDetail }) => {
       }
 
       ChannelService.edit(query).then((res) => {
-
         message.success('成功了!')
       })
     }

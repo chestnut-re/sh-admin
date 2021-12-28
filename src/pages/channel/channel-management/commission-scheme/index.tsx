@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道分佣列表
- * @LastEditTime: 2021-12-27 15:53:33
+ * @LastEditTime: 2021-12-28 15:44:41
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
@@ -175,7 +175,7 @@ const CommissionSchemePage: React.FC = () => {
                         清除
                       </Button>
                       <Button type="primary" onClick={showAddDialog}>
-                        添加分佣方案
+                        创建分佣方案
                       </Button>
                     </Space>
                   </Form.Item>
