@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道权限
- * @LastEditTime: 2021-12-28 10:31:20
+ * @LastEditTime: 2021-12-28 10:43:13
  */
 import React, { useState, useEffect } from 'react'
 import { Menu, Col, Row, Checkbox, Radio, Input, Tooltip } from 'antd'
@@ -11,7 +11,6 @@ import ChannelListTree from '../components/ChannelListTree'
 import TableScheme from './components/TableScheme'
 import CommissionAuthority from './components/CommissionAuthority'
 import './index.less'
-
 const AuthorityManagement: React.FC = () => {
   const [current, setCurrent] = useState('one')
   const [switchFunc, setSwitchFunc] = useState('admin')
@@ -42,7 +41,6 @@ const AuthorityManagement: React.FC = () => {
     if (!!channelId) {
       ChannelService.get(channelId).then((res) => {
         setChannelDetail(JSON.stringify(res?.data))
-        // setStructure(cityDispose([res?.data], 'children'))
       })
     }
   }
@@ -96,6 +94,7 @@ const AuthorityManagement: React.FC = () => {
                   chanId={channelId}
                   ranked={ranked}
                   structure={structure}
+                  switchFunc={switchFunc}
                 />
               )}
             </>

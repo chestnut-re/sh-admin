@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description:
- * @LastEditTime: 2021-12-27 18:40:45
+ * @LastEditTime: 2021-12-28 10:47:10
  */
 
 import React, { useState, useEffect } from 'react'
@@ -10,16 +10,20 @@ import { QuestionCircleOutlined } from '@ant-design/icons'
 import { Menu, Col, Row, Checkbox, Radio, Input, Button, Tooltip, Form, Select, InputNumber, message } from 'antd'
 import ChannelService from '@/service/ChannelService'
 import { cityDispose, getMaxFloor } from '@/utils/tree'
+export type DialogType = 'admin' | 'toB'
 interface Props {
   chanId: any
   structure: any
   ranked: any
+  switchFunc:DialogType
   channelDetail: any
 }
 const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, channelDetail }) => {
   const [dataObj, setDataObj] = useState({})
   const [isGroupServiceFee, setIsGroupServiceFee] = useState(0)
   const [form] = Form.useForm()
+  useEffect(() => {
+  })
   useEffect(() => {
     if (channelDetail == '') {
       form.setFieldsValue({
@@ -57,7 +61,7 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
 
   const onClose = (e) => {
     console.log(form.getFieldsValue(), 'form.getFieldsValue')
-    // setValue(e.target.value)
+
   }
   const onFinish = (values: any) => {
     console.log('Success:', values)
@@ -78,13 +82,11 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
         ...PostData,
       }
       ChannelService.edit(query).then((res) => {
-        console.log(res, '----')
         message.success('成功了!')
       })
     }
   }
   const changeCheckout = (e) => {
-    console.log(e)
     setIsGroupServiceFee(e.length)
   }
   return (
@@ -127,7 +129,6 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
     >
       <Radio.Group onChange={onChangeRadio} value={''}>
         <Radio value={1}>核销</Radio>
-        {/* <Radio value={3}>行程结束</Radio> */}
         <Radio value={2}>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             行程结束 &nbsp; &nbsp;且需满&nbsp; &nbsp;

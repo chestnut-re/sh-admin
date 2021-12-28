@@ -1,11 +1,11 @@
 /*
  * @Description: 添加渠道
- * @LastEditTime: 2021-12-27 16:16:24
+ * @LastEditTime: 2021-12-28 10:49:22
  */
 
 import { Form, Input, Modal, Cascader, Switch, message } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
-import { cityDispose, analysisName, analysisNameDuo,lastOneJoin, arrayNameJoin, regionsCodeArray } from '@/utils/tree'
+import { cityDispose, analysisName, analysisNameDuo, lastOneJoin, arrayNameJoin, regionsCodeArray } from '@/utils/tree'
 import ChannelService from '@/service/ChannelService'
 export type DialogMode = 'add' | 'edit'
 interface Props {
@@ -56,7 +56,7 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
     } else {
       form.setFieldsValue({
         // state: true,
-        isOpenAccount: true,
+        isOpenAccount: false,
       })
     }
   }
@@ -164,7 +164,14 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
             <div>{nameDefault}</div>
           )}
         </Form.Item>
-        <Form.Item label="分中心名称" name="name" rules={[{ required: true, message: '请输入' },{max:20,message:'最大不可超过20个字符'}]}>
+        <Form.Item
+          label="分中心名称"
+          name="name"
+          rules={[
+            { required: true, message: '请输入' },
+            { max: 20, message: '最大不可超过20个字符' },
+          ]}
+        >
           <Input />
         </Form.Item>
         <Form.Item label="责任区域" name="regions" rules={[{ required: true, message: '请输入' }]}>
@@ -175,10 +182,24 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
             fieldNames={{ label: 'name', value: 'adcode', children: 'areas' }}
           />
         </Form.Item>
-        <Form.Item label="责任人姓名" name="person" rules={[{ required: true, message: '请输入' },{max:10,message:'最大不可超过20个字符'}]}>
+        <Form.Item
+          label="责任人姓名"
+          name="person"
+          rules={[
+            { required: true, message: '请输入' },
+            { max: 10, message: '最大不可超过20个字符' },
+          ]}
+        >
           <Input />
         </Form.Item>
-        <Form.Item label="手机号" name="phoneNumber" rules={[{ required: true, message: '请输入' },{pattern:/^1[3456789]\d{9}$/, message:'请输入正确的手机号'}]}>
+        <Form.Item
+          label="手机号"
+          name="phoneNumber"
+          rules={[
+            { required: true, message: '请输入' },
+            { pattern: /^1[3456789]\d{9}$/, message: '请输入正确的手机号' },
+          ]}
+        >
           <Input />
         </Form.Item>
         <Form.Item label="渠道账户" name="isOpenAccount" style={{ display: level == 2 ? 'flex' : 'none' }}>
@@ -187,7 +208,7 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
         <Form.Item
           label="客服热线"
           name="hotLine"
-          rules={[{ required: (level == 2), message: '请输入' }]}
+          rules={[{ required: level == 2, message: '请输入' }]}
           style={{ display: level == 2 ? 'flex' : 'none' }}
         >
           <Input />
