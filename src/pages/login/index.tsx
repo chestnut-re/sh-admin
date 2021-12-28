@@ -14,8 +14,10 @@ const LoginPage: React.FC = () => {
   useEffect(() => {
     //TODO: test
     form.setFieldsValue({
-      username: 'qwrqerewty',
-      password: '6623664xing',
+      // username: 'qwrqerewty',
+      // password: '6623664xing',
+      username: 'admin',
+      password: 'admin',
     })
 
     if (getJWT()) {
