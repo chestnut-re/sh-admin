@@ -235,13 +235,13 @@ export default [
                   componentPath: '/basic/role-based',
                   path: '/basic/role-based ',
                 },
-                {
-                  name: '管理员账户',
-                  id: 93,
-                  type: 'menu',
-                  componentPath: '/basic/administrator',
-                  path: '/basic/administrator',
-                },
+                // {
+                //   name: '管理员账户',
+                //   id: 93,
+                //   type: 'menu',
+                //   componentPath: '/basic/administrator',
+                //   path: '/basic/administrator',
+                // },
               ],
             },
             {
