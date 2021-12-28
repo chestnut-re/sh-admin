@@ -8,12 +8,30 @@ export class FinanceAccountService {
    * 列表
    */
   static list({ size = 30, current, ...params }): Promise<any> {
-    return axios.get('/api/wallet/a/userBillPage', {
+    return axios.get('/api/wallet/a/centerPage', {
       params: {
         size,
         current,
         ...params,
       },
+    })
+  }
+
+  /**
+   * 账户明细-总账单
+   */
+  static details(data): Promise<any> {
+    return axios.get('/api/wallet/a/walletInfo', {
+      params: data,
+    })
+  }
+
+  /**
+   * 账户明细-列表
+   */
+  static detailsList(data): Promise<any> {
+    return axios.get('/api/wallet/a/userBillPage', {
+      params: data,
     })
   }
 

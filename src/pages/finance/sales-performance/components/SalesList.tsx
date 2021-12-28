@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Form, Button, Input, Row, Col, Select, Space, Table } from 'antd'
 import './index.less'
+import ChannelService from '@/service/ChannelService'
+import { HttpCode } from '@/constants/HttpCode'
 
 /**账户管理 */
 const SalesListPage: React.FC = () => {
@@ -12,6 +14,7 @@ const SalesListPage: React.FC = () => {
   const [pageIndex, setPageIndex] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [total, setTotal] = useState()
+  const [channelData, setChannelData] = useState([])
 
   useEffect(() => {
     loadData(pageIndex)
@@ -25,50 +28,13 @@ const SalesListPage: React.FC = () => {
     // })
   }
 
-  const channelList = [
-    {
-      key: 1,
-      value: '全部',
-    },
-    {
-      key: 2,
-      value: '分中心一',
-    },
-    {
-      key: 3,
-      value: '分中心二',
-    },
-    {
-      key: 4,
-      value: '分中心三',
-    },
-    {
-      key: 5,
-      value: '分中心四',
-    },
-  ]
-  const personList = [
-    {
-      key: 1,
-      value: '全部',
-    },
-    {
-      key: 2,
-      value: '张三',
-    },
-    {
-      key: 3,
-      value: '李四',
-    },
-    {
-      key: 4,
-      value: '王五',
-    },
-    {
-      key: 5,
-      value: '赵六',
-    },
-  ]
+  const getChannel = () => {
+    ChannelService.list({ pages: 1, size: 10 }).then((res) => {
+      if (res.code === HttpCode.success) {
+        setChannelData(res.data?.records ?? [])
+      }
+    })
+  }
 
   const columns = [
     {
@@ -76,32 +42,25 @@ const SalesListPage: React.FC = () => {
       render: (text, record, index) => `${index + 1}`,
     },
     {
-      title: '姓名',
+      title: '订单编号',
       dataIndex: 'nickName',
     },
     {
-      title: '手机号',
+      title: '分佣类型',
       dataIndex: 'mobile',
     },
     {
-      title: '账户总额',
+      title: '账户变化',
       dataIndex: 'roleName',
     },
     {
-      title: '待释放金额',
+      title: '时间',
       dataIndex: 'state',
-    },
-    {
-      title: '可提现金额',
-      dataIndex: 'createTime',
-    },
-    {
-      title: '所属渠道',
     },
   ]
 
   const onFinish = (values: any) => {
-    console.log('Success:', values, channel, person)
+    console.log('Success:', values)
   }
 
   const onFinishFailed = (errorInfo: any) => {
@@ -119,37 +78,26 @@ const SalesListPage: React.FC = () => {
         >
           <Row gutter={[5, 0]}>
             <Col span={2} className="table-from-label">
-              渠道
+              收支状态
             </Col>
             <Col span={4}>
-              <Select defaultValue="全部" style={{ width: 120 }} onChange={(value) => setChannel(value)}>
-                {channelList.map((item) => {
-                  return (
-                    <Option value={item.value} key={item.key}>
-                      {item.value}
-                    </Option>
-                  )
-                })}
-              </Select>
+              <Form.Item name="channelId">
+                <Select value={channelData} style={{ width: 120 }}>
+                  {channelData?.map((item: any) => {
+                    return (
+                      <Option value={item.id} key={item.id}>
+                        {item.name}
+                      </Option>
+                    )
+                  })}
+                </Select>
+              </Form.Item>
             </Col>
             <Col span={2} className="table-from-label">
-              人员
+              时间筛选
             </Col>
             <Col span={4}>
-              <Select defaultValue="全部" style={{ width: 120 }} onChange={(value) => setPerson(value)}>
-                {personList.map((item) => {
-                  return (
-                    <Option value={item.value} key={item.key}>
-                      {item.value}
-                    </Option>
-                  )
-                })}
-              </Select>
-            </Col>
-            <Col span={8}>
-              <Form.Item name="admin">
-                <Input placeholder="请输入人员名称" />
-              </Form.Item>
+              <Form.Item name="channelId"></Form.Item>
             </Col>
             <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
               <Space>
@@ -171,34 +119,12 @@ const SalesListPage: React.FC = () => {
         </Form>
       </div>
       <div className="sales">
-        <div>
-          <div>账户总额</div>
-          <div>
-            <span>100850</span>
-            <span>&nbsp;&nbsp;元</span>
-          </div>
-        </div>
-        <div>
-          <div>运营账户</div>
-          <div>
-            <span>100850</span>
-            <span>&nbsp;&nbsp;元</span>
-          </div>
-        </div>
-        <div>
-          <div>提现中</div>
-          <div>
-            <span>2000</span>
-            <span>&nbsp;&nbsp;元</span>
-          </div>
-        </div>
-        <div>
-          <div>待释放</div>
-          <div>
-            <span>180.50</span>
-            <span>&nbsp;&nbsp;元</span>
-          </div>
-        </div>
+        <span>待释放：</span>
+        <span></span>
+        <span>支出：</span>
+        <span></span>
+        <span>收入：</span>
+        <span></span>
       </div>
       <Table
         rowKey="id"

@@ -121,12 +121,6 @@ const CreateAdminDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onC
         >
           <Input style={{ width: 276 }} />
         </Form.Item>
-        <Form.Item label="状态" name="state" rules={[{ required: true, message: '请选择状态' }]}>
-          <Radio.Group onChange={(e) => setState(e.target.value)} value={state}>
-            <Radio value={0}>禁用</Radio>
-            <Radio value={1}>正常</Radio>
-          </Radio.Group>
-        </Form.Item>
       </Form>
     </Modal>
   )

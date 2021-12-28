@@ -5,6 +5,9 @@ import { SelectState, OrderRoute, OrderType, OrderState } from '@/components/fil
 import './index.less'
 import OrderDetailsPage from './components/order-details/OrderDetails'
 import { OrderService } from '@/service/OrderService'
+import ChannelService from '@/service/ChannelService'
+import { HttpCode } from '@/constants/HttpCode'
+import dayjs from 'dayjs'
 /**
  * 订单列表
  */
@@ -14,11 +17,12 @@ const OrderListPage: React.FC = () => {
   const { Option } = Select
   const { RangePicker } = DatePicker
   const [tabValue, setTabValue] = useState('全部')
-  const [selData, setSelData] = useState('渠道名称')
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [total, setTotal] = useState()
+  const [channelData, setChannelData] = useState([])
+  const [formData, setFormData] = useState({})
 
   const options = [
     { label: '全部', value: '全部', innerWidth: '40px' },
@@ -30,19 +34,42 @@ const OrderListPage: React.FC = () => {
 
   useEffect(() => {
     loadData(pageIndex)
+    getChannel()
   }, [pageIndex])
 
   const loadData = (pageIndex) => {
-    OrderService.list({ current: pageIndex, size: pageSize }).then((res) => {
-      setData(res.data.records)
-      setTotal(res.data.total)
+    form.validateFields().then((query) => {
+      const payBeginTime = query.time ? dayjs(query.time[0]).format('YYYY-MM-DD HH:mm:ss') : ''
+      const payEndTime = query.time ? dayjs(query.time[1]).format('YYYY-MM-DD HH:mm:ss') : ''
+      OrderService.list({
+        current: pageIndex,
+        size: pageSize,
+        payBeginTime,
+        payEndTime,
+        channelId: query.channelId,
+        orderType: query.orderType,
+        source: query.source,
+        state: query.state,
+      }).then((res) => {
+        setData(res.data.records)
+        setTotal(res.data.total)
+      })
+    })
+  }
+
+  const getChannel = () => {
+    ChannelService.list({ pages: 1, size: 10 }).then((res) => {
+      if (res.code === HttpCode.success) {
+        setChannelData(res.data?.records ?? [])
+        console.log(channelData, 'ccc')
+      }
     })
   }
 
   const columns = [
     {
       title: '订单编号',
-      dataIndex: 'orderNo',
+      dataIndex: 'id',
     },
     {
       title: '下单时间',
@@ -54,7 +81,7 @@ const OrderListPage: React.FC = () => {
     },
     {
       title: '单价',
-      dataIndex: 'originPrice', //无
+      dataIndex: 'unitPrice',
     },
     {
       title: '营销活动',
@@ -62,7 +89,7 @@ const OrderListPage: React.FC = () => {
     },
     {
       title: '下单数量',
-      dataIndex: 'createTime', //无
+      dataIndex: 'orderCount', //无
     },
     {
       title: '应付款',
@@ -94,7 +121,7 @@ const OrderListPage: React.FC = () => {
     },
     {
       title: '订单/售后状态',
-      dataIndex: 'createTime',
+      dataIndex: 'state',
     },
     {
       title: '操作',
@@ -112,41 +139,25 @@ const OrderListPage: React.FC = () => {
     },
   ]
 
-  const selectData = [
-    {
-      key: '1',
-      value: '渠道名称',
-    },
-    {
-      key: '2',
-      value: '订单编号',
-    },
-    {
-      key: '3',
-      value: '商品名称',
-    },
-    {
-      key: '4',
-      value: '买家手机号',
-    },
-    {
-      key: '5',
-      value: '始发地',
-    },
-  ]
-
   const toDetails = (record: any) => {
     history.push('/order/order-list/order-details', {
-      record: record,
+      id: record.id,
     })
   }
 
   const onFinish = (values: any) => {
-    console.log('Success:', values)
+    loadData(pageIndex)
   }
 
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo)
+  }
+
+  /**重置 */
+  const resetTable = () => {
+    form.resetFields()
+    setPageIndex(1)
+    loadData(1)
   }
 
   return (
@@ -179,7 +190,7 @@ const OrderListPage: React.FC = () => {
           form={form}
         >
           <Row gutter={[5, 0]} style={{ paddingLeft: '40px' }}>
-            <Col span={6}>
+            {/* <Col span={6}>
               <Select value={selData} style={{ width: 120 }} onChange={(value) => setSelData(value)}>
                 {selectData?.map((item) => {
                   return (
@@ -202,6 +213,22 @@ const OrderListPage: React.FC = () => {
               ) : (
                 <Input style={{ width: 120 }} />
               )}
+            </Col> */}
+            <Col span={2} className="table-from-label">
+              渠道名称
+            </Col>
+            <Col span={4}>
+              <Form.Item name="channelId">
+                <Select value={channelData} style={{ width: 120 }}>
+                  {channelData?.map((item: any) => {
+                    return (
+                      <Option value={item.id} key={item.id}>
+                        {item.name}
+                      </Option>
+                    )
+                  })}
+                </Select>
+              </Form.Item>
             </Col>
             <Col span={2} className="table-from-label">
               下单时间
@@ -221,7 +248,7 @@ const OrderListPage: React.FC = () => {
               下单途径
             </Col>
             <Col span={2}>
-              <OrderRoute name="orderRoute" />
+              <OrderRoute name="source" />
             </Col>
           </Row>
           <Row gutter={[5, 0]} style={{ marginLeft: '-52px' }} justify="start">
@@ -236,7 +263,9 @@ const OrderListPage: React.FC = () => {
                 <Button type="primary" htmlType="submit">
                   查询
                 </Button>
-                <Button htmlType="button">重置</Button>
+                <Button htmlType="button" onClick={resetTable}>
+                  重置
+                </Button>
               </Space>
             </Form.Item>
           </Row>

@@ -66,23 +66,27 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
     <Modal title="商品分佣方案" visible={show} onOk={_handleUpdate} onCancel={_formClose}>
       <Form
         name="basic"
-        labelCol={{ span: 10 }}
-        wrapperCol={{ span: 30 }}
+        // labelCol={{ span: 20 }}
+        // wrapperCol={{ span: 20 }}
         initialValues={{ remember: true }}
         autoComplete="off"
         form={form}
       >
         <Form.Item label="方案名称" name="planName" rules={[{ required: true, message: '请输入' }]}>
-          <Input readOnly />
+          {mode == 'add' ? <Input style={{ width: '200px' }} /> : <Input style={{ width: '200px' }} readOnly />}
         </Form.Item>
         <p>直销商品分佣方案配置</p>
 
         <Form.Item label="" name="channelPlanList" rules={[]}>
-          <SubCenterSelect />
+          <SubCenterSelect mode={mode} />
         </Form.Item>
         <p>分销商品分佣方案配置</p>
         <Form.Item label="分佣比例" name="saleScale">
-          <InputNumber style={{ width: '100px' }} addonAfter="%" type="number" readOnly />
+          {mode == 'add' ? (
+            <InputNumber style={{ width: '100px' }} addonAfter="%" type="number" />
+          ) : (
+            <InputNumber style={{ width: '100px' }} addonAfter="%" type="number" readOnly />
+          )}
         </Form.Item>
       </Form>
     </Modal>

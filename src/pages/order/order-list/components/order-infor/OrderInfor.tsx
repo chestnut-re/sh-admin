@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './OrderInfor.less'
 /**
  * 详情信息
  */
-const OrderInfor: React.FC = () => {
+
+interface Props {
+  data: any
+}
+const OrderInfor: React.FC<Props> = ({ data }) => {
   return (
     <div className="infor__root">
       <div className="infor-title">

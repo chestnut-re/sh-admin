@@ -1,16 +1,31 @@
 import React, { useState, useEffect } from 'react'
-import OrderStates from '../order-states/OrderStates'
-import OrderInfor from '../order-infor/OrderInfor'
 import './OrderDetails.less'
+import { useHistory } from 'react-router-dom'
 import { Table, Space, Button } from 'antd'
+import { OrderService } from '@/service/OrderService'
+import { HttpCode } from '@/constants/HttpCode'
 /**
  * 订单详情
  */
 const OrderDetailsPage: React.FC = () => {
+  const history = useHistory()
   const [dataM, setDataM] = useState([])
   const [dataD, setDataD] = useState([])
   const [dataZ, setDataZ] = useState([])
   const [dataF, setDataF] = useState([])
+  const [data, setData] = useState([])
+  useEffect(() => {
+    loadData()
+  }, [])
+
+  const loadData = () => {
+    OrderService.details({ orderId: history.location.state.id }).then((res) => {
+      if (res.code === HttpCode.success) {
+        setData(res.data)
+        setDataZ(res.data?.subOrderDtoList)
+      }
+    })
+  }
   const columnsM = [
     {
       title: '昵称',
@@ -95,6 +110,23 @@ const OrderDetailsPage: React.FC = () => {
     {
       title: '订单信息状态',
       dataIndex: 'state',
+      render: (text: any, record: any) => {
+        if (record.state == 1) {
+          return `待付款`
+        } else if (record.state == 2) {
+          return `已失效`
+        } else if (record.state == 3) {
+          return `待确认`
+        } else if (record.state == 4) {
+          return `已完成`
+        } else if (record.state == 5) {
+          return `退款中`
+        } else if (record.state == 6) {
+          return `退款成功`
+        } else if (record.state == 2) {
+          return `退款失败`
+        }
+      },
     },
     {
       title: '行程状态',
@@ -117,8 +149,59 @@ const OrderDetailsPage: React.FC = () => {
   ]
   return (
     <div className="details__root">
-      <OrderStates />
-      <OrderInfor />
+      <div className="states-con">
+        <span className="order-sta">订单状态</span>
+        <span className="order-state">{data.state}</span>
+        <div className="order-time">
+          剩<span></span>
+        </div>
+        <span className="order-fx">分销</span>
+        <div className="states-order">
+          <div>{data.orderNo}</div>
+          <div>订单编号</div>
+        </div>
+        <div className="states-order1">
+          <div>{data.orderTime}</div>
+          <div>下单时间</div>
+        </div>
+        <div className="states-order2">
+          <div>{data.payTime}</div>
+          <div>付款时间</div>
+        </div>
+        <div className="states-order3">
+          <div>APP 浏览</div>
+          <div>下单途径</div>
+        </div>
+      </div>
+      <div className="infor-con">
+        <div className="infor-title">
+          <img src="" alt="" />
+          <span>{data.goodsName}</span>
+        </div>
+        <div className="infor infor-spe">
+          <div>始发地</div>
+          <div>青岛</div>
+        </div>
+        <div className="infor">
+          <div>成人价</div>
+          <div>{data.goodsPrice ? data.goodsPrice : 0}</div>
+        </div>
+        <div className="infor">
+          <div>儿童价</div>
+          <div>¥878</div>
+        </div>
+        <div className="infor">
+          <div>下单数量</div>
+          <div>
+            <span>{data.orderCount ? data.orderCount : 0}</span>
+            {/* <span>成人×4 儿童×1</span> */}
+          </div>
+        </div>
+        <div className="infor">
+          <div>代币最多可抵</div>
+          <div>{data.deductionPrice ? data.deductionPrice : 0}</div>
+        </div>
+      </div>
       <div className="details-title">买家信息</div>
       <Table rowKey="id" columns={columnsM} scroll={{ x: 'max-content' }} dataSource={[...dataM]} />
       <div className="details-title">订单关联人</div>
