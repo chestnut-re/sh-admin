@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description:
- * @LastEditTime: 2021-12-28 15:45:43
+ * @LastEditTime: 2021-12-28 16:17:52
  */
 
 import React, { useState, useEffect } from 'react'
@@ -56,7 +56,6 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
   }
 
   const onFinish = (values: any) => {
-
     console.log('Success:', values)
     const PostData = { ...values }
     PostData['isGroupServiceFee'] = values['isGroupServiceFee'].length > 0 ? 1 : 0
@@ -85,7 +84,12 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
   return (
     <>
       {!!chanId ? (
-        <Form name="normal_login" onFinish={onFinish} form={form} initialValues={{ remember: true }}>
+        <Form
+          name="normal_login"
+          onFinish={onFinish}
+          form={form}
+          initialValues={{ groupSettleDay: 0, saleSettleDay: 0 }}
+        >
           <Form.Item>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               预设团建奖金&nbsp; &nbsp;
@@ -126,7 +130,7 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     行程结束 &nbsp; &nbsp;且需满&nbsp; &nbsp;
                     <Form.Item name="groupSettleDay" style={{ marginBottom: '0' }}>
-                      <InputNumber addonAfter="天" defaultValue={0} />
+                      <InputNumber addonAfter="天"  />
                     </Form.Item>
                   </div>{' '}
                   &nbsp; &nbsp;
@@ -168,7 +172,7 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                   行程结束 &nbsp; &nbsp;且需满&nbsp; &nbsp;
                   <Form.Item name="saleSettleDay" style={{ marginBottom: '0' }}>
-                    <InputNumber addonAfter="天" defaultValue={0} />
+                    <InputNumber addonAfter="天"  />
                   </Form.Item>
                 </div>{' '}
                 &nbsp; &nbsp;

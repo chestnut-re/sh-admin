@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /*
  * @Description: 城市数据处理
- * @LastEditTime: 2021-12-28 15:31:02
+ * @LastEditTime: 2021-12-28 16:37:13
  */
 
 /**
@@ -237,11 +237,11 @@ export const findIcChild = (dataTree: Array<any>, id) => {
   let arrayList
   // console.log(dataTree,'dataTree')
   const each = (dataTree, id) => {
-    dataTree.some((item) => {
+    const dataList = dataTree??[]
+    dataList.some((item) => {
       if ((item['id'] == id)) {
-        // console.log(item,'item,')
-        arrayList = item['children']
-        return true
+        console.log(dataTree,'dataTree')
+        arrayList = item['children']??[]
       } else {
       each(item['children'],id)
       }

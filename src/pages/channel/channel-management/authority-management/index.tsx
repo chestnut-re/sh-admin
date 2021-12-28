@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道权限
- * @LastEditTime: 2021-12-28 15:43:52
+ * @LastEditTime: 2021-12-28 16:39:11
  */
 import React, { useState, useEffect } from 'react'
 import { Menu, Col, Row, Checkbox, Radio, Input, Tooltip } from 'antd'
@@ -100,16 +100,14 @@ const AuthorityManagement: React.FC = () => {
             </>
           ) : (
             <>
-              {ranked.length == 0 ? (
-                ''
-              ) : (
+            
                 <CommissionAuthority
                   channelDetail={channelDetail}
                   chanId={channelId}
                   ranked={ranked}
                   structure={structure}
                 />
-              )}
+
             </>
           )}
           {/* <TableScheme /> */}
