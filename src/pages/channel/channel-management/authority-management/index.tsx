@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道权限
- * @LastEditTime: 2021-12-28 17:25:19
+ * @LastEditTime: 2021-12-28 17:45:08
  */
 import React, { useState, useEffect } from 'react'
 import { Menu, Col, Row, Checkbox, Radio, Input, Tooltip } from 'antd'
@@ -26,7 +26,6 @@ const AuthorityManagement: React.FC = () => {
 
   useEffect(() => {
     getDetail()
-    console.log(channelId, '---')
   }, [channelId])
 
   const getStructure = () => {
@@ -79,7 +78,7 @@ const AuthorityManagement: React.FC = () => {
           {structure.length > 0 ? (
             <ChannelListTree
               structure={structure}
-              defaultSelectedKeys={structure[0]?.id}
+              defaultSelectedKeys={structure[0]?.id ?? ''}
               onSelectStructure={_onSelectStructure}
             />
           ) : (

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /*
  * @Description: 城市数据处理
- * @LastEditTime: 2021-12-28 17:11:46
+ * @LastEditTime: 2021-12-28 17:37:14
  */
 
 /**
@@ -197,7 +197,7 @@ export const getMaxFloor = (treeData: any[] = []) => {
 }
 
 /**
- * @description: level 小于2 的全部删除
+ * @description: 只要 level 2 的 
  * @param {Array} treeList
  * @param {string} children
  * @return {*}

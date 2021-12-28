@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description:功能权限
- * @LastEditTime: 2021-12-28 15:30:42
+ * @LastEditTime: 2021-12-28 17:44:40
  */
 import { Table, Switch, Space, message, Button } from 'antd'
 import React, { useState, useEffect } from 'react'
@@ -46,9 +46,6 @@ const TableScheme: React.FC<Props> = ({ chanId, switchFc, channelDetail }) => {
     setSelectedRowKeys([])
     if (channelDetail != '') {
       const channelDe = JSON.parse(channelDetail)
-    // console.log(channelDe,'channelDe')
-    // console.log(channelDe?.preBusinessAuthority)
-    // console.log(channelDe?.preMenuAuthority)
     init(channelDe)
     }
 //  
@@ -91,14 +88,14 @@ const TableScheme: React.FC<Props> = ({ chanId, switchFc, channelDetail }) => {
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       setSelectedRowKeys(selectedRowKeys)
-      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+      // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
     },
 
     onSelect: (record, selected, selectedRows) => {
-      console.log(record, selected, selectedRows)
+      // console.log(record, selected, selectedRows)
     },
     onSelectAll: (selected, selectedRows, changeRows) => {
-      console.log(selected, selectedRows, changeRows)
+      // console.log(selected, selectedRows, changeRows)
     },
     // 1,11,111,112,113,114
     selectedRowKeys: selectedRowKeys,

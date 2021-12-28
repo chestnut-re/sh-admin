@@ -1,6 +1,6 @@
 /*
  * @Description: 添加渠道
- * @LastEditTime: 2021-12-28 10:49:22
+ * @LastEditTime: 2021-12-28 17:45:28
  */
 
 import { Form, Input, Modal, Cascader, Switch, message } from 'antd'
@@ -75,7 +75,6 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
     form
       .validateFields()
       .then((formData) => {
-        console.log(formData, '999999')
         const postData = { ...formData }
         postData.regions = lastOneJoin(formData.regions)
         postData.regionsName = arrayNameJoin(formData.regions, area)
@@ -127,9 +126,7 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
     })
   }
   const changeStructure = (e, data) => {
-    console.log(data, '---')
     setLevel(data[data.length - 1]?.level)
-    console.log(data[data.length - 1]?.level)
     form.setFieldsValue({
       id: e[e.length - 1],
       level: data[data.length - 1]?.level,

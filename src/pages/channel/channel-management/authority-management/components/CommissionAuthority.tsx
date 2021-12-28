@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description:
- * @LastEditTime: 2021-12-28 16:42:41
+ * @LastEditTime: 2021-12-28 17:44:23
  */
 
 import React, { useState, useEffect } from 'react'
@@ -56,7 +56,7 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
   }
 
   const onFinish = (values: any) => {
-    console.log('Success:', values)
+
     const PostData = { ...values }
     PostData['isGroupServiceFee'] = values['isGroupServiceFee'].length > 0 ? 1 : 0
     PostData['channelDistAuth'] = values['channelDistAuth'].map((res, index) => {

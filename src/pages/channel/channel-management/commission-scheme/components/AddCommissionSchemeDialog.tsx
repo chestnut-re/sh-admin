@@ -1,6 +1,6 @@
 /*
  * @Description: 添加分佣方案
- * @LastEditTime: 2021-12-28 16:05:13
+ * @LastEditTime: 2021-12-28 17:46:38
  */
 
 import { Form, Input, Modal, Cascader, message, Row, Col, InputNumber } from 'antd'
@@ -44,14 +44,12 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
               return res
             })
             .filter((res) => res?.directAuth == 1)
-          console.log(dataList, 'dataList')
           form.setFieldsValue({
             teamBonus: resData?.presetBonus,
           })
           setChannelDistAuth(dataList)
         })
       } else {
-        console.log(data, '====')
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -73,7 +71,6 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
     if (!dataId === false) {
       setChannelDistAuth(data?.channelPlanList)
       setNameDefault(analysisNameDuo(structure, data?.channelId, 'children', 'id', 'pid'))
-      console.log(analysisNameDuo(structure, data?.channelId, 'children', 'id', 'pid'), 'sss')
       form.setFieldsValue({
         structureId: data?.id,
         channelPlanList: data?.channelPlanList,
