@@ -28,11 +28,11 @@ const ProductionListPage: React.FC<Props> = observer(({ type }) => {
 
   const loadData = (pageIndex) => {
     const params = form.getFieldsValue()
-    let obj = {}
+    let goodsDto = {}
     if (type === 'unRelease') {
-      obj = { state: 1 }
+      goodsDto = { state: 1 }
     }
-    ProductionListService.list({ current: pageIndex, size: pageSize, ...params, ...obj }).then((res) => {
+    ProductionListService.list({ current: pageIndex, size: pageSize, ...params, goodsDto }).then((res) => {
       setData(res.data.records)
       setTotal(res.data.total)
     })
