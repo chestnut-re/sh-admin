@@ -1,6 +1,6 @@
 /*
  * @Description: 左侧tree
- * @LastEditTime: 2021-12-28 15:40:03
+ * @LastEditTime: 2021-12-28 17:19:00
  */
 import { Tree } from 'antd'
 import React from 'react'
@@ -16,7 +16,7 @@ const ChannelListTree: React.FC<Props> = ({ structure, onSelectStructure,default
   }
   return (
   <>
-    {}
+    {/* {defaultSelectedKeys} */}
     <Tree
       showLine={{showLeafIcon:false}}
       defaultExpandAll

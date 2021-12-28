@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /*
  * @Description: 城市数据处理
- * @LastEditTime: 2021-12-28 16:37:13
+ * @LastEditTime: 2021-12-28 17:11:46
  */
 
 /**
@@ -198,21 +198,31 @@ export const getMaxFloor = (treeData: any[] = []) => {
 
 /**
  * @description: level 小于2 的全部删除
- * @param {Array} city
+ * @param {Array} treeList
  * @param {string} children
  * @return {*}
  */
-export const getTwoTier = (city: Array<any>, children: string): any => {
-  city.forEach((item) => {
-    if (item['level'] < 2) {
-      item = getTwoTier(item[children], children)
-    } else {
-      // console.log(item, '------')
-      delete item[children]
-    }
-    return item
-  })
-  return city
+export const getTwoTier = (treeList: Array<any>, children: string): any => {
+  let newArray = []
+  const each = (treeList, children) => {
+    const treeListData = treeList??[]
+    treeListData.some((item) => {
+      if (item['level'] <= 2) {
+        if (item['level'] == 2) {
+          const items = JSON.parse(JSON.stringify(item))
+          delete items[children]
+          newArray.push(items)
+        }
+        item = each(item[children], children)
+      } else {
+        // delete item[children]
+      }
+      return item
+    })
+  }
+  each(treeList, children)
+  console.log(newArray,'newArray')
+  return newArray
 }
 /**
  * @description:  根据[id,id] 找到对应的数据树
@@ -237,17 +247,17 @@ export const findIcChild = (dataTree: Array<any>, id) => {
   let arrayList
   // console.log(dataTree,'dataTree')
   const each = (dataTree, id) => {
-    const dataList = dataTree??[]
+    const dataList = dataTree ?? []
     dataList.some((item) => {
-      if ((item['id'] == id)) {
-        console.log(dataTree,'dataTree')
-        arrayList = item['children']??[]
+      if (item['id'] == id) {
+        console.log(dataTree, 'dataTree')
+        arrayList = item['children'] ?? []
       } else {
-      each(item['children'],id)
+        each(item['children'], id)
       }
-  
     })
   }
   each(dataTree, id)
-return arrayList
+
+  return arrayList
 }

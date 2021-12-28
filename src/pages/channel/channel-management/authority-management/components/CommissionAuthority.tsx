@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description:
- * @LastEditTime: 2021-12-28 16:17:52
+ * @LastEditTime: 2021-12-28 16:42:41
  */
 
 import React, { useState, useEffect } from 'react'
@@ -148,7 +148,7 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
               <div key={index}>
                 <Form.Item
                   name={['channelDistAuth', index]}
-                  label={`${index + 2}级渠道（${res.name}）:佣金权限 :   `}
+                  label={`${index + 2}级渠道（${res.name}${index==0?'':'等'}） :佣金权限 :   `}
                   rules={[{ required: true, message: '请选择佣金权限 !' }]}
                 >
                   <Checkbox.Group>

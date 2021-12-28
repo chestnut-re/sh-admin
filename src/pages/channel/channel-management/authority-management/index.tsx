@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道权限
- * @LastEditTime: 2021-12-28 16:39:11
+ * @LastEditTime: 2021-12-28 17:25:19
  */
 import React, { useState, useEffect } from 'react'
 import { Menu, Col, Row, Checkbox, Radio, Input, Tooltip } from 'antd'
@@ -35,12 +35,14 @@ const AuthorityManagement: React.FC = () => {
       const twoData = JSON.parse(JSON.stringify(getTwoTier([res?.data], 'children')))
       setStaticStructure(data)
       if (current == 'one') {
+        setStructure([])
         const id = JSON.parse(JSON.stringify(data[0]))?.id
         setStructure(data)
         setChannelId(id)
         getDetail()
       } else {
-        const id = JSON.parse(JSON.stringify(twoData[0]))?.id
+        setStructure([])
+        const id = JSON.parse(JSON.stringify(twoData[0] ?? []))?.id
         setStructure(twoData)
         setChannelId(id)
         getDetail()
@@ -100,14 +102,12 @@ const AuthorityManagement: React.FC = () => {
             </>
           ) : (
             <>
-            
-                <CommissionAuthority
-                  channelDetail={channelDetail}
-                  chanId={channelId}
-                  ranked={ranked}
-                  structure={structure}
-                />
-
+              <CommissionAuthority
+                channelDetail={channelDetail}
+                chanId={channelId}
+                ranked={ranked}
+                structure={structure}
+              />
             </>
           )}
           {/* <TableScheme /> */}
