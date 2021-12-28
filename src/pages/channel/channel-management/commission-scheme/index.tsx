@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道分佣列表
- * @LastEditTime: 2021-12-28 17:49:28
+ * @LastEditTime: 2021-12-28 20:18:30
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
@@ -22,7 +22,7 @@ const CommissionSchemePage: React.FC = () => {
   const [showDialog, setShowDialog] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
   const [channelId, setChannelId] = useState(null)
-  const [dialogMode, setDialogMode] = useState<DialogMode>('add')
+  const [dialogMode, setDialogMode] = useState('add')
   const [structure, setStructure] = useState([])
   const [ranked, setRanked] = useState([])
   useEffect(() => {
@@ -82,8 +82,8 @@ const CommissionSchemePage: React.FC = () => {
       title: '操作',
       render: (_text: any, record: any) => (
         <Space size="middle">
-          {/* <Button >查看</Button> */}
-          <Button onClick={() => showAddDialog(record, false)}>编辑</Button>
+          <Button  onClick={() => showAddDialog(record, 'see')}>查看</Button>
+          <Button onClick={() => showAddDialog(record, 'edit')}>编辑</Button>
           {/* <Button>删除</Button> */}
         </Space>
       ),
@@ -103,8 +103,8 @@ const CommissionSchemePage: React.FC = () => {
     form.resetFields()
   }
 
-  const showAddDialog = (record, add = true) => {
-    setDialogMode(add ? 'add' : 'edit')
+  const showAddDialog = (record, add = 'add') => {
+    setDialogMode(add)
     setShowDialog(true)
     setSelectedData(record)
   }

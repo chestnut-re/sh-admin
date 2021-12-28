@@ -1,16 +1,17 @@
 /*
  * @Description: 添加分佣方案
- * @LastEditTime: 2021-12-28 17:46:38
+ * @LastEditTime: 2021-12-28 20:28:45
  */
 
-import { Form, Input, Modal, Cascader, message, Row, Col, InputNumber } from 'antd'
+import { Form, Input, Modal, Cascader, message, Row, Col, InputNumber, Button } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
 import { analysisNameDuo } from '@/utils/tree'
 import ChannelService from '@/service/ChannelService'
-export type DialogMode = 'add' | 'edit'
+import { formateTime } from '@/utils/timeUtils'
+// export type DialogMode = 'add' | 'edit'
 interface Props {
   data: any
-  mode: DialogMode
+  mode: any
   structure: Array<any>
   show: boolean
   ranked: any
@@ -56,6 +57,7 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
   }, [dataId])
   useEffect(() => {
     if (show) {
+      form.resetFields()
       getDetail()
       if (mode == 'add') {
         setLevel(structure[0].level)
@@ -69,19 +71,24 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
   const getDetail = () => {
     const dataId = data?.id
     if (!dataId === false) {
-      setChannelDistAuth(data?.channelPlanList)
-      setNameDefault(analysisNameDuo(structure, data?.channelId, 'children', 'id', 'pid'))
-      form.setFieldsValue({
-        structureId: data?.id,
-        channelPlanList: data?.channelPlanList,
-        level: structure[0].level,
-        planName: data?.planName,
-        teamBonus: data?.teamBonus,
-        state: data?.state,
+      ChannelService.ChannelPlan.get(dataId).then((result) => {
+        const resultData = result?.data
+        setChannelDistAuth(resultData?.channelPlanList)
+        setNameDefault(analysisNameDuo(structure, resultData?.channelId, 'children', 'id', 'pid'))
+        form.setFieldsValue({
+          structureId: resultData?.id,
+          channelPlanList: resultData?.channelPlanList,
+          level: structure[0].level,
+          planName: resultData?.planName,
+          teamBonus: resultData?.teamBonus,
+          state: resultData?.state,
+          createTime: formateTime(resultData?.createTime),
+          createUserName: resultData?.createUserName,
+        })
       })
-      // })
     } else {
       form.setFieldsValue({
+        structureId: [],
         state: true,
         isOpenAccount: true,
         level: structure[0]?.level,
@@ -95,20 +102,19 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
       .validateFields()
       .then((formData) => {
         const postData = { ...formData }
-        postData.channelPlanList =
-          formData.channelPlanList ??
-          [].map((res, index) => {
-            const Data = JSON.parse(JSON.stringify(res))
-            Data['level'] = channelDistAuth[index]['level']
-            Data['saleScalePlan'] = (res.saleScalePlan ?? []).map((mRes, Ci) => {
-              const levelData = channelDistAuth[index]['saleScalePlan'][Ci]['level']
-              return {
-                level: levelData,
-                saleScale: mRes['saleScale'],
-              }
-            })
-            return Data
+        const maoList = formData.channelPlanList ?? []
+        postData.channelPlanList = maoList.map((res, index) => {
+          const Data = JSON.parse(JSON.stringify(res))
+          Data['level'] = channelDistAuth[index]['level']
+          Data['saleScalePlan'] = (res.saleScalePlan ?? []).map((mRes, Ci) => {
+            const levelData = channelDistAuth[index]['saleScalePlan'][Ci]['level']
+            return {
+              level: levelData,
+              saleScale: mRes['saleScale'],
+            }
           })
+          return Data
+        })
         postData.state = formData.state ? 1 : 0
         postData.isOpenAccount = formData.isOpenAccount ? 1 : 0
         if (mode === 'add') {
@@ -164,13 +170,31 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
   const onFinish = (values: any) => {
     console.log('Success:', values)
   }
+
+  const type = { add: '创建分佣方案', edit: '编辑分佣方案', see: '查看分佣方案' }
   return (
     <Modal
-      title={mode == 'add' ? '创建分佣方案' : '分佣方案详情'}
+      title={type[mode]}
       visible={show}
       width={700}
-      onOk={_handleUpdate}
-      onCancel={_formClose}
+      // onOk={_handleUpdate}
+      // onCancel={_formClose}
+      footer={
+        mode == 'see'
+          ? [
+              <Button key="submit" type="primary" onClick={_formClose}>
+                确定
+              </Button>,
+            ]
+          : [
+              <Button key="back" onClick={_formClose}>
+                取消
+              </Button>,
+              <Button key="submit" type="primary" onClick={_handleUpdate}>
+                确定
+              </Button>,
+            ]
+      }
     >
       <Form
         name="basic"
@@ -186,6 +210,7 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
             {mode == 'add' ? (
               <Cascader
                 options={structure}
+                disabled={mode == 'see'}
                 changeOnSelect
                 fieldNames={{ label: 'name', value: 'id', children: 'children' }}
                 onChange={changeStructure}
@@ -199,12 +224,12 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
         )}
 
         <Form.Item label="方案名称" name="planName" rules={[{ required: true, message: '请输入' }]}>
-          <Input />
+          <Input disabled={mode == 'see'} />
         </Form.Item>
         <Form.Item label="团建奖金" name="teamBonus" rules={[{ required: true, message: '请输入' }]}>
-          <InputNumber max={100} min={0} addonAfter="%" />
+          <InputNumber disabled={mode == 'see'} max={100} min={0} addonAfter="%" />
         </Form.Item>
-        {channelDistAuth.map((res: any, index, array) => {
+        {(channelDistAuth ?? []).map((res: any, index, array) => {
           return (
             <div key={index}>
               <>
@@ -216,7 +241,7 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
                       label="直销分佣比例"
                       name={['channelPlanList', index, 'directScale']}
                     >
-                      <InputNumber max={100} min={0} addonAfter="%" />
+                      <InputNumber disabled={mode == 'see'} max={100} min={0} addonAfter="%" />
                     </Form.Item>
                   </Col>
                   {res.isGroupServiceFee == 1 ? (
@@ -226,7 +251,7 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
                         label="发团服务费"
                         name={['channelPlanList', index, 'teamPrice']}
                       >
-                        <InputNumber max={100} min={0} addonAfter="%" />
+                        <InputNumber disabled={mode == 'see'} max={100} min={0} addonAfter="%" />
                       </Form.Item>
                     </Col>
                   ) : (
@@ -241,7 +266,7 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
                           label={mRes.level + '级渠道分销分佣比例'}
                           name={['channelPlanList', index, 'saleScalePlan', Ci, 'saleScale']}
                         >
-                          <InputNumber max={100} min={0} addonAfter="%" />
+                          <InputNumber disabled={mode == 'see'} max={100} min={0} addonAfter="%" />
                         </Form.Item>
                       </Col>
                     )
@@ -258,8 +283,20 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
           rules={[{ required: true, message: '请输入' }]}
           style={{ visibility: 'hidden', height: 0 }}
         >
-          <Input />
+          <Input disabled={mode == 'see'} />
         </Form.Item>
+        {mode == 'add' ? (
+          <></>
+        ) : (
+          <>
+            <Form.Item label="创建人" name="createUserName">
+              <Input disabled />
+            </Form.Item>
+            <Form.Item label="创建时间" name="createTime">
+              <Input disabled />
+            </Form.Item>
+          </>
+        )}
       </Form>
     </Modal>
   )
