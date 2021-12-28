@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道列表
- * @LastEditTime: 2021-12-27 16:33:21
+ * @LastEditTime: 2021-12-28 09:53:12
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
@@ -152,7 +152,7 @@ const RolePage: React.FC = () => {
                   搜索条件
                 </Col>
                 <Col >
-                  <InputTemp name="roleName" placeholder="角色名称" />
+                  <InputTemp name="roleNameLike" placeholder="角色名称" />
                 </Col>
                 {/* <Col span={1} className="table-from-label">
                   状态

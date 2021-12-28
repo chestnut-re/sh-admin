@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道列表
- * @LastEditTime: 2021-12-27 15:53:04
+ * @LastEditTime: 2021-12-27 19:29:32
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
@@ -68,7 +68,7 @@ const ChannelPage: React.FC = () => {
     },
     {
       title: '责任人手机号',
-      dataIndex: 'name',
+      dataIndex: 'phoneNumber',
     },
     {
       title: '责任区域',

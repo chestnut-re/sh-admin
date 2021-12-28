@@ -1,6 +1,6 @@
 /*
  * @Description: 添加角色
- * @LastEditTime: 2021-12-27 13:52:41
+ * @LastEditTime: 2021-12-27 19:48:33
  */
 
 import { Form, Input, Modal, Cascader, Switch, message } from 'antd'
@@ -159,8 +159,8 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
               onChange={changeStructure}
             />
           ) : (
-            <Input defaultValue={data?.channelName} />
-            // <div>{nameDefault}</div>
+            // <Input defaultValue={data?.channelName} />
+            <div>{data?.channelName}</div>
           )}
         </Form.Item>
         <Form.Item label="角色名称" name="roleName" rules={[{ required: true, message: '请输入' }]}>

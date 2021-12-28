@@ -1,6 +1,6 @@
 /*
  * @Description: 城市数据处理
- * @LastEditTime: 2021-12-27 14:34:00
+ * @LastEditTime: 2021-12-27 19:13:20
  */
 
 /**
@@ -27,12 +27,12 @@ export const cityDispose = (city: Array<any>, children: string): any => {
  * @return {Array}
  */
 
-export const shellArrayDuo = (arr, id, areas = 'areas', adcode = 'adcode', pid = 'adcode') => {
+export const shellArrayDuo = (arr: any[], id: string, areas = 'areas', adcode = 'adcode', pid = 'adcode') => {
   // eslint-disable-next-line prefer-const
   let temp: any[]
   // eslint-disable-next-line prefer-const
   temp = []
-  const callback = function (nowArr, id) {
+  const callback = function (nowArr: string | any[], id: any) {
     for (let i = 0; i < nowArr.length; i++) {
       const item = nowArr[i]
 
@@ -184,7 +184,6 @@ export const getMaxFloor = (treeData: any[] = []) => {
       if (floor > max) {
         max = floor
         if(e.level!=1){
-
           arrayList.push(e)
         }
       }
@@ -196,4 +195,37 @@ export const getMaxFloor = (treeData: any[] = []) => {
   }
   each(treeData, 1)
   return arrayList
+}
+
+/**
+ * @description: level 小于2 的全部删除
+ * @param {Array} city
+ * @param {string} children
+ * @return {*}
+ */
+export const getTwoTier = (city: Array<any>, children: string): any => {
+  city.forEach((item) => {
+    if(item['level']<2){
+      item = getTwoTier(item[children], children)
+    } else {
+        console.log(item,'------')
+        delete item[children]
+      
+    }
+    return item
+  })
+  return city
+}
+export const nwqRouter = (city: Array<any>, arrayId:  any[]) => {
+  city.forEach((item) => {
+    if(arrayId.includes(item['arrayId'])){
+      item = nwqRouter(item['children'],arrayId)
+    } else {
+        console.log(item,'------')
+        delete item['children']
+      
+    }
+    return item
+  })
+  return city
 }

@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道权限
- * @LastEditTime: 2021-12-27 15:52:37
+ * @LastEditTime: 2021-12-27 18:39:37
  */
 import React, { useState, useEffect } from 'react'
 import { Menu, Col, Row, Checkbox, Radio, Input, Tooltip } from 'antd'
-import { cityDispose, getMaxFloor } from '@/utils/tree'
+import { cityDispose, getMaxFloor, getTwoTier } from '@/utils/tree'
 import ChannelService from '@/service/ChannelService'
 import ChannelListTree from '../components/ChannelListTree'
 import TableScheme from './components/TableScheme'
@@ -21,17 +21,23 @@ const AuthorityManagement: React.FC = () => {
   const [channelDetail, setChannelDetail] = useState('')
   useEffect(() => {
     getStructure()
-  }, [])
+  }, [current])
+
   useEffect(() => {
     getDetail()
   }, [channelId])
 
   const getStructure = () => {
     ChannelService.getStructure().then((res) => {
-      setStructure(cityDispose([res?.data], 'children'))
+      if(current=='one'){
+        setStructure(cityDispose([res?.data], 'children'))
+      }else{
+        setStructure(getTwoTier([res?.data], 'children'))
+      }
       setRanked(getMaxFloor([res?.data]))
     })
   }
+
   const getDetail = () => {
     if (!!channelId) {
       ChannelService.get(channelId).then((res) => {
@@ -41,7 +47,6 @@ const AuthorityManagement: React.FC = () => {
     }
   }
   const _onSelectStructure = (id) => {
-    console.log(id, 'ccc')
     setChannelId(id)
   }
 
@@ -55,12 +60,17 @@ const AuthorityManagement: React.FC = () => {
           </Menu>
         </Col>
       </Row>
-
       <Row gutter={[10, 0]}>
-      <Col xxl={3} xl={5} lg={7} md={8}>
-          {structure.length > 0 ? <ChannelListTree structure={structure} onSelectStructure={_onSelectStructure} /> : ''}
+        <Col xxl={3} xl={5} lg={7} md={8}>
+          {structure.length > 0 ? (
+            <ChannelListTree
+              structure={structure}
+              onSelectStructure={_onSelectStructure}
+            />
+          ) : (
+            ''
+          )}
         </Col>
-    
         <Col xxl={21} xl={19} lg={17} md={16}>
           {current == 'one' ? (
             <>
