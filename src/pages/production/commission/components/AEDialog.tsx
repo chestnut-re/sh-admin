@@ -1,4 +1,4 @@
-import { Form, Input, Modal, DatePicker, Row, Col, InputNumber } from 'antd'
+import { Form, Input, Modal, DatePicker, Row, Col, InputNumber, Radio } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
 import { HttpCode } from '@/constants/HttpCode'
 import { SubCenterSelect } from '@/components/formItem/SubCenterSelect'
@@ -29,6 +29,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
         item.key = `${Date.now()}-${index}`
         return item
       }),
+      saleSettleType: data?.saleSettleType,
     })
   }, [show])
 
@@ -62,6 +63,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
     onClose()
   }
 
+  const onChangeRadio = () => {}
   return (
     <Modal title="商品分佣方案" visible={show} onOk={_handleUpdate} onCancel={_formClose}>
       <Form
@@ -87,6 +89,18 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
           ) : (
             <InputNumber style={{ width: '100px' }} addonAfter="%" type="number" readOnly />
           )}
+        </Form.Item>
+        <Form.Item label="直销/分销结算要求" name="saleSettleType">
+          <Radio.Group onChange={onChangeRadio} value={''}>
+            <Radio value={1}>核销</Radio>
+            <Radio value={2}>行程结束</Radio>
+          </Radio.Group>
+          <span>
+            且需满
+            {/* <Form.Item name="groupSettleDay" style={{ marginBottom: '0', display: 'inline-block' }}> */}
+            <InputNumber value={data?.saleSettleDay} addonAfter="天" style={{ width: 100 }} />
+            {/* </Form.Item> */}
+          </span>
         </Form.Item>
       </Form>
     </Modal>
