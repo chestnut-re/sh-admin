@@ -97,6 +97,21 @@ export const SelectState: FC<any> = ({ name, ...props }) => {
 }
 
 /**
+ * 人员管理列表 状态
+ */
+export const PersonalState: FC<any> = ({ name, ...props }) => {
+  return (
+    <Form.Item name={name}>
+      <Select allowClear {...props}>
+        <Select.Option value={''}>全部</Select.Option>
+        <Select.Option value={1}>正常</Select.Option>
+        <Select.Option value={0}>禁用</Select.Option>
+      </Select>
+    </Form.Item>
+  )
+}
+
+/**
  * 订单状态 模版
  */
 export const OrderState: FC<any> = ({ name, ...props }) => {
@@ -186,6 +201,23 @@ export const StatusRoute: FC<any> = ({ name, ...props }) => {
         <Select.Option value={''}>全部</Select.Option>
         <Select.Option value={1}>使用中</Select.Option>
         <Select.Option value={0}>未使用</Select.Option>
+      </Select>
+    </Form.Item>
+  )
+}
+
+/**
+ * 人员累心
+ * 人员类型 0 渠道账户 1 内部渠道 2 外部渠道
+ */
+export const AccountType: FC<any> = ({ name, ...props }) => {
+  return (
+    <Form.Item name={name}>
+      <Select allowClear {...props}>
+        <Select.Option value={''}>全部</Select.Option>
+        <Select.Option value={0}>渠道账户</Select.Option>
+        <Select.Option value={1}>内部渠道</Select.Option>
+        <Select.Option value={2}>外部渠道</Select.Option>
       </Select>
     </Form.Item>
   )
