@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道权限
- * @LastEditTime: 2021-12-28 10:30:15
+ * @LastEditTime: 2021-12-28 10:31:20
  */
 import React, { useState, useEffect } from 'react'
 import { Menu, Col, Row, Checkbox, Radio, Input, Tooltip } from 'antd'
@@ -18,7 +18,6 @@ const AuthorityManagement: React.FC = () => {
   const [ranked, setRanked] = useState([])
   const [channelId, setChannelId] = useState(null)
   const [structure, setStructure] = useState([])
-  const [structureTwo, setStructureTwo] = useState([])
   const [channelDetail, setChannelDetail] = useState('')
   useEffect(() => {
     getStructure()
@@ -31,13 +30,11 @@ const AuthorityManagement: React.FC = () => {
   const getStructure = () => {
     ChannelService.getStructure().then((res) => {
       setRanked(getMaxFloor([res?.data]))
-      if (current == 'one') {
-        setStructureTwo(cityDispose([res?.data], 'children'))
-      } else {
-        setStructureTwo(getTwoTier([res?.data], 'children'))
+      if(current=='one'){
+        setStructure(cityDispose([res?.data], 'children'))
+      }else{
+        setStructure(getTwoTier([res?.data], 'children'))
       }
-      setStructure(cityDispose([res?.data], 'children'))
- 
     })
   }
 
@@ -50,6 +47,7 @@ const AuthorityManagement: React.FC = () => {
     }
   }
   const _onSelectStructure = (id) => {
+
     setChannelId(id)
   }
 
@@ -66,7 +64,10 @@ const AuthorityManagement: React.FC = () => {
       <Row gutter={[10, 0]}>
         <Col xxl={3} xl={5} lg={7} md={8}>
           {structure.length > 0 ? (
-            <ChannelListTree structure={structureTwo} onSelectStructure={_onSelectStructure} />
+            <ChannelListTree
+              structure={structure}
+              onSelectStructure={_onSelectStructure}
+            />
           ) : (
             ''
           )}
