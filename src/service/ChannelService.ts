@@ -1,6 +1,6 @@
 /*
  * @Description:渠道管理
- * @LastEditTime: 2021-12-26 14:57:13
+ * @LastEditTime: 2021-12-28 11:17:56
  */
 import axios from '@/request'
 
@@ -17,7 +17,7 @@ export default class ChannelService {
     return axios.delete(`/api/market/channel/delete/${id}`)
   }
   static get(id): Promise<any> {
-    return axios.get(`/api/market/channel/get/${id}`)
+    return axios.get(`/api/market/channel/getInfo/${id}`)
   }
   static getStructure(): Promise<any> {
     return axios.get(`/api/market/channel/structure`)

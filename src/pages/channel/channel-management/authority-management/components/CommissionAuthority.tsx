@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description:
- * @LastEditTime: 2021-12-28 10:47:10
+ * @LastEditTime: 2021-12-28 11:18:53
  */
 
 import React, { useState, useEffect } from 'react'
@@ -15,15 +15,18 @@ interface Props {
   chanId: any
   structure: any
   ranked: any
-  switchFunc:DialogType
+  switchFunc: DialogType
   channelDetail: any
 }
-const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, channelDetail }) => {
+const CommissionAuthority: React.FC<Props> = ({ chanId, structure, switchFunc, ranked, channelDetail }) => {
   const [dataObj, setDataObj] = useState({})
   const [isGroupServiceFee, setIsGroupServiceFee] = useState(0)
   const [form] = Form.useForm()
+
   useEffect(() => {
-  })
+    console.log('---')
+  }, [switchFunc, chanId])
+
   useEffect(() => {
     if (channelDetail == '') {
       form.setFieldsValue({
@@ -34,14 +37,13 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
     } else {
       const Data = JSON.parse(channelDetail)
       let listDit: any
-      const mapList = Data.channelDistAuth ??[]
-      listDit =
-      mapList.map((res) => {
-          let list = []
-          res?.saleAuth == 1 ? list.push(0) : ''
-          res?.directAuth == 1 ? list.push(1) : ''
-          return list
-        })
+      const mapList = Data.channelDistAuth ?? []
+      listDit = mapList.map((res) => {
+        let list = []
+        res?.saleAuth == 1 ? list.push(0) : ''
+        res?.directAuth == 1 ? list.push(1) : ''
+        return list
+      })
       form.setFieldsValue({
         channelDistAuth: listDit,
         isGroupServiceFee: Data?.isGroupServiceFee == 1 ? ['1'] : [],
@@ -61,7 +63,6 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
 
   const onClose = (e) => {
     console.log(form.getFieldsValue(), 'form.getFieldsValue')
-
   }
   const onFinish = (values: any) => {
     console.log('Success:', values)
@@ -110,36 +111,36 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
           </div>
         </Form.Item>
         <Form.Item name="isGroupServiceFee">
-            <Checkbox.Group onChange={changeCheckout}>
-              <Checkbox value="1">
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                  发团服务费&nbsp; &nbsp;
-                  <Tooltip placement="right" title={'发团后是否获取佣金'}>
-                    <QuestionCircleOutlined />
-                  </Tooltip>
-                </div>
-              </Checkbox>
-            </Checkbox.Group>
-          </Form.Item>
+          <Checkbox.Group onChange={changeCheckout}>
+            <Checkbox value="1">
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                发团服务费&nbsp; &nbsp;
+                <Tooltip placement="right" title={'发团后是否获取佣金'}>
+                  <QuestionCircleOutlined />
+                </Tooltip>
+              </div>
+            </Checkbox>
+          </Checkbox.Group>
+        </Form.Item>
         {isGroupServiceFee == 1 ? (
-      <Form.Item
-      label="发团服务结算要求"
-      name="groupSettleType"
-      rules={[{ required: true, message: '请选择佣金权限 !' }]}
-    >
-      <Radio.Group onChange={onChangeRadio} value={''}>
-        <Radio value={1}>核销</Radio>
-        <Radio value={2}>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            行程结束 &nbsp; &nbsp;且需满&nbsp; &nbsp;
-            <Form.Item name="groupSettleDay" style={{ marginBottom: '0' }}>
-              <InputNumber addonAfter="天" defaultValue={0} />
-            </Form.Item>
-          </div>{' '}
-          &nbsp; &nbsp;
-        </Radio>
-      </Radio.Group>
-    </Form.Item>
+          <Form.Item
+            label="发团服务结算要求"
+            name="groupSettleType"
+            rules={[{ required: true, message: '请选择佣金权限 !' }]}
+          >
+            <Radio.Group onChange={onChangeRadio} value={''}>
+              <Radio value={1}>核销</Radio>
+              <Radio value={2}>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  行程结束 &nbsp; &nbsp;且需满&nbsp; &nbsp;
+                  <Form.Item name="groupSettleDay" style={{ marginBottom: '0' }}>
+                    <InputNumber addonAfter="天" defaultValue={0} />
+                  </Form.Item>
+                </div>{' '}
+                &nbsp; &nbsp;
+              </Radio>
+            </Radio.Group>
+          </Form.Item>
         ) : (
           ''
         )}
