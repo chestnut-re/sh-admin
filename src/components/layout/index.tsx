@@ -1,16 +1,18 @@
-import { Layout } from 'antd'
+
+import { Layout,ConfigProvider } from 'antd'
 import React, { useState } from 'react'
 import ContentLayout from './content'
 import LayoutSider from './slider'
 import './index.less'
 import { Content, Header } from 'antd/lib/layout/layout'
 import { userLoginOut } from '@/utils/biz'
-
+import zhCN from 'antd/es/locale/zh_CN'
 function AdminLayout(): JSX.Element {
   const _logout = () => {
     userLoginOut()
   }
   return (
+    <ConfigProvider locale={zhCN}>
     <Layout className="AdminLayout">
       <Header className="nav-header">
         <div className="logo">山海云途</div>
@@ -27,6 +29,7 @@ function AdminLayout(): JSX.Element {
         </Layout>
       </Content>
     </Layout>
+    </ConfigProvider>
   )
 }
 
