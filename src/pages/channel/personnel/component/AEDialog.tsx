@@ -71,7 +71,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
   const getChannel = () => {
     PersonService.getStructure().then((res) => {
       const data = cityDispose([res?.data], 'children')
-      const str = [data]['level'] == 1 ? data['children'] : data
+      const str = data['level'] == 1 ? data['children'] : data
       console.log(str)
       setStructure(str)
     })
