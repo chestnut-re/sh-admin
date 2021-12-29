@@ -147,7 +147,7 @@ export default [
                   ],
                 },
                 {
-                  name: '人员管理2',
+                  name: '人员管理',
                   id: 315,
                   type: 'menu',
                   componentPath: '/channel/personnel',
