@@ -63,7 +63,6 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
     onClose()
   }
 
-  const onChangeRadio = () => {}
   return (
     <Modal title="商品分佣方案" visible={show} onOk={_handleUpdate} onCancel={_formClose}>
       <Form
@@ -91,7 +90,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
           )}
         </Form.Item>
         <Form.Item label="直销/分销结算要求" name="saleSettleType">
-          <Radio.Group onChange={onChangeRadio} value={''}>
+          <Radio.Group>
             <Radio value={1}>核销</Radio>
             <Radio value={2}>行程结束</Radio>
           </Radio.Group>

@@ -17,7 +17,7 @@ const ClassManagement: React.FC = () => {
   const [parent, setParent] = useState('')
 
   const handleOk = () => {
-    AllocationService.edit([{ operationType: 1, sortName: addClassName }]).then((res) => {
+    AllocationService.edit([{ operationType: 1, sortName: addClassName, parentId: parent }]).then((res) => {
       if (res.code === HttpCode.success) {
         setIsModalVisible(false)
         _ref.current?.getTreeList()
@@ -28,9 +28,17 @@ const ClassManagement: React.FC = () => {
   const handleCancel = () => {
     setIsModalVisible(false)
   }
+
+  const getParentList = () => {
+    AllocationService.list({ sortName: '', parentId: 0 }).then((res: any) => {
+      const parentData = { id: 0, sortName: '无' }
+      setParentList([...res.data, parentData])
+    })
+  }
+
   const _addClass = () => {
     setIsModalVisible(true)
-    setParentList(_ref.current?.data)
+    getParentList()
   }
   return (
     <div className="class__root">
@@ -81,9 +89,11 @@ const ClassManagement: React.FC = () => {
               <Select placeholder="请选择" style={{ width: 120 }} onChange={(value: any) => setParent(value)}>
                 {parentList?.map((item) => {
                   return (
-                    <Option value={item.sortName} key={item.id}>
-                      {item.sortName}
-                    </Option>
+                    <>
+                      <Option value={item.id} key={item.id}>
+                        {item.sortName}
+                      </Option>
+                    </>
                   )
                 })}
               </Select>

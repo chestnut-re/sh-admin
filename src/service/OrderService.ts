@@ -22,9 +22,9 @@ export class OrderService {
   }
 
   /**
-   * 详情
+   * 详情-订单相关联人员信息
    */
-  // static details(params): Promise<any> {
-  //   return axios.get(`/api/platform/order/getOrderInfo`, { params })
-  // }
+  static relation(params): Promise<any> {
+    return axios.get(`/api/platform/order/getUserInfo`, { params })
+  }
 }

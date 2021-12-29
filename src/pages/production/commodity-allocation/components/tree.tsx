@@ -52,6 +52,7 @@ const TreePage: React.FC = ({ cRef }) => {
 
   useEffect(() => {
     getList()
+    getParentList()
   }, [])
 
   useImperativeHandle(cRef, () => ({
@@ -68,6 +69,13 @@ const TreePage: React.FC = ({ cRef }) => {
     })
   }
 
+  const getParentList = () => {
+    AllocationService.list({ sortName: '', parentId: 0 }).then((res) => {
+      const parentData = { id: 0, sortName: '无' }
+      setParentList([...res.data, parentData])
+    })
+  }
+
   const showModal = (item) => {
     setIsModalVisible(true)
     setClass1(item.sortName)
@@ -77,9 +85,8 @@ const TreePage: React.FC = ({ cRef }) => {
   //编辑
   const handleOk = () => {
     setIsModalVisible(false)
-    AllocationService.edit([
-      { id: changeData.id, operationType: 2, parentId: changeData.parentId, sortName: class1 },
-    ]).then((res) => {
+    console.log(changeData)
+    AllocationService.edit([{ id: changeData.id, operationType: 2, parentId: type, sortName: class1 }]).then((res) => {
       if (res.code === HttpCode.success) {
         setIsModalVisible1(false)
         getList()
@@ -206,9 +213,9 @@ const TreePage: React.FC = ({ cRef }) => {
             </Col>
             <Col span={16}>
               <Select placeholder="请选择" style={{ width: 120 }} onChange={(value: any) => setType(value)}>
-                {data?.map((item) => {
+                {parentList?.map((item) => {
                   return (
-                    <Option value={item.sortName} key={item.id}>
+                    <Option value={item.id} key={item.id}>
                       {item.sortName}
                     </Option>
                   )
