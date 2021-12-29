@@ -1,6 +1,6 @@
 /*
  * @Description: 添加分佣方案
- * @LastEditTime: 2021-12-28 20:28:45
+ * @LastEditTime: 2021-12-29 10:06:53
  */
 
 import { Form, Input, Modal, Cascader, message, Row, Col, InputNumber, Button } from 'antd'
@@ -76,7 +76,7 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
         setChannelDistAuth(resultData?.channelPlanList)
         setNameDefault(analysisNameDuo(structure, resultData?.channelId, 'children', 'id', 'pid'))
         form.setFieldsValue({
-          structureId: resultData?.id,
+          structureId: [resultData?.id],
           channelPlanList: resultData?.channelPlanList,
           level: structure[0].level,
           planName: resultData?.planName,
@@ -88,7 +88,7 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
       })
     } else {
       form.setFieldsValue({
-        structureId: [],
+        // structureId: undefined,
         state: true,
         isOpenAccount: true,
         level: structure[0]?.level,

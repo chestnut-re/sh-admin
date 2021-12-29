@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道分佣列表
- * @LastEditTime: 2021-12-28 20:18:30
+ * @LastEditTime: 2021-12-29 10:04:17
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
@@ -127,7 +127,7 @@ const CommissionSchemePage: React.FC = () => {
     setChannelId(id)
   }
   return (
-    <div className="scheme-list">
+    <div className="scheme__root">
       <Row gutter={[10, 0]}>
       <Col xxl={3} xl={5} lg={7} md={8}>
           {structure.length > 0 ? <ChannelListTree structure={structure} onSelectStructure={_onSelectStructure} /> : ''}

@@ -1,6 +1,6 @@
 /*
  * @Description: 添加渠道
- * @LastEditTime: 2021-12-28 19:10:46
+ * @LastEditTime: 2021-12-29 10:08:36
  */
 
 import { Form, Input, Modal, Cascader, Switch, message, Button } from 'antd'
@@ -41,7 +41,7 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
         setLevel(data?.level)
         form.setFieldsValue({
           level: data?.level,
-          structureId: data?.id,
+          structureId: [data?.id],
           name: data?.name,
           person: data?.person,
           regions: data?.regions ? regionsCodeArray(data?.regions, propArea) : null,
