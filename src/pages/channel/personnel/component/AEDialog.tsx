@@ -39,6 +39,10 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
 
   useEffect(() => {
     getLeaders()
+    form.setFieldsValue({
+      leader:undefined,
+      roleId:undefined,
+    })
   }, [channelId])
 
   const getLeaders = async () => {
@@ -116,7 +120,9 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
       setChannelId(e[e.length - 1])
     }
   }
-
+const _changeRoleSelect = (e)=>{
+  console.log(e)
+}
   return (
     <Modal title="添加人员" visible={show} onOk={_handleUpdate} onCancel={_formClose}>
       <Form
@@ -168,7 +174,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
           </Select>
         </Form.Item>
         <Form.Item name="roleId" label="角色名称" rules={[{ required: false }]}>
-          <RoleSelect />
+          <RoleSelect channelId={channelId} onChange={_changeRoleSelect} value={form.getFieldValue('roleId')} />
         </Form.Item>
         <Form.Item name="state" label="是否启用" rules={[{ required: true }]}>
           <Switch />
