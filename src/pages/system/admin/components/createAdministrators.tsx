@@ -90,14 +90,13 @@ const CreateAdminDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onC
     >
       <Form
         name="basic"
-        labelCol={{ span: 4 }}
+        labelCol={{ span: 6 }}
         wrapperCol={{ span: 16 }}
         initialValues={{ remember: true }}
         onFinish={(values: any) => {}}
         onFinishFailed={(errorInfo: any) => {}}
         autoComplete="off"
         form={form}
-        style={{ paddingLeft: 30 }}
       >
         <Form.Item label="角色" name="roleName">
           <Select placeholder="请选择角色" onChange={(value, e) => setRoleId(e.key)}>
@@ -115,11 +114,11 @@ const CreateAdminDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onC
         </Form.Item>
         <Form.Item
           label="手机号/账号"
-          style={{ width: 560 }}
+          // style={{ width: 500 }}
           name="mobile"
           rules={[{ required: true, message: '请输入手机号/账号' }]}
         >
-          <Input style={{ width: 276 }} />
+          <Input />
         </Form.Item>
       </Form>
     </Modal>
