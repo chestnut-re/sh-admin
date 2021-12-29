@@ -148,10 +148,48 @@ export default [
                 },
                 {
                   name: '人员管理',
-                  id: 314,
+                  id: 315,
                   type: 'menu',
                   componentPath: '/channel/personnel',
                   path: '/channel/personnel',
+                },
+              ],
+            },
+            {
+              name: '用户中心',
+              id: 5,
+              type: 'menu',
+              componentPath: '/user',
+              path: '/user',
+              children: [
+                {
+                  name: '用户列表',
+                  id: 51,
+                  type: 'menu',
+                  componentPath: '/user/list',
+                  path: '/user/list',
+                },
+              ],
+            },
+            {
+              name: '订单中心',
+              id: 7,
+              type: 'menu',
+              componentPath: '/order',
+              path: '/order',
+              children: [
+                {
+                  name: '订单列表',
+                  id: 71,
+                  type: 'menu',
+                  componentPath: '/order/order-list',
+                  path: '/order/order-list',
+                },
+                {
+                  name: '订单详情',
+                  type: 'menu',
+                  componentPath: '/order/order-list/components/order-details/OrderDetails',
+                  path: '/order/order-list/order-details',
                 },
               ],
             },
@@ -178,42 +216,13 @@ export default [
                 },
               ],
             },
-            {
-              name: '用户中心',
-              id: 5,
-              type: 'menu',
-              componentPath: '/user',
-              path: '/user',
-            },
-            {
-              name: '订单中心',
-              id: 7,
-              type: 'menu',
-              componentPath: '/order',
-              path: '/order',
-              children: [
-                {
-                  name: '订单列表',
-                  id: 71,
-                  type: 'menu',
-                  componentPath: '/order/order-list',
-                  path: '/order/order-list',
-                },
-                {
-                  name: '订单详情',
-                  type: 'menu',
-                  componentPath: '/order/order-list/components/order-details/OrderDetails',
-                  path: '/order/order-list/order-details',
-                },
-              ],
-            },
-            {
-              name: '行程中心',
-              id: 8,
-              type: 'menu',
-              componentPath: '/route',
-              path: '/route',
-            },
+            // {
+            //   name: '行程中心',
+            //   id: 8,
+            //   type: 'menu',
+            //   componentPath: '/route',
+            //   path: '/route',
+            // },
             {
               name: '基础信息管理',
               id: 9,
@@ -221,13 +230,13 @@ export default [
               componentPath: 'basic',
               path: '/basic',
               children: [
-                {
-                  name: '意见反馈',
-                  id: 91,
-                  type: 'menu',
-                  componentPath: '/basic/opinion',
-                  path: '/basic/opinion',
-                },
+                // {
+                //   name: '意见反馈',
+                //   id: 91,
+                //   type: 'menu',
+                //   componentPath: '/basic/opinion',
+                //   path: '/basic/opinion',
+                // },
                 {
                   name: '角色权限',
                   id: 92,
@@ -235,13 +244,13 @@ export default [
                   componentPath: '/basic/role-based',
                   path: '/basic/role-based ',
                 },
-                // {
-                //   name: '管理员账户',
-                //   id: 93,
-                //   type: 'menu',
-                //   componentPath: '/basic/administrator',
-                //   path: '/basic/administrator',
-                // },
+                {
+                  name: '管理员账号',
+                  id: 94,
+                  type: 'menu',
+                  componentPath: '/system/admin',
+                  path: '/system/admin',
+                },
               ],
             },
             {
@@ -252,57 +261,26 @@ export default [
               path: '/system',
               children: [
                 {
-                  name: '权限管理',
-                  id: 61,
-                  type: 'menu',
-                  componentPath: '/system/authority',
-                  path: '/system/authority',
-                  children: [
-                    {
-                      name: '用户管理',
-                      id: 611,
-                      type: 'menu',
-                      componentPath: '/system/authority/user',
-                      path: '/system/authority/user',
-                    },
-                    {
-                      name: '菜单管理',
-                      id: 612,
-                      type: 'menu',
-                      componentPath: '/system/authority/menu',
-                      path: '/system/authority/menu',
-                    },
-                    {
-                      name: '角色管理',
-                      id: 613,
-                      type: 'menu',
-                      componentPath: '/system/authority/role',
-                      path: '/system/authority/role',
-                    },
-                  ],
-                },
-
-                {
                   name: '版本管理',
                   id: 63,
                   type: 'menu',
                   componentPath: '/system/version',
                   path: '/system/version',
                   children: [
-                    {
-                      name: 'B端版本管理',
-                      id: 631,
-                      type: 'menu',
-                      componentPath: '/system/version/version-b',
-                      path: '/system/version/user',
-                    },
-                    {
-                      name: 'C端版本管理',
-                      id: 632,
-                      type: 'menu',
-                      componentPath: '/system/version/version-c',
-                      path: '/system/version/menu',
-                    },
+                    // {
+                    //   name: 'B端版本管理',
+                    //   id: 631,
+                    //   type: 'menu',
+                    //   componentPath: '/system/version/version-b',
+                    //   path: '/system/version/user',
+                    // },
+                    // {
+                    //   name: 'C端版本管理',
+                    //   id: 632,
+                    //   type: 'menu',
+                    //   componentPath: '/system/version/version-c',
+                    //   path: '/system/version/menu',
+                    // },
                     {
                       name: '支付配置',
                       id: 633,
@@ -335,13 +313,7 @@ export default [
                     },
                   ],
                 },
-                {
-                  name: '管理员账号',
-                  id: 64,
-                  type: 'menu',
-                  componentPath: '/system/admin',
-                  path: '/system/admin',
-                },
+
                 {
                   name: '支付配置',
                   id: 65,

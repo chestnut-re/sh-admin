@@ -1,6 +1,6 @@
 /*
  * @Description:渠道管理
- * @LastEditTime: 2021-12-28 11:17:56
+ * @LastEditTime: 2021-12-28 18:25:38
  */
 import axios from '@/request'
 
@@ -33,7 +33,7 @@ export default class ChannelService {
     /**
      * 商品-分佣方案列表
      */
-     getChannelDistPlan(data): Promise<any> {
+    getChannelDistPlan(data): Promise<any> {
       return axios.get(`/api/market/channel/getChannelDistPlan`, {
         params: data,
       })
@@ -44,8 +44,11 @@ export default class ChannelService {
     saveChannelPlan(data): Promise<any> {
       return axios.post(`/api/market/channel/saveChannelDistPlan`, data)
     },
-     edit(data): Promise<any> {
+    edit(data): Promise<any> {
       return axios.put(`/api/market/channel/dist/plan/update`, data)
-    }
+    },
+    get(id): Promise<any> {
+      return axios.get(`/api/market/channel/dist/plan/get/${id}`)
+    },
   }
 }

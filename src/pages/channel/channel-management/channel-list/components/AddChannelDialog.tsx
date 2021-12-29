@@ -1,16 +1,24 @@
 /*
  * @Description: 添加渠道
- * @LastEditTime: 2021-12-28 17:45:28
+ * @LastEditTime: 2021-12-29 14:05:55
  */
 
-import { Form, Input, Modal, Cascader, Switch, message } from 'antd'
+import { Form, Input, Modal, Cascader, Switch, message, Button } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
-import { cityDispose, analysisName, analysisNameDuo, lastOneJoin, arrayNameJoin, regionsCodeArray } from '@/utils/tree'
+import {
+  cityDispose,
+  analysisName,
+  analysisNameDuo,
+  analysisIdDuo,
+  lastOneJoin,
+  arrayNameJoin,
+  regionsCodeArray,
+} from '@/utils/tree'
 import ChannelService from '@/service/ChannelService'
-export type DialogMode = 'add' | 'edit'
 interface Props {
   data: any
-  mode: DialogMode
+  mode: any
+  channelId: any
   structure: Array<any>
   show: boolean
   onSuccess: () => void
@@ -19,7 +27,7 @@ interface Props {
 /**
  * 添加&编辑
  */
-const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSuccess, onClose }) => {
+const AddUserDialog: FC<Props> = ({ data, mode, channelId, structure, show = false, onSuccess, onClose }) => {
   const [form] = Form.useForm()
   const [area, setArea] = useState<Array<any>>([])
   const [level, setLevel] = useState(1)
@@ -42,7 +50,7 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
         setLevel(data?.level)
         form.setFieldsValue({
           level: data?.level,
-          structureId: data?.id,
+          structureId: [data?.id],
           name: data?.name,
           person: data?.person,
           regions: data?.regions ? regionsCodeArray(data?.regions, propArea) : null,
@@ -54,6 +62,10 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
         })
       })
     } else {
+      form.resetFields()
+
+      console.log(regionsCodeArray(structure, channelId, 'children', 'id', 'pid'))
+
       form.setFieldsValue({
         // state: true,
         isOpenAccount: false,
@@ -127,14 +139,36 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
   }
   const changeStructure = (e, data) => {
     setLevel(data[data.length - 1]?.level)
+    console.log(e, data)
     form.setFieldsValue({
       id: e[e.length - 1],
       level: data[data.length - 1]?.level,
     })
   }
 
+  const type = { add: '创建渠道', edit: '编辑渠道', see: '查看渠道' }
   return (
-    <Modal title={mode == 'add' ? '创建渠道' : '编辑渠道'} visible={show} onOk={_handleUpdate} onCancel={_formClose}>
+    <Modal
+      title={type[mode]}
+      visible={show}
+      onCancel={_formClose}
+      footer={
+        mode == 'see'
+          ? [
+              <Button key="submit" type="primary" onClick={_formClose}>
+                确定
+              </Button>,
+            ]
+          : [
+              <Button key="back" onClick={_formClose}>
+                取消
+              </Button>,
+              <Button key="submit" type="primary" onClick={_handleUpdate}>
+                确定
+              </Button>,
+            ]
+      }
+    >
       <Form
         name="basic"
         labelCol={{ span: 6 }}
@@ -152,6 +186,7 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
         <Form.Item label="归属渠道" name="structureId" rules={[{ required: true, message: '请输入' }]}>
           {mode == 'add' ? (
             <Cascader
+              disabled={mode == 'see'}
               options={structure}
               changeOnSelect
               fieldNames={{ label: 'name', value: 'id', children: 'children' }}
@@ -169,13 +204,14 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
             { max: 20, message: '最大不可超过20个字符' },
           ]}
         >
-          <Input />
+          <Input disabled={mode == 'see'} />
         </Form.Item>
         <Form.Item label="责任区域" name="regions" rules={[{ required: true, message: '请输入' }]}>
           <Cascader
             options={area}
             onChange={casOnChange}
             multiple
+            disabled={mode == 'see'}
             fieldNames={{ label: 'name', value: 'adcode', children: 'areas' }}
           />
         </Form.Item>
@@ -187,7 +223,7 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
             { max: 10, message: '最大不可超过20个字符' },
           ]}
         >
-          <Input />
+          <Input disabled={mode == 'see'} />
         </Form.Item>
         <Form.Item
           label="手机号"
@@ -197,18 +233,22 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
             { pattern: /^1[3456789]\d{9}$/, message: '请输入正确的手机号' },
           ]}
         >
-          <Input />
+          <Input disabled={mode == 'see'} />
         </Form.Item>
-        <Form.Item label="渠道账户" name="isOpenAccount" style={{ display: level == 2 ? 'flex' : 'none' }}>
-          <Switch defaultChecked={!!data?.isOpenAccount} />
+        <Form.Item
+          label="渠道账户"
+          name="isOpenAccount"
+          style={{ display: (level == 2 && mode != 'add') || (level == 1 && mode == 'add') ? 'flex' : 'none' }}
+        >
+          <Switch disabled={mode == 'see'} defaultChecked={!!data?.isOpenAccount} />
         </Form.Item>
         <Form.Item
           label="客服热线"
           name="hotLine"
-          rules={[{ required: level == 2, message: '请输入' }]}
-          style={{ display: level == 2 ? 'flex' : 'none' }}
+          rules={[{ required: (level == 2 && mode != 'add') || (level == 1 && mode == 'add'), message: '请输入' }]}
+          style={{ display: (level == 2 && mode != 'add') || (level == 1 && mode == 'add') ? 'flex' : 'none' }}
         >
-          <Input />
+          <Input disabled={mode == 'see'} />
         </Form.Item>
 
         {/* <Form.Item label="是否开启" name="state">
@@ -221,7 +261,7 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
           rules={[{ required: true, message: '请输入' }]}
           style={{ visibility: 'hidden', height: 0 }}
         >
-          <Input />
+          <Input disabled={mode == 'see'} />
         </Form.Item>
       </Form>
     </Modal>

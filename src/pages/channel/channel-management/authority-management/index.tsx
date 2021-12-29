@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道权限
- * @LastEditTime: 2021-12-28 17:45:08
+ * @LastEditTime: 2021-12-29 10:03:25
  */
 import React, { useState, useEffect } from 'react'
 import { Menu, Col, Row, Checkbox, Radio, Input, Tooltip } from 'antd'
@@ -64,7 +64,7 @@ const AuthorityManagement: React.FC = () => {
   }
 
   return (
-    <div className="commission-scheme__root">
+    <div className="scheme__root">
       <Row className="mb20">
         <Col span={24}>
           <Menu onClick={(e) => setCurrent(e.key)} selectedKeys={[current]} mode="horizontal">

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description:功能权限
- * @LastEditTime: 2021-12-28 17:44:40
+ * @LastEditTime: 2021-12-28 18:12:39
  */
 import { Table, Switch, Space, message, Button } from 'antd'
 import React, { useState, useEffect } from 'react'
@@ -18,6 +18,8 @@ const TableScheme: React.FC<Props> = ({ chanId, switchFc, channelDetail }) => {
   const [checkStrictly, setCheckStrictly] = useState(false)
   const [selectedRowKeys, setSelectedRowKeys] = useState([])
   const [menu, setMenu] = useState(false)
+  const [bType, setBType] = useState(false)
+  const [adminType, setAdminType] = useState(false)
   const [isOpen, setIdOPen] = useState(false)
   useEffect(() => {
     if (channelDetail != '') {
@@ -29,38 +31,37 @@ const TableScheme: React.FC<Props> = ({ chanId, switchFc, channelDetail }) => {
         } else {
           setSelectedRowKeys(data)
         }
-        setIdOPen(newChannelDetail?.menuIsOpen == 1)
+        setAdminType(newChannelDetail?.menuIsOpen == 1)
       } else {
         const data = newChannelDetail?.businessAuthority ?? []
         if (data.length > 0) {
           setSelectedRowKeys(data.map(Number))
         } else {
           setSelectedRowKeys(data)
-          setIdOPen(newChannelDetail?.businessIsOpen == 1)
+          setBType(newChannelDetail?.businessIsOpen == 1)
         }
       }
     }
+    // console.log(isOpen, 'isOpen')
   }, [channelDetail])
 
-  useEffect( () => {
+  useEffect(() => {
     setSelectedRowKeys([])
     if (channelDetail != '') {
       const channelDe = JSON.parse(channelDetail)
-    init(channelDe)
+      init(channelDe)
     }
-//  
-
-  }, [switchFc,channelDetail])
+    //
+  }, [switchFc, channelDetail])
 
   const init = async (channelDe) => {
     const res = await getMenusType({
       platformType: switchFc == 'admin' ? 0 : 1,
     })
-    if(switchFc == 'admin'){
+    if (switchFc == 'admin') {
       // console.log(nwqRouter(res?.data,))
       // channelDe?.preMenuAuthority
-    }else{
-
+    } else {
     }
     setMenu(cityDispose(res?.data, 'children'))
   }
@@ -109,10 +110,10 @@ const TableScheme: React.FC<Props> = ({ chanId, switchFc, channelDetail }) => {
       }
       if (switchFc == 'admin') {
         query['menuAuthority'] = selectedRowKeys
-        query['menuIsOpen'] = isOpen == true ? 1 : 0
+        query['menuIsOpen'] = adminType == true ? 1 : 0
       } else {
         query['businessAuthority'] = selectedRowKeys
-        query['businessIsOpen'] = isOpen == true ? 1 : 0
+        query['businessIsOpen'] = bType == true ? 1 : 0
       }
 
       ChannelService.edit(query).then((res) => {
@@ -122,12 +123,28 @@ const TableScheme: React.FC<Props> = ({ chanId, switchFc, channelDetail }) => {
   }
   return (
     <>
-      <Space align="center" style={{ marginBottom: 16 }}>
+      {switchFc == 'admin' ? (
+        <Space align="center" style={{ marginBottom: 16 }}>
+          是否开启: <Switch className="Bc" checked={!!adminType} onChange={setAdminType} />
+          <Button type="primary" onClick={save}>
+            保存
+          </Button>
+        </Space>
+      ) : (
+        <Space align="center" style={{ marginBottom: 16 }}>
+          是否开启: <Switch className="Ad" checked={!!bType} onChange={setBType} />
+          <Button type="primary" onClick={save}>
+            保存
+          </Button>
+        </Space>
+      )}
+
+      {/* <Space align="center" style={{ marginBottom: 16 }}>
         是否开启: <Switch checked={isOpen} onChange={setIdOPen} />
         <Button type="primary" onClick={save}>
           保存
         </Button>
-      </Space>
+      </Space> */}
       <Table
         columns={columns}
         rowKey={(record) => record.id}
