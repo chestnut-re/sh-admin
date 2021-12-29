@@ -30,9 +30,11 @@ const AdminListPage: React.FC = () => {
   }, [pageIndex])
 
   const loadData = (pageIndex) => {
-    AdminService.list({ current: pageIndex, pageSize: pageSize, keyword, state, roleId }).then((res) => {
-      setData(res.data.records)
-      setTotal(res.data.total)
+    form.validateFields().then((query) => {
+      AdminService.list({ current: pageIndex, pageSize: pageSize, ...query }).then((res) => {
+        setData(res.data.records)
+        setTotal(res.data.total)
+      })
     })
   }
 
@@ -60,17 +62,6 @@ const AdminListPage: React.FC = () => {
       dataIndex: 'roleName',
     },
     {
-      title: '状态',
-      dataIndex: 'state',
-      render: (text: any, record: any) => {
-        if (record.state == 0) {
-          return `禁用`
-        } else {
-          return `正常`
-        }
-      },
-    },
-    {
       title: '添加日期',
       dataIndex: 'createTime',
     },
@@ -78,24 +69,10 @@ const AdminListPage: React.FC = () => {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button onClick={() => _editDialog(record)}>编辑</Button>
+          <Button onClick={() => _editDialog(record)}>详情</Button>
           <Button onClick={_delete}>删除</Button>
         </Space>
       ),
-    },
-  ]
-  const stateList = [
-    {
-      key: '',
-      value: '全部',
-    },
-    {
-      key: 0,
-      value: '禁用',
-    },
-    {
-      key: 1,
-      value: '正常',
     },
   ]
 
@@ -117,6 +94,13 @@ const AdminListPage: React.FC = () => {
 
   const _comDelete = () => {
     setVisible(false)
+  }
+
+  /**重置 */
+  const resetTable = () => {
+    form.resetFields()
+    setPageIndex(1)
+    loadData(1)
   }
 
   const _onDialogSuccess = () => {
@@ -157,54 +141,32 @@ const AdminListPage: React.FC = () => {
         >
           <Row gutter={[5, 0]} style={{ paddingLeft: '40px' }}>
             <Col span={8}>
-              <Input
-                value={keyword}
-                onChange={(e) => {
-                  setKeyword(e.target.value)
-                }}
-                placeholder="姓名/手机号"
-              />
+              <Form.Item name="keyword">
+                <Input placeholder="姓名/手机号" />
+              </Form.Item>
             </Col>
             <Col span={2} className="table-from-label">
               角色
             </Col>
             <Col span={4}>
-              <Select style={{ width: 120 }} placeholder="请选择" onChange={(value: any) => setRoleId(value)}>
-                {roleData?.map((item: any, index) => {
-                  return (
-                    <Option value={item.id} key={item.id}>
-                      {item.roleName}
-                    </Option>
-                  )
-                })}
-              </Select>
-            </Col>
-            <Col span={2} className="table-from-label">
-              状态
-            </Col>
-            <Col span={4}>
-              <Select placeholder="请选择" style={{ width: 120 }} onChange={(value: any) => setState(value)}>
-                {stateList.map((item) => {
-                  return (
-                    <Option value={item.key} key={item.key}>
-                      {item.value}
-                    </Option>
-                  )
-                })}
-              </Select>
+              <Form.Item name="roleId">
+                <Select style={{ width: 120 }} placeholder="请选择">
+                  {roleData?.map((item: any, index) => {
+                    return (
+                      <Option value={item.id} key={item.id}>
+                        {item.roleName}
+                      </Option>
+                    )
+                  })}
+                </Select>
+              </Form.Item>
             </Col>
             <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
               <Space>
                 <Button type="primary" htmlType="submit">
                   查询
                 </Button>
-                <Button
-                  htmlType="submit"
-                  onClick={() => {
-                    setRoleId('')
-                    setState('')
-                  }}
-                >
+                <Button htmlType="button" onClick={resetTable}>
                   重置
                 </Button>
               </Space>

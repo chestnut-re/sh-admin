@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './OrderStates.less'
 /**
  * 订单状态
  */
-const OrderStates: React.FC = () => {
+interface Props {
+  data: any
+}
+const OrderStates: React.FC<Props> = ({ data }) => {
+  const [state, setState] = useState(data)
   return (
     <div className="states__root">
       <span className="order-sta">订单状态</span>

@@ -87,7 +87,7 @@ const BannerListPage: React.FC = () => {
     },
     {
       title: '添加人',
-      dataIndex: 'createUserName',
+      dataIndex: 'updateUser',
     },
     {
       title: '添加时间',

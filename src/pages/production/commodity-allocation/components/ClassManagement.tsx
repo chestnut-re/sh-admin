@@ -30,6 +30,7 @@ const ClassManagement: React.FC = () => {
   }
   const _addClass = () => {
     setIsModalVisible(true)
+    setParentList(_ref.current?.data)
   }
   return (
     <div className="class__root">
@@ -78,7 +79,7 @@ const ClassManagement: React.FC = () => {
             </Col>
             <Col span={16}>
               <Select placeholder="请选择" style={{ width: 120 }} onChange={(value: any) => setParent(value)}>
-                {parentList.map((item) => {
+                {parentList?.map((item) => {
                   return (
                     <Option value={item.sortName} key={item.id}>
                       {item.sortName}

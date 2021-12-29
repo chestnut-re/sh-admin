@@ -8,13 +8,14 @@ import './index.less'
 interface Props {
   value?: any[]
   onChange?: (value: any[]) => void
+  mode: any
 }
 
 /**
  * 商品分佣金设置
  */
 export const SubCenterSelect: FC<Props> = ({ ...props }) => {
-  const { onChange, value } = props
+  const { onChange, value, mode } = props
   const [subCenters, setSubCenters] = useState<any[]>([])
   const [projects, setProject] = useState<any[]>([{ key: `${Date.now()}` }])
 
@@ -77,35 +78,68 @@ export const SubCenterSelect: FC<Props> = ({ ...props }) => {
           <div key={pItem.key}>
             <Space>
               分佣比例
-              <InputNumber
-                readOnly
-                type="number"
-                style={{ width: 100 }}
-                addonAfter="%"
-                defaultValue={projects[index]['directScale']}
-                onChange={(value) => {
-                  projects[index]['directScale'] = value
-                  setProject([...projects])
-                }}
-              />
-              <Select
-                disabled
-                style={{ width: 100 }}
-                value={selectValue}
-                onChange={(value) => {
-                  projects[index].id = subCenters[value].id
-                  projects[index].level = subCenters[value].level
-                  setProject([...projects])
-                }}
-              >
-                {subCenters.map((item, index) => {
-                  return (
-                    <Select.Option key={`${pItem.key}-${item.id}`} value={index}>
-                      {item.name}
-                    </Select.Option>
-                  )
-                })}
-              </Select>
+              {mode == 'add' ? (
+                <InputNumber
+                  type="number"
+                  style={{ width: 100 }}
+                  addonAfter="%"
+                  defaultValue={projects[index]['directScale']}
+                  onChange={(value) => {
+                    projects[index]['directScale'] = value
+                    setProject([...projects])
+                  }}
+                />
+              ) : (
+                <InputNumber
+                  readOnly
+                  type="number"
+                  style={{ width: 100 }}
+                  addonAfter="%"
+                  defaultValue={projects[index]['directScale']}
+                  onChange={(value) => {
+                    projects[index]['directScale'] = value
+                    setProject([...projects])
+                  }}
+                />
+              )}
+              {mode == 'add' ? (
+                <Select
+                  style={{ width: 100 }}
+                  value={selectValue}
+                  onChange={(value) => {
+                    projects[index].id = subCenters[value].id
+                    projects[index].level = subCenters[value].level
+                    setProject([...projects])
+                  }}
+                >
+                  {subCenters.map((item, index) => {
+                    return (
+                      <Select.Option key={`${pItem.key}-${item.id}`} value={index}>
+                        {item.name}
+                      </Select.Option>
+                    )
+                  })}
+                </Select>
+              ) : (
+                <Select
+                  disabled
+                  style={{ width: 100 }}
+                  value={selectValue}
+                  onChange={(value) => {
+                    projects[index].id = subCenters[value].id
+                    projects[index].level = subCenters[value].level
+                    setProject([...projects])
+                  }}
+                >
+                  {subCenters.map((item, index) => {
+                    return (
+                      <Select.Option key={`${pItem.key}-${item.id}`} value={index}>
+                        {item.name}
+                      </Select.Option>
+                    )
+                  })}
+                </Select>
+              )}
               {/* {index === projects.length - 1 && (
                 <Button type="primary" onClick={_addNewItem}>
                   添加

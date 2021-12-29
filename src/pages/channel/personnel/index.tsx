@@ -339,6 +339,7 @@ const PersonnelManagement: React.FC = () => {
   const onReset = () => {
     form.resetFields()
   }
+
   return (
     <div className="channel-list">
       <div className="person-top">

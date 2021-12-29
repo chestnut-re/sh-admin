@@ -46,6 +46,7 @@ const TreePage: React.FC = ({ cRef }) => {
   const [class1, setClass1] = useState('')
   const [changeData, setChangeData] = useState([])
   const [parentList, setParentList] = useState([])
+  const [type, setType] = useState('')
 
   const { TreeNode } = Tree
 
@@ -58,13 +59,12 @@ const TreePage: React.FC = ({ cRef }) => {
     getTreeList: () => {
       return getList()
     },
+    data,
   }))
 
   const getList = () => {
     AllocationService.list({ sortName: '' }).then((res) => {
-      console.log(res)
       setData(res.data)
-      console.log(treeData)
     })
   }
 
@@ -112,7 +112,7 @@ const TreePage: React.FC = ({ cRef }) => {
     setExpandedKeys(expandedKeys)
   }
   const renderTreeNodes = (data) => {
-    const nodeArr = data.map((item) => {
+    const nodeArr = data?.map((item) => {
       //删除
       item.title = (
         <div>
@@ -131,7 +131,7 @@ const TreePage: React.FC = ({ cRef }) => {
 
       if (item.children) {
         return (
-          <TreeNode title={item.sortName} key={item.id} dataRef={item}>
+          <TreeNode title={item.title} key={item.id} dataRef={item}>
             {renderTreeNodes(item.children)}
           </TreeNode>
         )
@@ -205,8 +205,8 @@ const TreePage: React.FC = ({ cRef }) => {
               <span>选择上级分类&nbsp;&nbsp;</span>
             </Col>
             <Col span={16}>
-              <Select placeholder="请选择" style={{ width: 120 }} onChange={(value: any) => setState(value)}>
-                {parentList.map((item) => {
+              <Select placeholder="请选择" style={{ width: 120 }} onChange={(value: any) => setType(value)}>
+                {data?.map((item) => {
                   return (
                     <Option value={item.sortName} key={item.id}>
                       {item.sortName}
