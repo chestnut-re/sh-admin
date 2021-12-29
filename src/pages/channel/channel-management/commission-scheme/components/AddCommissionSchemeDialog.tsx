@@ -1,6 +1,6 @@
 /*
  * @Description: 添加分佣方案
- * @LastEditTime: 2021-12-29 16:58:36
+ * @LastEditTime: 2021-12-29 18:52:43
  */
 
 import { Form, Input, Modal, Cascader, message, Row, Col, InputNumber, Button, Tooltip } from 'antd'
@@ -316,7 +316,7 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
                       </Col>
                     )
                   })}
-                  <Col span={12} style={{ textAlign: 'right' }}>
+                  {/* <Col span={12} style={{ textAlign: 'right' }}>
                   `  <Form.Item labelCol={{ offset: 4 }} label={'合计'} name={['channelPlanList', index, 'total']}>
                       <InputNumber disabled max={100} min={0} addonAfter="%" />
                     </Form.Item>
@@ -326,7 +326,7 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
                   '团建奖金以商品分佣所得额为基数，如订单10000，商品分佣10%，团建奖金配置了1%，最终所得团建奖金为10000*10%*1%'
                 }
               ></Tooltip>`
-                  </Col>  
+                  </Col>   */}
               
                 </Row>
               </>
