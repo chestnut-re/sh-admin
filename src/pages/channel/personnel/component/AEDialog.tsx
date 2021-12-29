@@ -4,8 +4,8 @@ import { DialogMode, personType } from '@/utils/enum'
 import RoleSelect from '@/components/formItem/RoleSelect'
 import { PersonService } from '@/service/PersonService'
 import { cityDispose } from '@/utils/tree'
-import ChannelService from '@/service/ChannelService'
 import { HttpCode } from '@/constants/HttpCode'
+import AreaSelect from '@/components/formItem/AreaSelect'
 
 interface Props {
   data: any
@@ -25,10 +25,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
   const [leader, setLeader] = useState<any[]>([])
   const [channelId, setChannelId] = useState<string>('')
 
-  const [area, setArea] = useState<Array<any>>([])
-
   useEffect(() => {
-    getProvinceCity()
     getChannel()
   }, [])
 
@@ -57,14 +54,6 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
     )
   }
 
-  /**
-   * @description: 负责区域
-   */
-  const getProvinceCity = async () => {
-    ChannelService.getProvinceCity().then((res) => {
-      setArea(cityDispose(res?.data, 'areas'))
-    })
-  }
 
   /**
    * 请求渠道名称
@@ -85,14 +74,6 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
       }),
     })
   }, [show])
-
-  const casOnChange = (data: any[]) => {
-    data.map((items, index, arr) => {
-      if (items.length < 2) {
-        arr[index].push(area.find((res) => res.adcode == items[0]).areas[0].adcode)
-      }
-    })
-  }
 
   /**提交数据 */
   const _handleUpdate = async () => {
@@ -160,12 +141,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
         </Form.Item>
 
         <Form.Item label="责任区域" name="address" rules={[{ required: true, message: '请选择' }]}>
-          <Cascader
-            options={area}
-            onChange={casOnChange}
-            multiple
-            fieldNames={{ label: 'name', value: 'adcode', children: 'areas' }}
-          />
+          <AreaSelect />
         </Form.Item>
 
         <Form.Item name="realName" label="姓名" rules={[{ required: true }]}>

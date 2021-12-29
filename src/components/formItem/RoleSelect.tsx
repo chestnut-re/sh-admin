@@ -1,11 +1,15 @@
 import { PersonService } from '@/service/PersonService'
 import { Select } from 'antd'
 import React, { useEffect, useState } from 'react'
+interface Props {
+  value?: string
+  onChange?: (value: string) => void
+}
 
 /**
  * 角色列表
  */
-const RoleSelect: React.FC = () => {
+const RoleSelect: React.FC<Props> = ({value, onChange}) => {
   const [roleNames, setRoleName] = useState<any[]>([])
   useEffect(() => {
     PersonService.getRoles().then((res) => {
@@ -20,7 +24,7 @@ const RoleSelect: React.FC = () => {
     })
   }, [])
 
-  return <Select options={roleNames} />
+  return <Select options={roleNames} value={value} onChange={onChange}/>
 }
 
 export default RoleSelect
