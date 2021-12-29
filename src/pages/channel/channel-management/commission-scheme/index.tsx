@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道分佣列表
- * @LastEditTime: 2021-12-29 10:04:17
+ * @LastEditTime: 2021-12-29 16:52:02
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
@@ -112,6 +112,7 @@ const CommissionSchemePage: React.FC = () => {
   const _onDialogSuccess = () => {
     setSelectedData(null)
     setShowDialog(false)
+    setChannelId(null)
     loadData()
   }
 

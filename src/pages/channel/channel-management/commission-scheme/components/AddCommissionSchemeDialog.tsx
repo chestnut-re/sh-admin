@@ -1,9 +1,9 @@
 /*
  * @Description: 添加分佣方案
- * @LastEditTime: 2021-12-29 11:12:27
+ * @LastEditTime: 2021-12-29 16:58:36
  */
 
-import { Form, Input, Modal, Cascader, message, Row, Col, InputNumber, Button } from 'antd'
+import { Form, Input, Modal, Cascader, message, Row, Col, InputNumber, Button, Tooltip } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
 import { analysisNameDuo } from '@/utils/tree'
 import ChannelService from '@/service/ChannelService'
@@ -27,6 +27,33 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
   const [nameDefault, setNameDefault] = useState('')
   const [channelDistAuth, setChannelDistAuth] = useState([])
   const [dataId, setDataId] = useState(null)
+  /**
+   * @description: 合计算
+   */
+  const getTotal = (mapData, teamBonus, isGroupServiceFee) => {
+    console.log(mapData, 'mapData')
+    const reduceList = mapData.saleScalePlan ?? [0]
+    let sum = reduceList.reduce((pre, item) => {
+      return (pre += item?.saleScale ?? 0)
+    }, 0)
+    const totalDirectScale = mapData.directScale ?? 0
+    const totalTeamBonus = teamBonus ?? 0
+    const totalTeamPrice = mapData.teamPrice ?? 0
+    return totalTeamBonus + totalDirectScale + totalTeamPrice + sum
+  }
+  const getInit = (mapData, presetBonus, isGroupServiceFee) => {
+    const dataList = mapData.map((res) => {
+      res.total = getTotal(res, presetBonus, isGroupServiceFee)
+      return res
+    })
+    console.log(dataList, 'dataList')
+    form.setFieldsValue({
+      channelPlanList: dataList,
+    })
+    setChannelDistAuth(dataList)
+    // return dataList
+  }
+
   useEffect(() => {
     if (show) {
       if (mode == 'add') {
@@ -41,14 +68,17 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
                   return res
                 }
               })
+
               res.isGroupServiceFee = resData?.isGroupServiceFee
               return res
             })
             .filter((res) => res?.directAuth == 1)
+          //
+          const isList = getInit(dataList, resData?.presetBonus, resData?.isGroupServiceFee)
           form.setFieldsValue({
             teamBonus: resData?.presetBonus,
           })
-          setChannelDistAuth(dataList)
+          // setChannelDistAuth(isList)
         })
       } else {
       }
@@ -56,8 +86,9 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataId])
   useEffect(() => {
+    form.resetFields()
+    setChannelDistAuth([])
     if (show) {
-      form.resetFields()
       getDetail()
       if (mode == 'add') {
         setLevel(structure[0].level)
@@ -85,6 +116,7 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
           createTime: formateTime(resultData?.createTime),
           createUserName: resultData?.createUserName,
         })
+        getInit(resultData?.channelPlanList, resultData?.teamBonus, resultData?.isGroupServiceFee)
       })
     } else {
       form.setFieldsValue({
@@ -106,6 +138,7 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
         postData.channelPlanList = maoList.map((res, index) => {
           const Data = JSON.parse(JSON.stringify(res))
           Data['level'] = channelDistAuth[index]['level']
+
           Data['saleScalePlan'] = (res.saleScalePlan ?? []).map((mRes, Ci) => {
             const levelData = channelDistAuth[index]['saleScalePlan'][Ci]['level']
             return {
@@ -170,7 +203,13 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
   const onFinish = (values: any) => {
     console.log('Success:', values)
   }
-
+  const changeInput = () => {
+    getInit(
+      form.getFieldValue('channelPlanList'),
+      form.getFieldValue('teamBonus'),
+      form.getFieldValue('isGroupServiceFee')
+    )
+  }
   const type = { add: '创建分佣方案', edit: '编辑分佣方案', see: '查看分佣方案' }
   return (
     <Modal
@@ -227,7 +266,7 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
           <Input disabled={mode == 'see'} />
         </Form.Item>
         <Form.Item label="团建奖金" name="teamBonus" rules={[{ required: true, message: '请输入' }]}>
-          <InputNumber disabled={mode == 'see'} max={100} min={0} addonAfter="%" />
+          <InputNumber disabled max={100} min={0} addonAfter="%" />
         </Form.Item>
         {(channelDistAuth ?? []).map((res: any, index, array) => {
           return (
@@ -241,7 +280,7 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
                       label="直销分佣比例"
                       name={['channelPlanList', index, 'directScale']}
                     >
-                      <InputNumber disabled={mode == 'see'} max={100} min={0} addonAfter="%" />
+                      <InputNumber onChange={changeInput} disabled={mode == 'see'} max={100} min={0} addonAfter="%" />
                     </Form.Item>
                   </Col>
                   {res.isGroupServiceFee == 1 ? (
@@ -251,7 +290,7 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
                         label="发团服务费"
                         name={['channelPlanList', index, 'teamPrice']}
                       >
-                        <InputNumber disabled={mode == 'see'} max={100} min={0} addonAfter="%" />
+                        <InputNumber onChange={changeInput} disabled={mode == 'see'} max={100} min={0} addonAfter="%" />
                       </Form.Item>
                     </Col>
                   ) : (
@@ -266,11 +305,29 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
                           label={mRes.level + '级渠道分销分佣比例'}
                           name={['channelPlanList', index, 'saleScalePlan', Ci, 'saleScale']}
                         >
-                          <InputNumber disabled={mode == 'see'} max={100} min={0} addonAfter="%" />
+                          <InputNumber
+                            onChange={changeInput}
+                            disabled={mode == 'see'}
+                            max={100}
+                            min={0}
+                            addonAfter="%"
+                          />
                         </Form.Item>
                       </Col>
                     )
                   })}
+                  <Col span={12} style={{ textAlign: 'right' }}>
+                  `  <Form.Item labelCol={{ offset: 4 }} label={'合计'} name={['channelPlanList', index, 'total']}>
+                      <InputNumber disabled max={100} min={0} addonAfter="%" />
+                    </Form.Item>
+                    <Tooltip
+                placement="right"
+                title={
+                  '团建奖金以商品分佣所得额为基数，如订单10000，商品分佣10%，团建奖金配置了1%，最终所得团建奖金为10000*10%*1%'
+                }
+              ></Tooltip>`
+                  </Col>  
+              
                 </Row>
               </>
             </div>

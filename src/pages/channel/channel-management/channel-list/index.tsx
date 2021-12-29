@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道列表
- * @LastEditTime: 2021-12-29 10:03:56
+ * @LastEditTime: 2021-12-29 14:48:39
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
@@ -125,6 +125,7 @@ const ChannelPage: React.FC = () => {
     setSelectedData(null)
     setShowDialog(false)
     loadData()
+    getStructure()
   }
 
   const _onDialogClose = () => {
@@ -213,6 +214,7 @@ const ChannelPage: React.FC = () => {
       </Row>
       <AddChannelDialog
         data={selectedData}
+        channelId={channelId}
         mode={dialogMode}
         structure={structure}
         onSuccess={_onDialogSuccess}

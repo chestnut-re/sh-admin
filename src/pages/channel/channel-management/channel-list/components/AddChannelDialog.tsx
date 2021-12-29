@@ -1,15 +1,24 @@
 /*
  * @Description: 添加渠道
- * @LastEditTime: 2021-12-29 12:00:34
+ * @LastEditTime: 2021-12-29 14:05:55
  */
 
 import { Form, Input, Modal, Cascader, Switch, message, Button } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
-import { cityDispose, analysisName, analysisNameDuo, lastOneJoin, arrayNameJoin, regionsCodeArray } from '@/utils/tree'
+import {
+  cityDispose,
+  analysisName,
+  analysisNameDuo,
+  analysisIdDuo,
+  lastOneJoin,
+  arrayNameJoin,
+  regionsCodeArray,
+} from '@/utils/tree'
 import ChannelService from '@/service/ChannelService'
 interface Props {
   data: any
   mode: any
+  channelId: any
   structure: Array<any>
   show: boolean
   onSuccess: () => void
@@ -18,7 +27,7 @@ interface Props {
 /**
  * 添加&编辑
  */
-const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSuccess, onClose }) => {
+const AddUserDialog: FC<Props> = ({ data, mode, channelId, structure, show = false, onSuccess, onClose }) => {
   const [form] = Form.useForm()
   const [area, setArea] = useState<Array<any>>([])
   const [level, setLevel] = useState(1)
@@ -54,6 +63,9 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
       })
     } else {
       form.resetFields()
+
+      console.log(regionsCodeArray(structure, channelId, 'children', 'id', 'pid'))
+
       form.setFieldsValue({
         // state: true,
         isOpenAccount: false,
@@ -127,6 +139,7 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
   }
   const changeStructure = (e, data) => {
     setLevel(data[data.length - 1]?.level)
+    console.log(e, data)
     form.setFieldsValue({
       id: e[e.length - 1],
       level: data[data.length - 1]?.level,
