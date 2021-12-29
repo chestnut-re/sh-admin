@@ -26,8 +26,10 @@ export class PersonService {
   /**
    * 获取角色列表
    */
-  static getRoles(): Promise<any> {
-    return axios.get('/api/platform/role/list')
+  static getRoles(data): Promise<any> {
+    return axios.get('/api/platform/role/list',{
+      params:data
+    })
   }
 
   /**

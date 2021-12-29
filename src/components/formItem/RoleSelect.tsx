@@ -1,18 +1,22 @@
+/*
+ * @LastEditTime: 2021-12-29 17:16:54
+ */
 import { PersonService } from '@/service/PersonService'
 import { Select } from 'antd'
 import React, { useEffect, useState } from 'react'
 interface Props {
   value?: string
+  channelId?:string
   onChange?: (value: string) => void
 }
 
 /**
  * 角色列表
  */
-const RoleSelect: React.FC<Props> = ({value, onChange}) => {
+const RoleSelect: React.FC<Props> = ({value, onChange,channelId}) => {
   const [roleNames, setRoleName] = useState<any[]>([])
   useEffect(() => {
-    PersonService.getRoles().then((res) => {
+    PersonService.getRoles({channelId:channelId}).then((res) => {
       setRoleName(
         res.data.map((item) => {
           return {
@@ -22,7 +26,7 @@ const RoleSelect: React.FC<Props> = ({value, onChange}) => {
         })
       )
     })
-  }, [])
+  }, [channelId])
 
   return <Select options={roleNames} value={value} onChange={onChange}/>
 }
