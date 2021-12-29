@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道列表
- * @LastEditTime: 2021-12-28 09:53:12
+ * @LastEditTime: 2021-12-29 09:53:23
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
@@ -44,7 +44,7 @@ const RolePage: React.FC = () => {
   }
   const loadData = () => {
     form.validateFields().then((query) => {
-      const postForm = { current: pageIndex, size: pageSize, ...query, id: channelId }
+      const postForm = { current: pageIndex, size: pageSize, ...query, channelId: channelId }
       RoleService.list(postForm).then((res) => {
         setData(res.data?.records ?? [])
         setTotal(res.data?.total)
