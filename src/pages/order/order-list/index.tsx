@@ -69,7 +69,7 @@ const OrderListPage: React.FC = () => {
   const columns = [
     {
       title: '订单编号',
-      dataIndex: 'id',
+      dataIndex: 'orderNo',
     },
     {
       title: '下单时间',

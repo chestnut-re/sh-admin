@@ -2,6 +2,7 @@ import { Form, Modal, DatePicker, Row, Col, Select, Tabs, Table, Button, Space }
 import React, { FC, useEffect, useState } from 'react'
 import { FinanceAccountService } from '@/service/FinanceAccountService'
 import './index.less'
+import dayjs from 'dayjs'
 
 export type DialogMode = 'add' | 'edit'
 
@@ -21,6 +22,7 @@ const AEDialog: FC<Props> = ({ data, show = false, onSuccess, onClose }) => {
   const [form] = Form.useForm()
   const { Option } = Select
   const { TabPane } = Tabs
+  const { RangePicker } = DatePicker
   const [pageIndex, setPageIndex] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [total, setTotal] = useState()
@@ -33,7 +35,7 @@ const AEDialog: FC<Props> = ({ data, show = false, onSuccess, onClose }) => {
 
   useEffect(() => {
     loadTableData(pageIndex)
-  }, [pageIndex])
+  }, [pageIndex, show])
 
   const loadAllData = () => {
     FinanceAccountService.details({ phone: data?.phone }).then((res) => {
@@ -42,11 +44,22 @@ const AEDialog: FC<Props> = ({ data, show = false, onSuccess, onClose }) => {
   }
 
   const loadTableData = (pageIndex) => {
-    FinanceAccountService.detailsList({ current: pageIndex, pageSize: pageSize }).then((res) => {
-      console.log(res)
-      // setData(res.data.records)
-      // setTotal(res.data.total)
-    })
+    form
+      .validateFields()
+      .then((formData) => {
+        const startDate = formData.time ? dayjs(formData.time[0]).format('YYYY-MM-DD HH:mm:ss') : ''
+        const endDate = formData.time ? dayjs(formData.time[1]).format('YYYY-MM-DD HH:mm:ss') : ''
+        FinanceAccountService.detailsList({ current: pageIndex, pageSize: pageSize, startDate, endDate }).then(
+          (res) => {
+            console.log(res)
+            setTableData(res.data.records)
+            setTotal(res.data.total)
+          }
+        )
+      })
+      .catch((e) => {
+        console.error(e)
+      })
   }
 
   const columns = [
@@ -56,24 +69,24 @@ const AEDialog: FC<Props> = ({ data, show = false, onSuccess, onClose }) => {
     },
     {
       title: '订单编号',
-      dataIndex: 'nickName',
+      dataIndex: 'orderNo',
     },
     {
       title: '分佣类型',
-      dataIndex: 'mobile',
+      dataIndex: 'commissionTypeName',
     },
     {
       title: '账户变化',
-      dataIndex: 'roleName',
+      dataIndex: 'amount',
     },
     {
       title: '时间',
-      dataIndex: 'state',
+      dataIndex: 'billDate',
     },
   ]
 
   const onFinish = (values: any) => {
-    console.log('Success:', values)
+    loadTableData(pageIndex)
   }
 
   const onFinishFailed = (errorInfo: any) => {
@@ -118,13 +131,13 @@ const AEDialog: FC<Props> = ({ data, show = false, onSuccess, onClose }) => {
           </div>
           <div className="con3">
             <span>可用金额：</span>
-            <span></span>
+            <span>{data?.available}</span>
             <span>运营资金：</span>
-            <span></span>
+            <span>{data?.funds}</span>
             <span>待释放：</span>
-            <span></span>
+            <span>{data?.frozen}</span>
             <span>提现中：</span>
-            <span></span>
+            <span>{data?.cashing}</span>
           </div>
         </div>
         <div className="sales-tabs">
@@ -146,13 +159,16 @@ const AEDialog: FC<Props> = ({ data, show = false, onSuccess, onClose }) => {
                       <Col span={4}>
                         <Form.Item name="channelId">
                           <Select style={{ width: 120 }}>
-                            {channelData?.map((item: any) => {
+                            {/* {channelData?.map((item: any) => {
                               return (
                                 <Option value={item.id} key={item.id}>
                                   {item.name}
                                 </Option>
                               )
-                            })}
+                            })} */}
+                            <Option value="" key="1">
+                              全部
+                            </Option>
                           </Select>
                         </Form.Item>
                       </Col>
@@ -160,7 +176,9 @@ const AEDialog: FC<Props> = ({ data, show = false, onSuccess, onClose }) => {
                         时间筛选
                       </Col>
                       <Col span={4}>
-                        <Form.Item name="channelId"></Form.Item>
+                        <Form.Item name="time">
+                          <RangePicker showTime />
+                        </Form.Item>
                       </Col>
                       <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
                         <Space>

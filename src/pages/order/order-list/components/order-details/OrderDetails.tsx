@@ -16,6 +16,7 @@ const OrderDetailsPage: React.FC = () => {
   const [data, setData] = useState([])
   useEffect(() => {
     loadData()
+    getRelations()
   }, [])
 
   const loadData = () => {
@@ -23,63 +24,72 @@ const OrderDetailsPage: React.FC = () => {
       if (res.code === HttpCode.success) {
         setData(res.data)
         setDataZ(res.data?.subOrderDtoList)
+        // setDataF(res.data?.distPlanOrderDTO)
+      }
+    })
+  }
+
+  const getRelations = () => {
+    OrderService.relation({ orderId: history.location.state.id }).then((res) => {
+      if (res.code === HttpCode.success) {
+        setDataM(res.data)
+        setDataD(res.data)
       }
     })
   }
   const columnsM = [
     {
-      title: '昵称',
-      dataIndex: 'travelerPhoneNumber',
+      title: '手机号',
+      dataIndex: 'phoneNumber',
     },
     {
-      title: '订单关联',
-      dataIndex: 'nickName',
+      title: '昵称',
+      dataIndex: '',
     },
     {
       title: '常住地',
-      dataIndex: 'mobile',
-    },
-    {
-      title: '手机号',
-      dataIndex: 'travelerPhoneNumber',
-    },
-    {
-      title: '平台身份',
-      dataIndex: 'state',
+      dataIndex: '',
     },
   ]
   const columnsD = [
     {
       title: '订单关系',
-      dataIndex: 'systemUserId',
+      dataIndex: 'orderShip',
     },
     {
       title: '姓名',
-      dataIndex: 'nickName',
+      dataIndex: '',
     },
     {
       title: '关系归属',
-      dataIndex: 'mobile',
+      dataIndex: 'relationship',
     },
     {
       title: '责任区域',
-      dataIndex: 'roleName',
+      dataIndex: 'responsibilityArea',
     },
     {
       title: '始发地责任区域',
-      dataIndex: 'state',
+      dataIndex: '',
     },
     {
       title: '手机号',
-      dataIndex: 'state',
+      dataIndex: 'phoneNumber',
     },
     {
       title: '平台身份',
-      dataIndex: 'state',
+      dataIndex: 'accountTypeVal',
     },
     {
       title: '当前返利任务',
-      dataIndex: 'state',
+      dataIndex: 'rebateFlag',
+      render: (text: any, record: any) => {
+        if (record.rebateFlag == 0) {
+          return `-`
+        } else if (record.rebateFlag == 1) {
+          return `有`
+        }
+      },
     },
   ]
   const columnsZ = [
@@ -151,21 +161,21 @@ const OrderDetailsPage: React.FC = () => {
     <div className="details__root">
       <div className="states-con">
         <span className="order-sta">订单状态</span>
-        <span className="order-state">{data.state}</span>
+        <span className="order-state">{data.state ? data.state : ''}</span>
         <div className="order-time">
           剩<span></span>
         </div>
         <span className="order-fx">分销</span>
         <div className="states-order">
-          <div>{data.orderNo}</div>
+          <div>{data.orderNo ? data.orderNo : ''}</div>
           <div>订单编号</div>
         </div>
         <div className="states-order1">
-          <div>{data.orderTime}</div>
+          <div>{data.orderTime ? data.orderTime : ''}</div>
           <div>下单时间</div>
         </div>
         <div className="states-order2">
-          <div>{data.payTime}</div>
+          <div>{data.payTime ? data.payTime : ''}</div>
           <div>付款时间</div>
         </div>
         <div className="states-order3">
@@ -176,7 +186,7 @@ const OrderDetailsPage: React.FC = () => {
       <div className="infor-con">
         <div className="infor-title">
           <img src="" alt="" />
-          <span>{data.goodsName}</span>
+          <span>{data.goodsName ? data.goodsName : ''}</span>
         </div>
         <div className="infor infor-spe">
           <div>始发地</div>
@@ -210,6 +220,53 @@ const OrderDetailsPage: React.FC = () => {
       <Table rowKey="id" columns={columnsZ} scroll={{ x: 'max-content' }} dataSource={[...dataZ]} />
       <div className="details-title">分佣方案</div>
       <Table rowKey="id" columns={columnsF} scroll={{ x: 'max-content' }} dataSource={[...dataF]} />
+      <div className="details-title">支付详情</div>
+      <div className="bottom">
+        <table className="tableStyle" cellSpacing="0" cellPadding="0">
+          <tr>
+            <td rowspan="2" className="paymentWays">
+              <div>
+                付款方式:<span>{data.payTypeVal ? data.payTypeVal : ''}</span>
+              </div>
+              <div>
+                交易单号:<span>{data.thirdPartyPayNo ? data.thirdPartyPayNo : ''}</span>
+              </div>
+              <div>
+                三方交易单号:<span>{data.thirdPartyPayNo ? data.thirdPartyPayNo : ''}</span>
+              </div>
+            </td>
+            <td>实付款</td>
+            <td>商品总价</td>
+            <td>代币折扣</td>
+          </tr>
+          <tr>
+            <td>{data.payAmount ? data.payAmount : ''}</td>
+            <td>{data.originPrice ? data.originPrice : ''}</td>
+            <td>{data.tokenAmount ? data.tokenAmount : ''}</td>
+          </tr>
+        </table>
+      </div>
+      <div className="details-title">营销活动</div>
+      <div className="bottom">
+        <table className="tableStyle" cellSpacing="0" cellPadding="0">
+          <tr>
+            <td>营销活动名称</td>
+            <td>当前订单参与时段</td>
+            <td>活动目标</td>
+            <td>活动福利</td>
+            <td>用户执行情况</td>
+            <td>用户已获福利</td>
+          </tr>
+          <tr style={{ height: '100px' }}>
+            <td style={{ fontWeight: 'bold' }}>暑假返利</td>
+            <td>11</td>
+            <td>22</td>
+            <td>23</td>
+            <td>44</td>
+            <td>55</td>
+          </tr>
+        </table>
+      </div>
     </div>
   )
 }
