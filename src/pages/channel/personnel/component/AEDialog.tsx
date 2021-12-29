@@ -71,7 +71,9 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
   const getChannel = () => {
     PersonService.getStructure().then((res) => {
       const data = cityDispose([res?.data], 'children')
-      setStructure([data]['level']==1?data['children']:data)
+      const str = [data]['level'] == 1 ? data['children'] : data
+      console.log(str)
+      setStructure(str)
     })
   }
 
@@ -123,7 +125,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
   /**渠道修改了 */
   const changeStructure = (e, data) => {
     console.log(e, data)
-    setLevel(data[data.length-1]?.level)
+    setLevel(data[data.length - 1]?.level)
     if (e.length > 0) {
       setChannelId(e[e.length - 1])
     }
@@ -141,23 +143,21 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
         autoComplete="off"
         form={form}
       >
-          <Form.Item label="归属渠道" name="channel" rules={[{ required: true, message: '设置渠道' }]}>
-            <Cascader
-              options={structure}
-              changeOnSelect
-              fieldNames={{ label: 'name', value: 'id', children: 'children' }}
-              onChange={changeStructure}
-            />
-          </Form.Item>
+        <Form.Item label="归属渠道" name="channel" rules={[{ required: true, message: '设置渠道' }]}>
+          <Cascader
+            options={structure}
+            changeOnSelect
+            fieldNames={{ label: 'name', value: 'id', children: 'children' }}
+            onChange={changeStructure}
+          />
+        </Form.Item>
         {level == 1 ? (
           ``
         ) : (
           <Form.Item name="leader" label="上级人员" rules={[{ required: false }]}>
-          <Select placeholder="无" options={leader} />
-        </Form.Item>
+            <Select placeholder="无" options={leader} />
+          </Form.Item>
         )}
-
-       
 
         <Form.Item label="责任区域" name="address" rules={[{ required: true, message: '请选择' }]}>
           <AreaSelect />
