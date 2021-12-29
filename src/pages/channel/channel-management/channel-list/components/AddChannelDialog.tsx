@@ -1,6 +1,6 @@
 /*
  * @Description: 添加渠道
- * @LastEditTime: 2021-12-29 10:08:36
+ * @LastEditTime: 2021-12-29 12:00:34
  */
 
 import { Form, Input, Modal, Cascader, Switch, message, Button } from 'antd'
@@ -53,6 +53,7 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
         })
       })
     } else {
+      form.resetFields()
       form.setFieldsValue({
         // state: true,
         isOpenAccount: false,
@@ -137,6 +138,7 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
     <Modal
       title={type[mode]}
       visible={show}
+      onCancel={_formClose}
       footer={
         mode == 'see'
           ? [
@@ -220,14 +222,18 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
         >
           <Input disabled={mode == 'see'} />
         </Form.Item>
-        <Form.Item label="渠道账户" name="isOpenAccount" style={{ display: level == 2 ? 'flex' : 'none' }}>
+        <Form.Item
+          label="渠道账户"
+          name="isOpenAccount"
+          style={{ display: (level == 2 && mode != 'add') || (level == 1 && mode == 'add') ? 'flex' : 'none' }}
+        >
           <Switch disabled={mode == 'see'} defaultChecked={!!data?.isOpenAccount} />
         </Form.Item>
         <Form.Item
           label="客服热线"
           name="hotLine"
-          rules={[{ required: level == 2, message: '请输入' }]}
-          style={{ display: level == 2 ? 'flex' : 'none' }}
+          rules={[{ required: (level == 2 && mode != 'add') || (level == 1 && mode == 'add'), message: '请输入' }]}
+          style={{ display: (level == 2 && mode != 'add') || (level == 1 && mode == 'add') ? 'flex' : 'none' }}
         >
           <Input disabled={mode == 'see'} />
         </Form.Item>

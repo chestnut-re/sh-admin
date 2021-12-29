@@ -1,6 +1,6 @@
 /*
  * @Description: 添加分佣方案
- * @LastEditTime: 2021-12-29 10:06:53
+ * @LastEditTime: 2021-12-29 11:12:27
  */
 
 import { Form, Input, Modal, Cascader, message, Row, Col, InputNumber, Button } from 'antd'
@@ -178,7 +178,7 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
       visible={show}
       width={700}
       // onOk={_handleUpdate}
-      // onCancel={_formClose}
+      onCancel={_formClose}
       footer={
         mode == 'see'
           ? [

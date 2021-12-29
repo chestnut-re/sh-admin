@@ -1,6 +1,6 @@
 /*
  * @Description: 用户详情
- * @LastEditTime: 2021-12-24 13:37:22
+ * @LastEditTime: 2021-12-29 11:12:38
  */
 
 import { usersAddUser } from '@/service/user'
@@ -77,7 +77,7 @@ const AEBannerDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClos
       title={mode == 'edit' ? '查看' : '创建'}
       getContainer={false}
       visible={show}
-      onOk={_handleUpdate}
+      onCancel={_formClose}
       footer={[
         <Button key="ok"  type="primary"  onClick={_handleUpdate}>
           确定
