@@ -1,6 +1,6 @@
 /*
  * @Description: 添加渠道
- * @LastEditTime: 2021-12-30 16:37:19
+ * @LastEditTime: 2021-12-30 16:38:36
  */
 
 import { Form, Input, Modal, Cascader, Switch, message, Button } from 'antd'
@@ -240,10 +240,11 @@ const AddUserDialog: FC<Props> = ({ data, mode, channelId, structure, show = fal
         </Form.Item>
         <Form.Item
           label="渠道账户"
-          name="isOpenAccount"
+
           style={{ display: (level == 2 && mode != 'add') || (level == 1 && mode == 'add') ? 'flex' : 'none' }}
         >
-          <Switch disabled={mode == 'see'} defaultChecked={!!data?.isOpenAccount} />
+          渠道账户为手机号
+          {/* <Switch disabled={mode == 'see'} defaultChecked={!!data?.isOpenAccount} /> */}
         </Form.Item>
         <Form.Item
           label="客服热线"

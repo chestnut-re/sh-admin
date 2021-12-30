@@ -3,7 +3,7 @@ import React, { FC, useEffect, useState } from 'react'
 import { DialogMode, personType } from '@/utils/enum'
 import RoleSelect from '@/components/formItem/RoleSelect'
 import { PersonService } from '@/service/PersonService'
-import { cityDispose } from '@/utils/tree'
+import { cityDispose,lastOneJoin } from '@/utils/tree'
 import { HttpCode } from '@/constants/HttpCode'
 import AreaSelect from '@/components/formItem/AreaSelect'
 
@@ -99,7 +99,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
           const params = { ...formData }
           params.state = params.state ? 1 : 0
           delete params.channel
-
+          params.address = lastOneJoin(formData.address)
           PersonService.add({ ...params }).then((res) => {
             if (res.code === HttpCode.success) {
               onSuccess()
@@ -134,6 +134,11 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
   const _changeRoleSelect = (e) => {
     console.log(e)
   }
+  const _onChangeAddress=(e)=>{
+    form.setFieldsValue({
+      address:e
+    })
+  }
   return (
     <Modal title="添加人员" visible={show} onOk={_handleUpdate} onCancel={_formClose}>
       <Form
@@ -161,7 +166,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
         )}
 
         <Form.Item label="责任区域" name="address" rules={[{ required: true, message: '请选择' }]}>
-          <AreaSelect channelId={channelId} />
+          <AreaSelect channelId={channelId} onChange={_onChangeAddress} />
         </Form.Item>
 
         <Form.Item name="realName" label="姓名" rules={[{ required: true }]}>
