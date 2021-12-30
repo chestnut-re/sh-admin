@@ -68,6 +68,10 @@ const BannerListPage: React.FC = () => {
       },
     },
     {
+      title: '展示排序',
+      dataIndex: 'sort',
+    },
+    {
       title: '展示时段',
       dataIndex: 'endDate',
       render: (text: any, record: any) => `${record.startDate}~${record.endDate}`,
