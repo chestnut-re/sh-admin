@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description:
- * @LastEditTime: 2021-12-28 17:44:23
+ * @LastEditTime: 2021-12-30 15:13:33
  */
 
 import React, { useState, useEffect } from 'react'
@@ -94,7 +94,7 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
             <div style={{ display: 'flex', alignItems: 'center' }}>
               预设团建奖金&nbsp; &nbsp;
               <Form.Item name="presetBonus" style={{ marginBottom: '0' }}>
-                <InputNumber min={0} max={100} addonAfter="%" style={{ width: '100px' }} />
+                <InputNumber step={0} min={0} max={100} addonAfter="%" style={{ width: '100px' }} />
               </Form.Item>
               &nbsp; &nbsp;
               <Tooltip
