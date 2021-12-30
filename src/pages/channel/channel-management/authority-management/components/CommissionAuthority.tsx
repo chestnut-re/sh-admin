@@ -97,7 +97,7 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
                 rules={[
                   {
                     pattern: /^([1-9]\d|\d)$/,
-                    message: '请输入0-99的正整数!',
+                    message: '请输入0-99的整数!',
                   },
                 ]}
                 style={{ marginBottom: '0' }}
@@ -142,7 +142,7 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
                       rules={[
                         {
                           pattern: /^([1-9]\d|\d)$/,
-                          message: '请输入0-99的正整数!',
+                          message: '请输入0-99的整数!',
                         },
                       ]}
                       style={{ marginBottom: '0' }}
@@ -192,7 +192,7 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
                     rules={[
                       {
                         pattern: /^([1-9]\d|\d)$/,
-                        message: '请输入0-99的正整数!',
+                        message: '请输入0-99的整数!',
                       },
                     ]}
                     style={{ marginBottom: '0' }}

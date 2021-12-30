@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道列表
- * @LastEditTime: 2021-12-30 16:15:38
+ * @LastEditTime: 2021-12-30 21:29:13
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
@@ -73,6 +73,8 @@ const ChannelPage: React.FC = () => {
     {
       title: '责任区域',
       dataIndex: 'regionsName',
+      render: (_text, record, index) => `${(record?.regionsName??'').substring(0,40)}`
+      
     },
     {
       title: '归属',
