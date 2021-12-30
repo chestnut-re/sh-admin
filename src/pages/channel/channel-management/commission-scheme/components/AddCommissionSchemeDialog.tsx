@@ -281,8 +281,8 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
                       label="直销分佣比例"
                       rules={[
                         {
-                          pattern: /^[1-9]+[0-9]*$/,
-                          message: '只能正整数!',
+                          pattern: /^([1-9]\d|\d)$/,
+                          message: '请输入0-99的正整数!',
                         },
                       ]}
                       name={['channelPlanList', index, 'directScale']}
@@ -297,8 +297,8 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
                         label="发团服务费"
                         rules={[
                           {
-                            pattern: /^[1-9]+[0-9]*$/,
-                            message: '只能正整数!',
+                            pattern: /^([1-9]\d|\d)$/,
+                            message: '请输入0-99的正整数!',
                           },
                         ]}
                         name={['channelPlanList', index, 'teamPrice']}
@@ -318,8 +318,8 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
                           label={mRes.level + '级渠道分销分佣比例'}
                           rules={[
                             {
-                              pattern: /^[1-9]+[0-9]*$/,
-                              message: '只能正整数!',
+                              pattern: /^([1-9]\d|\d)$/,
+                              message: '请输入0-99的正整数!',
                             },
                           ]}
                           name={['channelPlanList', index, 'saleScalePlan', Ci, 'saleScale']}

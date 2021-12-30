@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description:
- * @LastEditTime: 2021-12-30 16:13:14
+ * @LastEditTime: 2021-12-30 18:10:44
  */
 
 import React, { useState, useEffect } from 'react'
@@ -96,8 +96,8 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
                 name="presetBonus"
                 rules={[
                   {
-                    pattern: /^[1-9]+[0-9]*$/,
-                    message: '只能正整数!',
+                    pattern: /^([1-9]\d|\d)$/,
+                    message: '请输入0-99的正整数!',
                   },
                 ]}
                 style={{ marginBottom: '0' }}
@@ -141,8 +141,8 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
                       name="groupSettleDay"
                       rules={[
                         {
-                          pattern: /^[1-9]+[0-9]*$/,
-                          message: '只能正整数!',
+                          pattern: /^([1-9]\d|\d)$/,
+                          message: '请输入0-99的正整数!',
                         },
                       ]}
                       style={{ marginBottom: '0' }}
@@ -191,8 +191,8 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
                     name="saleSettleDay"
                     rules={[
                       {
-                        pattern: /^[1-9]+[0-9]*$/,
-                        message: '只能正整数!',
+                        pattern: /^([1-9]\d|\d)$/,
+                        message: '请输入0-99的正整数!',
                       },
                     ]}
                     style={{ marginBottom: '0' }}
