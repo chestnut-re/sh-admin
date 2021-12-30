@@ -1,3 +1,7 @@
+/*
+ * @Description: 
+ * @LastEditTime: 2021-12-30 12:00:39
+ */
 import ChannelService from '@/service/ChannelService'
 import { cityDispose } from '@/utils/tree'
 import { Cascader } from 'antd'
@@ -5,6 +9,7 @@ import React, { useEffect, useState } from 'react'
 
 interface Props {
   value?: string
+  channelId:any
   onChange?: (value: string) => void
 }
 

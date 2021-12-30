@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道列表
- * @LastEditTime: 2021-12-30 10:20:54
+ * @LastEditTime: 2021-12-30 12:33:20
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
@@ -42,7 +42,7 @@ const ChannelPage: React.FC = () => {
   }
   const loadData = () => {
     form.validateFields().then((query) => {
-      const postForm = { pages: pageIndex, size: pageSize, ...query, id: channelId }
+      const postForm = { current: pageIndex, size: pageSize, ...query, id: channelId }
       ChannelService.list(postForm).then((res) => {
         setData(res.data?.records ?? [])
         setTotal(res.data?.total)
