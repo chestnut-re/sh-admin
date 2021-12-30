@@ -40,7 +40,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
   useEffect(() => {
     getLeaders()
     form.setFieldsValue({
-      leader: undefined,
+      supUserId: undefined,
       roleId: undefined,
     })
   }, [channelId])
@@ -160,7 +160,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
         {level == 1 ? (
           ``
         ) : (
-          <Form.Item name="leader" label="上级人员" rules={[{ required: false }]}>
+          <Form.Item name="supUserId" label="上级人员" rules={[{ required: false }]}>
             <Select placeholder="无" options={leader} />
           </Form.Item>
         )}

@@ -1,6 +1,6 @@
 /*
  * @Description: 添加渠道
- * @LastEditTime: 2021-12-30 19:01:10
+ * @LastEditTime: 2021-12-30 20:51:01
  */
 
 import { Form, Input, Modal, Cascader, Switch, message, Button } from 'antd'
@@ -26,13 +26,14 @@ interface Props {
   onClose: () => void
 }
 /**
- * 添加&编辑
+ * 添加&编辑 暂时堆积 后期
  */
 const AddUserDialog: FC<Props> = ({ data, mode, channelId, structure, show = false, onSuccess, onClose }) => {
   const [form] = Form.useForm()
   const [area, setArea] = useState<Array<any>>([])
   const [level, setLevel] = useState(1)
   const [nameDefault, setNameDefault] = useState('')
+  const [value, setValue] = useState<Array<any>>([])
   useEffect(() => {
     if (show) {
       getProvinceCity()
@@ -139,11 +140,10 @@ const AddUserDialog: FC<Props> = ({ data, mode, channelId, structure, show = fal
       const element = data[index]
       if (data[index].length < 2) {
         const child = area.find((res) => res.adcode == element[0])['areas']
-       const newList= child.map(res=>{
-          return [element,res.adcode]
+        const newList = child.map((res) => {
+          return [element, res.adcode]
         })
-        data.splice(index,1,...newList)
-
+        data.splice(index, 1, ...newList)
       }
     }
   }
@@ -153,6 +153,15 @@ const AddUserDialog: FC<Props> = ({ data, mode, channelId, structure, show = fal
     form.setFieldsValue({
       id: e[e.length - 1],
       level: data[data.length - 1]?.level,
+    })
+    // 暂时堆积 后期
+    ChannelService.get(e[e.length - 1]).then((res) => {
+      // setRegions(res?.data?.regions)
+      // getProvinceCity()
+      ChannelService.getProvinceCity({ adcodes: res?.data?.regions }).then((res) => {
+        setArea(cityDispose(res?.data, 'areas'))
+        setValue([])
+      })
     })
   }
 
