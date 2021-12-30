@@ -1,6 +1,6 @@
 /*
  * @Description:
- * @LastEditTime: 2021-12-30 20:20:33
+ * @LastEditTime: 2021-12-30 21:07:06
  */
 import ChannelService from '@/service/ChannelService'
 import { cityDispose } from '@/utils/tree'
@@ -27,7 +27,7 @@ const AreaSelect: React.FC<Props> = ({ defaultValue, onChange, channelId }) => {
     }
   }, [channelId])
   useEffect(() => {
-    setValue(JSON.parse(JSON.stringify(defaultValue??[])))
+    setValue(JSON.parse(JSON.stringify(defaultValue ?? [])))
   }, [defaultValue])
 
   useEffect(() => {
@@ -44,10 +44,20 @@ const AreaSelect: React.FC<Props> = ({ defaultValue, onChange, channelId }) => {
     getProvinceCity()
     setValue([])
   }, [regions])
-  
-  const tagRender = (labels, selectedOptions) =>{
-    console.log(labels,selectedOptions,'-----------')
-    return  (<p>{labels.label }</p>)
+
+  const tagRender = (labels, selectedOptions) => {
+    console.log()
+    const dataAreas = area.find((res) => res.adcode == labels.value)
+    if (!dataAreas) {
+      return <>{labels.label}</>
+    } else {
+      const valueData = dataAreas.areas.map((resC) => {
+        console.log(resC, 'resC')
+        return resC.name
+      })
+      return <>{valueData.join(',')}</>
+    }
+    // console.log(labels,selectedOptions,'-----------',area)
   }
 
   /**
@@ -73,11 +83,10 @@ const AreaSelect: React.FC<Props> = ({ defaultValue, onChange, channelId }) => {
       const element = data[index]
       if (data[index].length < 2) {
         const child = area.find((res) => res.adcode == element[0])['areas']
-       const newList= child.map(res=>{
-          return [element,res.adcode]
+        const newList = child.map((res) => {
+          return [element, res.adcode]
         })
-        data.splice(index,1,...newList)
-
+        data.splice(index, 1, ...newList)
       }
     }
     setValue(data)
