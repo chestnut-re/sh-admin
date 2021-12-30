@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道列表
- * @LastEditTime: 2021-12-30 13:49:36
+ * @LastEditTime: 2021-12-30 20:30:54
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
@@ -72,10 +72,10 @@ const RolePage: React.FC = () => {
       title: '所属渠道',
       dataIndex: 'channelName',
     },
-    {
-      title: '权限平台',
-      dataIndex: 'authorityPlatform',
-    },
+    // {
+    //   title: '权限平台',
+    //   dataIndex: 'authorityPlatform',
+    // },
     {
       title: '创建时间',
       dataIndex: 'createTime',

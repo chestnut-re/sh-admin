@@ -1,6 +1,6 @@
 /*
  * @Description:
- * @LastEditTime: 2021-12-30 19:04:01
+ * @LastEditTime: 2021-12-30 20:20:33
  */
 import ChannelService from '@/service/ChannelService'
 import { cityDispose } from '@/utils/tree'
@@ -45,10 +45,10 @@ const AreaSelect: React.FC<Props> = ({ defaultValue, onChange, channelId }) => {
     setValue([])
   }, [regions])
   
-  // const tagRender = (labels, selectedOptions) =>{
-  //   console.log(labels,selectedOptions,'-----------')
-  //   return  (<p>{labels.label }</p>)
-  // }
+  const tagRender = (labels, selectedOptions) =>{
+    console.log(labels,selectedOptions,'-----------')
+    return  (<p>{labels.label }</p>)
+  }
 
   /**
    * @description: 负责区域
@@ -87,7 +87,7 @@ const AreaSelect: React.FC<Props> = ({ defaultValue, onChange, channelId }) => {
       options={area}
       value={value}
       onChange={casOnChange}
-      // tagRender={tagRender}
+      tagRender={tagRender}
       multiple
       fieldNames={{ label: 'name', value: 'adcode', children: 'areas' }}
     />
