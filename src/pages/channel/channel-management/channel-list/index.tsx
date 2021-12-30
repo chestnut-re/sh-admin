@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道列表
- * @LastEditTime: 2021-12-29 14:48:39
+ * @LastEditTime: 2021-12-30 13:49:43
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
@@ -17,11 +17,11 @@ const ChannelPage: React.FC = () => {
   const [form] = Form.useForm()
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
-  const [pageSize] = useState(10)
+  const [pageSize] = useState(20)
   const [total, setTotal] = useState()
   const [showDialog, setShowDialog] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
-  const [channelId, setChannelId] = useState(null)
+  const [channelId, setChannelId] = useState('')
   const [dialogMode, setDialogMode] = useState('add')
   const [structure, setStructure] = useState([])
   useEffect(() => {
@@ -42,7 +42,7 @@ const ChannelPage: React.FC = () => {
   }
   const loadData = () => {
     form.validateFields().then((query) => {
-      const postForm = { pages: pageIndex, size: pageSize, ...query, id: channelId }
+      const postForm = { current: pageIndex, size: pageSize, ...query, id: channelId }
       ChannelService.list(postForm).then((res) => {
         setData(res.data?.records ?? [])
         setTotal(res.data?.total)
@@ -118,12 +118,14 @@ const ChannelPage: React.FC = () => {
   const showAddDialog = (record, add = 'add') => {
     setDialogMode(add)
     setShowDialog(true)
-    setSelectedData(add=='add' ? { state: true, isOpenAccount: false } : record)
+    setSelectedData(add == 'add' ? { state: true, isOpenAccount: false } : record)
   }
 
   const _onDialogSuccess = () => {
     setSelectedData(null)
     setShowDialog(false)
+    setPageIndex(1)
+    setChannelId('')
     loadData()
     getStructure()
   }
@@ -142,7 +144,7 @@ const ChannelPage: React.FC = () => {
   return (
     <div className="channel__root">
       <Row gutter={[10, 0]}>
-      <Col xxl={3} xl={5} lg={7} md={8}>
+        <Col xxl={3} xl={5} lg={7} md={8}>
           {structure.length > 0 ? <ChannelListTree structure={structure} onSelectStructure={_onSelectStructure} /> : ''}
         </Col>
         <Col xxl={21} xl={19} lg={17} md={16}>
@@ -203,7 +205,7 @@ const ChannelPage: React.FC = () => {
             dataSource={[...data]}
             pagination={{
               onChange: setPageIndex,
-              showSizeChanger: true,
+              showSizeChanger: false,
               showQuickJumper: true,
               current: pageIndex,
               pageSize: pageSize,

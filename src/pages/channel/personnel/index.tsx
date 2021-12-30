@@ -6,7 +6,7 @@ import { del, PersonService } from '@/service/PersonService'
 import { cityDispose } from '@/utils/tree'
 import AEDialog from './component/AEDialog'
 import ChannelListTree from '@/components/components/ChannelListTree'
-import { DialogMode } from '@/utils/enum'
+import { DialogMode,createChannel } from '@/utils/enum'
 
 /*
  * 人员管理
@@ -15,7 +15,7 @@ const PersonnelManagement: React.FC = () => {
   const [form] = Form.useForm()
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
-  const [pageSize, setPageSize] = useState(10)
+  const [pageSize, setPageSize] = useState(20)
   const [total, setTotal] = useState()
 
   const [showDialog, setShowDialog] = useState(false)
@@ -110,13 +110,7 @@ const PersonnelManagement: React.FC = () => {
     {
       title: '创建平台',
       dataIndex: 'createChannel',
-      render: (text: any, record: any) => {
-        if (record.state == 0) {
-          return `管理后台`
-        } else if (record.state == 1) {
-          return `biz山海`
-        }
-      },
+      render: (text: any, record: any) => `${createChannel[record.createChannel]}`
     },
     {
       title: '状态',
@@ -203,7 +197,15 @@ const PersonnelManagement: React.FC = () => {
 
   return (
     <div className="PersonnelManagement__root">
-      <div>
+    
+
+      <Row gutter={[24, 0]}>
+        <Col xxl={3} xl={5} lg={7} md={8}>
+          {/* <StructureTree structure={structure} onSelectStructure={_onSelectStructure} /> */}
+          {structure.length > 0 ? <ChannelListTree structure={structure} onSelectStructure={_onSelectStructure} /> : ''}
+        </Col>
+        <Col xxl={21} xl={19} lg={17} md={16}>
+        <div>
         <Form name="basic" initialValues={{ remember: true }} onFinish={onFinish} form={form}>
           <Row gutter={[12, 12]}>
             <Col span={5}>
@@ -244,12 +246,7 @@ const PersonnelManagement: React.FC = () => {
         </Form>
       </div>
 
-      <Row gutter={[24, 0]}>
-        <Col xxl={3} xl={5} lg={7} md={8}>
-          {/* <StructureTree structure={structure} onSelectStructure={_onSelectStructure} /> */}
-          {structure.length > 0 ? <ChannelListTree structure={structure} onSelectStructure={_onSelectStructure} /> : ''}
-        </Col>
-        <Col xxl={21} xl={19} lg={17} md={16}>
+          
           <Table
             rowKey="userId"
             columns={columns}
@@ -257,7 +254,7 @@ const PersonnelManagement: React.FC = () => {
             dataSource={data}
             pagination={{
               onChange: onPaginationChange,
-              showSizeChanger: true,
+              showSizeChanger: false,
               showQuickJumper: true,
               pageSize: pageSize,
               total: total,

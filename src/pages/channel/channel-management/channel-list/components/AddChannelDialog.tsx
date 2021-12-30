@@ -1,6 +1,6 @@
 /*
  * @Description: 添加渠道
- * @LastEditTime: 2021-12-29 14:05:55
+ * @LastEditTime: 2021-12-30 11:39:12
  */
 
 import { Form, Input, Modal, Cascader, Switch, message, Button } from 'antd'
@@ -64,7 +64,7 @@ const AddUserDialog: FC<Props> = ({ data, mode, channelId, structure, show = fal
     } else {
       form.resetFields()
 
-      console.log(regionsCodeArray(structure, channelId, 'children', 'id', 'pid'))
+      // console.log(regionsCodeArray(structure, channelId, 'children', 'id', 'pid'))
 
       form.setFieldsValue({
         // state: true,
@@ -235,13 +235,13 @@ const AddUserDialog: FC<Props> = ({ data, mode, channelId, structure, show = fal
         >
           <Input disabled={mode == 'see'} />
         </Form.Item>
-        <Form.Item
+        {/* <Form.Item
           label="渠道账户"
           name="isOpenAccount"
           style={{ display: (level == 2 && mode != 'add') || (level == 1 && mode == 'add') ? 'flex' : 'none' }}
         >
           <Switch disabled={mode == 'see'} defaultChecked={!!data?.isOpenAccount} />
-        </Form.Item>
+        </Form.Item> */}
         <Form.Item
           label="客服热线"
           name="hotLine"

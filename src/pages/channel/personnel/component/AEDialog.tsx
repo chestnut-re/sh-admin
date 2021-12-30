@@ -24,7 +24,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
   const [structure, setStructure] = useState<any[]>([])
   const [leader, setLeader] = useState<any[]>([])
   const [channelId, setChannelId] = useState<string>('')
-
+  const [level, setLevel] = useState<number>(0)
   useEffect(() => {
     getChannel()
   }, [])
@@ -40,31 +40,40 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
   useEffect(() => {
     getLeaders()
     form.setFieldsValue({
-      leader:undefined,
-      roleId:undefined,
+      leader: undefined,
+      roleId: undefined,
     })
   }, [channelId])
 
   const getLeaders = async () => {
     if (!channelId) return
     const res = await PersonService.getSubordinate(channelId)
-    setLeader(
-      res.data.map((item) => {
-        return {
-          value: item.userId,
-          label: item.userName,
-        }
-      })
-    )
-  }
+    const resList = res.data.map((item) => {
+      return {
+        value: item.userId,
+        label: item.userName,
+      }
+    })
 
+    // console.log(,'---')
+    setLeader([
+      {
+        value: undefined,
+        label: '无',
+      },
+      ...resList,
+    ])
+  }
 
   /**
    * 请求渠道名称
    */
   const getChannel = () => {
     PersonService.getStructure().then((res) => {
-      setStructure(cityDispose([res?.data], 'children'))
+      const data = cityDispose([res?.data], 'children')
+      const str = data[0]['level'] == 1 ? data[0]['children'] : data
+      console.log(str)
+      setStructure(str)
     })
   }
 
@@ -116,13 +125,14 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
   /**渠道修改了 */
   const changeStructure = (e, data) => {
     console.log(e, data)
+    setLevel(data[data.length - 1]?.level)
     if (e.length > 0) {
       setChannelId(e[e.length - 1])
     }
   }
-const _changeRoleSelect = (e)=>{
-  console.log(e)
-}
+  const _changeRoleSelect = (e) => {
+    console.log(e)
+  }
   return (
     <Modal title="添加人员" visible={show} onOk={_handleUpdate} onCancel={_formClose}>
       <Form
@@ -141,13 +151,16 @@ const _changeRoleSelect = (e)=>{
             onChange={changeStructure}
           />
         </Form.Item>
-
-        <Form.Item name="leader" label="上级人员" rules={[{ required: true }]}>
-          <Select placeholder="无" options={leader} />
-        </Form.Item>
+        {level == 1 ? (
+          ``
+        ) : (
+          <Form.Item name="leader" label="上级人员" rules={[{ required: false }]}>
+            <Select placeholder="无" options={leader} />
+          </Form.Item>
+        )}
 
         <Form.Item label="责任区域" name="address" rules={[{ required: true, message: '请选择' }]}>
-          <AreaSelect />
+          <AreaSelect channelId={channelId} />
         </Form.Item>
 
         <Form.Item name="realName" label="姓名" rules={[{ required: true }]}>

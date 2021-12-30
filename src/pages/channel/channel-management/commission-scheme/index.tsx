@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道分佣列表
- * @LastEditTime: 2021-12-29 16:52:02
+ * @LastEditTime: 2021-12-30 13:49:49
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
@@ -17,11 +17,11 @@ const CommissionSchemePage: React.FC = () => {
   const [form] = Form.useForm()
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
-  const [pageSize] = useState(10)
+  const [pageSize] = useState(20)
   const [total, setTotal] = useState()
   const [showDialog, setShowDialog] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
-  const [channelId, setChannelId] = useState(null)
+  const [channelId, setChannelId] = useState('')
   const [dialogMode, setDialogMode] = useState('add')
   const [structure, setStructure] = useState([])
   const [ranked, setRanked] = useState([])
@@ -112,7 +112,8 @@ const CommissionSchemePage: React.FC = () => {
   const _onDialogSuccess = () => {
     setSelectedData(null)
     setShowDialog(false)
-    setChannelId(null)
+    setChannelId('')
+    setPageIndex(1)
     loadData()
   }
 
