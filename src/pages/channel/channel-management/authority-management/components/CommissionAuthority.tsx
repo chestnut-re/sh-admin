@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description:
- * @LastEditTime: 2021-12-28 17:44:23
+ * @LastEditTime: 2021-12-30 15:44:25
  */
 
 import React, { useState, useEffect } from 'react'
@@ -56,13 +56,12 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
   }
 
   const onFinish = (values: any) => {
-
     const PostData = { ...values }
     PostData['isGroupServiceFee'] = values['isGroupServiceFee'].length > 0 ? 1 : 0
     PostData['channelDistAuth'] = values['channelDistAuth'].map((res, index) => {
       return {
-        directAuth: res.indexOf(1) == -1 ? 0 : 1,
-        saleAuth: res.indexOf(0) == -1 ? 0 : 1,
+        directAuth: (res??'').indexOf(1) == -1 ? 0 : 1,
+        saleAuth: (res??'').indexOf(0) == -1 ? 0 : 1,
         level: ranked[index].level,
       }
     })
@@ -94,7 +93,14 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
             <div style={{ display: 'flex', alignItems: 'center' }}>
               预设团建奖金&nbsp; &nbsp;
               <Form.Item name="presetBonus" style={{ marginBottom: '0' }}>
-                <InputNumber min={0} max={100} addonAfter="%" style={{ width: '100px' }} />
+                <InputNumber
+                  formatter={(value) => `$ ${value}`.replace(/^[+]{0,1}(\d+)$/)}
+                  parser={(value) => value.replace(/^[+]{0,1}(\d+)$/)}
+                  min={0}
+                  max={100}
+                  addonAfter="%"
+                  style={{ width: '100px' }}
+                />
               </Form.Item>
               &nbsp; &nbsp;
               <Tooltip
@@ -130,7 +136,7 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     行程结束 &nbsp; &nbsp;且需满&nbsp; &nbsp;
                     <Form.Item name="groupSettleDay" style={{ marginBottom: '0' }}>
-                      <InputNumber addonAfter="天"  />
+                      <InputNumber addonAfter="天" />
                     </Form.Item>
                   </div>{' '}
                   &nbsp; &nbsp;
@@ -148,8 +154,7 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
               <div key={index}>
                 <Form.Item
                   name={['channelDistAuth', index]}
-                  label={`${index + 2}级渠道（${res.name}${index==0?'':'等'}） :佣金权限 :   `}
-                  rules={[{ required: true, message: '请选择佣金权限 !' }]}
+                  label={`${index + 2}级渠道（${res.name}${index == 0 ? '' : '等'}） :佣金权限 :   `}
                 >
                   <Checkbox.Group>
                     <Checkbox value={0}>分销分佣</Checkbox>
@@ -172,7 +177,7 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                   行程结束 &nbsp; &nbsp;且需满&nbsp; &nbsp;
                   <Form.Item name="saleSettleDay" style={{ marginBottom: '0' }}>
-                    <InputNumber addonAfter="天"  />
+                    <InputNumber addonAfter="天" />
                   </Form.Item>
                 </div>{' '}
                 &nbsp; &nbsp;
