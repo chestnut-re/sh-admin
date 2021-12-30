@@ -38,7 +38,6 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
     form
       .validateFields()
       .then((formData) => {
-        console.log(formData, 'fff')
         onSuccess()
         if (mode === 'add') {
           ProductionCommission.add({ ...formData }).then((res) => {

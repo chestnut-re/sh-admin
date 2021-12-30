@@ -48,6 +48,13 @@ const ProductionCommissionListPage: React.FC = () => {
     {
       title: '状态',
       dataIndex: 'state',
+      render: (text: any, record: any) => {
+        if (record.state == 0) {
+          return `未使用`
+        } else if (record.state == 1) {
+          return `使用中`
+        }
+      },
     },
     {
       title: '现关联商品量',
