@@ -1,6 +1,6 @@
 /*
  * @Description: 添加渠道
- * @LastEditTime: 2021-12-30 11:39:12
+ * @LastEditTime: 2021-12-30 16:37:19
  */
 
 import { Form, Input, Modal, Cascader, Switch, message, Button } from 'antd'
@@ -14,6 +14,7 @@ import {
   arrayNameJoin,
   regionsCodeArray,
 } from '@/utils/tree'
+import { formateTime } from '@/utils/timeUtils'
 import ChannelService from '@/service/ChannelService'
 interface Props {
   data: any
@@ -59,6 +60,8 @@ const AddUserDialog: FC<Props> = ({ data, mode, channelId, structure, show = fal
           hotLine: data?.hotLine,
           // state: data?.state == 1 ? true : false,
           isOpenAccount: data?.isOpenAccount == 1 ? true : false,
+          createTime: formateTime(data?.createTime),
+          createUserName: data?.createUserName,
         })
       })
     } else {
@@ -235,13 +238,13 @@ const AddUserDialog: FC<Props> = ({ data, mode, channelId, structure, show = fal
         >
           <Input disabled={mode == 'see'} />
         </Form.Item>
-        {/* <Form.Item
+        <Form.Item
           label="渠道账户"
           name="isOpenAccount"
           style={{ display: (level == 2 && mode != 'add') || (level == 1 && mode == 'add') ? 'flex' : 'none' }}
         >
           <Switch disabled={mode == 'see'} defaultChecked={!!data?.isOpenAccount} />
-        </Form.Item> */}
+        </Form.Item>
         <Form.Item
           label="客服热线"
           name="hotLine"
@@ -263,6 +266,19 @@ const AddUserDialog: FC<Props> = ({ data, mode, channelId, structure, show = fal
         >
           <Input disabled={mode == 'see'} />
         </Form.Item>
+        {mode == 'add' ? (
+          <></>
+        ) : (
+          <>
+            <Form.Item label="创建人" name="createUserName">
+              <Input disabled />
+            </Form.Item>
+            <Form.Item label="创建时间" name="createTime">
+              <Input disabled />
+            </Form.Item>
+          </>
+        )}
+
       </Form>
     </Modal>
   )

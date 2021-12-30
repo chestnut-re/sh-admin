@@ -1,6 +1,6 @@
 /*
  * @Description: 添加分佣方案
- * @LastEditTime: 2021-12-30 15:52:56
+ * @LastEditTime: 2021-12-30 16:35:17
  */
 
 import { Form, Input, Modal, Cascader, message, Row, Col, InputNumber, Button, Tooltip } from 'antd'
@@ -279,6 +279,12 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
                     <Form.Item
                       labelCol={{ offset: 4 }}
                       label="直销分佣比例"
+                      rules={[
+                        {
+                          pattern: /^[1-9]+[0-9]*$/,
+                          message: '只能正整数!',
+                        },
+                      ]}
                       name={['channelPlanList', index, 'directScale']}
                     >
                       <InputNumber onChange={changeInput} disabled={mode == 'see'} max={100} min={0} addonAfter="%" />
@@ -289,6 +295,12 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
                       <Form.Item
                         labelCol={{ offset: 4 }}
                         label="发团服务费"
+                        rules={[
+                          {
+                            pattern: /^[1-9]+[0-9]*$/,
+                            message: '只能正整数!',
+                          },
+                        ]}
                         name={['channelPlanList', index, 'teamPrice']}
                       >
                         <InputNumber onChange={changeInput} disabled={mode == 'see'} max={100} min={0} addonAfter="%" />
@@ -304,6 +316,12 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
                         <Form.Item
                           labelCol={{ offset: 4 }}
                           label={mRes.level + '级渠道分销分佣比例'}
+                          rules={[
+                            {
+                              pattern: /^[1-9]+[0-9]*$/,
+                              message: '只能正整数!',
+                            },
+                          ]}
                           name={['channelPlanList', index, 'saleScalePlan', Ci, 'saleScale']}
                         >
                           <InputNumber
@@ -317,17 +335,29 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
                       </Col>
                     )
                   })}
-                  {/* <Col span={12} style={{ textAlign: 'right' }}>
-                  `  <Form.Item labelCol={{ offset: 4 }} label={'合计'} name={['channelPlanList', index, 'total']}>
+                  <Col span={12} style={{ textAlign: 'right' }}>
+                    `{' '}
+                    <Form.Item
+                      labelCol={{ offset: 4 }}
+                      label={'合计'}
+                      rules={[
+                        {
+                          pattern: /^100$|^(\d|[1-9]\d)$/,
+                          message: '团建奖金，分销服务费和发团服务费合计不可超过100',
+                        },
+                      ]}
+                      name={['channelPlanList', index, 'total']}
+                    >
                       <InputNumber disabled max={100} min={0} addonAfter="%" />
                     </Form.Item>
                     <Tooltip
-                placement="right"
-                title={
-                  '团建奖金以商品分佣所得额为基数，如订单10000，商品分佣10%，团建奖金配置了1%，最终所得团建奖金为10000*10%*1%'
-                }
-              ></Tooltip>`
-                  </Col>   */}
+                      placement="right"
+                      title={
+                        '团建奖金以商品分佣所得额为基数，如订单10000，商品分佣10%，团建奖金配置了1%，最终所得团建奖金为10000*10%*1%'
+                      }
+                    ></Tooltip>
+                    `
+                  </Col>
                 </Row>
               </>
             </div>

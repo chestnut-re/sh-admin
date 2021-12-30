@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道列表
- * @LastEditTime: 2021-12-30 15:18:59
+ * @LastEditTime: 2021-12-30 16:15:38
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
@@ -51,7 +51,7 @@ const ChannelPage: React.FC = () => {
   }
   const columns = [
     {
-      title: 'id',
+      title: '序号',
       render: (_text, _record, index) => `${index + 1}`,
     },
     {

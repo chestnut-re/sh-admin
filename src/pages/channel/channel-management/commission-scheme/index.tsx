@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道分佣列表
- * @LastEditTime: 2021-12-30 15:18:23
+ * @LastEditTime: 2021-12-30 16:15:54
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
@@ -59,7 +59,7 @@ const CommissionSchemePage: React.FC = () => {
   }
   const columns = [
     {
-      title: 'id',
+      title: '序号',
       render: (_text, _record, index) => `${index + 1}`,
     },
     {

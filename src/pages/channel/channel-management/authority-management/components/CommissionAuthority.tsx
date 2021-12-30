@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description:
- * @LastEditTime: 2021-12-30 15:44:25
+ * @LastEditTime: 2021-12-30 16:13:14
  */
 
 import React, { useState, useEffect } from 'react'
@@ -41,12 +41,12 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
       form.setFieldsValue({
         channelDistAuth: listDit,
         isGroupServiceFee: Data?.isGroupServiceFee == 1 ? ['1'] : [],
-        groupSettleDay: Data?.groupSettleDay,
+        groupSettleDay: Data?.groupSettleDay??0,
         groupSettleType: Data?.groupSettleType,
         id: Data?.id,
         presetBonus: Data?.presetBonus,
         saleSettleType: Data?.saleSettleType,
-        saleSettleDay: Data?.saleSettleDay,
+        saleSettleDay: Data?.saleSettleDay??0,
       })
       setIsGroupServiceFee(Data?.isGroupServiceFee)
     }
@@ -60,8 +60,8 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
     PostData['isGroupServiceFee'] = values['isGroupServiceFee'].length > 0 ? 1 : 0
     PostData['channelDistAuth'] = values['channelDistAuth'].map((res, index) => {
       return {
-        directAuth: (res??'').indexOf(1) == -1 ? 0 : 1,
-        saleAuth: (res??'').indexOf(0) == -1 ? 0 : 1,
+        directAuth: (res ?? '').indexOf(1) == -1 ? 0 : 1,
+        saleAuth: (res ?? '').indexOf(0) == -1 ? 0 : 1,
         level: ranked[index].level,
       }
     })
@@ -92,15 +92,17 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
           <Form.Item>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               预设团建奖金&nbsp; &nbsp;
-              <Form.Item name="presetBonus" style={{ marginBottom: '0' }}>
-                <InputNumber
-                  formatter={(value) => `$ ${value}`.replace(/^[+]{0,1}(\d+)$/)}
-                  parser={(value) => value.replace(/^[+]{0,1}(\d+)$/)}
-                  min={0}
-                  max={100}
-                  addonAfter="%"
-                  style={{ width: '100px' }}
-                />
+              <Form.Item
+                name="presetBonus"
+                rules={[
+                  {
+                    pattern: /^[1-9]+[0-9]*$/,
+                    message: '只能正整数!',
+                  },
+                ]}
+                style={{ marginBottom: '0' }}
+              >
+                <InputNumber min={0} max={100} addonAfter="%" style={{ width: '100px' }} />
               </Form.Item>
               &nbsp; &nbsp;
               <Tooltip
@@ -135,7 +137,16 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
                 <Radio value={2}>
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     行程结束 &nbsp; &nbsp;且需满&nbsp; &nbsp;
-                    <Form.Item name="groupSettleDay" style={{ marginBottom: '0' }}>
+                    <Form.Item
+                      name="groupSettleDay"
+                      rules={[
+                        {
+                          pattern: /^[1-9]+[0-9]*$/,
+                          message: '只能正整数!',
+                        },
+                      ]}
+                      style={{ marginBottom: '0' }}
+                    >
                       <InputNumber addonAfter="天" />
                     </Form.Item>
                   </div>{' '}
@@ -176,7 +187,16 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
               <Radio value={3}>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                   行程结束 &nbsp; &nbsp;且需满&nbsp; &nbsp;
-                  <Form.Item name="saleSettleDay" style={{ marginBottom: '0' }}>
+                  <Form.Item
+                    name="saleSettleDay"
+                    rules={[
+                      {
+                        pattern: /^[1-9]+[0-9]*$/,
+                        message: '只能正整数!',
+                      },
+                    ]}
+                    style={{ marginBottom: '0' }}
+                  >
                     <InputNumber addonAfter="天" />
                   </Form.Item>
                 </div>{' '}
