@@ -1,6 +1,6 @@
 /*
  * @Description:
- * @LastEditTime: 2021-12-30 14:55:01
+ * @LastEditTime: 2021-12-30 15:34:07
  */
 import ChannelService from '@/service/ChannelService'
 import { cityDispose } from '@/utils/tree'
@@ -43,7 +43,7 @@ const AreaSelect: React.FC<Props> = ({ value, onChange, channelId }) => {
    * @description: 负责区域
    */
   const getProvinceCity = async () => {
-    ChannelService.closestCity({ adcode: regions }).then((res) => {
+    ChannelService.getProvinceCity({ adcodes: regions }).then((res) => {
       setArea(cityDispose(res?.data, 'areas'))
     })
   }

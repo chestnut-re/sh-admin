@@ -1,6 +1,6 @@
 /*
  * @Description: 添加分佣方案
- * @LastEditTime: 2021-12-30 11:15:06
+ * @LastEditTime: 2021-12-30 15:52:56
  */
 
 import { Form, Input, Modal, Cascader, message, Row, Col, InputNumber, Button, Tooltip } from 'antd'
@@ -78,6 +78,7 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
           form.setFieldsValue({
             teamBonus: resData?.presetBonus,
           })
+          // console.log(dataList,'dataListdataListdataListdataListdataList')
           // setChannelDistAuth(isList)
         })
       } else {
@@ -265,7 +266,7 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
         <Form.Item label="方案名称" name="planName" rules={[{ required: true, message: '请输入' }]}>
           <Input disabled={mode == 'see'} />
         </Form.Item>
-        <Form.Item label="团建奖金" name="teamBonus" >
+        <Form.Item label="团建奖金" name="teamBonus">
           <InputNumber disabled max={100} min={0} addonAfter="%" />
         </Form.Item>
         {(channelDistAuth ?? []).map((res: any, index, array) => {
@@ -297,7 +298,7 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
                     ''
                   )}
 
-                  {array.slice(0, index).map((mRes, Ci) => {
+                  {(res.saleScalePlan ?? []).map((mRes, Ci) => {
                     return (
                       <Col span={12} style={{ textAlign: 'right' }} key={Ci}>
                         <Form.Item
@@ -327,7 +328,6 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
                 }
               ></Tooltip>`
                   </Col>   */}
-              
                 </Row>
               </>
             </div>
