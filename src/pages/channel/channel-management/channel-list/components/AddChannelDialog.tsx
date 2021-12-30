@@ -1,6 +1,6 @@
 /*
  * @Description: 添加渠道
- * @LastEditTime: 2021-12-30 16:38:36
+ * @LastEditTime: 2021-12-30 19:01:10
  */
 
 import { Form, Input, Modal, Cascader, Switch, message, Button } from 'antd'
@@ -114,6 +114,7 @@ const AddUserDialog: FC<Props> = ({ data, mode, channelId, structure, show = fal
             id: data?.id,
           }
           delete putData.structureId
+          delete putData.createTime
           ChannelService.edit(putData).then((res) => {
             if (res.code == 200) {
               message.success('渠道编辑成功')
@@ -134,11 +135,17 @@ const AddUserDialog: FC<Props> = ({ data, mode, channelId, structure, show = fal
     onClose()
   }
   const casOnChange = (data: any[]) => {
-    data.map((items, index, arr) => {
-      if (items.length < 2) {
-        arr[index].push(area.find((res) => res.adcode == items[0]).areas[0].adcode)
+    for (let index = 0; index < data.length; index++) {
+      const element = data[index]
+      if (data[index].length < 2) {
+        const child = area.find((res) => res.adcode == element[0])['areas']
+       const newList= child.map(res=>{
+          return [element,res.adcode]
+        })
+        data.splice(index,1,...newList)
+
       }
-    })
+    }
   }
   const changeStructure = (e, data) => {
     setLevel(data[data.length - 1]?.level)
@@ -240,7 +247,6 @@ const AddUserDialog: FC<Props> = ({ data, mode, channelId, structure, show = fal
         </Form.Item>
         <Form.Item
           label="渠道账户"
-
           style={{ display: (level == 2 && mode != 'add') || (level == 1 && mode == 'add') ? 'flex' : 'none' }}
         >
           渠道账户为手机号
@@ -279,7 +285,6 @@ const AddUserDialog: FC<Props> = ({ data, mode, channelId, structure, show = fal
             </Form.Item>
           </>
         )}
-
       </Form>
     </Modal>
   )

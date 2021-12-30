@@ -1,6 +1,6 @@
 /*
  * @Description: 添加分佣方案
- * @LastEditTime: 2021-12-30 16:35:17
+ * @LastEditTime: 2021-12-30 18:33:38
  */
 
 import { Form, Input, Modal, Cascader, message, Row, Col, InputNumber, Button, Tooltip } from 'antd'
@@ -343,7 +343,7 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
                       rules={[
                         {
                           pattern: /^100$|^(\d|[1-9]\d)$/,
-                          message: '团建奖金，分销服务费和发团服务费合计不可超过100',
+                          message: '每级直销渠道的团建奖金，分佣比例和发团服务费不可超过100%',
                         },
                       ]}
                       name={['channelPlanList', index, 'total']}

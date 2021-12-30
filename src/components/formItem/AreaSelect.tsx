@@ -1,6 +1,6 @@
 /*
  * @Description:
- * @LastEditTime: 2021-12-30 17:50:22
+ * @LastEditTime: 2021-12-30 19:04:01
  */
 import ChannelService from '@/service/ChannelService'
 import { cityDispose } from '@/utils/tree'
@@ -58,15 +58,29 @@ const AreaSelect: React.FC<Props> = ({ defaultValue, onChange, channelId }) => {
       setArea(cityDispose(res?.data, 'areas'))
     })
   }
+  // const casOnChange = (data: any[]) => {
+  //   data.map((items, index, arr) => {
+  //     if (items.length < 2) {
+  //       console.log(area.find((res) => res.adcode == items[0]))
+  //       arr[index].push(area.find((res) => res.adcode == items[0])?.['areas']?.[0]?.['adcode'])
+  //     }
+  //   })
+  //   setValue(data)
+  //   onChange?.(data)
+  // }
   const casOnChange = (data: any[]) => {
-    data.map((items, index, arr) => {
-      if (items.length < 2) {
-        console.log(area.find((res) => res.adcode == items[0]))
-        arr[index].push(area.find((res) => res.adcode == items[0])?.['areas']?.[0]?.['adcode'])
+    for (let index = 0; index < data.length; index++) {
+      const element = data[index]
+      if (data[index].length < 2) {
+        const child = area.find((res) => res.adcode == element[0])['areas']
+       const newList= child.map(res=>{
+          return [element,res.adcode]
+        })
+        data.splice(index,1,...newList)
+
       }
-    })
+    }
     setValue(data)
-    onChange?.(data)
   }
   return (
     <Cascader
