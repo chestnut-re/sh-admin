@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道列表
- * @LastEditTime: 2021-12-30 12:33:20
+ * @LastEditTime: 2021-12-30 13:09:36
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
@@ -205,7 +205,7 @@ const ChannelPage: React.FC = () => {
             dataSource={[...data]}
             pagination={{
               onChange: setPageIndex,
-              showSizeChanger: true,
+              showSizeChanger: false,
               showQuickJumper: true,
               current: pageIndex,
               pageSize: pageSize,

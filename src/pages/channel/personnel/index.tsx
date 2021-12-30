@@ -254,7 +254,7 @@ const PersonnelManagement: React.FC = () => {
             dataSource={data}
             pagination={{
               onChange: onPaginationChange,
-              showSizeChanger: true,
+              showSizeChanger: false,
               showQuickJumper: true,
               pageSize: pageSize,
               total: total,
