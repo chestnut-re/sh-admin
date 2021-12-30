@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道权限
- * @LastEditTime: 2021-12-29 10:03:25
+ * @LastEditTime: 2021-12-30 14:16:31
  */
 import React, { useState, useEffect } from 'react'
 import { Menu, Col, Row, Checkbox, Radio, Input, Tooltip } from 'antd'
@@ -54,6 +54,7 @@ const AuthorityManagement: React.FC = () => {
         setChannelDetail(JSON.stringify(res?.data))
         if (current == 'two') {
           // 佣金权限 找到对应渠道的最深数据
+          // console.log(findIcChild(staticStructure, res?.data.id),'findIcChild(staticStructure, res?.data.id)')
           setRanked(getMaxFloor(findIcChild(staticStructure, res?.data.id)))
         }
       })

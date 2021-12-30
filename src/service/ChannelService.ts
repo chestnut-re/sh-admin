@@ -1,6 +1,6 @@
 /*
  * @Description:渠道管理
- * @LastEditTime: 2021-12-30 13:20:29
+ * @LastEditTime: 2021-12-30 14:55:32
  */
 import axios from '@/request'
 
@@ -31,6 +31,11 @@ export default class ChannelService {
     })
   }
 
+  static closestCity(data={}): Promise<any> {
+    return axios.get(`/api/area/closestCity`,{
+      params:data
+    })
+  }
   static ChannelPlan = {
     /**
      * 商品-分佣方案列表

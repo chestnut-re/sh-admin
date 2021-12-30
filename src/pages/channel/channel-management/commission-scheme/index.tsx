@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道分佣列表
- * @LastEditTime: 2021-12-30 13:49:49
+ * @LastEditTime: 2021-12-30 14:48:03
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
@@ -10,7 +10,7 @@ import AddCommissionSchemeDialog, { DialogMode } from './components/AddCommissio
 
 import ChannelListTree from '../components/ChannelListTree'
 import ChannelService from '@/service/ChannelService'
-import { cityDispose, getMaxFloor } from '@/utils/tree'
+import { cityDispose, getMaxFloor,getTwoTier,getLastTwoTier } from '@/utils/tree'
 import { enumState } from '@/utils/enum'
 import './index.less'
 const CommissionSchemePage: React.FC = () => {
@@ -25,6 +25,7 @@ const CommissionSchemePage: React.FC = () => {
   const [dialogMode, setDialogMode] = useState('add')
   const [structure, setStructure] = useState([])
   const [ranked, setRanked] = useState([])
+  const [structureTwo,setStructureTwo]  = useState([])
   useEffect(() => {
     loadData()
     getStructure()
@@ -38,7 +39,12 @@ const CommissionSchemePage: React.FC = () => {
 
   const getStructure = () => {
     ChannelService.getStructure().then((res) => {
-      setStructure(cityDispose([res?.data], 'children'))
+      console.log([res?.data],'[res?.data]')
+      const lastTwoData = JSON.parse(JSON.stringify(getLastTwoTier([res?.data], 'children')))
+      const twoData = JSON.parse(JSON.stringify(getTwoTier([res?.data], 'children')))
+      console.log(lastTwoData,'lastTwoData')
+      setStructure(lastTwoData)
+      setStructureTwo(twoData)
       setRanked(getMaxFloor([res?.data]).slice(1))
     })
   }
@@ -205,7 +211,7 @@ const CommissionSchemePage: React.FC = () => {
       <AddCommissionSchemeDialog
         data={selectedData}
         mode={dialogMode}
-        structure={structure}
+        structure={structureTwo}
         onSuccess={_onDialogSuccess}
         ranked={ranked}
         show={showDialog}

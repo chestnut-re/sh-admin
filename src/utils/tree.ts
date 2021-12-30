@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /*
  * @Description: 城市数据处理
- * @LastEditTime: 2021-12-28 17:37:14
+ * @LastEditTime: 2021-12-30 14:52:28
  */
 
 /**
@@ -197,7 +197,7 @@ export const getMaxFloor = (treeData: any[] = []) => {
 }
 
 /**
- * @description: 只要 level 2 的 
+ * @description: 只要 level 2 的
  * @param {Array} treeList
  * @param {string} children
  * @return {*}
@@ -205,7 +205,7 @@ export const getMaxFloor = (treeData: any[] = []) => {
 export const getTwoTier = (treeList: Array<any>, children: string): any => {
   let newArray = []
   const each = (treeList, children) => {
-    const treeListData = treeList??[]
+    const treeListData = treeList ?? []
     treeListData.some((item) => {
       if (item['level'] <= 2) {
         if (item['level'] == 2) {
@@ -221,9 +221,28 @@ export const getTwoTier = (treeList: Array<any>, children: string): any => {
     })
   }
   each(treeList, children)
-  console.log(newArray,'newArray')
+  console.log(newArray, 'newArray')
   return newArray
 }
+
+/**
+ * @description: 只要 level 1 和2 的
+ * @param {Array} treeList
+ * @param {string} children
+ * @return {*}
+ */
+export const getLastTwoTier = (treeList: Array<any>, children: string): any => {
+  treeList.forEach((item) => {
+    if (item['level'] != 2) {
+      item = getLastTwoTier(item['children'], children)
+    } else {
+      delete item[children]
+    }
+    return item
+  })
+  return treeList
+}
+
 /**
  * @description:  根据[id,id] 找到对应的数据树
  * @param {Array} city
@@ -242,7 +261,12 @@ export const nwqRouter = (city: Array<any>, arrayId: any[]) => {
   })
   return city
 }
-
+/**
+ * @description: 找到当前id 以及当前下的所有子tree
+ * @param {Array} dataTree
+ * @param {*} id
+ * @return {*}
+ */
 export const findIcChild = (dataTree: Array<any>, id) => {
   let arrayList
   // console.log(dataTree,'dataTree')
@@ -250,8 +274,7 @@ export const findIcChild = (dataTree: Array<any>, id) => {
     const dataList = dataTree ?? []
     dataList.some((item) => {
       if (item['id'] == id) {
-        console.log(dataTree, 'dataTree')
-        arrayList = item['children'] ?? []
+        arrayList = [item]
       } else {
         each(item['children'], id)
       }
