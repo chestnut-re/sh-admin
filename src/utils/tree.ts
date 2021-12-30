@@ -197,7 +197,7 @@ export const getMaxFloor = (treeData: any[] = []) => {
 }
 
 /**
- * @description: 只要 level 2 的 
+ * @description: 只要 level 2 的
  * @param {Array} treeList
  * @param {string} children
  * @return {*}
@@ -205,7 +205,7 @@ export const getMaxFloor = (treeData: any[] = []) => {
 export const getTwoTier = (treeList: Array<any>, children: string): any => {
   let newArray = []
   const each = (treeList, children) => {
-    const treeListData = treeList??[]
+    const treeListData = treeList ?? []
     treeListData.some((item) => {
       if (item['level'] <= 2) {
         if (item['level'] == 2) {
@@ -221,7 +221,7 @@ export const getTwoTier = (treeList: Array<any>, children: string): any => {
     })
   }
   each(treeList, children)
-  console.log(newArray,'newArray')
+  console.log(newArray, 'newArray')
   return newArray
 }
 /**
@@ -250,8 +250,7 @@ export const findIcChild = (dataTree: Array<any>, id) => {
     const dataList = dataTree ?? []
     dataList.some((item) => {
       if (item['id'] == id) {
-        console.log(dataTree, 'dataTree')
-        arrayList = item['children'] ?? []
+        arrayList = [item]
       } else {
         each(item['children'], id)
       }
