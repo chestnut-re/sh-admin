@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道列表
- * @LastEditTime: 2021-12-30 21:29:13
+ * @LastEditTime: 2021-12-30 21:44:34
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
@@ -83,7 +83,7 @@ const ChannelPage: React.FC = () => {
         `${
           !analysisName(structure, recode?.id, 'children', 'id', 'pid')
             ? recode?.name
-            : analysisName(structure, recode?.id, 'children', 'id', 'pid')
+            : analysisName(structure, recode?.id, 'children', 'id', 'pid').split('-')?.[0]??''
         }`,
     },
     // {
