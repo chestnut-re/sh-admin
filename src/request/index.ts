@@ -27,7 +27,7 @@ const instance = axios.create({
       try {
         return JSONbigString.parse(data)
       } catch (error) {
-        console.log(error);
+        console.log(error)
         return data
       }
     },
@@ -62,7 +62,13 @@ instance.interceptors.response.use(
       if (res.data.code !== '200') {
         message.error(res.data.msg)
       }
-      if (res.data.code === '010011' || res.data.code === '000003') {
+      if (
+        res.data.code === '010011' ||
+        res.data.code === '000003' ||
+        res.data.code === '010010' ||
+        res.data.code === '010014' ||
+        res.data.code === '010012'
+      ) {
         // 登录态失效
         userLoginOut()
         return
