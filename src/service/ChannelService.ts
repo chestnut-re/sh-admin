@@ -1,6 +1,6 @@
 /*
  * @Description:渠道管理
- * @LastEditTime: 2021-12-28 18:25:38
+ * @LastEditTime: 2021-12-30 13:20:29
  */
 import axios from '@/request'
 
@@ -25,8 +25,10 @@ export default class ChannelService {
   static edit(data): Promise<any> {
     return axios.put('/api/market/channel/update', data)
   }
-  static getProvinceCity(): Promise<any> {
-    return axios.get(`/api/area/provinceCity`)
+  static getProvinceCity(data={}): Promise<any> {
+    return axios.get(`/api/area/provinceCity`,{
+      params:data
+    })
   }
 
   static ChannelPlan = {

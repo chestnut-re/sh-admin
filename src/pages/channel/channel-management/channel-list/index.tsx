@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道列表
- * @LastEditTime: 2021-12-30 13:09:36
+ * @LastEditTime: 2021-12-30 13:49:43
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
@@ -17,7 +17,7 @@ const ChannelPage: React.FC = () => {
   const [form] = Form.useForm()
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
-  const [pageSize] = useState(10)
+  const [pageSize] = useState(20)
   const [total, setTotal] = useState()
   const [showDialog, setShowDialog] = useState(false)
   const [selectedData, setSelectedData] = useState(null)

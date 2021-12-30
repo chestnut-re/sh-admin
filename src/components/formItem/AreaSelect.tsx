@@ -1,6 +1,6 @@
 /*
- * @Description: 
- * @LastEditTime: 2021-12-30 12:00:39
+ * @Description:
+ * @LastEditTime: 2021-12-30 13:26:39
  */
 import ChannelService from '@/service/ChannelService'
 import { cityDispose } from '@/utils/tree'
@@ -9,29 +9,41 @@ import React, { useEffect, useState } from 'react'
 
 interface Props {
   value?: string
-  channelId:any
+  channelId: any
   onChange?: (value: string) => void
 }
 
 /**
  * 城市选择
  */
-const AreaSelect: React.FC<Props> = ({ value, onChange }) => {
+const AreaSelect: React.FC<Props> = ({ value, onChange, channelId }) => {
   const [area, setArea] = useState<Array<any>>([])
-
+  const [regions, setRegions] = useState('')
   useEffect(() => {
     getProvinceCity()
-  }, [])
+    if(channelId){
+
+      getChannelInfo()
+    }
+  }, [channelId])
 
   useEffect(() => {
     onChange?.(value ?? '')
   }, [value])
+  const getChannelInfo = () => {
+    ChannelService.get(channelId).then((res) => {
+      setRegions(res?.data?.regions)
+    })
+  }
 
+  useEffect(() => {
+    getProvinceCity()
+  }, [regions])
   /**
    * @description: 负责区域
    */
   const getProvinceCity = async () => {
-    ChannelService.getProvinceCity().then((res) => {
+    ChannelService.getProvinceCity({ regions: regions }).then((res) => {
       setArea(cityDispose(res?.data, 'areas'))
     })
   }
@@ -39,9 +51,9 @@ const AreaSelect: React.FC<Props> = ({ value, onChange }) => {
   const casOnChange = (data: any[]) => {
     console.log('data', data)
     const newD = data.map((item, index, arr) => {
-      return `${item[item.length-1]}`
+      return `${item[item.length - 1]}`
     })
-    console.log(newD);
+    console.log(newD)
     onChange?.(newD.toString())
   }
 
