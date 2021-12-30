@@ -1,6 +1,6 @@
 /*
  * @Description: 添加分佣方案
- * @LastEditTime: 2021-12-30 10:18:32
+ * @LastEditTime: 2021-12-30 11:15:06
  */
 
 import { Form, Input, Modal, Cascader, message, Row, Col, InputNumber, Button, Tooltip } from 'antd'
@@ -265,8 +265,8 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
         <Form.Item label="方案名称" name="planName" rules={[{ required: true, message: '请输入' }]}>
           <Input disabled={mode == 'see'} />
         </Form.Item>
-        <Form.Item label="团建奖金" name="teamBonus" rules={[{ required: true, message: '请输入' }]}>
-          <InputNumber disabled={mode == 'see'} max={100} min={0} addonAfter="%" />
+        <Form.Item label="团建奖金" name="teamBonus" >
+          <InputNumber disabled max={100} min={0} addonAfter="%" />
         </Form.Item>
         {(channelDistAuth ?? []).map((res: any, index, array) => {
           return (
