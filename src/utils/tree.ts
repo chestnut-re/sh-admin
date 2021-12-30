@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /*
  * @Description: 城市数据处理
- * @LastEditTime: 2021-12-28 17:37:14
+ * @LastEditTime: 2021-12-30 14:52:28
  */
 
 /**
@@ -224,6 +224,25 @@ export const getTwoTier = (treeList: Array<any>, children: string): any => {
   console.log(newArray, 'newArray')
   return newArray
 }
+
+/**
+ * @description: 只要 level 1 和2 的
+ * @param {Array} treeList
+ * @param {string} children
+ * @return {*}
+ */
+export const getLastTwoTier = (treeList: Array<any>, children: string): any => {
+  treeList.forEach((item) => {
+    if (item['level'] != 2) {
+      item = getLastTwoTier(item['children'], children)
+    } else {
+      delete item[children]
+    }
+    return item
+  })
+  return treeList
+}
+
 /**
  * @description:  根据[id,id] 找到对应的数据树
  * @param {Array} city
@@ -242,7 +261,12 @@ export const nwqRouter = (city: Array<any>, arrayId: any[]) => {
   })
   return city
 }
-
+/**
+ * @description: 找到当前id 以及当前下的所有子tree
+ * @param {Array} dataTree
+ * @param {*} id
+ * @return {*}
+ */
 export const findIcChild = (dataTree: Array<any>, id) => {
   let arrayList
   // console.log(dataTree,'dataTree')
