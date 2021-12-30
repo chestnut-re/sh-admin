@@ -112,17 +112,17 @@ const PersonnelManagement: React.FC = () => {
       dataIndex: 'createChannel',
       render: (text: any, record: any) => `${createChannel[record.createChannel]}`,
     },
-    {
-      title: '状态',
-      dataIndex: 'state',
-      render: (text: any, record: any) => {
-        if (record.state == 0) {
-          return `禁用`
-        } else {
-          return `正常`
-        }
-      },
-    },
+    // {
+    //   title: '状态',
+    //   dataIndex: 'state',
+    //   render: (text: any, record: any) => {
+    //     if (record.state == 0) {
+    //       return `禁用`
+    //     } else {
+    //       return `正常`
+    //     }
+    //   },
+    // },
     {
       title: '操作',
       render: (text: any, record: any) => (
@@ -217,12 +217,12 @@ const PersonnelManagement: React.FC = () => {
                 <Col span={5}>
                   <InputTemp name="keyword" placeholder="渠道名称/责任区域" />
                 </Col>
-                <Col span={1} className="table-from-label">
+                {/* <Col span={1} className="table-from-label">
                   状态
                 </Col>
                 <Col span={3}>
                   <PersonalState name="state" />
-                </Col>
+                </Col> */}
                 <Col span={2} className="table-from-label">
                   人员类型
                 </Col>

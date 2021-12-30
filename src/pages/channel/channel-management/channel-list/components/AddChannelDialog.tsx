@@ -1,6 +1,6 @@
 /*
  * @Description: 添加渠道
- * @LastEditTime: 2021-12-30 20:51:01
+ * @LastEditTime: 2021-12-30 21:12:31
  */
 
 import { Form, Input, Modal, Cascader, Switch, message, Button } from 'antd'
@@ -84,6 +84,21 @@ const AddUserDialog: FC<Props> = ({ data, mode, channelId, structure, show = fal
       setArea(cityDispose(res?.data, 'areas'))
       getDetail(data, res?.data)
     })
+  }
+
+  const tagRender = (labels, selectedOptions) => {
+    console.log()
+    const dataAreas = area.find((res) => res.adcode == labels.value)
+    if (!dataAreas) {
+      return <>{labels.label}</>
+    } else {
+      const valueData = dataAreas.areas.map((resC) => {
+        console.log(resC, 'resC')
+        return resC.name
+      })
+      return <>{valueData.join(',')}</>
+    }
+    // console.log(labels,selectedOptions,'-----------',area)
   }
 
   /**提交数据 */
@@ -230,6 +245,7 @@ const AddUserDialog: FC<Props> = ({ data, mode, channelId, structure, show = fal
             options={area}
             onChange={casOnChange}
             multiple
+            tagRender={tagRender}
             disabled={mode == 'see'}
             fieldNames={{ label: 'name', value: 'adcode', children: 'areas' }}
           />
