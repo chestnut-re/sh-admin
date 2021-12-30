@@ -81,6 +81,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
     form.setFieldsValue({
       planName: data?.planName,
       saleScale: data?.saleScale,
+      state: true,
       channelPlanList: data?.channelPlanList.map((item, index) => {
         item.key = `${Date.now()}-${index}`
         return item
@@ -179,7 +180,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
           <Select allowClear>
             {Object.keys(personType).map((item) => {
               return (
-                <Select.Option key={item} value={item}>
+                <Select.Option key={item} value={item} disabled={item == '0'}>
                   {personType[item]}
                 </Select.Option>
               )
@@ -189,7 +190,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
         <Form.Item name="roleId" label="角色名称" rules={[{ required: false }]}>
           <RoleSelect channelId={channelId} onChange={_changeRoleSelect} value={form.getFieldValue('roleId')} />
         </Form.Item>
-        <Form.Item name="state" label="是否启用" rules={[{ required: true }]}>
+        <Form.Item name="state"  valuePropName="checked" label="是否启用"  rules={[{ required: true }]}>
           <Switch />
         </Form.Item>
       </Form>
