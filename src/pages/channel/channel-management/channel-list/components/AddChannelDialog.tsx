@@ -1,6 +1,6 @@
 /*
  * @Description: 添加渠道
- * @LastEditTime: 2021-12-29 14:05:55
+ * @LastEditTime: 2021-12-30 10:07:40
  */
 
 import { Form, Input, Modal, Cascader, Switch, message, Button } from 'antd'
@@ -64,7 +64,7 @@ const AddUserDialog: FC<Props> = ({ data, mode, channelId, structure, show = fal
     } else {
       form.resetFields()
 
-      console.log(regionsCodeArray(structure, channelId, 'children', 'id', 'pid'))
+      // console.log(regionsCodeArray(structure, channelId, 'children', 'id', 'pid'))
 
       form.setFieldsValue({
         // state: true,
