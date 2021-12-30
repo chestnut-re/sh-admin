@@ -38,19 +38,19 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
     form
       .validateFields()
       .then((formData) => {
-        console.log(formData)
+        console.log(formData, 'fff')
         onSuccess()
         if (mode === 'add') {
-          // ProductionCommission.add({ ...formData }).then((res) => {
-          //   if (res.code === HttpCode.success) {
-          //   }
-          // })
+          ProductionCommission.add({ ...formData }).then((res) => {
+            if (res.code === HttpCode.success) {
+            }
+          })
         } else {
-          // ProductionCommission.edit({ ...formData, id: data.id }).then((res) => {
-          //   if (res.code === HttpCode.success) {
-          //     onSuccess()
-          //   }
-          // })
+          ProductionCommission.edit({ ...formData, id: data.id }).then((res) => {
+            if (res.code === HttpCode.success) {
+              onSuccess()
+            }
+          })
         }
       })
       .catch((e) => {
