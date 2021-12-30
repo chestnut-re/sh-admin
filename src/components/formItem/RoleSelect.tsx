@@ -1,5 +1,5 @@
 /*
- * @LastEditTime: 2021-12-29 19:03:07
+ * @LastEditTime: 2021-12-30 10:44:18
  */
 import { PersonService } from '@/service/PersonService'
 import { Select } from 'antd'
@@ -17,7 +17,7 @@ const RoleSelect: React.FC<Props> = ({ value, onChange, channelId }) => {
   const [roleNames, setRoleName] = useState<any[]>([])
   useEffect(() => {
     console.log(',channelId')
-    PersonService.getRoles({ channelId: channelId }).then((res) => {
+    PersonService.getRoles({ channelId: channelId,state:0 }).then((res) => {
       setRoleName(
         res.data.map((item) => {
           return {
