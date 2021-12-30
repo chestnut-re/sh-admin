@@ -39,7 +39,7 @@ const PersonnelManagement: React.FC = () => {
     console.log(params)
     let newChannelId = channelId
     if (!newChannelId) {
-      newChannelId = structure[0].id // 设置默认选中 channelId
+      newChannelId = structure[0].level==1? structure[0].children[0].id:structure[0].id// 设置默认选中 channelId
     }
     PersonService.list({ current: pageIndex, pageSize: pageSize, ...params, channelId: newChannelId }).then((res) => {
       setData(res.data?.records)
@@ -203,7 +203,7 @@ const PersonnelManagement: React.FC = () => {
           {structure.length > 0 ? (
             <ChannelListTree
               structure={structure}
-              defaultSelectedKeys={structure[0]?.id ?? ''}
+              defaultSelectedKeys={structure[0].level==1? structure[0].children[0].id:structure[0].id}
               onSelectStructure={_onSelectStructure}
             />
           ) : (
