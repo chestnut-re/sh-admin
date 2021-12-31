@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道分佣列表
- * @LastEditTime: 2021-12-30 16:15:54
+ * @LastEditTime: 2021-12-31 10:32:59
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
@@ -81,7 +81,7 @@ const CommissionSchemePage: React.FC = () => {
     },
     {
       title: '创建日期',
-      dataIndex: 'regionsName',
+      dataIndex: 'createTime',
     },
 
     {
