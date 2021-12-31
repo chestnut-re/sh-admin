@@ -215,7 +215,7 @@ export const AccountType: FC<any> = ({ name, ...props }) => {
     <Form.Item name={name}>
       <Select allowClear {...props}>
         <Select.Option value={''}>全部</Select.Option>
-        <Select.Option value={0}>渠道账户</Select.Option>
+        {/* <Select.Option value={0}>渠道账户</Select.Option> */}
         <Select.Option value={1}>内部渠道</Select.Option>
         <Select.Option value={2}>外部渠道</Select.Option>
       </Select>

@@ -185,7 +185,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
           <Select allowClear>
             {Object.keys(personType).map((item) => {
               return (
-                <Select.Option key={item} value={item} disabled={item == '0'}>
+                <Select.Option key={item} value={item} >
                   {personType[item]}
                 </Select.Option>
               )
