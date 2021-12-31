@@ -173,7 +173,9 @@ const AddUserDialog: FC<Props> = ({ data, mode, channelId, structure, show = fal
     ChannelService.get(e[e.length - 1]).then((res) => {
       // setRegions(res?.data?.regions)
       // getProvinceCity()
-      ChannelService.getProvinceCity({ adcodes: res?.data?.regions }).then((res) => {
+
+      // { adcodes: res?.data?.regions }, 先去掉
+      ChannelService.getProvinceCity().then((res) => {
         setArea(cityDispose(res?.data, 'areas'))
         setValue([])
       })
