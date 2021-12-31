@@ -1,6 +1,6 @@
 /*
  * @Description: 添加渠道
- * @LastEditTime: 2021-12-30 21:12:31
+ * @LastEditTime: 2021-12-31 10:22:41
  */
 
 import { Form, Input, Modal, Cascader, Switch, message, Button } from 'antd'
@@ -98,7 +98,6 @@ const AddUserDialog: FC<Props> = ({ data, mode, channelId, structure, show = fal
       })
       return <>{valueData.join(',')}</>
     }
-    // console.log(labels,selectedOptions,'-----------',area)
   }
 
   /**提交数据 */
@@ -170,16 +169,16 @@ const AddUserDialog: FC<Props> = ({ data, mode, channelId, structure, show = fal
       level: data[data.length - 1]?.level,
     })
     // 暂时堆积 后期
-    ChannelService.get(e[e.length - 1]).then((res) => {
-      // setRegions(res?.data?.regions)
-      // getProvinceCity()
+    // ChannelService.get(e[e.length - 1]).then((res) => {
+    //   // setRegions(res?.data?.regions)
+    //   // getProvinceCity()
 
-      // { adcodes: res?.data?.regions }, 先去掉
-      ChannelService.getProvinceCity().then((res) => {
-        setArea(cityDispose(res?.data, 'areas'))
-        setValue([])
-      })
-    })
+    //   // { adcodes: res?.data?.regions }, 先去掉
+    //   ChannelService.getProvinceCity().then((res) => {
+    //     setArea(cityDispose(res?.data, 'areas'))
+    //     setValue([])
+    //   })
+    // })
   }
 
   const type = { add: '创建渠道', edit: '编辑渠道', see: '查看渠道' }
@@ -233,7 +232,7 @@ const AddUserDialog: FC<Props> = ({ data, mode, channelId, structure, show = fal
           )}
         </Form.Item>
         <Form.Item
-          label="分中心名称"
+          label="渠道名称"
           name="name"
           rules={[
             { required: true, message: '请输入' },
