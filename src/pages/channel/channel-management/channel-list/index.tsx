@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道列表
- * @LastEditTime: 2021-12-30 21:44:34
+ * @LastEditTime: 2021-12-31 14:42:17
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
 import { InputTemp } from '@/components/filter/formItem'
 import AddChannelDialog, { DialogMode } from './components/AddChannelDialog'
-import { analysisName } from '@/utils/tree'
+import { analysisNameDuo } from '@/utils/tree'
 import ChannelListTree from '../components/ChannelListTree'
 import ChannelService from '@/service/ChannelService'
 import { cityDispose } from '@/utils/tree'
@@ -73,18 +73,16 @@ const ChannelPage: React.FC = () => {
     {
       title: '责任区域',
       dataIndex: 'regionsName',
-      render: (_text, record, index) => `${(record?.regionsName??'').substring(0,40)}`
-      
+      render: (_text, record, index) => `${(record?.regionsName ?? '').substring(0, 40)}`,
     },
     {
       title: '归属',
       dataIndex: 'title',
-      render: (text, recode) =>
-        `${
-          !analysisName(structure, recode?.id, 'children', 'id', 'pid')
-            ? recode?.name
-            : analysisName(structure, recode?.id, 'children', 'id', 'pid').split('-')?.[0]??''
-        }`,
+      render: (text, recode) => {
+        const nameJoin = analysisNameDuo(structure, recode?.id, 'children', 'id', 'pid')
+        console.log(nameJoin,'nameJoinnameJoinnameJoin')
+        return `${!nameJoin ? recode?.name : nameJoin?? ''}`
+      },
     },
     // {
     //   title: '状态',
