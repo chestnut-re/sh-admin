@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /*
  * @Description: 城市数据处理
- * @LastEditTime: 2021-12-30 14:52:28
+ * @LastEditTime: 2021-12-31 15:01:18
  */
 
 /**
@@ -38,7 +38,7 @@ export const shellArrayDuo = (arr: any[], id: string, areas = 'areas', adcode = 
       const item = nowArr[i]
 
       if (item[adcode] == id) {
-        temp.push(item)
+        temp.unshift(item)
         callback(arr, item[pid])
         break
       } else {
@@ -79,7 +79,7 @@ export const shellArray = (oldArray: Array<any>, isId: string, areas = 'areas', 
   return newArray
 }
 /**
- * @description:  获取城市名字 列表展示 省-市
+ * @description:  渠道名称 总部 到自身上一级  	集团-分中心1-区域代理1-12
  * @param {Array} oldArray
  * @param {string} isId
  * @return {string}
@@ -91,14 +91,19 @@ export const analysisNameDuo = (
   adcode = 'adcode',
   pid = 'adcode'
 ): string => {
-  return shellArrayDuo(oldArray, isId, areas, adcode, pid)
-    .map((res: { name: any }) => {
-      return res?.name
-    })
-    .join('-')
+  const returnData = shellArrayDuo(oldArray, isId, areas, adcode, pid).map((res: { name: any }) => {
+    return res?.name
+  })
+  // returnData.splice(returnData.length - 1, 1)
+  return returnData.join('-')
 }
 
 export const analysisName = (oldArray: Array<any>, isId: string, areas = 'areas', adcode = 'adcode'): string => {
+  console.log(
+    shellArray(oldArray, isId, areas, adcode).map((res: { name: any }) => {
+      return res?.name
+    })
+  )
   return shellArray(oldArray, isId, areas, adcode)
     .map((res: { name: any }) => {
       return res?.name

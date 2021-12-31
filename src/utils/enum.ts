@@ -1,6 +1,6 @@
 /*
  * @Description: 字典
- * @LastEditTime: 2021-12-26 16:03:33
+ * @LastEditTime: 2021-12-31 13:52:49
  */
 
 export const status = {
@@ -55,7 +55,7 @@ export const personState = {
  * 人员类型
  */
 export const personType = {
-  0: '渠道账户',
+  // 0: '渠道账户',
   1: '内部渠道',
   2: '外部渠道',
 }
