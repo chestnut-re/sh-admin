@@ -1,17 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道列表
- * @LastEditTime: 2021-12-31 14:42:17
+ * @LastEditTime: 2021-12-31 15:02:51
  */
 import React, { useState, useEffect } from 'react'
-import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
+import { Form, Col, Row, Button, Table, Space } from 'antd'
 import { InputTemp } from '@/components/filter/formItem'
 import AddChannelDialog, { DialogMode } from './components/AddChannelDialog'
-import { analysisNameDuo } from '@/utils/tree'
+import { analysisName } from '@/utils/newTree'
 import ChannelListTree from '../components/ChannelListTree'
 import ChannelService from '@/service/ChannelService'
 import { cityDispose } from '@/utils/tree'
-import { enumState } from '@/utils/enum'
+// import { enumState } from '@/utils/enum'
 import './index.less'
 const ChannelPage: React.FC = () => {
   const [form] = Form.useForm()
@@ -79,9 +79,9 @@ const ChannelPage: React.FC = () => {
       title: '归属',
       dataIndex: 'title',
       render: (text, recode) => {
-        const nameJoin = analysisNameDuo(structure, recode?.id, 'children', 'id', 'pid')
-        console.log(nameJoin,'nameJoinnameJoinnameJoin')
-        return `${!nameJoin ? recode?.name : nameJoin?? ''}`
+        const nameJoin = analysisName(structure, recode?.id, 'children', 'id', 'pid')
+        console.log(nameJoin, 'nameJoinnameJoinnameJoin')
+        return `${!nameJoin ? recode?.name : nameJoin ?? ''}`
       },
     },
     // {

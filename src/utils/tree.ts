@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /*
  * @Description: 城市数据处理
- * @LastEditTime: 2021-12-31 14:53:39
+ * @LastEditTime: 2021-12-31 15:01:18
  */
 
 /**
@@ -79,7 +79,7 @@ export const shellArray = (oldArray: Array<any>, isId: string, areas = 'areas', 
   return newArray
 }
 /**
- * @description:  获取城市名字 列表展示 省-市
+ * @description:  渠道名称 总部 到自身上一级  	集团-分中心1-区域代理1-12
  * @param {Array} oldArray
  * @param {string} isId
  * @return {string}
@@ -94,7 +94,7 @@ export const analysisNameDuo = (
   const returnData = shellArrayDuo(oldArray, isId, areas, adcode, pid).map((res: { name: any }) => {
     return res?.name
   })
-  returnData.splice(returnData.length - 1, 1)
+  // returnData.splice(returnData.length - 1, 1)
   return returnData.join('-')
 }
 
