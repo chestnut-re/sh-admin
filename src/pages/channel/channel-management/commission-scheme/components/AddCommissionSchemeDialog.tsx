@@ -1,6 +1,6 @@
 /*
  * @Description: 添加分佣方案
- * @LastEditTime: 2021-12-30 18:33:38
+ * @LastEditTime: 2021-12-31 15:56:29
  */
 
 import { Form, Input, Modal, Cascader, message, Row, Col, InputNumber, Button, Tooltip } from 'antd'
@@ -62,7 +62,12 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
           const mapData = res.data?.channelDistAuth ?? []
           const dataList = mapData
             .map((res, index, array) => {
-              const mapList = array.slice(0, index) ?? []
+              let mapList
+              if(res['level']=='2'){
+                mapList = array.slice(0, index+1) ?? []
+              }else{
+                mapList = array.slice(0, index) ?? []
+              }
               res.saleScalePlan = mapList.filter((mRes, Ci) => {
                 if (mRes.saleAuth == 1) {
                   return res
