@@ -18,9 +18,15 @@ export const SubCenterSelect: FC<Props> = ({ ...props }) => {
   const { onChange, value, mode } = props
   const [subCenters, setSubCenters] = useState<any[]>([])
   const [projects, setProject] = useState<any[]>([{ key: `${Date.now()}` }])
+  const [disabled, setDisabled] = useState(false)
 
   useEffect(() => {
     if (value) {
+      if (mode == 'add') {
+        setDisabled(false)
+      } else if (mode == 'edit') {
+        setDisabled(true)
+      }
       console.log(value)
       setProject(value)
     }
@@ -140,13 +146,14 @@ export const SubCenterSelect: FC<Props> = ({ ...props }) => {
                   })}
                 </Select>
               )}
-              {/* {index === projects.length - 1 && (
-                <Button type="primary" onClick={_addNewItem}>
+              {index === projects.length - 1 && (
+                <Button type="primary" onClick={_addNewItem} disabled={disabled}>
                   添加
                 </Button>
               )}
               {index !== 0 && (
                 <Button
+                  disabled={disabled}
                   type="primary"
                   onClick={() => {
                     _delItem(index)
@@ -154,7 +161,7 @@ export const SubCenterSelect: FC<Props> = ({ ...props }) => {
                 >
                   删除
                 </Button>
-              )} */}
+              )}
             </Space>
           </div>
         )

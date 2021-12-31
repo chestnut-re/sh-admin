@@ -20,6 +20,8 @@ interface Props {
  */
 const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) => {
   const [form] = Form.useForm()
+  const [day, setDay] = useState('')
+  const [type, setType] = useState('')
 
   useEffect(() => {
     form.setFieldsValue({
@@ -38,9 +40,10 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
     form
       .validateFields()
       .then((formData) => {
+        console.log(formData, day, type)
         onSuccess()
         if (mode === 'add') {
-          ProductionCommission.add({ ...formData }).then((res) => {
+          ProductionCommission.add({ ...formData, saleSettleDay: day, saleSettleType: type }).then((res) => {
             if (res.code === HttpCode.success) {
             }
           })
@@ -88,18 +91,33 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
             <InputNumber style={{ width: '100px' }} addonAfter="%" type="number" readOnly />
           )}
         </Form.Item>
-        <Form.Item label="直销/分销结算要求" name="saleSettleType">
-          <Radio.Group>
-            <Radio value={1}>核销</Radio>
-            <Radio value={2}>行程结束</Radio>
-          </Radio.Group>
-          <span>
-            且需满
-            {/* <Form.Item name="groupSettleDay" style={{ marginBottom: '0', display: 'inline-block' }}> */}
-            <InputNumber value={data?.saleSettleDay} addonAfter="天" style={{ width: 100 }} />
-            {/* </Form.Item> */}
-          </span>
-        </Form.Item>
+        {mode == 'add' ? (
+          <Form.Item label="直销/分销结算要求">
+            <Radio.Group onChange={(e) => setType(e.target.value)}>
+              <Radio value={1}>核销</Radio>
+              <Radio value={2}>行程结束</Radio>
+            </Radio.Group>
+            <span>
+              且需满
+              {/* <Form.Item name="groupSettleDay" style={{ marginBottom: '0', display: 'inline-block' }}> */}
+              <InputNumber value={day} onChange={(value) => setDay(value)} addonAfter="天" style={{ width: 100 }} />
+              {/* </Form.Item> */}
+            </span>
+          </Form.Item>
+        ) : (
+          <Form.Item label="直销/分销结算要求" name="saleSettleType">
+            <Radio.Group disabled value={data?.saleSettleType}>
+              <Radio value={1}>核销</Radio>
+              <Radio value={2}>行程结束</Radio>
+            </Radio.Group>
+            <span>
+              且需满
+              {/* <Form.Item name="groupSettleDay" style={{ marginBottom: '0', display: 'inline-block' }}> */}
+              <InputNumber value={data?.saleSettleDay} addonAfter="天" style={{ width: 100 }} />
+              {/* </Form.Item> */}
+            </span>
+          </Form.Item>
+        )}
       </Form>
     </Modal>
   )
