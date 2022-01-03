@@ -42,6 +42,14 @@ export default [
                   hide: true,
                 },
                 {
+                  name: '商品详情',
+                  id: 116,
+                  type: 'menu',
+                  componentPath: '/production/detail',
+                  path: '/production/detail',
+                  hide: true,
+                },
+                {
                   name: '商品审核',
                   id: 113,
                   type: 'menu',

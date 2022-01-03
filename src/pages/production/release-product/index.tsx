@@ -179,7 +179,7 @@ const ReleaseProductPage: React.FC = () => {
       setCurrent(current + 1)
     } else if (current == 1) {
       // itineraryRef.current.next()
-      ProductionService.saveToAudit(productionStore.data).then((res) => {
+      ProductionService.save(productionStore.data).then((res) => {
         console.log(res)
         if (res.code === '200') {
           message.success('成功')
@@ -226,7 +226,7 @@ const ReleaseProductPage: React.FC = () => {
               </div>
             )}
             <div onClick={() => next()} className="nextBtn">
-              {current === 1 ? '提交审核' : '下一步'}
+              {current === 1 ? '提交至待发布' : '下一步'}
             </div>
           </div>
 

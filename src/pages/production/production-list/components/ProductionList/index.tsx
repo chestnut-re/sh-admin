@@ -153,7 +153,7 @@ const ProductionListPage: React.FC<Props> = observer(({ type }) => {
       render: (text: any, record: any) => (
         <Space size="middle">
           <Button>查看</Button>
-          <Button>编辑</Button>
+          <Button>配置详情</Button>
         </Space>
       ),
     },

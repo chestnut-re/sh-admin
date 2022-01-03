@@ -65,6 +65,7 @@ class ProductionData {
       addTravelOneDay: action,
       addTravelDetail: action,
       setDepartureCity: action,
+      setGoodsPricesTime: action,
     })
   }
 
@@ -94,6 +95,12 @@ class ProductionData {
   setTravelMode(travelMode: number) {
     console.log(`setTravelMode ${travelMode}`)
     this.data.travelMode = travelMode
+    // 重置所有商品时间
+    this.data.goodsPrices = this.data.goodsPrices.map((item) => {
+      item.startDate = item.endDate
+      return item
+    })
+    // end
     console.log(this.data)
   }
 
@@ -186,6 +193,21 @@ class ProductionData {
   setDepartureCity(departureCity, departureCityAdcode) {
     this.data.departureCity = departureCity
     this.data.departureCityAdcode = departureCityAdcode
+  }
+
+  /**设置商品时间 */
+  setGoodsPricesTime(activeKey, value) {
+    const goodsPrice = this.data.goodsPrices.find((i) => i.key === activeKey)
+    console.log(value)
+    if (value instanceof Array) {
+      goodsPrice.startDate = value[0]
+      goodsPrice.endDate = value[1]
+    } else {
+      goodsPrice.startDate = value
+      goodsPrice.endDate = value
+    }
+
+    this.data.goodsPrices = [...this.data.goodsPrices]
   }
 
   /**保存到草稿箱子 */
