@@ -4,6 +4,7 @@ import { InputTemp, SelectTemp } from '@/components/filter/formItem'
 import { ProductionAuditService } from '@/service/ProductionAuditService'
 import TimeColumn from '@/components/tableColumn/TimeColumn'
 import { ProductionReleaseService } from '@/service/ProductionReleaseService'
+import { useHistory } from 'react-router-dom'
 
 interface Props {
   /**发布，上架 */
@@ -14,6 +15,7 @@ interface Props {
  * 商品管理-商品审核
  */
 const AuditScreen: React.FC<Props> = ({ type }) => {
+  const history = useHistory()
   const [form] = Form.useForm()
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
@@ -29,12 +31,12 @@ const AuditScreen: React.FC<Props> = ({ type }) => {
   const loadData = (pageIndex) => {
     const params = form.getFieldsValue()
     console.log(params)
-    if(type === 'publish'){
+    if (type === 'publish') {
       ProductionAuditService.list({ current: pageIndex, size: pageSize, checkState, ...params }).then((res) => {
         setData(res.data.records)
         setTotal(res.data.total)
       })
-    }else{
+    } else {
       ProductionReleaseService.list({ current: pageIndex, size: pageSize, checkState, ...params }).then((res) => {
         setData(res.data.records)
         setTotal(res.data.total)
@@ -87,8 +89,26 @@ const AuditScreen: React.FC<Props> = ({ type }) => {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button>查看</Button>
-          <Button>审核</Button>
+          <Button
+            onClick={() => {
+              console.log(record)
+              history.push(
+                `/production/production-detail?channelGoodsId=${record.channelGoodsId}&goodsId=${record.goodsId}`
+              )
+            }}
+          >
+            查看
+          </Button>
+          <Button
+            onClick={() => {
+              console.log(record)
+              history.push(
+                `/production/production-detail?channelGoodsId=${record.channelGoodsId}&goodsId=${record.goodsId}`
+              )
+            }}
+          >
+            审核
+          </Button>
         </Space>
       ),
     },
