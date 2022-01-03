@@ -193,6 +193,10 @@ class ProductionData {
     const postData = JSON.stringify(this.data)
     console.log(JSON.parse(postData))
   }
+
+  clearData() {
+    this.initData()
+  }
 }
 
 function createProductionStore() {

@@ -8,6 +8,7 @@ import { ProductionMode } from './utils'
 import { useStore } from '@/store/context'
 import { ProductionService } from '@/service/ProductionService'
 import { message } from 'antd'
+import { useHistory } from 'react-router-dom'
 
 const goodsParam = {
   goods: {
@@ -154,6 +155,7 @@ const goodsParam = {
  * 商品管理-发布商品
  */
 const ReleaseProductPage: React.FC = () => {
+  const history = useHistory()
   const { productionStore } = useStore()
   // 详情页模式
   const [productionMode, setProductionMode] = useState<ProductionMode>(ProductionMode.create)
@@ -164,7 +166,11 @@ const ReleaseProductPage: React.FC = () => {
   useEffect(() => {
     // const { adminStore } = adminStore()
     productionStore.initData()
+    return () => {
+      productionStore.clearData()
+    }
   }, [])
+
 
   /**下一步 */
   const next = () => {
@@ -177,6 +183,7 @@ const ReleaseProductPage: React.FC = () => {
         console.log(res)
         if (res.code === '200') {
           message.success('成功')
+          history.goBack()
         } else {
           message.error(res.msg)
         }
@@ -197,6 +204,7 @@ const ReleaseProductPage: React.FC = () => {
     ProductionService.save(productionStore.data).then((res) => {
       if (res.code === '200') {
         message.success('成功')
+        history.goBack()
       } else {
         message.error(res.msg)
       }

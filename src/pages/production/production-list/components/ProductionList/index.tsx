@@ -6,6 +6,7 @@ import './index.less'
 import { ProductionListService } from '@/service/ProductionListService'
 import TimeColumn from '@/components/tableColumn/TimeColumn'
 import TravelModeColumn from '@/components/tableColumn/TravelModeColumn'
+import { useHistory } from 'react-router-dom'
 
 interface Props {
   /**普通，待发布 */
@@ -16,6 +17,7 @@ interface Props {
  * 商品库
  */
 const ProductionListPage: React.FC<Props> = observer(({ type }) => {
+  const history = useHistory()
   const [form] = Form.useForm()
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
@@ -97,6 +99,8 @@ const ProductionListPage: React.FC<Props> = observer(({ type }) => {
         <Space size="middle">
           <Button>查看</Button>
           <Button>编辑</Button>
+          <Button>下架</Button>
+          <Button>禁用</Button>
         </Space>
       ),
     },
@@ -174,6 +178,11 @@ const ProductionListPage: React.FC<Props> = observer(({ type }) => {
     loadData(1)
   }
 
+  /**添加商品 */
+  const _addProduction = () => {
+    history.push('/production/release-product')
+  }
+
   return (
     <div className="ProductionListPage__root">
       <div>
@@ -213,7 +222,7 @@ const ProductionListPage: React.FC<Props> = observer(({ type }) => {
           <Row justify="end">
             <Form.Item>
               <Space>
-                <Button type="primary" htmlType="button">
+                <Button type="primary" htmlType="button" onClick={_addProduction}>
                   添加商品
                 </Button>
                 {/* <Button htmlType="button" type="primary">

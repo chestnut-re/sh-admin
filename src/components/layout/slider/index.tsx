@@ -14,6 +14,7 @@ function LayoutSider(): JSX.Element {
    */
   const getMenuNodes = (_menuList: any[]) => {
     return _menuList.reduce((pre, item) => {
+      if (item.hide) return pre
       if (item.children && item.children.length > 0) {
         pre.push(
           <Menu.SubMenu
