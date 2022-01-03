@@ -40,13 +40,6 @@ export default [
                   path: '/production/release-product',
                 },
                 {
-                  name: '发布商品2',
-                  id: 112,
-                  type: 'menu',
-                  componentPath: '/production/release-product2',
-                  path: '/production/release-product2',
-                },
-                {
                   name: '商品审核',
                   id: 113,
                   type: 'menu',

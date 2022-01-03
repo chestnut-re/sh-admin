@@ -4,23 +4,27 @@ import { observer } from 'mobx-react-lite'
 import React from 'react'
 import './index.less'
 
-/**截止下单时间 */
-const LimitOrderTime: React.FC = () => {
+/**截止退款时间 */
+const LimitRefundTime: React.FC = () => {
   const { productionStore } = useStore()
 
   const _onChange = (value) => {
+    //TODO：add
     productionStore.addOrderDeadline(value)
   }
 
   return (
-    <div className="LimitOrderTime_root">
-      <div className="label">截止退款时间</div>
+    <div className="LimitRefundTime__root">
+      <div className="label">截止下单时间</div>
       <span className="text">出发前</span>
       <div className="inputNumber">
         <InputNumber
           controls={false}
           size="small"
+          value={productionStore.orderDeadline}
           min={1}
+          max={100}
+          defaultValue={24}
           onChange={_onChange}
         />
       </div>
@@ -29,4 +33,4 @@ const LimitOrderTime: React.FC = () => {
   )
 }
 
-export default observer(LimitOrderTime)
+export default observer(LimitRefundTime)

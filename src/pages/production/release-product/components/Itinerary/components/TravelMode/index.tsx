@@ -18,7 +18,7 @@ const TravelModel: React.FC = () => {
         defaultValue={0}
         buttonStyle="solid"
         onChange={(value) => {
-          productionStore.addTravelMode(value.target.value)
+          productionStore.setTravelMode(value.target.value)
         }}
       >
         <Radio.Button value={0}>固定时间</Radio.Button>

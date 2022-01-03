@@ -216,9 +216,9 @@ const ProductionListPage: React.FC<Props> = observer(({ type }) => {
                 <Button type="primary" htmlType="button">
                   添加商品
                 </Button>
-                <Button htmlType="button" type="primary">
+                {/* <Button htmlType="button" type="primary">
                   下架
-                </Button>
+                </Button> */}
               </Space>
             </Form.Item>
           </Row>

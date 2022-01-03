@@ -1,561 +1,182 @@
-import React, { FC, useEffect, useState, useImperativeHandle, useRef, forwardRef } from 'react'
-import { Row, Col, Form, DatePicker, InputNumber, Button, Modal, Input, Select, Tabs, Radio, Divider } from 'antd';
-import { PlusOutlined, DeleteOutlined } from '@ant-design/icons';
-
-const { Option } = Select;
-const { TabPane } = Tabs;
-
+import React, { useEffect, useState, useImperativeHandle } from 'react'
+import { Row, Col, Button, Tabs } from 'antd'
+import { PlusOutlined } from '@ant-design/icons'
 import './index.less'
-import { useStore } from '@/store/context';
+import { useStore } from '@/store/context'
+import { observer } from 'mobx-react-lite'
+import HotelDialog from './components/HotelDialog'
+import TravelModel from './components/TravelMode'
+import LimitOrderTime from './components/LimitOrderTime'
+import LimitRefundTime from './components/LimitOrderTime'
+import { createPanesData } from '../../utils'
+import Travel from './components/Travel'
+import ScenicDialog from './components/ScenicDialog'
+import MealDialog from './components/MealDialog'
+import TransportationDialog from './components/TransportationDialog'
+import OriginLocation from './components/OriginLocation'
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface Props {
-
-}
-
-const initialPanes = [
-  { title: '10/22', content: 'Content of Tab 1', key: '1' },
-];
+/**行程消息 */
 const Itinerary = (props, ref) => {
-  const [form] = Form.useForm();
+  const { productionStore } = useStore()
+  const [activeKey, setActiveKey] = useState<string>()
 
-  const [visible, setVisible] = React.useState(false)
-  const [panes, setPanes] = useState(initialPanes)
-  const [newTabIndex, setNewTabIndex] = useState(0)
-  const [activeKey, setActiveKey] = useState('1')
-  const [modalType, setModalType] = useState({})
-
-  const [addData, setAddData] = useState([] as any[])
-  const [newAddDataIndex, setNewAddDataIndex] = useState(0)
-
-  const [itineraryData, setItineraryData] = useState({})
-
-  /**
-   * 表单hook
-   */
-
-  const [hotelForm] = Form.useForm();
-
-
-  useEffect(() => {
-    addItinerary()
-  }, [])
+  const [hotelDialogVisible, setHotelDialogVisible] = useState(false)
+  const [scenicDialogVisible, setScenicDialogVisible] = useState(false)
+  const [mealDialogVisible, setMealDialogVisible] = useState(false)
+  const [transportationDialogVisible, setTransportationDialogVisible] = useState(false)
 
   useImperativeHandle(ref, () => ({
-    formItineraryFields: form,
-  }));
+    next,
+  }))
 
-  const handleCancel = () => {
-    console.log('Clicked cancel button');
-    setVisible(false);
-  };
-  /**
-   * 添加信息
-   * @param type 
-   */
-  const showModal = (type) => {
-    switch (type) {
-      case 'addHotel':
-        setModalType({
-          type: 'addHotel',
-          modalTitle: '添加酒店'
-        })
-        setVisible(true);
-        break
-      case 'addScenic':
-        setModalType({
-          type: 'addScenic',
-          modalTitle: '添加景区'
-        })
-        setVisible(true);
-        break
-      case 'addMeal':
-        setModalType({
-          type: 'addMeal',
-          modalTitle: '添加饭店'
-        })
-        setVisible(true);
-        break
-      case 'addTravel':
-        setModalType({
-          type: 'addTravel',
-          modalTitle: '交通信息'
-        })
-        setVisible(true);
-        break
-      case 'addAData':
-        setModalType({
-          type: 'addAData',
-          modalTitle: '添加一条信息'
-        })
-        setVisible(true);
-        break
+  useEffect(() => {
+    setActiveKey(productionStore.data.goodsPrices[0].key)
+  }, [])
 
-      default:
-        setVisible(false);
-        break
-    }
-  };
-
-  const handleOk = () => {
-    switch (modalType['type']) {
-      case 'addAData': {
-        const todoList = [...addData];   //浅拷贝一下
-        todoList.map((item, key) => {
-          if (key == todoList.length - 1) {
-            const obj = {}
-            obj['travelTitle'] = itineraryData['travelTitle']
-            item.data.push(obj)
-          }
-        })
-        setAddData(todoList)
-        setVisible(false);
-      }
-        break
-      default:
-
-        break
-
-    }
-  }
-  const layout = {
-    labelCol: { span: 4 },
-    wrapperCol: { span: 19 },
-  };
-  /**
-   * 添加一条数据
-   */
-
-
-  /**
-   * 添加一天的数据
-   */
-  const addTabs = () => {
-    setNewTabIndex(newTabIndex + 1)
-    const activeKey = `newTab${newTabIndex}`;
-    panes.push({ title: '10/22', content: `${activeKey}`, key: activeKey });
-    setPanes(panes)
-  }
-  /**
-   * 删除
-   */
-  const removeTabs = targetKey => {
-    if (panes.length <= 1) {
-      alert('只剩一条信息了')
-      return
-    }
-    let newActiveKey = activeKey;
-    let lastIndex;
-    panes.forEach((pane, i) => {
-      if (pane.key === targetKey) {
-        lastIndex = i - 1;
-      }
-    });
-    const newPanes = panes.filter(pane => pane.key !== targetKey);
-    if (newPanes.length && newActiveKey === targetKey) {
-      if (lastIndex >= 0) {
-        newActiveKey = newPanes[lastIndex].key;
-      } else {
-        newActiveKey = newPanes[0].key;
-      }
-    }
-    setPanes(newPanes)
-    setActiveKey(newActiveKey)
+  const next = () => {
+    console.log('Itinerary next')
+    // const value = form.getFieldsValue()
+    // console.log(value)
+    // productionStore.addBaseInfo(value)
   }
 
   const onEdit = (targetKey, action) => {
     if (action === 'remove') {
-      removeTabs(targetKey)
+      productionStore.removeGood(targetKey)
+      const pD = createPanesData(productionStore.data)
+      setActiveKey(pD[pD.length - 1].key)
     }
-  };
-
-  const onTabsChange = activeKey => {
-    setActiveKey(activeKey)
-    console.log('item', activeKey)
   }
 
+  const onTabsChange = (activeKey) => {
+    setActiveKey(activeKey)
+  }
 
   /**
    * 添加一天行程
    */
-
-  const addItinerary = () => {
-    setNewAddDataIndex(newAddDataIndex + 1)
-    const addDataId = `newID${newAddDataIndex}`;
-
-    addData.push({
-      id: addDataId,
-      title: `第${newAddDataIndex + 1}天`,
-      data: []
-    })
-    setAddData(addData)
+  const addTravel = () => {
+    productionStore.addTravelOneDay(activeKey)
   }
 
-
-  /**
-   * 添加一条数据
-   */
-  const addADataInput = (e) => {
-    const { value } = e.target
-    const data = { ...itineraryData }
-
-    data['travelTitle'] = value
-    setItineraryData(data)
-  }
-  const style = { padding: '8px 0' };
-  const operations = <Button onClick={addTabs}>复制</Button>;
+  const panesData = createPanesData(productionStore.data)
+  console.log(panesData)
 
   return (
-    <div className='Itinerary__root'>
-      <Form form={form}>
-        <Row>
-          <Col span={8}>
-            <Form.Item
-              label="出行时间"
-              name="username"
-              help="至少出行前48小时，最长不得超过45天"
-              {...layout}
+    <div className="Itinerary__root">
+      <Row>
+        <Col span={8}>
+          <TravelModel />
+        </Col>
+        <Col span={8}>
+          <LimitOrderTime />
+        </Col>
+        <Col span={8}>
+          <LimitRefundTime />
+        </Col>
+      </Row>
+      <Row>
+        <OriginLocation />
+      </Row>
+      <Row>
+        <div className="content">
+          <div className="body">
+            <Tabs
+              type="editable-card"
+              hideAdd
+              onChange={onTabsChange}
+              activeKey={activeKey}
+              onEdit={onEdit}
+              tabBarExtraContent={<Button onClick={() => productionStore.copyGood()}>复制</Button>}
             >
-              <Radio.Group defaultValue="a" buttonStyle="solid">
-                <Radio.Button value="a">固定时间</Radio.Button>
-                <Radio.Button value="b">约定时间</Radio.Button>
-              </Radio.Group>
-            </Form.Item>
-          </Col>
-          <Col span={4}>
-            <div className='limitTime'>
-              <div className='label'>截止下单时间</div>
-              <span className='text'>出发前</span>
-              <div className='inputNumber'>
-                <InputNumber style={{ width: 30 }} controls={false} size="small" min={1} max={100} defaultValue={1} />
-              </div>
-              <span className='text'>小时</span>
-            </div>
-          </Col>
-          <Col span={8}>
-            <div className='limitTime'>
-              <div className='label'>退款截止时间</div>
-              <span className='text'>出发前</span>
-              <div className='inputNumber'>
-                <InputNumber style={{ width: 30 }} controls={false} size="small" min={1} max={100} defaultValue={1} />
-              </div>
-              <span className='text'>小时</span>
-            </div>
-          </Col>
-        </Row>
-        <Row>
-          <div className='content'>
-            <div className='body'>
-              <Tabs
-                type="editable-card"
-                hideAdd
-                onChange={onTabsChange}
-                activeKey={activeKey}
-                onEdit={onEdit}
-                tabBarExtraContent={operations}
-              >
-                {panes.map(pane => (
-                  <TabPane tab={pane.title} key={pane.key}>
-                    {pane.key == '1' && (
-                      <div className='addDataView'>
-                        {addData && addData.map((item, index) => (
-                          <div key={`item${index}`} className='item'>
-                            <Divider orientation="left">{item['title']}</Divider>
-
-                            {item['data'].map((items, j) => (
-                              modalType['type'] == 'addAData' && (
-                                <Row key={`j${j}`} gutter={16}>
-                                  <Col className="gutter-row" span={3}>
-                                    <div style={style}>
-                                      <span className='must'>*</span>
-                                      <DatePicker />
-                                    </div>
-                                  </Col>
-                                  <Col className="gutter-row" span={6}>
-                                    <div style={style}>{itineraryData['travelTitle']}</div>
-                                  </Col>
-                                  <Col className="gutter-row" span={2}>
-                                    <div style={style}>
-                                      <DeleteOutlined style={{ fontSize: 24 }} />
-                                    </div>
-                                  </Col>
-                                </Row>
-                              )
-                            ))}
-
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </TabPane>
-                ))}
-              </Tabs>
-            </div>
-
-            <div className='footer'>
-              <div className='item'>
-                <Button icon={<PlusOutlined />} onClick={() => showModal('addHotel')} type="dashed">添加酒店</Button>
-                <Button icon={<PlusOutlined />} onClick={() => showModal('addScenic')} type="dashed">添加景区</Button>
-                <Button icon={<PlusOutlined />} onClick={() => showModal('addMeal')} type="dashed">添加饭店</Button>
-                <Button icon={<PlusOutlined />} onClick={() => showModal('addTravel')} type="dashed">添加交通</Button>
-                <Button icon={<PlusOutlined />} onClick={addItinerary} type="dashed">行程+1天</Button>
-                <Button icon={<PlusOutlined />} onClick={() => showModal('addAData')} type="dashed">添加一条</Button>
-              </div>
-              <div className='item'>
-                现售价 合计：￥ 1000
-              </div>
-            </div>
+              {panesData.map((item) => (
+                <Tabs.TabPane tab={item.title} key={item.key}>
+                  <Travel data={item.travels} activeKey={activeKey} />
+                </Tabs.TabPane>
+              ))}
+            </Tabs>
           </div>
-        </Row>
-        <Modal
-          centered
-          title={modalType['modalTitle']}
-          visible={visible}
-          onOk={handleOk}
-          onCancel={handleCancel}
-          width={1000}
-          cancelText='取消'
-          okText='保存提交'
-        >
-          <Row>
-            {/* 添加酒店 */}
-            {modalType['type'] === 'addHotel' && (
-              <Col span={12}>
-                <Form form={hotelForm}>
-                  <Form.Item {...layout} name="note" label="酒店名称" rules={[{ required: true }]}>
-                    <Input />
-                  </Form.Item>
-                  <Form.Item {...layout} name="gender" label="选择房型" rules={[{ required: true }]}>
-                    <Select
-                      placeholder="房型"
-                      // onChange={onGenderChange}
-                      allowClear
-                    >
-                      <Option value="male">大床放</Option>
-                      <Option value="female">双人床</Option>
-                      <Option value="other">套房</Option>
-                    </Select>
-                  </Form.Item>
-                  <Form.Item {...layout} label="供应成本价格" style={{ marginBottom: 0 }}>
-                    <Form.Item
-                      name="year"
-                      rules={[{ required: true }]}
-                      style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}
-                    >
-                      <Input placeholder="成人价" />
-                    </Form.Item>
-                    <Form.Item
-                      name="month"
-                      rules={[{ required: true }]}
-                      style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 8px' }}
-                    >
-                      <Input placeholder="儿童价" />
-                    </Form.Item>
-                  </Form.Item>
-                  <Form.Item {...layout} label="市场标价" style={{ marginBottom: 0 }}>
-                    <Form.Item
-                      name="year"
-                      rules={[{ required: true }]}
-                      style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}
-                    >
-                      <Input placeholder="成人价" />
-                    </Form.Item>
-                    <Form.Item
-                      name="month"
-                      rules={[{ required: true }]}
-                      style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 8px' }}
-                    >
-                      <Input placeholder="儿童价" />
-                    </Form.Item>
-                  </Form.Item>
-                  <Form.Item {...layout} label="现售价" style={{ marginBottom: 0 }}>
-                    <Form.Item
-                      name="year"
-                      rules={[{ required: true }]}
-                      style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}
-                    >
-                      <Input placeholder="成人价" />
-                    </Form.Item>
-                    <Form.Item
-                      name="month"
-                      rules={[{ required: true }]}
-                      style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 8px' }}
-                    >
-                      <Input placeholder="儿童价" />
-                    </Form.Item>
-                  </Form.Item>
-                  <Form.Item {...layout} name={['user', 'introduction']} label="其他备注">
-                    <Input.TextArea placeholder='可填写：酒店距景区' />
-                  </Form.Item>
-                </Form>
-              </Col>
-            )}
-            {/* 添加景点 */}
-            {modalType['type'] === 'addScenic' && (
-              <Col span={12}>
-                <Form.Item {...layout} name="note" label="景点名称" rules={[{ required: true }]}>
-                  <Input />
-                </Form.Item>
-                <Form.Item {...layout} name="note" label="游览时长" rules={[{ required: true }]}>
-                  <Input />
-                </Form.Item>
-                <Form.Item {...layout} label="门票成本价格" style={{ marginBottom: 0 }}>
-                  <Form.Item
-                    name="year"
-                    rules={[{ required: true }]}
-                    style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}
-                  >
-                    <Input placeholder="成人价" />
-                  </Form.Item>
-                  <Form.Item
-                    name="month"
-                    rules={[{ required: true }]}
-                    style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 8px' }}
-                  >
-                    <Input placeholder="儿童价" />
-                  </Form.Item>
-                </Form.Item>
-                <Form.Item {...layout} label="门票标价" style={{ marginBottom: 0 }}>
-                  <Form.Item
-                    name="year"
-                    rules={[{ required: true }]}
-                    style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}
-                  >
-                    <Input placeholder="成人价" />
-                  </Form.Item>
-                  <Form.Item
-                    name="month"
-                    rules={[{ required: true }]}
-                    style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 8px' }}
-                  >
-                    <Input placeholder="儿童价" />
-                  </Form.Item>
-                </Form.Item>
-                <Form.Item {...layout} label="现售价" style={{ marginBottom: 0 }}>
-                  <Form.Item
-                    name="year"
-                    rules={[{ required: true }]}
-                    style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}
-                  >
-                    <Input placeholder="成人价" />
-                  </Form.Item>
-                  <Form.Item
-                    name="month"
-                    rules={[{ required: true }]}
-                    style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 8px' }}
-                  >
-                    <Input placeholder="儿童价" />
-                  </Form.Item>
-                </Form.Item>
-                <Form.Item {...layout} name={['user', 'introduction']} label="其他备注">
-                  <Input.TextArea placeholder='可填写：该景点的独有的特点，或其他优势' />
-                </Form.Item>
-              </Col>
-            )}
-            {/* 添加吃饭 */}
-            {modalType['type'] === 'addMeal' && (
-              <Col span={12}>
-                <Form.Item {...layout} name="note" label="饭店名称" rules={[{ required: true }]}>
-                  <Input />
-                </Form.Item>
-                <Form.Item {...layout} name="note" label="团餐人限" >
-                  <Input />
-                </Form.Item>
-                <Form.Item {...layout} label="团餐成本价" style={{ marginBottom: 0 }}>
-                  <Form.Item
-                    name="year"
-                    rules={[{ required: true }]}
-                    style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}
-                  >
-                    <Input placeholder="成人价" />
-                  </Form.Item>
-                  <Form.Item
-                    name="month"
-                    rules={[{ required: true }]}
-                    style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 8px' }}
-                  >
-                    <Input placeholder="儿童价" />
-                  </Form.Item>
-                </Form.Item>
-                <Form.Item {...layout} label="市场标价" style={{ marginBottom: 0 }}>
-                  <Form.Item
-                    name="year"
-                    rules={[{ required: true }]}
-                    style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}
-                  >
-                    <Input placeholder="成人价" />
-                  </Form.Item>
-                  <Form.Item
-                    name="month"
-                    rules={[{ required: true }]}
-                    style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 8px' }}
-                  >
-                    <Input placeholder="儿童价" />
-                  </Form.Item>
-                </Form.Item>
-                <Form.Item {...layout} label="现售价" style={{ marginBottom: 0 }}>
-                  <Form.Item
-                    name="year"
-                    rules={[{ required: true }]}
-                    style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}
-                  >
-                    <Input placeholder="成人价" />
-                  </Form.Item>
-                  <Form.Item
-                    name="month"
-                    rules={[{ required: true }]}
-                    style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 8px' }}
-                  >
-                    <Input placeholder="儿童价" />
-                  </Form.Item>
-                </Form.Item>
 
-                <Form.Item {...layout} name={['user', 'introduction']} label="其他备注">
-                  <Input.TextArea placeholder='可填写：该景点的独有的特点，或其他优势' />
-                </Form.Item>
-              </Col>
-            )}
+          <div className="footer">
+            <div className="item">
+              <Button icon={<PlusOutlined />} onClick={() => setHotelDialogVisible(true)} type="dashed">
+                添加酒店
+              </Button>
+              <Button
+                icon={<PlusOutlined />}
+                onClick={() => {
+                  setScenicDialogVisible(true)
+                }}
+                type="dashed"
+              >
+                添加景区
+              </Button>
+              <Button
+                icon={<PlusOutlined />}
+                onClick={() => {
+                  setMealDialogVisible(true)
+                }}
+                type="dashed"
+              >
+                添加饭店
+              </Button>
+              <Button
+                icon={<PlusOutlined />}
+                onClick={() => {
+                  setTransportationDialogVisible(true)
+                }}
+                type="dashed"
+              >
+                添加交通
+              </Button>
+              <Button
+                icon={<PlusOutlined />}
+                onClick={() => {
+                  productionStore.addTravelDetail(activeKey, 0, {})
+                }}
+                type="dashed"
+              >
+                添加一条
+              </Button>
+              <Button icon={<PlusOutlined />} onClick={addTravel} type="dashed">
+                行程+1天
+              </Button>
+            </div>
+            <div className="item">现售价 合计: ￥{productionStore.getCurrentPrice(activeKey)}</div>
+          </div>
+        </div>
+      </Row>
 
-            {/* 添加出行 */}
-            {modalType['type'] === 'addTravel' && (
-              <Col span={12}>
-                <Form.Item {...layout} name="note" label="交通方式" rules={[{ required: true }]}>
-                  <Select defaultValue="火车" style={{ width: 120 }}>
-                    <Option value="火车">火车</Option>
-                    <Option value="飞机">飞机</Option>
-                    <Option value="汽车">汽车</Option>
-                  </Select>
-                </Form.Item>
-
-                <Form.Item {...layout} name={['user', 'introduction']} label="其他备注">
-                  <Input.TextArea placeholder='可填写：优势信息' />
-                </Form.Item>
-              </Col>
-            )}
-            {modalType['type'] === 'addAData' && (
-              <Col span={12}>
-                <Form.Item {...layout} label="添加信息">
-                  <Input.TextArea onChange={addADataInput} value={itineraryData['travelTitle']} placeholder='可填写：优势信息' />
-                </Form.Item>
-              </Col>
-            )}
-            {
-              modalType['type'] !== 'addAData' && (
-                <Col span={12}>
-                  <div className='mapView'>
-                    地图模块
-                  </div>
-                </Col>
-              )
-            }
-
-          </Row>
-        </Modal>
-      </Form>
+      <HotelDialog
+        visible={hotelDialogVisible}
+        activeKey={activeKey}
+        onCancel={() => {
+          setHotelDialogVisible(false)
+        }}
+      />
+      <ScenicDialog
+        visible={scenicDialogVisible}
+        activeKey={activeKey}
+        onCancel={() => {
+          setScenicDialogVisible(false)
+        }}
+      />
+      <MealDialog
+        visible={mealDialogVisible}
+        activeKey={activeKey}
+        onCancel={() => {
+          setMealDialogVisible(false)
+        }}
+      />
+      <TransportationDialog
+        visible={transportationDialogVisible}
+        activeKey={activeKey}
+        onCancel={() => {
+          setTransportationDialogVisible(false)
+        }}
+      />
     </div>
   )
 }
 
-
-const WrappedForm = forwardRef(Itinerary);
-export default WrappedForm
+export default observer(Itinerary, { forwardRef: true })

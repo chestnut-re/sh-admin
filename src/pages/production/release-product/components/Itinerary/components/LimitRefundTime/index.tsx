@@ -5,25 +5,23 @@ import React from 'react'
 import './index.less'
 
 /**截止退款时间 */
-const LimitRefundTime: React.FC = () => {
+const LimitOrderTime: React.FC = () => {
   const { productionStore } = useStore()
 
   const _onChange = (value) => {
-    //TODO：add
     productionStore.addOrderDeadline(value)
   }
 
   return (
-    <div className="LimitRefundTime__root">
-      <div className="label">截止下单时间</div>
+    <div className="LimitOrderTime_root">
+      <div className="label">截止退款时间</div>
       <span className="text">出发前</span>
       <div className="inputNumber">
         <InputNumber
+          value={productionStore.refundDeadline}
           controls={false}
           size="small"
           min={1}
-          max={100}
-          defaultValue={24}
           onChange={_onChange}
         />
       </div>
@@ -32,4 +30,4 @@ const LimitRefundTime: React.FC = () => {
   )
 }
 
-export default observer(LimitRefundTime)
+export default observer(LimitOrderTime)
