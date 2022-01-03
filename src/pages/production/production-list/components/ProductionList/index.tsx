@@ -48,13 +48,16 @@ const ProductionListPage: React.FC<Props> = observer(({ type }) => {
     {
       title: '商品名称',
       dataIndex: 'goodsName',
+      width: 150,
     },
     {
       title: '商品类型标签',
       dataIndex: 'goodsTypeTag',
+      width: 100,
     },
     {
       title: '出行类型',
+      width: 100,
       render: (text, record, index) => <TravelModeColumn travelMode={record?.travelMode} />,
     },
     {
@@ -97,7 +100,15 @@ const ProductionListPage: React.FC<Props> = observer(({ type }) => {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button>查看</Button>
+          <Button
+            onClick={() => {
+              history.push('/production/production-detail', {
+                id: record.id,
+              })
+            }}
+          >
+            查看
+          </Button>
           <Button>编辑</Button>
           <Button>下架</Button>
           <Button>禁用</Button>
@@ -115,13 +126,16 @@ const ProductionListPage: React.FC<Props> = observer(({ type }) => {
     {
       title: '商品名称',
       dataIndex: 'goodsName',
+      width: 150,
     },
     {
       title: '商品类型标签',
       dataIndex: 'goodsTypeTag',
+      width: 100,
     },
     {
       title: '出行类型',
+      width: 100,
       render: (text, record, index) => <TravelModeColumn travelMode={record?.travelMode} />,
     },
     {
@@ -152,8 +166,25 @@ const ProductionListPage: React.FC<Props> = observer(({ type }) => {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button>查看</Button>
-          <Button>配置详情</Button>
+          <Button
+            onClick={() => {
+              history.push('/production/production-detail', {
+                id: record.id,
+              })
+            }}
+          >
+            查看
+          </Button>
+          <Button
+            onClick={() => {
+              console.log(record)
+              history.push('/production/production-config-detail', {
+                id: record.id,
+              })
+            }}
+          >
+            配置详情
+          </Button>
         </Space>
       ),
     },
