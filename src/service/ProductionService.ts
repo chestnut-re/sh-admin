@@ -21,6 +21,13 @@ export class ProductionService {
   static tagList(data): Promise<any> {
     return axios.post('/api/operation/goods/sortManagement/query', data)
   }
+
+  /**
+   * 商品详情
+   */
+  static get(id: string): Promise<any> {
+    return axios.get(`/api/operation/goods/get/${id}`)
+  }
 }
 
 /**

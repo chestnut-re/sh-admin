@@ -102,9 +102,7 @@ const ProductionListPage: React.FC<Props> = observer(({ type }) => {
         <Space size="middle">
           <Button
             onClick={() => {
-              history.push('/production/production-detail', {
-                id: record.id,
-              })
+              history.push(`/production/production-detail?id=${record.id}`)
             }}
           >
             查看
@@ -168,9 +166,7 @@ const ProductionListPage: React.FC<Props> = observer(({ type }) => {
         <Space size="middle">
           <Button
             onClick={() => {
-              history.push('/production/production-detail', {
-                id: record.id,
-              })
+              history.push(`/production/production-detail?id=${record.id}`)
             }}
           >
             查看
@@ -178,9 +174,7 @@ const ProductionListPage: React.FC<Props> = observer(({ type }) => {
           <Button
             onClick={() => {
               console.log(record)
-              history.push('/production/production-config-detail', {
-                id: record.id,
-              })
+              history.push(`/production/production-config-detail?id=${record.id}`)
             }}
           >
             配置详情

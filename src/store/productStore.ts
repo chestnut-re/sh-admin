@@ -34,7 +34,7 @@ const getPriceFromTravels = (travels: any[], priceKeyStr: string) => {
 }
 
 /**
- * 产品详情页
+ * 添加商品 Data
  */
 class ProductionData {
   data: any = {
@@ -126,6 +126,14 @@ class ProductionData {
     const newD = this.data.goodsPrices.filter((item) => item.key !== targetKey)
     console.log(targetKey, newD)
     this.data.goodsPrices = newD
+
+    // 删光了，自动添加一个
+    if (this.data.goodsPrices.length === 0) {
+      const nowDay = Date.now()
+      this.data.goodsPrices = [
+        { startDate: nowDay, endDate: nowDay, key: getNanoId(), travels: [{ whatDay: whatDay[0], key: getNanoId() }] },
+      ]
+    }
   }
 
   /**添加行程: 一天 */
@@ -216,6 +224,7 @@ class ProductionData {
     console.log(JSON.parse(postData))
   }
 
+  /**清除数据，退出页面时候调用 */
   clearData() {
     this.initData()
   }
