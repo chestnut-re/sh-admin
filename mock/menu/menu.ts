@@ -45,8 +45,8 @@ export default [
                   name: '商品详情',
                   id: 116,
                   type: 'menu',
-                  componentPath: '/production/detail',
-                  path: '/production/detail',
+                  componentPath: '/production/production-detail',
+                  path: '/production/production-detail',
                   hide: true,
                 },
                 {
