@@ -1,4 +1,67 @@
-
-.TravelInfo__root{
-    
+.TravelInfo__root {
+  padding: 20px;
+  background: #fff;
+  h4 {
+    font-size: 18px;
+    font-weight: 500;
+    color: #252b3a;
+    line-height: 25px;
+  }
+  .time {
+    display: flex;
+    div {
+      padding: 5px 40px 5px 0;
+    }
+  }
+  .tabs {
+    border: 1px solid #aeb0b8;
+    .all-day {
+      display: inline-block;
+    }
+    .what-day {
+      height: 200px;
+      display: flex;
+      align-items: flex-start;
+      border-top: 1px solid #aeb0b8;
+      margin: 26px;
+      .every {
+        height: 198px;
+        border-left: 1px solid #aeb0b8;
+        border-bottom: 1px solid #aeb0b8;
+        padding: 0px 10px;
+      }
+      .every-info {
+        border-left: 1px solid #aeb0b8;
+        .day-info {
+          display: flex;
+          .travelTime,
+          .travelTitle {
+            text-align: center;
+            width: 50px;
+            padding: 5px;
+            border-right: 1px solid #aeb0b8;
+            border-bottom: 1px solid #aeb0b8;
+          }
+          .type-pay {
+            display: flex;
+            .travelGoods,
+            .remark {
+              text-align: center;
+              width: 400px;
+              padding: 5px;
+              border-right: 1px solid #aeb0b8;
+              border-bottom: 1px solid #aeb0b8;
+            }
+            .money {
+              text-align: center;
+              width: 80px;
+              padding: 5px;
+              border-right: 1px solid #aeb0b8;
+              border-bottom: 1px solid #aeb0b8;
+            }
+          }
+        }
+      }
+    }
+  }
 }
