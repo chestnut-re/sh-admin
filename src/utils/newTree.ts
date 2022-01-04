@@ -1,6 +1,6 @@
 /*
  * @Description: 结构树处理 新 之前有些乱 不动 慢慢在这维护
- * @LastEditTime: 2021-12-31 15:02:23
+ * @LastEditTime: 2022-01-04 15:57:30
  */
 /**
  * @description:  根据id 获取父 - 子 数据
@@ -53,4 +53,21 @@ export const analysisName = (
   })
   returnData.splice(returnData.length - 1, 1)
   return returnData.join('-')
+}
+// 是否包含某id
+export const isInclude = (arrayList: Array<any>, id = '') => {
+  let isIncludeType = false
+  const each = (treeList, children) => {
+    const treeListData = treeList ?? []
+    treeListData.forEach((item) => {
+      if (item['id'] != id) {
+        item = each(item['children'], children)
+      } else {
+        isIncludeType = true
+      }
+    })
+  }
+  each(arrayList, id)
+  return isIncludeType
+
 }

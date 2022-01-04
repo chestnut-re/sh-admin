@@ -1,13 +1,12 @@
 import { Space, Table, Tag, Form, Row, Col, Button } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { InputTemp, SelectTemp } from '@/components/filter/formItem'
-import AEVersionCDialog, { DialogMode } from './components/AEVersionCDialog'
-
+import AEVersionBDialog, { DialogMode } from './components/AEVersionBDialog'
 /**
- * 系统中心-版本管理-C端版本管理
+ * 系统中心-版本管理-B端版本管理
  */
 
-const VersionCPage: React.FC = () => {
+const VersionBPage: React.FC = () => {
   const [form] = Form.useForm()
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(0)
@@ -63,7 +62,7 @@ const VersionCPage: React.FC = () => {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button>编辑</Button>
+          <Button onClick={() => _editDialog(record)}>编辑</Button>
         </Space>
       ),
     },
@@ -95,6 +94,10 @@ const VersionCPage: React.FC = () => {
     setSelectedData(null)
     setShowDialog(false)
   }
+  const _addVersion = () => {
+    setDialogMode('add')
+    setShowDialog(true)
+  }
   return (
     <div className="page-root">
       <div>
@@ -108,7 +111,9 @@ const VersionCPage: React.FC = () => {
           <Row gutter={[10, 0]}>
             <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
               <Space>
-                <Button type="primary">添加版本记录</Button>
+                <Button type="primary" onClick={_addVersion}>
+                  添加版本记录
+                </Button>
               </Space>
             </Form.Item>
           </Row>
@@ -127,7 +132,7 @@ const VersionCPage: React.FC = () => {
           total: total,
         }}
       />
-      <AEVersionCDialog
+      <AEVersionBDialog
         data={selectedData}
         mode={dialogMode}
         onSuccess={_onDialogSuccess}
@@ -138,4 +143,4 @@ const VersionCPage: React.FC = () => {
   )
 }
 
-export default VersionCPage
+export default VersionBPage

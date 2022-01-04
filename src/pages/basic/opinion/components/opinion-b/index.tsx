@@ -1,21 +1,16 @@
-import { Space, Table, Tag, Form, Row, Col, Button } from 'antd'
+import { Space, Table, Tag, Form, Row, Col, Button, DatePicker, Input } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { InputTemp, SelectTemp } from '@/components/filter/formItem'
-import AEVersionBDialog, { DialogMode } from './components/AEVersionBDialog'
 /**
  * 系统中心-版本管理-B端版本管理
  */
 
-const VersionBPage: React.FC = () => {
+const OpinionBPage: React.FC = () => {
   const [form] = Form.useForm()
+  const { RangePicker } = DatePicker
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(0)
   const [pageSize, setPageSize] = useState(10)
   const [total, setTotal] = useState()
-
-  const [showDialog, setShowDialog] = useState(false)
-  const [selectedData, setSelectedData] = useState(null)
-  const [dialogMode, setDialogMode] = useState<DialogMode>('add')
 
   useEffect(() => {
     loadData(pageIndex)
@@ -35,64 +30,31 @@ const VersionBPage: React.FC = () => {
       render: (text, record, index) => `${index + 1}`,
     },
     {
-      title: '版本号',
+      title: '账号',
       dataIndex: 'account',
     },
     {
-      title: '下载链接',
+      title: '昵称',
       dataIndex: 'password',
     },
     {
-      title: '更多内容',
+      title: '反馈图片',
       dataIndex: 'name',
     },
     {
-      title: '备注',
+      title: '文字描述',
       dataIndex: 'role',
     },
     {
-      title: '是否强制更新',
+      title: '反馈时间',
       dataIndex: 'createtime',
-    },
-    {
-      title: '添加时间',
-      dataIndex: 'state',
-    },
-    {
-      title: '操作',
-      render: (text: any, record: any) => (
-        <Space size="middle">
-          <Button>编辑</Button>
-        </Space>
-      ),
     },
   ]
 
-  /**编辑 */
-  const _editDialog = (record) => {
-    setDialogMode('edit')
-    setSelectedData(record)
-    setShowDialog(true)
-  }
-
-  const onFinish = (values: any) => {
-    setShowDialog(true)
-    setDialogMode('add')
-  }
+  const onFinish = (values: any) => {}
 
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo)
-  }
-
-  const _onDialogSuccess = () => {
-    setSelectedData(null)
-    setShowDialog(false)
-    loadData(pageIndex)
-  }
-
-  const _onDialogClose = () => {
-    setSelectedData(null)
-    setShowDialog(false)
   }
   return (
     <div className="page-root">
@@ -105,9 +67,25 @@ const VersionBPage: React.FC = () => {
           form={form}
         >
           <Row gutter={[10, 0]}>
+            <Col span={2} className="table-from-label">
+              账号
+            </Col>
+            <Col span={4}>
+              <Form.Item name="time">
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col span={2} className="table-from-label">
+              时间
+            </Col>
+            <Col span={4}>
+              <Form.Item name="time">
+                <RangePicker showTime />
+              </Form.Item>
+            </Col>
             <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
               <Space>
-                <Button type="primary">添加版本记录</Button>
+                <Button type="primary">查询</Button>
               </Space>
             </Form.Item>
           </Row>
@@ -120,21 +98,13 @@ const VersionBPage: React.FC = () => {
         dataSource={[...data]}
         pagination={{
           onChange: setPageIndex,
-          showSizeChanger: true,
           showQuickJumper: true,
           pageSize: pageSize,
           total: total,
         }}
       />
-      <AEVersionBDialog
-        data={selectedData}
-        mode={dialogMode}
-        onSuccess={_onDialogSuccess}
-        show={showDialog}
-        onClose={_onDialogClose}
-      />
     </div>
   )
 }
 
-export default VersionBPage
+export default OpinionBPage

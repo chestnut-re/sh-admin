@@ -1,16 +1,15 @@
 import { CheckOutlined } from '@ant-design/icons'
 import React from 'react'
-import { getStepsInfo, ProductionMode } from '../../utils'
+import { getStepsInfo } from '../../utils'
 import './index.less'
 
 interface Props {
   current: number
-  productionMode: ProductionMode
 }
 
 /**商品 Step */
-const StepView: React.FC<Props> = ({ productionMode, current }) => {
-  const steps = getStepsInfo(productionMode)
+const StepView: React.FC<Props> = ({ current }) => {
+  const steps = getStepsInfo()
 
   return (
     <div className="StepView_root">

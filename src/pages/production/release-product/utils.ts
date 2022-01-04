@@ -8,20 +8,17 @@ export enum ProductionMode {
 }
 
 /**获取 Step信息 */
-export const getStepsInfo = (productionMode: ProductionMode): any => {
-  if (productionMode === ProductionMode.create) {
-    return [
-      {
-        title: '基础信息',
-        index: 0,
-      },
-      {
-        title: '行程信息',
-        index: 1,
-      },
-    ]
-  }
-  return []
+export const getStepsInfo = (): any => {
+  return [
+    {
+      title: '基础信息',
+      index: 0,
+    },
+    {
+      title: '行程信息',
+      index: 1,
+    },
+  ]
 }
 
 /**获取 Panes 数据 */

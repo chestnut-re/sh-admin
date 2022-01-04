@@ -6,10 +6,12 @@ import { useStore } from '@/store/context'
 import { observer } from 'mobx-react-lite'
 import UploadImage from '@/components/formItem/UploadImage'
 
+interface Props {}
+
 /**
  * 基础信息
  */
-const BaseInfo = (props, ref) => {
+const BaseInfo: React.FC<Props> = (props, ref) => {
   const { productionStore } = useStore()
   const [form] = Form.useForm()
 
@@ -26,7 +28,7 @@ const BaseInfo = (props, ref) => {
       refundAndChangePolicy: productionStore.data.refundAndChangePolicy,
       promotionalImageUrl: productionStore.data.promotionalImageUrl,
     })
-  }, [])
+  }, [productionStore.data])
 
   const next = () => {
     console.log('BaseInfo next')

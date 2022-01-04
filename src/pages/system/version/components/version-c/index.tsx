@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react'
-import { Form, Col, Row, Button, Table, Space } from 'antd'
-import './index.less'
-import AEBannerDialog, { DialogMode } from './components/AEActivityDialog'
-import { ActivitiesService } from '@/service/ActivitiesService'
-import { HttpCode } from '@/constants/HttpCode'
+import { Space, Table, Tag, Form, Row, Col, Button } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { InputTemp, SelectTemp } from '@/components/filter/formItem'
+import AEVersionCDialog, { DialogMode } from './../version-b/components/AEVersionBDialog'
 
 /**
- * App营销-Activity管理-List
+ * 系统中心-版本管理-C端版本管理
  */
-const BannerListPage: React.FC = () => {
+
+const VersionCPage: React.FC = () => {
+  const [form] = Form.useForm()
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(0)
-  const [pageSize, setPageSize] = useState(20)
+  const [pageSize, setPageSize] = useState(10)
   const [total, setTotal] = useState()
 
   const [showDialog, setShowDialog] = useState(false)
@@ -23,79 +23,54 @@ const BannerListPage: React.FC = () => {
   }, [pageIndex])
 
   const loadData = (pageIndex) => {
-    ActivitiesService.list({ current: pageIndex, size: pageSize }).then((res) => {
-      setData(res.data.records)
-      setTotal(res.data.total)
-    })
+    // BannerService.list({ current: pageIndex, size: pageSize }).then((res) => {
+    //   console.log(res)
+    //   setData(res.data.records)
+    //   setTotal(res.data.total)
+    // })
   }
 
   const columns = [
     {
-      title: '排序编号',
+      title: '序号',
       render: (text, record, index) => `${index + 1}`,
     },
     {
-      title: '主题预览图',
-      dataIndex: 'activityImg',
+      title: '版本号',
+      dataIndex: 'account',
     },
     {
-      title: '专题页头图',
-      dataIndex: 'activityDetailImg',
+      title: '下载链接',
+      dataIndex: 'password',
     },
     {
-      title: '主题名称',
-      dataIndex: 'activityTitle',
+      title: '更多内容',
+      dataIndex: 'name',
     },
     {
-      title: '关联商品数量',
-      dataIndex: 'goodsIdList',
-      render: (text, record, index) => `${record.split(',')?.length}`,
+      title: '备注',
+      dataIndex: 'role',
     },
     {
-      title: '链接',
-      dataIndex: 'startDate',
+      title: '是否强制更新',
+      dataIndex: 'createtime',
     },
     {
-      title: '状态',
-      dataIndex: 'endDate',
-    },
-    {
-      title: '展示时段',
-      dataIndex: 'endDate',
-    },
-    {
-      title: '剩余展示时长',
-      dataIndex: 'endDate',
-    },
-    {
-      title: '添加人',
-      dataIndex: 'endDate',
-    },  {
       title: '添加时间',
-      dataIndex: 'endDate',
+      dataIndex: 'state',
     },
     {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
           <Button onClick={() => _editDialog(record)}>编辑</Button>
-          <Button onClick={() => _delItem(record)}>删除</Button>
         </Space>
       ),
     },
   ]
 
-  /**删除 */
-  const _delItem = (record) => {
-    ActivitiesService.del({ id: record.id }).then((res) => {
-      if (res.code === HttpCode.success) {
-        loadData(pageIndex)
-      }
-    })
-  }
   /**编辑 */
   const _editDialog = (record) => {
-    console.log(record, '00000000')
     setDialogMode('edit')
     setSelectedData(record)
     setShowDialog(true)
@@ -103,6 +78,7 @@ const BannerListPage: React.FC = () => {
 
   const onFinish = (values: any) => {
     setShowDialog(true)
+    setDialogMode('add')
   }
 
   const onFinishFailed = (errorInfo: any) => {
@@ -119,16 +95,25 @@ const BannerListPage: React.FC = () => {
     setSelectedData(null)
     setShowDialog(false)
   }
-
+  const _addVersion = () => {
+    setDialogMode('add')
+    setShowDialog(true)
+  }
   return (
-    <div className="channel-list">
+    <div className="page-root">
       <div>
-        <Form name="basic" initialValues={{ remember: true }} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form
+          name="basic"
+          initialValues={{ remember: true }}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
+          form={form}
+        >
           <Row gutter={[10, 0]}>
             <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
               <Space>
-                <Button type="primary" htmlType="submit">
-                  添加
+                <Button type="primary" onClick={_addVersion}>
+                  添加版本记录
                 </Button>
               </Space>
             </Form.Item>
@@ -148,7 +133,7 @@ const BannerListPage: React.FC = () => {
           total: total,
         }}
       />
-      <AEBannerDialog
+      <AEVersionCDialog
         data={selectedData}
         mode={dialogMode}
         onSuccess={_onDialogSuccess}
@@ -159,4 +144,4 @@ const BannerListPage: React.FC = () => {
   )
 }
 
-export default BannerListPage
+export default VersionCPage
