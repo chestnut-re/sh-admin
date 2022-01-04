@@ -1,6 +1,6 @@
 /*
  * @Description: 添加角色
- * @LastEditTime: 2021-12-28 17:48:13
+ * @LastEditTime: 2022-01-04 15:34:47
  */
 
 import { Form, Input, Modal, Cascader, Switch, message } from 'antd'
@@ -116,7 +116,7 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
     })
   }
   const _getFucValue = (e) => {
-    setRoleList([...new Set(roleList.concat(e))])
+    setRoleList(e)
   }
   const _setAdminType = (e) => {
     setAdminType(e)
