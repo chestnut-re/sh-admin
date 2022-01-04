@@ -1,12 +1,12 @@
 import { Tabs } from 'antd'
 import React from 'react'
-import OpinionBPage from './components/opinion-b'
-import OpinionCPage from './components/opinion-c'
+import VersionBPage from './components/version-b'
+import VersionCPage from './components/version-c'
 
 /**
- * 意见反馈
+ * 版本管理
  */
-const OpinionPage: React.FC = () => {
+const VersionPage: React.FC = () => {
   const onChange = (activeKey: string) => {
     console.log(activeKey)
   }
@@ -15,14 +15,14 @@ const OpinionPage: React.FC = () => {
     <div className="page-root">
       <Tabs defaultActiveKey="1" onChange={onChange}>
         <Tabs.TabPane tab="C端版本管理" key="1">
-          <OpinionCPage />
+          <VersionBPage />
         </Tabs.TabPane>
         <Tabs.TabPane tab="B端版本管理" key="2">
-          <OpinionBPage />
+          <VersionCPage />
         </Tabs.TabPane>
       </Tabs>
     </div>
   )
 }
 
-export default OpinionPage
+export default VersionPage

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Col, Row, Button, Table, Space } from 'antd'
+import { Form, Col, Row, Button, Table, Space, Modal } from 'antd'
 import './index.less'
 import AEBannerDialog, { DialogMode } from './components/AEBannerDialog'
 import { BannerService } from '@/service/BannerService'
@@ -19,6 +19,7 @@ const BannerListPage: React.FC = () => {
   const [pageIndex, setPageIndex] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [total, setTotal] = useState()
+  const [visible, setVisible] = useState(false)
 
   const [showDialog, setShowDialog] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
@@ -102,17 +103,18 @@ const BannerListPage: React.FC = () => {
       render: (text: any, record: any) => (
         <Space size="middle">
           <Button onClick={() => _editDialog(record)}>编辑</Button>
-          <Button onClick={() => _delItem(record)}>删除</Button>
+          <Button onClick={() => _delete(record)}>删除</Button>
         </Space>
       ),
     },
   ]
 
   /**删除 */
-  const _delItem = (record) => {
-    BannerService.del({ id: record.id }).then((res) => {
+  const _delItem = () => {
+    BannerService.del({ id: selectedData.id }).then((res) => {
       if (res.code === HttpCode.success) {
         loadData(pageIndex)
+        setVisible(false)
       }
     })
   }
@@ -147,6 +149,15 @@ const BannerListPage: React.FC = () => {
   const onPaginationChange = (page: number, pageSize: number) => {
     setPageIndex(page)
     setPageSize(pageSize)
+  }
+
+  const handleCancel = () => {
+    setVisible(false)
+  }
+
+  const _delete = (record) => {
+    setVisible(true)
+    setSelectedData(record)
   }
 
   return (
@@ -190,6 +201,9 @@ const BannerListPage: React.FC = () => {
         show={showDialog}
         onClose={_onDialogClose}
       />
+      <Modal title="提示" visible={visible} okText="确认删除" cancelText="取消" onOk={_delItem} onCancel={handleCancel}>
+        <span>是否确认删除?</span>
+      </Modal>
     </div>
   )
 }
