@@ -6,6 +6,7 @@ import './index.less'
 import { ProductionListService } from '@/service/ProductionListService'
 import TimeColumn from '@/components/tableColumn/TimeColumn'
 import TravelModeColumn from '@/components/tableColumn/TravelModeColumn'
+import { useHistory } from 'react-router-dom'
 
 interface Props {
   /**普通，待发布 */
@@ -16,6 +17,7 @@ interface Props {
  * 商品库
  */
 const ProductionListPage: React.FC<Props> = observer(({ type }) => {
+  const history = useHistory()
   const [form] = Form.useForm()
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
@@ -46,13 +48,16 @@ const ProductionListPage: React.FC<Props> = observer(({ type }) => {
     {
       title: '商品名称',
       dataIndex: 'goodsName',
+      width: 150,
     },
     {
       title: '商品类型标签',
       dataIndex: 'goodsTypeTag',
+      width: 100,
     },
     {
       title: '出行类型',
+      width: 100,
       render: (text, record, index) => <TravelModeColumn travelMode={record?.travelMode} />,
     },
     {
@@ -95,8 +100,16 @@ const ProductionListPage: React.FC<Props> = observer(({ type }) => {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button>查看</Button>
+          <Button
+            onClick={() => {
+              history.push(`/production/production-detail?id=${record.id}`)
+            }}
+          >
+            查看
+          </Button>
           <Button>编辑</Button>
+          <Button>下架</Button>
+          <Button>禁用</Button>
         </Space>
       ),
     },
@@ -111,13 +124,16 @@ const ProductionListPage: React.FC<Props> = observer(({ type }) => {
     {
       title: '商品名称',
       dataIndex: 'goodsName',
+      width: 150,
     },
     {
       title: '商品类型标签',
       dataIndex: 'goodsTypeTag',
+      width: 100,
     },
     {
       title: '出行类型',
+      width: 100,
       render: (text, record, index) => <TravelModeColumn travelMode={record?.travelMode} />,
     },
     {
@@ -148,8 +164,21 @@ const ProductionListPage: React.FC<Props> = observer(({ type }) => {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button>查看</Button>
-          <Button>编辑</Button>
+          <Button
+            onClick={() => {
+              history.push(`/production/production-detail?id=${record.id}`)
+            }}
+          >
+            查看
+          </Button>
+          <Button
+            onClick={() => {
+              console.log(record)
+              history.push(`/production/production-config-detail?id=${record.id}`)
+            }}
+          >
+            配置详情
+          </Button>
         </Space>
       ),
     },
@@ -172,6 +201,11 @@ const ProductionListPage: React.FC<Props> = observer(({ type }) => {
     form.resetFields()
     setPageIndex(1)
     loadData(1)
+  }
+
+  /**添加商品 */
+  const _addProduction = () => {
+    history.push('/production/release-product')
   }
 
   return (
@@ -213,12 +247,12 @@ const ProductionListPage: React.FC<Props> = observer(({ type }) => {
           <Row justify="end">
             <Form.Item>
               <Space>
-                <Button type="primary" htmlType="button">
+                <Button type="primary" htmlType="button" onClick={_addProduction}>
                   添加商品
                 </Button>
-                <Button htmlType="button" type="primary">
+                {/* <Button htmlType="button" type="primary">
                   下架
-                </Button>
+                </Button> */}
               </Space>
             </Form.Item>
           </Row>
