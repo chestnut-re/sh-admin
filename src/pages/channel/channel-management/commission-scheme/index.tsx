@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道分佣列表
- * @LastEditTime: 2021-12-31 10:32:59
+ * @LastEditTime: 2022-01-04 11:30:49
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
 import { InputTemp } from '@/components/filter/formItem'
 import AddCommissionSchemeDialog, { DialogMode } from './components/AddCommissionSchemeDialog'
-
+import { formateTime } from '@/utils/timeUtils'
 import ChannelListTree from '../components/ChannelListTree'
 import ChannelService from '@/service/ChannelService'
 import { cityDispose, getMaxFloor, getTwoTier, getLastTwoTier } from '@/utils/tree'
@@ -82,6 +82,7 @@ const CommissionSchemePage: React.FC = () => {
     {
       title: '创建日期',
       dataIndex: 'createTime',
+      render: (_text, record) => `${formateTime(record.createTime)} `,
     },
 
     {
