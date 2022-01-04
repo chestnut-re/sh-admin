@@ -23,7 +23,7 @@ const TravelInfo: React.FC = () => {
       </div>
       <div className="tabs">
         <Tabs onChange={callback} type="card">
-          {productionDetailStore.data?.goodsPrices.map((item, index) => {
+          {productionDetailStore.data?.goodsPrices?.map((item, index) => {
             return (
               <TabPane tab={`${item.startDate} · ¥${item.personMarkPrice}`} key={index}>
                 <div className="all-day">
@@ -32,7 +32,7 @@ const TravelInfo: React.FC = () => {
                       <div className="what-day" key={num}>
                         <div className="every">{li.whatDay}</div>
                         <div className="every-info">
-                          {li.travelDetails.map((e, o) => {
+                          {li.travelDetails?.map((e, o) => {
                             return (
                               <div className="day-info" key={o}>
                                 <div className="travelTime">{e.travelTime}</div>
