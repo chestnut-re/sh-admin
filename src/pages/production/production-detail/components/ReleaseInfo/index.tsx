@@ -14,6 +14,14 @@ const ReleaseInfo: React.FC = () => {
       <h4>4. 发布信息</h4>
       <div className="box">
         <div className="left">
+          <div>
+            审核结果:{' '}
+            {productionDetailStore.data?.checkState == 0
+              ? '待审核'
+              : productionDetailStore.data?.checkState == 1
+              ? '商品审核通过'
+              : '商品审核不通过'}
+          </div>
           <div>添加库存</div>
           <div>代币折现</div>
           <div>分佣方案</div>
