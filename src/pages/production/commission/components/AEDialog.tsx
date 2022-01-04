@@ -1,4 +1,4 @@
-import { Form, Input, Modal, DatePicker, Row, Col, InputNumber, Radio } from 'antd'
+import { Form, Input, Modal, InputNumber, Radio } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
 import { HttpCode } from '@/constants/HttpCode'
 import { SubCenterSelect } from '@/components/formItem/SubCenterSelect'
@@ -41,10 +41,10 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
       .validateFields()
       .then((formData) => {
         console.log(formData, day, type)
-        onSuccess()
         if (mode === 'add') {
           ProductionCommission.add({ ...formData, saleSettleDay: day, saleSettleType: type }).then((res) => {
             if (res.code === HttpCode.success) {
+              onSuccess()
             }
           })
         } else {

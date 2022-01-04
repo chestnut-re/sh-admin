@@ -32,8 +32,33 @@ export class ProductionService {
   /**
    * 删除商品
    */
-  static del(data): Promise<any> {
-    return axios.post('/api/operation/goods/delete', data)
+  static del(id): Promise<any> {
+    return axios.put(`/api/operation/goods/delete/${id}`)
+  }
+
+  /**
+   * 商品 soldOut
+   */
+  static soldOut(id): Promise<any> {
+    return axios.put(`/api/operation/goods/soldOut/${id}`)
+  }
+
+  /**
+   * 商品 禁用
+   */
+  static ban(id): Promise<any> {
+    return axios.put(`/api/operation/goods/ban/${id}`)
+  }
+
+  /**
+   * 商品发布审核信息获取，回显
+   */
+  static getPublishCheckInfo(id: string): Promise<any> {
+    return axios.get(`/api/operation/check/publishCheckInfo`, {
+      params: {
+        goodsId: id,
+      },
+    })
   }
 }
 
@@ -54,11 +79,4 @@ export const releaseRecord = (data): Promise<any> => {
 
 export const sortList = (data): Promise<any> => {
   return axios.post('/api/operation/goods/sortManagement/query', data)
-}
-
-/**
- * 商品列表
- */
-export const goodsList = (data): Promise<any> => {
-  return axios.post('/api/operation/goods/platform/page', data)
 }

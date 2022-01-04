@@ -9,6 +9,9 @@ interface Props {
  * 时间列
  */
 const TimeColumn: React.FC<Props> = ({ time }) => {
+  if (!time) {
+    return <p></p>
+  }
   return <p>{dayjs(time).format('YYYY-MM-DD HH:mm:ss')}</p>
 }
 

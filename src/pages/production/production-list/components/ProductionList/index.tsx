@@ -7,6 +7,7 @@ import { ProductionListService } from '@/service/ProductionListService'
 import TimeColumn from '@/components/tableColumn/TimeColumn'
 import TravelModeColumn from '@/components/tableColumn/TravelModeColumn'
 import { useHistory } from 'react-router-dom'
+import { ProductionService } from '@/service/ProductionService'
 
 interface Props {
   /**普通，待发布 */
@@ -30,11 +31,10 @@ const ProductionListPage: React.FC<Props> = observer(({ type }) => {
 
   const loadData = (pageIndex) => {
     const params = form.getFieldsValue()
-    let goodsDto = {}
     if (type === 'unRelease') {
-      goodsDto = { state: 1 }
+      params.state = 1
     }
-    ProductionListService.list({ current: pageIndex, size: pageSize, ...params, goodsDto }).then((res) => {
+    ProductionListService.list({ current: pageIndex, size: pageSize, ...params }).then((res) => {
       setData(res.data.records)
       setTotal(res.data.total)
     })
@@ -94,7 +94,7 @@ const ProductionListPage: React.FC<Props> = observer(({ type }) => {
     },
     {
       title: '创建时间',
-      render: (text, record, index) => <TimeColumn time={record?.createTime} />,
+      render: (text, record, index) => <TimeColumn time={record?.updateDate} />,
     },
     {
       title: '操作',
@@ -108,8 +108,28 @@ const ProductionListPage: React.FC<Props> = observer(({ type }) => {
             查看
           </Button>
           <Button>编辑</Button>
-          <Button>下架</Button>
-          <Button>禁用</Button>
+          <Button
+            onClick={() => {
+              ProductionService.soldOut(record.id).then((res) => {
+                if (res.code === '200') {
+                  loadData(pageIndex)
+                }
+              })
+            }}
+          >
+            下架
+          </Button>
+          <Button
+            onClick={() => {
+              ProductionService.ban(record.id).then((res) => {
+                if (res.code === '200') {
+                  loadData(pageIndex)
+                }
+              })
+            }}
+          >
+            禁用
+          </Button>
         </Space>
       ),
     },
