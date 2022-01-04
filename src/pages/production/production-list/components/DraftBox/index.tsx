@@ -1,16 +1,19 @@
 import { observer } from 'mobx-react-lite'
 import React, { useState, useEffect } from 'react'
-import { Button, Col, Form, Row, Space, Table, Divider, DatePicker } from 'antd'
+import { Button, Col, Form, Row, Space, Table, DatePicker, message } from 'antd'
 import { InputTemp } from '@/components/filter/formItem'
 import './index.less'
 import { ProductionDraftService } from '@/service/ProductionDraftService'
 import TimeColumn from '@/components/tableColumn/TimeColumn'
 import { formateTime } from '@/utils/timeUtils'
+import { useHistory } from 'react-router-dom'
+import { ProductionService } from '@/service/ProductionService'
 
 /**
  * 商品库 草稿箱
  */
 const DraftListPage: React.FC = observer(() => {
+  const history = useHistory()
   const [form] = Form.useForm()
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
@@ -58,8 +61,25 @@ const DraftListPage: React.FC = observer(() => {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button>编辑</Button>
-          <Button>删除</Button>
+          <Button
+            onClick={() => {
+              console.log(record)
+              history.push(`/production/release-product?id=${record.id}`)
+            }}
+          >
+            编辑
+          </Button>
+          <Button
+            onClick={() => {
+              ProductionService.del({ id: record.id }).then((res) => {
+                if (res.code === '200') {
+                  message.success('删除成功')
+                }
+              })
+            }}
+          >
+            删除
+          </Button>
         </Space>
       ),
     },

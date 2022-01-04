@@ -28,6 +28,13 @@ export class ProductionService {
   static get(id: string): Promise<any> {
     return axios.get(`/api/operation/goods/get/${id}`)
   }
+
+  /**
+   * 删除商品
+   */
+  static del(data): Promise<any> {
+    return axios.post('/api/operation/goods/delete', data)
+  }
 }
 
 /**
