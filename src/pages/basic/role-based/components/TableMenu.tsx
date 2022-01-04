@@ -2,12 +2,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description:功能权限
- * @LastEditTime: 2021-12-28 17:48:54
+ * @LastEditTime: 2022-01-04 15:44:10
  */
 import { Table, Switch, Space, message, Menu } from 'antd'
 import React, { useState, useEffect } from 'react'
 import { getMenusType } from '@/service/menu'
 import { cityDispose } from '@/utils/tree'
+import {isInclude} from '@/utils/newTree'
 import ChannelService from '@/service/ChannelService'
 import { getRenderPropValue } from 'antd/lib/_util/getRenderPropValue'
 interface Props {
@@ -31,12 +32,13 @@ const TableMenu: React.FC<Props> = ({
   const [checkStrictly, setCheckStrictly] = useState(false)
   const [selectedRowKeys, setSelectedRowKeys] = useState([])
   const [switchFc, setSwitchFunc] = useState('admin')
-
+const [tobeActList,setTobeActList] = useState([])
+const [adminActList,setAdminActList] = useState([])
   const [menu, setMenu] = useState(false)
 
   useEffect(() => {
     init()
-
+ 
     // setSelectedRowKeys([])
   }, [switchFc])
 
@@ -44,7 +46,31 @@ const TableMenu: React.FC<Props> = ({
     const res = await getMenusType({
       platformType: switchFc == 'admin' ? 0 : 1,
     })
-    setMenu(cityDispose(res?.data, 'children'))
+    const menuList = cityDispose(res?.data, 'children')
+    setMenu(menuList)
+    let adminActList = []
+    let tobeActList = []
+    roleList.forEach(element => {
+      console.log(isInclude(menuList,element),'isInclude(menuList,element)')
+      if(isInclude(menuList,element)){
+        if(switchFc=='admin'){
+          adminActList.push(element)
+        }else{
+          tobeActList.push(element)
+        }
+      }else{
+        if(switchFc!='admin'){
+          adminActList.push(element)
+        }else{
+          tobeActList.push(element)
+        }
+      }
+    });
+    setAdminActList(adminActList)
+    setTobeActList(tobeActList)
+    console.log(tobeActList,'tobeActList')
+    console.log(adminActList,'adminActList')
+    
   }
   const columns = [
     {
@@ -68,18 +94,22 @@ const TableMenu: React.FC<Props> = ({
   ]
 
   const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      getFucValue(selectedRowKeys)
-      setSelectedRowKeys(selectedRowKeys)
-      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+    onChange: (selectedRowKeys, selectedRows,e) => {      
+      if(switchFc =='admin'){
+        getFucValue(tobeActList.concat(Array.from(selectedRowKeys)))
+        setSelectedRowKeys(tobeActList.concat(Array.from(selectedRowKeys)))
+      }else{
+        getFucValue(adminActList.concat(Array.from(selectedRowKeys)))
+        setSelectedRowKeys(adminActList.concat(Array.from(selectedRowKeys)))
+      }
+      // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
     },
-
-    onSelect: (record, selected, selectedRows) => {
-      console.log(record, selected, selectedRows)
-    },
-    onSelectAll: (selected, selectedRows, changeRows) => {
-      console.log(selected, selectedRows, changeRows)
-    },
+    // onSelect: (record, selected, selectedRows) => {
+    //   // console.log(record, selected, selectedRows)
+    // },
+    // onSelectAll: (selected, selectedRows, changeRows) => {
+    //   // console.log(selected, selectedRows, changeRows)
+    // },
     selectedRowKeys: roleList,
   }
   const save = () => {

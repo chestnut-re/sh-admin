@@ -9,7 +9,7 @@ const LimitOrderTime: React.FC = () => {
   const { productionStore } = useStore()
 
   const _onChange = (value) => {
-    productionStore.addOrderDeadline(value)
+    productionStore.addRefundDeadline(value)
   }
 
   return (
@@ -18,7 +18,7 @@ const LimitOrderTime: React.FC = () => {
       <span className="text">出发前</span>
       <div className="inputNumber">
         <InputNumber
-          value={productionStore.refundDeadline}
+          value={productionStore.data.refundDeadline}
           controls={false}
           size="small"
           min={1}

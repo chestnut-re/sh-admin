@@ -69,19 +69,41 @@ class ProductionData {
     })
   }
 
-  initData() {
-    console.log('ProductionData initData')
-
-    const nowDay = Date.now()
-    this.data = {
-      travelMode: 0, // 出行类型
-      orderDeadline: 24, //下单截至时间，单位小时
-      refundDeadline: 24, //退款截至时间，单位小时
-      refundAndChangePolicy: '', //退改政策 详情
-      goodsPrices: [
-        { startDate: nowDay, endDate: nowDay, key: getNanoId(), travels: [{ whatDay: whatDay[0], key: getNanoId() }] },
-      ],
+  initData(draftData) {
+    if (draftData) {
+      this.data = {
+        ...draftData,
+      }
+      this.data.goodsPrices = this.data.goodsPrices.map((i) => {
+        i.key = getNanoId()
+        i.travels = i.travels?.map((t) => {
+          t.key = getNanoId()
+          t.travelDetails = t.travelDetails?.map((tD) => {
+            tD.key = getNanoId()
+            return tD
+          })
+          return t
+        })
+        return i
+      })
+    } else {
+      const nowDay = Date.now()
+      this.data = {
+        travelMode: 0, // 出行类型
+        orderDeadline: 24, //下单截至时间，单位小时
+        refundDeadline: 24, //退款截至时间，单位小时
+        refundAndChangePolicy: '', //退改政策 详情
+        goodsPrices: [
+          {
+            startDate: nowDay,
+            endDate: nowDay,
+            key: getNanoId(),
+            travels: [{ whatDay: whatDay[0], key: getNanoId() }],
+          },
+        ],
+      }
     }
+    console.log('ProductionData initData', JSON.parse(JSON.stringify(this.data)))
   }
 
   /**添加基础信息 */
@@ -108,6 +130,13 @@ class ProductionData {
   addOrderDeadline(value: number) {
     console.log(`addOrderDeadline ${value}`)
     this.data.orderDeadline = value
+    console.log(this.data)
+  }
+
+  /**退款截至时间，单位小时 */
+  addRefundDeadline(value: number) {
+    console.log(`refundDeadline ${value}`)
+    this.data.refundDeadline = value
     console.log(this.data)
   }
 
@@ -226,7 +255,7 @@ class ProductionData {
 
   /**清除数据，退出页面时候调用 */
   clearData() {
-    this.initData()
+    this.initData(null)
   }
 }
 

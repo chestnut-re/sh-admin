@@ -4,6 +4,9 @@ import { useStore } from '@/store/context'
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import BaseInfo from './components/BaseInfo'
+import DetailPageInfo from './components/DetailPageInfo'
+import ReleaseInfo from './components/ReleaseInfo'
+import TravelInfo from './components/TravelInfo'
 
 /**
  * 商品详情页
@@ -27,8 +30,10 @@ const ProductionDetail: React.FC = () => {
 
   return (
     <div>
-      商品详情页
       <BaseInfo />
+      <TravelInfo />
+      <DetailPageInfo />
+      <ReleaseInfo />
     </div>
   )
 }

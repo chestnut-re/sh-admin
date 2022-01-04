@@ -21,10 +21,8 @@ const LimitRefundTime: React.FC = () => {
         <InputNumber
           controls={false}
           size="small"
-          value={productionStore.orderDeadline}
+          value={productionStore.data.orderDeadline}
           min={1}
-          max={100}
-          defaultValue={24}
           onChange={_onChange}
         />
       </div>
