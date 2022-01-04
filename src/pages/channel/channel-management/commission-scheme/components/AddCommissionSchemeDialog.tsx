@@ -1,6 +1,6 @@
 /*
  * @Description: 添加分佣方案
- * @LastEditTime: 2022-01-04 11:30:12
+ * @LastEditTime: 2022-01-04 17:18:50
  */
 
 import { Form, Input, Modal, Cascader, message, Row, Col, InputNumber, Button, Tooltip } from 'antd'
@@ -62,24 +62,23 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
           ChannelService.get(form.getFieldValue('id')).then((res) => {
             const resData = res?.data
             const mapData = res.data?.channelDistAuth ?? []
-            const dataList = mapData
-              .map((res, index, array) => {
-                let mapList
-                if (res['level'] == '2') {
-                  mapList = array.slice(0, index + 1) ?? []
-                } else {
-                  mapList = array.slice(0, index) ?? []
+            const dataList = mapData.map((res, index, array) => {
+              let mapList
+              if (res['level'] == '2') {
+                mapList = array.slice(0, index + 1) ?? []
+              } else {
+                mapList = array.slice(0, index) ?? []
+              }
+              res.saleScalePlan = mapList.filter((mRes, Ci) => {
+                if (mRes.saleAuth == 1) {
+                  return res
                 }
-                res.saleScalePlan = mapList.filter((mRes, Ci) => {
-                  if (mRes.saleAuth == 1) {
-                    return res
-                  }
-                })
-
-                res.isGroupServiceFee = resData?.isGroupServiceFee
-                return res
               })
-              .filter((res) => res?.directAuth == 1)
+
+              res.isGroupServiceFee = resData?.isGroupServiceFee
+              return res
+            })
+            // .filter((res) => res?.directAuth == 1)
             //
             const isList = getInit(dataList, resData?.presetBonus, resData?.isGroupServiceFee)
             form.setFieldsValue({
@@ -284,21 +283,26 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
               <>
                 <Form.Item label="直销渠道">{res?.level}级渠道</Form.Item>
                 <Row key={index} gutter={23}>
-                  <Col span={12} style={{ textAlign: 'right' }}>
-                    <Form.Item
-                      labelCol={{ offset: 4 }}
-                      label="直销分佣比例"
-                      rules={[
-                        {
-                          pattern: /^([1-9]\d|\d)$/,
-                          message: '请输入0-99的整数!',
-                        },
-                      ]}
-                      name={['channelPlanList', index, 'directScale']}
-                    >
-                      <InputNumber onChange={changeInput} disabled={mode == 'see'} max={100} min={0} addonAfter="%" />
-                    </Form.Item>
-                  </Col>
+                  {res.directAuth == 1 ? (
+                    <Col span={12} style={{ textAlign: 'right' }}>
+                      <Form.Item
+                        labelCol={{ offset: 4 }}
+                        label="直销分佣比例"
+                        rules={[
+                          {
+                            pattern: /^([1-9]\d|\d)$/,
+                            message: '请输入0-99的整数!',
+                          },
+                        ]}
+                        name={['channelPlanList', index, 'directScale']}
+                      >
+                        <InputNumber onChange={changeInput} disabled={mode == 'see'} max={100} min={0} addonAfter="%" />
+                      </Form.Item>
+                    </Col>
+                  ) : (
+                    ''
+                  )}
+
                   {res.isGroupServiceFee == 1 ? (
                     <Col span={12} style={{ textAlign: 'right' }}>
                       <Form.Item

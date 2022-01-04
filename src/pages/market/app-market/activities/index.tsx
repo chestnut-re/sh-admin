@@ -11,7 +11,7 @@ import { HttpCode } from '@/constants/HttpCode'
 const BannerListPage: React.FC = () => {
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(0)
-  const [pageSize, setPageSize] = useState(10)
+  const [pageSize, setPageSize] = useState(20)
   const [total, setTotal] = useState()
 
   const [showDialog, setShowDialog] = useState(false)
@@ -31,31 +31,47 @@ const BannerListPage: React.FC = () => {
 
   const columns = [
     {
-      title: '序号',
+      title: '排序编号',
       render: (text, record, index) => `${index + 1}`,
     },
     {
-      title: '标题',
-      dataIndex: 'activityTitle',
-    },
-    {
-      title: '副标题',
-      dataIndex: 'activitySubtitle',
-    },
-    {
-      title: '活动跳转地址',
-      dataIndex: 'activityUrl',
+      title: '主题预览图',
+      dataIndex: 'activityImg',
     },
     {
       title: '专题页头图',
-      dataIndex: 'activityPreviewImg',
+      dataIndex: 'activityDetailImg',
     },
     {
-      title: '活动展示开始时间',
+      title: '主题名称',
+      dataIndex: 'activityTitle',
+    },
+    {
+      title: '关联商品数量',
+      dataIndex: 'goodsIdList',
+      render: (text, record, index) => `${record.split(',')?.length}`,
+    },
+    {
+      title: '链接',
       dataIndex: 'startDate',
     },
     {
-      title: '活动展示结束时间',
+      title: '状态',
+      dataIndex: 'endDate',
+    },
+    {
+      title: '展示时段',
+      dataIndex: 'endDate',
+    },
+    {
+      title: '剩余展示时长',
+      dataIndex: 'endDate',
+    },
+    {
+      title: '添加人',
+      dataIndex: 'endDate',
+    },  {
+      title: '添加时间',
       dataIndex: 'endDate',
     },
     {
