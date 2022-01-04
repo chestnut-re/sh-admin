@@ -18,30 +18,16 @@ export class ProductionAuditService {
   }
 
   /**
-   * get
+   * 发布审核
    */
-  static get({ id }): Promise<any> {
-    return axios.get(`/api/operation/banner/get`, { params: {} })
+  static publishAudit(data): Promise<any> {
+    return axios.post(`/api/operation/check/publishCheck`, data)
   }
 
   /**
-   * 删除
+   * 上架审核
    */
-  static del({ id }): Promise<any> {
-    return axios.delete(`/api/operation/banner/delete/${id}`)
-  }
-
-  /**
-   * 新增
-   */
-  static add(data): Promise<any> {
-    return axios.post(`/api/operation/banner/save`, data)
-  }
-
-  /**
-   * 编辑
-   */
-  static edit(data): Promise<any> {
-    return axios.put(`/api/operation/banner/update`, data)
+  static putOnAudit(data): Promise<any> {
+    return axios.post(`/api/operation/check/putawayCheck`, data)
   }
 }

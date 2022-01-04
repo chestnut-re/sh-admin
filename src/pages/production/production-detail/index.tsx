@@ -5,7 +5,10 @@ import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import BaseInfo from './components/BaseInfo'
 import DetailPageInfo from './components/DetailPageInfo'
+import PutOnInfo from './components/PutOnInfo'
+import PutOnInfoShow from './components/PutOnInfoShow'
 import ReleaseInfo from './components/ReleaseInfo'
+import ReleaseInfoShow from './components/ReleaseInfoShow'
 import TravelInfo from './components/TravelInfo'
 
 /**
@@ -17,8 +20,8 @@ const ProductionDetail: React.FC = () => {
   const history = useHistory()
 
   useEffect(() => {
-    console.log(query.get('goodsId'))
-    ProductionService.get(query.get('goodsId') ?? '').then((res) => {
+    console.log(query.get('id'))
+    ProductionService.get(query.get('id') ?? '').then((res) => {
       console.log(res)
       productionDetailStore.init(res.data)
     })
@@ -28,12 +31,20 @@ const ProductionDetail: React.FC = () => {
     }
   }, [])
 
+  const type = query.get('type')
+
   return (
     <div>
       <BaseInfo />
       <TravelInfo />
       <DetailPageInfo />
-      <ReleaseInfo />
+      {/* 发布审核 */}
+      {type === 'publish' && <ReleaseInfo />}
+      {type === 'release' && <ReleaseInfoShow />}
+      {/* 上架审核 */}
+      {type === 'release' && <PutOnInfo />}
+      {/* 查看详情 */}
+      {type === 'detail' && <PutOnInfoShow />}
     </div>
   )
 }

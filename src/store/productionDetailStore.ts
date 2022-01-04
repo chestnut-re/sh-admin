@@ -20,8 +20,21 @@ class ProductionDetailData {
 
   init(_data) {
     this.data = _data
+    if (!this.data) return
+    if (!this.data.goodsDetail) {
+      this.data.goodsDetail = {
+        goodsDetailStart: { key: getNanoId() },
+        goodsDetailEnd: { key: getNanoId() },
+        goodsDetailPage: [
+          {
+            key: getNanoId(),
+          },
+        ],
+      }
+      return
+    }
     // 初始化key
-    this.data.goodsDetail.goodsDetailPage = this.data.goodsDetail.goodsDetailPage.map((item) => {
+    this.data.goodsDetail.goodsDetailPage = this.data.goodsDetail?.goodsDetailPage?.map((item) => {
       item.key = getNanoId()
       return item
     })
@@ -29,14 +42,14 @@ class ProductionDetailData {
 
   /**添加模版 */
   addTemplate() {
-    this.data.goodsDetail.goodsDetailPage.push({
+    this.data.goodsDetail?.goodsDetailPage?.push({
       key: getNanoId(),
     })
   }
 
   /**删除模版 */
   removeTemplate(key: string) {
-    this.data.goodsDetail.goodsDetailPage = this.data.goodsDetail.goodsDetailPage.filter((i) => i.key !== key)
+    this.data.goodsDetail.goodsDetailPage = this.data.goodsDetail?.goodsDetailPage?.filter((i) => i.key !== key)
   }
 
   /**编辑模版，保存模版 */

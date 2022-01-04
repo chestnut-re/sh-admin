@@ -71,7 +71,7 @@ const DraftListPage: React.FC = observer(() => {
           </Button>
           <Button
             onClick={() => {
-              ProductionService.del({ id: record.id }).then((res) => {
+              ProductionService.del(record.id).then((res) => {
                 if (res.code === '200') {
                   message.success('删除成功')
                 }

@@ -5,6 +5,7 @@ import { ProductionAuditService } from '@/service/ProductionAuditService'
 import TimeColumn from '@/components/tableColumn/TimeColumn'
 import { ProductionReleaseService } from '@/service/ProductionReleaseService'
 import { useHistory } from 'react-router-dom'
+import GoodsAuditState from '@/components/tableColumn/GoodsAuditState'
 
 interface Props {
   /**发布，上架 */
@@ -68,7 +69,7 @@ const AuditScreen: React.FC<Props> = ({ type }) => {
     {
       title: '审核状态',
       align: 'center',
-      dataIndex: 'checkState',
+      render: (text, record, index) => <GoodsAuditState checkState={record?.checkState} />,
     },
     {
       title: '驳回原因',
@@ -93,22 +94,24 @@ const AuditScreen: React.FC<Props> = ({ type }) => {
             onClick={() => {
               console.log(record)
               history.push(
-                `/production/production-detail?channelGoodsId=${record.channelGoodsId}&goodsId=${record.goodsId}`
+                `/production/production-detail?channelGoodsId=${record.channelGoodsId}&goodsId=${record.goodsId}&id=${record.goodsId}&type=${type}`
               )
             }}
           >
             查看
           </Button>
-          <Button
-            onClick={() => {
-              console.log(record)
-              history.push(
-                `/production/production-detail?channelGoodsId=${record.channelGoodsId}&goodsId=${record.goodsId}`
-              )
-            }}
-          >
-            审核
-          </Button>
+          {record?.checkState === 0 && (
+            <Button
+              onClick={() => {
+                console.log(record)
+                history.push(
+                  `/production/production-detail?channelGoodsId=${record.channelGoodsId}&goodsId=${record.goodsId}&id=${record.goodsId}&type=${type}`
+                )
+              }}
+            >
+              审核
+            </Button>
+          )}
         </Space>
       ),
     },
@@ -168,7 +171,7 @@ const AuditScreen: React.FC<Props> = ({ type }) => {
         </Form>
       </div>
       <Table
-        rowKey="goodsNo"
+        rowKey="goodsId"
         columns={columns}
         scroll={{ x: 'max-content' }}
         dataSource={[...data]}

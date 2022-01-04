@@ -115,6 +115,7 @@ export const SubCenterSelect: FC<Props> = ({ ...props }) => {
                   onChange={(value) => {
                     projects[index].id = subCenters[value].id
                     projects[index].level = subCenters[value].level
+                    projects[index].channelName = subCenters[value].name
                     setProject([...projects])
                   }}
                 >
@@ -134,6 +135,7 @@ export const SubCenterSelect: FC<Props> = ({ ...props }) => {
                   onChange={(value) => {
                     projects[index].id = subCenters[value].id
                     projects[index].level = subCenters[value].level
+                    projects[index].channelName = subCenters[value].name
                     setProject([...projects])
                   }}
                 >

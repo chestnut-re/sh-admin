@@ -82,6 +82,19 @@ const ProductionConfigDetail: React.FC = () => {
     })
   }
 
+  /**保存 */
+  const _save = () => {
+    ProductionService.save(productionDetailStore.data).then((res) => {
+      console.log(res)
+      if (res.code === '200') {
+        message.success('成功')
+        history.goBack()
+      } else {
+        message.error(res.msg)
+      }
+    })
+  }
+
   return (
     <div className="ProductionConfigDetail__root">
       {productionDetailStore?.data?.goodsDetail && (
@@ -96,6 +109,7 @@ const ProductionConfigDetail: React.FC = () => {
       )}
       <Button onClick={_addTemplate}>添加模版</Button>
       <Button onClick={_submit}>提交审核</Button>
+      <Button onClick={_save}>保存</Button>
 
       <AEDialog data={selectedData} onSuccess={_onDialogSuccess} show={showDialog} onClose={_onDialogClose} />
     </div>
