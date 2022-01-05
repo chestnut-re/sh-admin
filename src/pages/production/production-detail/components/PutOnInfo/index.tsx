@@ -63,7 +63,7 @@ const PutOnInfo: React.FC = () => {
   return (
     <div className="PutOnInfo__root">
       <h4>5. 上架申请信息</h4>
-      {/* <Form name="basic" initialValues={{ remember: true }} autoComplete="off" form={form} {...layout}>
+      <Form name="basic" initialValues={{ remember: true }} autoComplete="off" form={form} {...layout}>
         <Form.Item label="审核结果" name="checkState" rules={[{ required: true }]}>
           <Radio.Group>
             <Radio value={1}>通过</Radio>
@@ -73,24 +73,14 @@ const PutOnInfo: React.FC = () => {
         <Form.Item label="原因" name="checkMag" rules={[{ required: false }]}>
           <Input />
         </Form.Item>
-        
-        {/* <Form.Item label="分佣方案" name="distPlanId" rules={[{ required: true }]}>
+
+        <Form.Item label="分佣方案" name="distPlanId" rules={[{ required: true }]}>
           <Commission onChange={_onCommissionChange} />
         </Form.Item>
-        <div>{JSON.stringify(commission)}</div> */}
+        <div>{JSON.stringify(commission)}</div>
 
         <Button onClick={_submit}>提交发布</Button>
-      </Form> */}
-      <div className="info">
-        <div className="one-info">
-          <div>申请渠道 </div>
-          <div>责任区域 </div>
-        </div>
-        <div>申请人 </div>
-        <div>申请时间 </div>
-        <div>分佣方案 </div>
-        <div>表格</div>
-      </div>
+      </Form>
     </div>
   )
 }

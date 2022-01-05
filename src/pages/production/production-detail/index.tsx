@@ -11,6 +11,7 @@ import ReleaseInfo from './components/ReleaseInfo'
 import ReleaseInfoShow from './components/ReleaseInfoShow'
 import TravelInfo from './components/TravelInfo'
 
+import './index.less'
 /**
  * 商品详情页
  */
@@ -34,7 +35,7 @@ const ProductionDetail: React.FC = () => {
   const type = query.get('type')
 
   return (
-    <div>
+    <div className="ProductionDetail__root">
       {/* 基本信息 */}
       <BaseInfo />
       {/* 行程信息 */}
@@ -46,9 +47,10 @@ const ProductionDetail: React.FC = () => {
       {/* 上架审核 ->发布信息 */}
       {type === 'release' && <ReleaseInfoShow />}
       {/* 上架审核 -> 上架信息 */}
-      {type === 'release' && <PutOnInfo />}
+      {/* {type === 'release' && <PutOnInfo />} */}
       {/* 查看详情页 */}
-      {type === 'detail' && <PutOnInfoShow />}
+      {/* {type === 'detail' && <PutOnInfoShow />} */}
+      {type === 'release' && <PutOnInfoShow />}
     </div>
   )
 }
