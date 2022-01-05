@@ -1,9 +1,12 @@
 import { ActivitiesService } from '@/service/ActivitiesService'
-import { Form, Input, Modal, Select, DatePicker } from 'antd'
+import { Form, Input, Modal, Select, DatePicker, Button, Row, Col, Radio } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
 // import dayjsFormat from 'dayjsFormat'
 import { dayjsFormat } from '@/utils/dayFormate'
 import UploadImage from '@/components/formItem/UploadImage'
+import ActivityGoodsTable from './ActivityGoodsTable'
+import ActivityDetailTable from './ActivityDetailTable'
+import { specialState } from '@/utils/enum'
 export type DialogMode = 'add' | 'edit'
 interface Props {
   data: any
@@ -21,33 +24,10 @@ const { Option } = Select
  */
 const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) => {
   const [form] = Form.useForm()
-  const [selectedRoles, setSelectedRoles] = useState<Array<any>>([])
-  const [roles, setRoles] = useState<Array<any>>([])
+  const [goodsShowDialog, setGoodsShowDialog] = useState(false)
+  const [goodsRoleList, setGoodsRoleList] = useState<Array<any>>([])
 
   useEffect(() => {
-    // setSelectedRoles(data?.roles ?? [])
-  }, [data])
-
-  useEffect(() => {
-    setRoles([
-      {
-        id: 1,
-        name: '商品',
-      },
-      {
-        id: 2,
-        name: '商品2',
-      },
-    ])
-  }, [])
-
-  useEffect(() => {
-    // if (data?.id ?? '' !== '') {
-    //   console.log(data, '----')
-    //   ActivitiesService.get(data?.id).then((res) => {
-    //     console.log(res)
-    //   })
-    // }
     if (show) {
       form.setFieldsValue({
         id: data?.id,
@@ -55,12 +35,14 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
         activityImg: data?.activityImg,
         activitySubtitle: data?.activitySubtitle,
         activityUrl: data?.activityUrl,
-        activityPreviewImg: data?.activityPreviewImg,
+        activityDetailImg: data?.activityDetailImg,
+        state: data?.state ?? '0',
         activityDate: !!data?.startDate
           ? [dayjsFormat(data?.startDate, 'YYYY-MM-DD HH:mm:ss'), dayjsFormat(data?.endDate, 'YYYY-MM-DD HH:mm:ss')]
           : null,
-        activityGoodsIdList: data?.goodsIdList.split(',') ?? [],
+        activityGoodsIdList: (data?.goodsIdList ?? '').split(',') ?? [],
       })
+      setGoodsRoleList((data?.goodsIdList ?? '').split(',') ?? [])
     }
   }, [show])
 
@@ -107,80 +89,122 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
     onClose()
   }
 
-  const handleChange = (value) => {
-    setSelectedRoles(value)
+  const editGoods = () => {
+    setGoodsShowDialog(true)
   }
-
+  const goodsOnClose = () => {
+    setGoodsShowDialog(false)
+  }
+  const goodsOnSuccess = (e) => {
+    // console.log(e, '----')
+    form.setFieldsValue({
+      activityGoodsIdList: e,
+    })
+    setGoodsRoleList(e)
+    setGoodsShowDialog(false)
+  }
+  const DetailTableSuccess = (e) => {
+    form.setFieldsValue({
+      activityGoodsIdList: e,
+    })
+    setGoodsRoleList(e)
+  }
   return (
-    <Modal title="用户" visible={show} onOk={_handleUpdate} onCancel={_formClose}>
-      <Form
-        name="basic"
-        labelCol={{ span: 6 }}
-        wrapperCol={{ span: 16 }}
-        initialValues={{ remember: true }}
-        onFinish={(values: any) => {
-          console.log(values, '-----')
-        }}
-        onFinishFailed={(errorInfo: any) => {
-          console.log(errorInfo)
-        }}
-        autoComplete="off"
-        form={form}
-      >
-        <Form.Item
-          label="活动图片"
-          name="activityImg"
-          rules={[{ required: false, message: '请上传图片' }]}
-          // getValueFromEvent={normFile}
+    <>
+      <Modal title="专题配置" width={800} visible={show} onOk={_handleUpdate} onCancel={_formClose}>
+        <Form
+          name="basic"
+          labelCol={{ span: 6 }}
+          wrapperCol={{ span: 16 }}
+          initialValues={{ remember: true }}
+          onFinish={(values: any) => {
+            console.log(values, '-----')
+          }}
+          onFinishFailed={(errorInfo: any) => {
+            console.log(errorInfo)
+          }}
+          autoComplete="off"
+          form={form}
         >
-          <UploadImage />
-        </Form.Item>
+          <Row gutter={[10, 0]}>
+            <Col span={18} className="table-from-label">
+              <Form.Item label="主题名称" name="activityTitle" rules={[{ required: false, message: '请输入活动标题' }]}>
+                <Input />
+              </Form.Item>
+              <Form.Item label="副标题" name="activitySubtitle" rules={[{ required: false, message: '请输入副标题' }]}>
+                <Input />
+              </Form.Item>
+              <Form.Item
+                label="活动展示时间"
+                name="activityDate"
+                rules={[{ required: false, message: '请选择活动展示时间' }]}
+              >
+                <DatePicker.RangePicker
+                  format="YYYY-MM-DD HH:mm:ss"
+                  defaultValue={[
+                    dayjsFormat(data?.startDate, 'YYYY-MM-DD HH:mm:ss'),
+                    dayjsFormat(data?.endDate, 'YYYY-MM-DD HH:mm:ss'),
+                  ]}
+                  showTime={{
+                    hideDisabledOptions: true,
+                  }}
+                />
+              </Form.Item>
+              <Form.Item label="状态" name="state">
+                <Radio.Group>
+                  {Object.keys(specialState)
+                    .sort()
+                    .map((item) => {
+                      return (
+                        <Radio.Button key={item} value={item}>
+                          {specialState[item]}
+                        </Radio.Button>
+                      )
+                    })}
+                </Radio.Group>
+              </Form.Item>
 
-        <Form.Item label="标题" name="activityTitle" rules={[{ required: false, message: '请输入活动标题' }]}>
-          <Input />
-        </Form.Item>
-        <Form.Item label="副标题" name="activitySubtitle" rules={[{ required: false, message: '请输入副标题' }]}>
-          <Input />
-        </Form.Item>
-        <Form.Item label="活动跳转地址" name="activityUrl" rules={[{ required: false, message: '请输入活动跳转地址' }]}>
-          <Input />
-        </Form.Item>
-        <Form.Item
-          label="专题页头图"
-          name="activityPreviewImg"
-          rules={[{ required: false, message: '请输入专题页头图' }]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          label="活动展示时间"
-          name="activityDate"
-          rules={[{ required: false, message: '请选择活动展示时间' }]}
-        >
-          <DatePicker.RangePicker
-            format="YYYY-MM-DD HH:mm:ss"
-            defaultValue={[
-              dayjsFormat(data?.startDate, 'YYYY-MM-DD HH:mm:ss'),
-              dayjsFormat(data?.endDate, 'YYYY-MM-DD HH:mm:ss'),
-            ]}
-            showTime={{
-              hideDisabledOptions: true,
-            }}
-          />
-        </Form.Item>
-        <Form.Item label="活动关联商品" name="activityGoodsIdList">
-          <Select mode="multiple" allowClear placeholder="活动关联商品" value={selectedRoles} onChange={handleChange}>
-            {roles.map((i) => {
-              return (
-                <Option key={i.id} value={i.id}>
-                  {i.name}
-                </Option>
-              )
-            })}
-          </Select>
-        </Form.Item>
-      </Form>
-    </Modal>
+              <Form.Item label="活动关联商品" name="activityGoodsIdList">
+                <Button type="primary" onClick={editGoods}>
+                  配置商品
+                </Button>
+              </Form.Item>
+              {goodsRoleList.length > 0 ? (
+                <ActivityDetailTable onSuccess={DetailTableSuccess} goodsIdList={goodsRoleList}></ActivityDetailTable>
+              ) : (
+                ''
+              )}
+            </Col>
+            <Col span={6}>
+              <Form.Item
+                label="活动图片"
+                name="activityImg"
+                labelCol={{ span: 24, offset: 1 }}
+                rules={[{ required: true, message: '请上传图片' }]}
+                // getValueFromEvent={normFile}
+              >
+                <UploadImage />
+              </Form.Item>
+              <Form.Item
+                label="专题页头图"
+                labelCol={{ span: 24, offset: 1 }}
+                name="activityDetailImg"
+                rules={[{ required: true, message: '请输入专题页头图' }]}
+              >
+                <UploadImage />
+              </Form.Item>
+            </Col>
+          </Row>
+        </Form>
+      </Modal>
+      <ActivityGoodsTable
+        goodsShow={goodsShowDialog}
+        onSuccess={goodsOnSuccess}
+        goodsIdList={goodsRoleList}
+        // data={goodsData}
+        onClose={goodsOnClose}
+      ></ActivityGoodsTable>
+    </>
   )
 }
 

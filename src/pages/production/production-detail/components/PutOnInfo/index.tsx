@@ -37,8 +37,8 @@ const PutOnInfo: React.FC = () => {
       .then((formData) => {
         console.log(formData)
         const postData = { ...formData }
-        postData.isDeduction = postData.isDeduction ? 0 : 1
-        postData.distPlanId = postData.distPlanId.id
+        // postData.isDeduction = postData.isDeduction ? 0 : 1
+        // postData.distPlanId = postData.distPlanId.id
         postData.id = query.get('id')
         // postData.distPlan = postData.distPlanId.channelPlanList.map(item=>{
         //   return {
@@ -74,10 +74,10 @@ const PutOnInfo: React.FC = () => {
           <Input />
         </Form.Item>
         
-        <Form.Item label="分佣方案" name="distPlanId" rules={[{ required: true }]}>
+        {/* <Form.Item label="分佣方案" name="distPlanId" rules={[{ required: true }]}>
           <Commission onChange={_onCommissionChange} />
         </Form.Item>
-        <div>{JSON.stringify(commission)}</div>
+        <div>{JSON.stringify(commission)}</div> */}
 
         <Button onClick={_submit}>提交发布</Button>
       </Form> */}

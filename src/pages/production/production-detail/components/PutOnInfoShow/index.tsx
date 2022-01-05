@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom'
 import './index.less'
 
 /**
- * 发布信息展示
+ * 上架信息展示
  */
 const PutOnInfoShow: React.FC = () => {
   const history = useHistory()
@@ -20,7 +20,7 @@ const PutOnInfoShow: React.FC = () => {
 
   return (
     <div className="PutOnInfoShow__root">
-      <h4>4. 发布信息</h4>
+      <h4>5. 上架信息</h4>
     </div>
   )
 }
