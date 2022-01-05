@@ -19,20 +19,33 @@ interface Props {
 const AEVersionDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) => {
   const [form] = Form.useForm()
   const [title, setTitle] = useState('添加版本记录')
+  const [versionData, setVersionData] = useState({})
   useEffect(() => {
-    form.setFieldsValue({
-      clientVersionNo: data?.clientVersionNo,
-      fileUrl: data?.fileUrl,
-      versionContent: data?.versionContent,
-      remark: data?.remark,
-      mandatoryUpdate: data?.mandatoryUpdate,
-    })
+    if (data?.id) {
+      getVersion()
+    }
     if (mode == 'add') {
       setTitle('添加版本记录')
     } else {
       setTitle('修改版本记录')
     }
   }, [show])
+
+  useEffect(() => {
+    form.setFieldsValue({
+      clientVersionNo: versionData?.clientVersionNo,
+      fileUrl: versionData?.fileUrl,
+      versionContent: versionData?.versionContent,
+      remark: versionData?.remark,
+      mandatoryUpdate: versionData?.mandatoryUpdate,
+    })
+  }, [versionData])
+
+  const getVersion = () => {
+    VersionService.details({ id: data?.id }).then((res) => {
+      setVersionData(res.data)
+    })
+  }
   /**提交数据 */
   const _handleUpdate = async () => {
     form
@@ -47,7 +60,7 @@ const AEVersionDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClo
           })
         } else {
           //edit
-          VersionService.edit({ ...formData, platform: 1, id: data.id }).then((res) => {
+          VersionService.add({ ...formData, platform: 1, id: data.id }).then((res) => {
             if (res.code === HttpCode.success) {
               onSuccess()
             }
