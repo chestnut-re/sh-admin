@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Col, Row, Button, Table, Space } from 'antd'
+import { Form, Col, Row, Button, Table, Space, Modal, message } from 'antd'
 import './index.less'
 import AEBannerDialog, { DialogMode } from './components/AEActivityDialog'
 import { ActivitiesService } from '@/service/ActivitiesService'
 import { HttpCode } from '@/constants/HttpCode'
-
+import RemainTime from '@/components/tableColumn/RemainTime'
+import ImageColumn from '@/components/tableColumn/ImageColumn'
+import { ExclamationCircleOutlined } from '@ant-design/icons'
 /**
  * App营销-Activity管理-List
  */
 const BannerListPage: React.FC = () => {
   const [data, setData] = useState([])
-  const [pageIndex, setPageIndex] = useState(0)
+  const [pageIndex, setPageIndex] = useState(1)
   const [pageSize, setPageSize] = useState(20)
   const [total, setTotal] = useState()
 
@@ -37,10 +39,12 @@ const BannerListPage: React.FC = () => {
     {
       title: '主题预览图',
       dataIndex: 'activityImg',
+      render: (text: any, record: any) => <ImageColumn url={record.activityImg} />,
     },
     {
       title: '专题页头图',
       dataIndex: 'activityDetailImg',
+      render: (text: any, record: any) => <ImageColumn url={record.activityDetailImg} />,
     },
     {
       title: '主题名称',
@@ -49,30 +53,35 @@ const BannerListPage: React.FC = () => {
     {
       title: '关联商品数量',
       dataIndex: 'goodsIdList',
-      render: (text, record, index) => `${record.split(',')?.length}`,
+      render: (text, record, index) => `${(record.goodsIdList ?? '').split(',')?.length}`,
     },
     {
       title: '链接',
-      dataIndex: 'startDate',
+      dataIndex: 'activityUrl',
     },
     {
       title: '状态',
-      dataIndex: 'endDate',
+      dataIndex: 'state',
     },
     {
       title: '展示时段',
       dataIndex: 'endDate',
+      render: (text: any, record: any) => `${record.startDate}~${record.endDate}`,
     },
     {
       title: '剩余展示时长',
       dataIndex: 'endDate',
+      render: (text: any, record: any) => {
+        return <RemainTime endDate={record.endDate} />
+      },
     },
     {
       title: '添加人',
-      dataIndex: 'endDate',
-    },  {
+      dataIndex: 'updateUserName',
+    },
+    {
       title: '添加时间',
-      dataIndex: 'endDate',
+      dataIndex: 'updateTime',
     },
     {
       title: '操作',
@@ -87,21 +96,33 @@ const BannerListPage: React.FC = () => {
 
   /**删除 */
   const _delItem = (record) => {
-    ActivitiesService.del({ id: record.id }).then((res) => {
-      if (res.code === HttpCode.success) {
-        loadData(pageIndex)
-      }
+    Modal.confirm({
+      title: '提示',
+      icon: <ExclamationCircleOutlined />,
+      content: '确定要删除当前',
+      okText: '确认',
+      cancelText: '取消',
+      onOk: () => {
+        ActivitiesService.del({ id: record.id }).then((res) => {
+          if (res.code === HttpCode.success) {
+            loadData(pageIndex)
+          }else{
+            message.error(res.message)
+          }
+        })
+      },
     })
   }
   /**编辑 */
   const _editDialog = (record) => {
-    console.log(record, '00000000')
     setDialogMode('edit')
     setSelectedData(record)
     setShowDialog(true)
   }
 
-  const onFinish = (values: any) => {
+  const onFinish = () => {
+    setDialogMode('add')
+    setSelectedData(null)
     setShowDialog(true)
   }
 
@@ -142,7 +163,7 @@ const BannerListPage: React.FC = () => {
         dataSource={[...data]}
         pagination={{
           onChange: setPageIndex,
-          showSizeChanger: true,
+          showSizeChanger: false,
           showQuickJumper: true,
           pageSize: pageSize,
           total: total,

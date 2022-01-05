@@ -1,3 +1,7 @@
+/*
+ * @Description: 
+ * @LastEditTime: 2022-01-04 18:34:57
+ */
 import axios from '@/request'
 
 /**
@@ -42,4 +46,12 @@ export class ActivitiesService {
   static get(id): Promise<any> {
     return axios.get(`/api/operation/activity/get/${id}`)
   }
+    /**
+   * 专题活动-详情-已完成
+   */
+     static goodsList(data): Promise<any> {
+      return axios.get(`/api/operation/activity/goodsList`,{
+        params:data
+      })
+    }
 }
