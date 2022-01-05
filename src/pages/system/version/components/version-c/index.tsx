@@ -1,6 +1,6 @@
 import { Space, Table, Tag, Form, Row, Col, Button } from 'antd'
 import React, { useEffect, useState } from 'react'
-import AEVersionDialog, { DialogMode } from '../version-b/components/AEVersionDialog'
+import AEVersionDialog, { DialogMode } from '../version-c/components/AEVersionDialog'
 import { VersionService } from '@/service/VersionService'
 
 /**

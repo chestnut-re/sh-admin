@@ -40,14 +40,14 @@ const AEVersionDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClo
       .then((formData) => {
         if (mode === 'add') {
           // create
-          VersionService.add({ ...formData, platform: 1 }).then((res) => {
+          VersionService.add({ ...formData, platform: 2 }).then((res) => {
             if (res.code === HttpCode.success) {
               onSuccess()
             }
           })
         } else {
           //edit
-          VersionService.edit({ ...formData, platform: 1, id: data.id }).then((res) => {
+          VersionService.edit({ ...formData, platform: 2, id: data.id }).then((res) => {
             if (res.code === HttpCode.success) {
               onSuccess()
             }
