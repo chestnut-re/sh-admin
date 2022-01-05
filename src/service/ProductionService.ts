@@ -60,6 +60,37 @@ export class ProductionService {
       },
     })
   }
+
+  /**
+   * 分中心上架商品
+   */
+  static centerPutOnRequest(data): Promise<any> {
+    return axios.post('/api/operation/channelShop/putaway', data)
+  }
+
+  /**
+   * 分中心上架商品，回显
+   */
+  static centerPutOnRequestGet(id: string): Promise<any> {
+    return axios.get(`/api/operation/channelShop/putawayInfo`, {
+      params: {
+        goodsId: id,
+      },
+    })
+  }
+
+  /**
+   * 商品-分佣方案列表, 分中心提交上架申请时使用
+   */
+  static getChannelDistPlan(data): Promise<any> {
+    return axios.get(`/api/market/commission/getChannelDistPlan`, {
+      params: {
+        size: 10,
+        current: 1,
+        ...data,
+      },
+    })
+  }
 }
 
 /**

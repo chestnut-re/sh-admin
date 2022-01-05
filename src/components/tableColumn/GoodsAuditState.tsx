@@ -14,7 +14,7 @@ const GoodsAuditState: React.FC<Props> = ({ checkState }) => {
     1: '通过',
     2: '不通过',
   }
-  return <p>{map[checkState]}</p>
+  return <>{map[checkState]}</>
 }
 
 export default GoodsAuditState

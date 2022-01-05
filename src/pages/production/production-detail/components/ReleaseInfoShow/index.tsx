@@ -33,14 +33,14 @@ const ReleaseInfoShow: React.FC = () => {
   }
 
   useEffect(() => {
-    const id = query.get('goodsId') ?? ''
+    const id = query.get('id') ?? ''
     ProductionService.getPublishCheckInfo(id).then((res) => {
       setData(res.data)
     })
   }, [])
 
   return (
-    <div className="ReleaseInfo__root">
+    <div className="ReleaseInfoShow__root">
       <h4>4. 发布信息</h4>
       <div>{JSON.stringify(data)}</div>
       <div className="box">

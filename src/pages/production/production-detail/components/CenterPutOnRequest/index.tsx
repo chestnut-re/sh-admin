@@ -1,5 +1,6 @@
 import useQuery from '@/hooks/useQuery'
 import { ProductionAuditService } from '@/service/ProductionAuditService'
+import { ProductionService } from '@/service/ProductionService'
 import { useStore } from '@/store/context'
 import { Button, Form, Input, InputNumber, Radio, Switch } from 'antd'
 import { useForm } from 'antd/es/form/Form'
@@ -10,9 +11,9 @@ import Commission from './Commission'
 import './index.less'
 
 /**
- * 上架信息 审核
+ * 上架申请
  */
-const PutOnInfo: React.FC = () => {
+const CenterPutOnRequest: React.FC = () => {
   const history = useHistory()
   const query = useQuery()
   const { productionDetailStore } = useStore()
@@ -38,22 +39,17 @@ const PutOnInfo: React.FC = () => {
         console.log(formData)
         const postData = { ...formData }
         // postData.isDeduction = postData.isDeduction ? 0 : 1
-        // postData.distPlanId = postData.distPlanId.id
-        postData.id = query.get('id')
-        // postData.distPlan = postData.distPlanId.channelPlanList.map(item=>{
-        //   return {
-        //     channelId: '',
-        //     channelName: '',
-        //     distScale: '',
-        //     planName: '',
-        //   }
-        // })
+        
+        postData.distPlan = postData.distPlanId
+        postData.distPlanId = postData.distPlan.id
+        postData.goodsId = query.get('id')
+        
         console.log(postData)
-        // ProductionAuditService.putOnAudit(postData).then((res) => {
-        //   if (res.code === '200') {
-        //     history.goBack()
-        //   }
-        // })
+        ProductionService.centerPutOnRequest(postData).then((res) => {
+          if (res.code === '200') {
+            history.goBack()
+          }
+        })
       })
       .catch((e) => {
         console.error(e)
@@ -61,23 +57,18 @@ const PutOnInfo: React.FC = () => {
   }
 
   return (
-    <div className="PutOnInfo__root">
-      <h4>5. 上架申请信息</h4>
+    <div className="CenterPutOnRequest__root">
+      <h4>5. 上架申请</h4>
       <Form name="basic" initialValues={{ remember: true }} autoComplete="off" form={form} {...layout}>
-        <Form.Item label="审核结果" name="checkState" rules={[{ required: true }]}>
-          <Radio.Group>
-            <Radio value={1}>通过</Radio>
-            <Radio value={2}>驳回</Radio>
-          </Radio.Group>
+        <Form.Item label="分佣方案" name="distPlanId" rules={[{ required: true }]}>
+          <Commission onChange={_onCommissionChange} />
         </Form.Item>
-        <Form.Item label="原因" name="checkMag" rules={[{ required: false }]}>
-          <Input />
-        </Form.Item>
+        <div>{JSON.stringify(commission)}</div>
 
-        <Button onClick={_submit}>提交发布</Button>
+        <Button onClick={_submit}>提交申请</Button>
       </Form>
     </div>
   )
 }
 
-export default observer(PutOnInfo)
+export default observer(CenterPutOnRequest)

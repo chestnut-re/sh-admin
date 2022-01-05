@@ -1,7 +1,7 @@
 import { useStore } from '@/store/context'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { Tabs } from 'antd'
+import { Tabs, Col, Row } from 'antd'
 const { TabPane } = Tabs
 import './index.less'
 
@@ -29,134 +29,166 @@ const TravelInfo: React.FC = () => {
                 <div className="all-day">
                   {item.travels.map((li, num) => {
                     return (
-                      <div className="what-day" key={num}>
-                        <div className="every">{li.whatDay}</div>
-                        <div className="every-info">
+                      <Row className="what-day" key={num}>
+                        <Col className="every" span={1}>
+                          {li.whatDay}
+                        </Col>
+                        <Col className="every-info" span={23}>
                           {li.travelDetails?.map((e, o) => {
                             return (
-                              <div className="day-info" key={o}>
-                                <div className="travelTime">{e.travelTime}</div>
-                                <div className="travelTitle">{e.travelTitle}</div>
-                                {e.travelGoods.airTicket && (
-                                  <div className="type-pay">
-                                    <div className="travelGoods">
-                                      交通：{e.travelGoods.airTicket.departAirport}飞
-                                      {e.travelGoods.airTicket.arriveAirport}\{e.travelGoods.airTicket.aircraftCabin}
-                                    </div>
-                                    <div className="remark">{e.travelGoods.airTicket.remark}</div>
-                                    <div className="money">
-                                      {e.travelGoods.airTicket.personCostPrice + e.travelGoods.airTicket.childCostPrice}
-                                    </div>
-                                    <div className="money">
-                                      {e.travelGoods.airTicket.personMarkPrice + e.travelGoods.airTicket.childMarkPrice}
-                                    </div>
-                                    <div className="money">
-                                      {e.travelGoods.airTicket.personCurrentPrice +
-                                        e.travelGoods.airTicket.childCurrentPrice}
-                                    </div>
-                                  </div>
-                                )}
-                                {e.travelGoods.hotel && (
-                                  <div className="type-pay">
-                                    <div className="travelGoods">
-                                      酒店：{e.travelGoods.hotel.hotelName}\{e.travelGoods.hotel.roomType}
-                                    </div>
-                                    <div className="remark">{e.travelGoods.hotel.remark}</div>
-                                    <div className="money">
-                                      {e.travelGoods.hotel.personCostPrice + e.travelGoods.hotel.childCostPrice}
-                                    </div>
-                                    <div className="money">
-                                      {e.travelGoods.hotel.personMarkPrice + e.travelGoods.hotel.childMarkPrice}
-                                    </div>
-                                    <div className="money">
-                                      {e.travelGoods.hotel.personCurrentPrice + e.travelGoods.hotel.childCurrentPrice}
-                                    </div>
-                                  </div>
-                                )}
-                                {e.travelGoods.restaurant && (
-                                  <div className="type-pay">
-                                    <div className="travelGoods">
-                                      餐饮：{e.travelGoods.restaurant.restaurantName}\限
-                                      {e.travelGoods.restaurant.limitPeople}人
-                                    </div>
-                                    <div className="remark">{e.travelGoods.restaurant.remark}</div>
-                                    <div className="money">
-                                      {e.travelGoods.restaurant.personCostPrice +
-                                        e.travelGoods.restaurant.childCostPrice}
-                                    </div>
-                                    <div className="money">
-                                      {e.travelGoods.restaurant.personMarkPrice +
-                                        e.travelGoods.restaurant.childMarkPrice}
-                                    </div>
-                                    <div className="money">
-                                      {e.travelGoods.restaurant.personCurrentPrice +
-                                        e.travelGoods.restaurant.childCurrentPrice}
-                                    </div>
-                                  </div>
-                                )}
-                                {e.travelGoods.scenicSpot && (
-                                  <div className="type-pay">
-                                    <div className="travelGoods">
-                                      景点：{e.travelGoods.scenicSpot.scenicSpotName}\限
-                                      {e.travelGoods.scenicSpot.visitingTime}分钟\附加项目：
-                                      {JSON.stringify(e.travelGoods.scenicSpot.additionItem)}
-                                    </div>
-                                    <div className="remark">{e.travelGoods.scenicSpot.remark}</div>
-                                    <div className="money">
-                                      {e.travelGoods.scenicSpot.personCostPrice +
-                                        e.travelGoods.scenicSpot.childCostPrice}
-                                    </div>
-                                    <div className="money">
-                                      {e.travelGoods.scenicSpot.personMarkPrice +
-                                        e.travelGoods.scenicSpot.childMarkPrice}
-                                    </div>
-                                    <div className="money">
-                                      {e.travelGoods.scenicSpot.personCurrentPrice +
-                                        e.travelGoods.scenicSpot.childCurrentPrice}
-                                    </div>
-                                  </div>
-                                )}
-                                {e.travelGoods.bus && (
-                                  <div className="type-pay">
-                                    <div className="travelGoods">
-                                      交通：{e.travelGoods.bus.departureStation}\车型：{e.travelGoods.bus.busType}
-                                      \使用类型：{e.travelGoods.bus.busUseType}
-                                    </div>
-                                    <div className="remark">{e.travelGoods.bus.remark}</div>
-                                    <div className="money">
-                                      {e.travelGoods.bus.personCostPrice + e.travelGoods.bus.childCostPrice}
-                                    </div>
-                                    <div className="money">
-                                      {e.travelGoods.bus.personMarkPrice + e.travelGoods.bus.childMarkPrice}
-                                    </div>
-                                    <div className="money">
-                                      {e.travelGoods.bus.personCurrentPrice + e.travelGoods.bus.childCurrentPrice}
-                                    </div>
-                                  </div>
-                                )}
-                                {e.travelGoods.train && (
-                                  <div className="type-pay">
-                                    <div className="travelGoods">
-                                      交通：{e.travelGoods.train.departureStation}到{e.travelGoods.train.arrivalStation}
-                                      \类型：{e.travelGoods.train.trainsType}\{e.travelGoods.train.seat}
-                                    </div>
-                                    <div className="remark">{e.travelGoods.train.remark}</div>
-                                    <div className="money">
-                                      {e.travelGoods.train.personCostPrice + e.travelGoods.train.childCostPrice}
-                                    </div>
-                                    <div className="money">
-                                      {e.travelGoods.train.personMarkPrice + e.travelGoods.train.childMarkPrice}
-                                    </div>
-                                    <div className="money">
-                                      {e.travelGoods.train.personCurrentPrice + e.travelGoods.train.childCurrentPrice}
-                                    </div>
-                                  </div>
-                                )}
-                              </div>
+                              <Row className="day-info" key={o}>
+                                <Col span={1} className="travelTime">
+                                  {e.travelTime}
+                                </Col>
+                                <Col span={3} className="travelTitle">
+                                  {e.travelTitle}
+                                </Col>
+                                {/* <p>交通</p> */}
+                                <Col span={20} className="type-pay">
+                                  {e.travelGoods.airTicket && (
+                                    <Row>
+                                      <Col span={11} className="travelGoods">
+                                        交通：{e.travelGoods.airTicket.departAirport}飞
+                                        {e.travelGoods.airTicket.arriveAirport}\{e.travelGoods.airTicket.aircraftCabin}
+                                      </Col>
+                                      <Col span={10} className="remark">
+                                        {e.travelGoods.airTicket.remark}
+                                      </Col>
+                                      <Col span={1} className="money">
+                                        {e.travelGoods.airTicket.personCostPrice +
+                                          e.travelGoods.airTicket.childCostPrice}
+                                      </Col>
+                                      <Col span={1} className="money">
+                                        {e.travelGoods.airTicket.personMarkPrice +
+                                          e.travelGoods.airTicket.childMarkPrice}
+                                      </Col>
+                                      <Col span={1} className="money">
+                                        {e.travelGoods.airTicket.personCurrentPrice +
+                                          e.travelGoods.airTicket.childCurrentPrice}
+                                      </Col>
+                                    </Row>
+                                  )}
+                                  {e.travelGoods.hotel && (
+                                    <Row>
+                                      <Col span={11} className="travelGoods">
+                                        酒店：{e.travelGoods.hotel.hotelName}\{e.travelGoods.hotel.roomType}
+                                      </Col>
+                                      <Col span={10} className="remark">
+                                        {e.travelGoods.hotel.remark}
+                                      </Col>
+                                      <Col span={1} className="money">
+                                        {e.travelGoods.hotel.personCostPrice + e.travelGoods.hotel.childCostPrice}
+                                      </Col>
+                                      <Col span={1} className="money">
+                                        {e.travelGoods.hotel.personMarkPrice + e.travelGoods.hotel.childMarkPrice}
+                                      </Col>
+                                      <Col span={1} className="money">
+                                        {e.travelGoods.hotel.personCurrentPrice + e.travelGoods.hotel.childCurrentPrice}
+                                      </Col>
+                                    </Row>
+                                  )}
+                                  {e.travelGoods.restaurant && (
+                                    <Row>
+                                      <Col span={11} className="travelGoods">
+                                        餐饮：{e.travelGoods.restaurant.restaurantName}\限
+                                        {e.travelGoods.restaurant.limitPeople}人
+                                      </Col>
+                                      <Col span={10} className="remark">
+                                        {e.travelGoods.restaurant.remark}
+                                      </Col>
+                                      <Col span={1} className="money">
+                                        {e.travelGoods.restaurant.personCostPrice +
+                                          e.travelGoods.restaurant.childCostPrice}
+                                      </Col>
+                                      <Col span={1} className="money">
+                                        {e.travelGoods.restaurant.personMarkPrice +
+                                          e.travelGoods.restaurant.childMarkPrice}
+                                      </Col>
+                                      <Col span={1} className="money">
+                                        {e.travelGoods.restaurant.personCurrentPrice +
+                                          e.travelGoods.restaurant.childCurrentPrice}
+                                      </Col>
+                                    </Row>
+                                  )}
+                                  {e.travelGoods.scenicSpot && (
+                                    <Row>
+                                      <Col span={11} className="travelGoods">
+                                        景点：{e.travelGoods.scenicSpot.scenicSpotName}\限
+                                        {e.travelGoods.scenicSpot.visitingTime}分钟\附加项目：
+                                        {JSON.stringify(e.travelGoods.scenicSpot.additionItem)}
+                                      </Col>
+                                      <Col span={10} className="remark">
+                                        {e.travelGoods.scenicSpot.remark}
+                                      </Col>
+                                      <Col span={1} className="money">
+                                        {e.travelGoods.scenicSpot.personCostPrice +
+                                          e.travelGoods.scenicSpot.childCostPrice}
+                                      </Col>
+                                      <Col span={1} className="money">
+                                        {e.travelGoods.scenicSpot.personMarkPrice +
+                                          e.travelGoods.scenicSpot.childMarkPrice}
+                                      </Col>
+                                      <Col span={1} className="money">
+                                        {e.travelGoods.scenicSpot.personCurrentPrice +
+                                          e.travelGoods.scenicSpot.childCurrentPrice}
+                                      </Col>
+                                    </Row>
+                                  )}
+                                  {e.travelGoods.bus && (
+                                    <Row>
+                                      <Col span={11} className="travelGoods">
+                                        交通：{e.travelGoods.bus.departureStation}\车型：{e.travelGoods.bus.busType}
+                                        \使用类型：{e.travelGoods.bus.busUseType}
+                                      </Col>
+                                      <Col span={10} className="remark">
+                                        {e.travelGoods.bus.remark}
+                                      </Col>
+                                      <Col span={1} className="money">
+                                        {e.travelGoods.bus.personCostPrice + e.travelGoods.bus.childCostPrice}
+                                      </Col>
+                                      <Col span={1} className="money">
+                                        {e.travelGoods.bus.personMarkPrice + e.travelGoods.bus.childMarkPrice}
+                                      </Col>
+                                      <Col span={1} className="money">
+                                        {e.travelGoods.bus.personCurrentPrice + e.travelGoods.bus.childCurrentPrice}
+                                      </Col>
+                                    </Row>
+                                  )}
+                                  {e.travelGoods.train && (
+                                    <Row>
+                                      <Col span={11} className="travelGoods">
+                                        交通：{e.travelGoods.train.departureStation}到
+                                        {e.travelGoods.train.arrivalStation}
+                                        \类型：{e.travelGoods.train.trainsType}\{e.travelGoods.train.seat}
+                                      </Col>
+                                      <Col span={10} className="remark">
+                                        {e.travelGoods.train.remark}
+                                      </Col>
+                                      <Col span={1} className="money">
+                                        {e.travelGoods.train.personCostPrice + e.travelGoods.train.childCostPrice}
+                                      </Col>
+                                      <Col span={1} className="money">
+                                        {e.travelGoods.train.personMarkPrice + e.travelGoods.train.childMarkPrice}
+                                      </Col>
+                                      <Col span={1} className="money">
+                                        {e.travelGoods.train.personCurrentPrice + e.travelGoods.train.childCurrentPrice}
+                                      </Col>
+                                    </Row>
+                                  )}
+                                </Col>
+                                {/* <p>备注</p> */}
+                                {/* <Col span={6}></Col> */}
+                                {/* <p>成本价</p> */}
+                                {/* <Col span={1}></Col> */}
+                                {/* <p>市场标价</p> */}
+                                {/* <Col span={1}></Col> */}
+                                {/* <p>现售价</p> */}
+                                {/* <Col span={1}></Col> */}
+                              </Row>
                             )
                           })}
-                        </div>
-                      </div>
+                        </Col>
+                      </Row>
                     )
                   })}
                 </div>

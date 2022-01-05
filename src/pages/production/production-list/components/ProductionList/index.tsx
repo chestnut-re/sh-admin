@@ -8,16 +8,13 @@ import TimeColumn from '@/components/tableColumn/TimeColumn'
 import TravelModeColumn from '@/components/tableColumn/TravelModeColumn'
 import { useHistory } from 'react-router-dom'
 import { ProductionService } from '@/service/ProductionService'
-
-interface Props {
-  /**普通，待发布 */
-  type: 'normal' | 'unRelease'
-}
+import GoodsState from '@/components/tableColumn/GoodsState'
 
 /**
- * 商品库
+ * 商品库 总部/分中心
+ * TODO：拆开
  */
-const ProductionListPage: React.FC<Props> = observer(({ type }) => {
+const ProductionListPage: React.FC<any> = observer(({}) => {
   const history = useHistory()
   const [form] = Form.useForm()
   const [data, setData] = useState([])
@@ -31,9 +28,6 @@ const ProductionListPage: React.FC<Props> = observer(({ type }) => {
 
   const loadData = (pageIndex) => {
     const params = form.getFieldsValue()
-    if (type === 'unRelease') {
-      params.state = 1
-    }
     ProductionListService.list({ current: pageIndex, size: pageSize, ...params }).then((res) => {
       setData(res.data.records)
       setTotal(res.data.total)
@@ -43,7 +37,7 @@ const ProductionListPage: React.FC<Props> = observer(({ type }) => {
   const columns = [
     {
       title: '商品ID',
-      dataIndex: 'goodsNo',
+      dataIndex: 'id',
     },
     {
       title: '商品名称',
@@ -86,7 +80,8 @@ const ProductionListPage: React.FC<Props> = observer(({ type }) => {
     },
     {
       title: '状态',
-      dataIndex: 'activityState',
+      dataIndex: 'state',
+      render: (text, record, index) => <GoodsState state={record?.state} />,
     },
     {
       title: '创建渠道',
@@ -107,19 +102,32 @@ const ProductionListPage: React.FC<Props> = observer(({ type }) => {
           >
             查看
           </Button>
-          <Button>编辑</Button>
-          <Button
-            onClick={() => {
-              ProductionService.soldOut(record.id).then((res) => {
-                if (res.code === '200') {
-                  loadData(pageIndex)
-                }
-              })
-            }}
-          >
-            下架
-          </Button>
-          <Button
+          {/* 分中心 */}
+          {record?.channelGoodsState !== 2 && (
+            <Button
+              onClick={() => {
+                history.push(`/production/production-detail?id=${record.id}&type=centerPublish`)
+              }}
+            >
+              上架
+            </Button>
+          )}
+          {record?.channelGoodsState === 2 && (
+            <Button
+              onClick={() => {
+                ProductionService.soldOut(record.id).then((res) => {
+                  if (res.code === '200') {
+                    loadData(pageIndex)
+                  }
+                })
+              }}
+            >
+              下架
+            </Button>
+          )}
+          {/* 分中心end */}
+
+          {/* <Button
             onClick={() => {
               ProductionService.ban(record.id).then((res) => {
                 if (res.code === '200') {
@@ -129,76 +137,7 @@ const ProductionListPage: React.FC<Props> = observer(({ type }) => {
             }}
           >
             禁用
-          </Button>
-        </Space>
-      ),
-    },
-  ]
-
-  /**待发布商品库 */
-  const columnsUnRelease = [
-    {
-      title: '商品ID',
-      dataIndex: 'goodsNo',
-    },
-    {
-      title: '商品名称',
-      dataIndex: 'goodsName',
-      width: 150,
-    },
-    {
-      title: '商品类型标签',
-      dataIndex: 'goodsTypeTag',
-      width: 100,
-    },
-    {
-      title: '出行类型',
-      width: 100,
-      render: (text, record, index) => <TravelModeColumn travelMode={record?.travelMode} />,
-    },
-    {
-      title: '始发地',
-      dataIndex: 'departureCity',
-    },
-    {
-      title: '最近出发时间',
-      render: (text, record, index) => <TimeColumn time={record?.startDate} />,
-    },
-    {
-      title: '库存',
-      dataIndex: 'stock',
-    },
-    {
-      title: '现售价(¥)',
-      dataIndex: 'personCurrentPrice',
-    },
-    {
-      title: '创建渠道',
-      dataIndex: 'time',
-    },
-    {
-      title: '创建时间',
-      dataIndex: 'methods',
-    },
-    {
-      title: '操作',
-      render: (text: any, record: any) => (
-        <Space size="middle">
-          <Button
-            onClick={() => {
-              history.push(`/production/production-detail?id=${record.id}`)
-            }}
-          >
-            查看
-          </Button>
-          <Button
-            onClick={() => {
-              console.log(record)
-              history.push(`/production/production-config-detail?id=${record.id}`)
-            }}
-          >
-            配置详情
-          </Button>
+          </Button> */}
         </Space>
       ),
     },
@@ -242,16 +181,12 @@ const ProductionListPage: React.FC<Props> = observer(({ type }) => {
             <Col span={4}>
               <TravelMode name="travelMode" />
             </Col>
-            {type !== 'unRelease' && (
-              <>
-                <Col span={2} className="table-from-label">
-                  状态
-                </Col>
-                <Col span={4}>
-                  <ProductionState name="state" />
-                </Col>
-              </>
-            )}
+            <Col span={2} className="table-from-label">
+              状态
+            </Col>
+            <Col span={4}>
+              <ProductionState name="state" />
+            </Col>
 
             <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
               <Space>
@@ -280,7 +215,7 @@ const ProductionListPage: React.FC<Props> = observer(({ type }) => {
       </div>
       <Table
         rowKey="id"
-        columns={type === 'unRelease' ? columnsUnRelease : columns}
+        columns={columns}
         scroll={{ x: 'max-content' }}
         dataSource={[...data]}
         pagination={{

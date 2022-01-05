@@ -4,6 +4,7 @@ import { useStore } from '@/store/context'
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import BaseInfo from './components/BaseInfo'
+import CenterPutOnRequest from './components/CenterPutOnRequest'
 import DetailPageInfo from './components/DetailPageInfo'
 import PutOnInfo from './components/PutOnInfo'
 import PutOnInfoShow from './components/PutOnInfoShow'
@@ -11,6 +12,7 @@ import ReleaseInfo from './components/ReleaseInfo'
 import ReleaseInfoShow from './components/ReleaseInfoShow'
 import TravelInfo from './components/TravelInfo'
 
+import './index.less'
 /**
  * 商品详情页
  */
@@ -34,21 +36,29 @@ const ProductionDetail: React.FC = () => {
   const type = query.get('type')
 
   return (
-    <div>
+    <div className="ProductionDetail__root">
       {/* 基本信息 */}
       <BaseInfo />
       {/* 行程信息 */}
       <TravelInfo />
       {/* 移动页详情信息 */}
       <DetailPageInfo />
+
       {/* 发布审核 ->发布信息 */}
       {type === 'publish' && <ReleaseInfo />}
       {/* 上架审核 ->发布信息 */}
-      {type === 'release' && <ReleaseInfoShow />}
+      {(type === 'release' || type === 'publishCheck' || type === 'releaseCheck' || type === 'centerPublish') && (
+        <ReleaseInfoShow />
+      )}
+
+      {/* 分中心 上架申请 centerPublish */}
+      {type === 'centerPublish' && <CenterPutOnRequest />}
+
       {/* 上架审核 -> 上架信息 */}
-      {type === 'release' && <PutOnInfo />}
+      {/* {type === 'release' && <PutOnInfo />} */}
       {/* 查看详情页 */}
-      {type === 'detail' && <PutOnInfoShow />}
+      {/* {type === 'detail' && <PutOnInfoShow />} */}
+      {type === 'release' && <PutOnInfoShow />}
     </div>
   )
 }

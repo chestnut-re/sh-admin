@@ -1,6 +1,7 @@
 import { Tabs } from 'antd'
 import React from 'react'
 import ProductionListPage from '../ProductionList'
+import UnReleaseProductionListPage from '../UnReleaseProductionList'
 
 /**
  * 商品管理-商品库
@@ -17,7 +18,7 @@ const ProductionListWrap: React.FC = () => {
           <ProductionListPage type="normal" />
         </Tabs.TabPane>
         <Tabs.TabPane tab="待发布商品库" key="2">
-          <ProductionListPage type="unRelease" />
+          <UnReleaseProductionListPage/>
         </Tabs.TabPane>
       </Tabs>
     </div>
