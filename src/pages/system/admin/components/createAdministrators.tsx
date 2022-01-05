@@ -32,7 +32,6 @@ const CreateAdminDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onC
       roleName: data?.roleName,
       nickName: data?.nickName,
       mobile: data?.mobile,
-      state: data?.state,
     })
     loadRoleData()
   }, [show])
@@ -54,7 +53,6 @@ const CreateAdminDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onC
             mobile: formData.mobile,
             nickName: formData.nickName,
             roleId: roleId,
-            state: formData.state,
           }).then((res) => {
             if (res.code === HttpCode.success) {
               onSuccess()
@@ -62,11 +60,16 @@ const CreateAdminDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onC
           })
         } else {
           //edit
-          // BannerService.edit({ ...formData }).then((res) => {
-          //   if (res.code === HttpCode.success) {
-          //     onSuccess()
-          //   }
-          // })
+          AdminService.edit({
+            roleId: roleId,
+            mobile: formData.mobile,
+            nickName: formData.nickName,
+            systemUserId: data.systemUserId,
+          }).then((res) => {
+            if (res.code === HttpCode.success) {
+              onSuccess()
+            }
+          })
         }
       })
       .catch((e) => {
@@ -99,10 +102,10 @@ const CreateAdminDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onC
         form={form}
       >
         <Form.Item label="角色" name="roleName">
-          <Select placeholder="请选择角色" onChange={(value, e) => setRoleId(e.key)}>
-            {roleList.map((item) => {
+          <Select placeholder="请选择角色" onChange={(value: any) => setRoleId(value)}>
+            {roleList.map((item: any) => {
               return (
-                <Option value={item.roleName} key={item.id}>
+                <Option value={item.id} key={item.id}>
                   {item.roleName}
                 </Option>
               )

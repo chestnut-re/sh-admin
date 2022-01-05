@@ -18,4 +18,18 @@ export class AdminService {
   static add(data): Promise<any> {
     return axios.post(`/api/users/admin/systemUser/add`, data)
   }
+
+  /**
+   * 编辑
+   */
+  static edit(data): Promise<any> {
+    return axios.put(`/api/users/admin/systemUser/update`, data)
+  }
+
+  /**
+   * 删除
+   */
+  static del(id): Promise<any> {
+    return axios.delete(`/api/users/admin/systemUser/delete/${id}`)
+  }
 }

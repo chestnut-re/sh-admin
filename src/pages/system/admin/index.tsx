@@ -4,6 +4,7 @@ import './index.less'
 import CreateAdminDialog, { DialogMode } from './components/createAdministrators'
 import { AdminService } from '@/service/AdminService'
 import { getRoles } from '@/service/role'
+import { HttpCode } from '@/constants/HttpCode'
 
 /**
  * 管理员账号
@@ -69,8 +70,14 @@ const AdminListPage: React.FC = () => {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button onClick={() => _editDialog(record)}>详情</Button>
-          <Button onClick={_delete}>删除</Button>
+          <Button onClick={() => _editDialog(record)}>编辑</Button>
+          <Button
+            onClick={() => {
+              _delete(record)
+            }}
+          >
+            删除
+          </Button>
         </Space>
       ),
     },
@@ -88,12 +95,19 @@ const AdminListPage: React.FC = () => {
     setVisible(false)
   }
 
-  const _delete = () => {
+  const _delete = (record) => {
+    console.log(record)
+    setSelectedData(record)
     setVisible(true)
   }
 
   const _comDelete = () => {
-    setVisible(false)
+    AdminService.del(selectedData.systemUserId).then((res) => {
+      if (res.code === HttpCode.success) {
+        setVisible(false)
+        loadData(pageIndex)
+      }
+    })
   }
 
   /**重置 */
@@ -181,7 +195,6 @@ const AdminListPage: React.FC = () => {
         dataSource={[...data]}
         pagination={{
           onChange: setPageIndex,
-          showSizeChanger: true,
           showQuickJumper: true,
           pageSize: pageSize,
           total: total,
