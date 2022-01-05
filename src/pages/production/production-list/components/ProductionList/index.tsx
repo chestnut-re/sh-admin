@@ -9,6 +9,7 @@ import TravelModeColumn from '@/components/tableColumn/TravelModeColumn'
 import { useHistory } from 'react-router-dom'
 import { ProductionService } from '@/service/ProductionService'
 import GoodsState from '@/components/tableColumn/GoodsState'
+import ChannelDialog from './components/ChannelDialog'
 
 /**
  * 商品库 总部
@@ -20,6 +21,9 @@ const ProductionList: React.FC<any> = observer(({}) => {
   const [pageIndex, setPageIndex] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [total, setTotal] = useState()
+
+  const [showDialog, setShowDialog] = useState(false)
+  const [selectedData, setSelectedData] = useState<any>(null)
 
   useEffect(() => {
     loadData(pageIndex)
@@ -75,7 +79,18 @@ const ProductionList: React.FC<any> = observer(({}) => {
     },
     {
       title: '已上架渠道',
-      dataIndex: 'putawayChannelNum',
+      render: (text, record, index) => {
+        return (
+          <Button
+            onClick={() => {
+              setSelectedData(record)
+              setShowDialog(true)
+            }}
+          >
+            {record.putawayChannelNum} 0
+          </Button>
+        )
+      },
     },
     {
       title: '状态',
@@ -101,42 +116,17 @@ const ProductionList: React.FC<any> = observer(({}) => {
           >
             查看
           </Button>
-          {/* 分中心 */}
-          {record?.channelGoodsState !== 2 && (
-            <Button
-              onClick={() => {
-                history.push(`/production/production-detail?id=${record.id}&type=centerPublish`)
-              }}
-            >
-              上架
-            </Button>
-          )}
-          {record?.channelGoodsState === 2 && (
-            <Button
-              onClick={() => {
-                ProductionService.soldOut(record.id).then((res) => {
-                  if (res.code === '200') {
-                    loadData(pageIndex)
-                  }
-                })
-              }}
-            >
-              下架
-            </Button>
-          )}
-          {/* 分中心end */}
-
-          {/* <Button
+          <Button
             onClick={() => {
-              ProductionService.ban(record.id).then((res) => {
-                if (res.code === '200') {
-                  loadData(pageIndex)
-                }
-              })
+              // ProductionService.ban(record.id).then((res) => {
+              //   if (res.code === '200') {
+              //     loadData(pageIndex)
+              //   }
+              // })
             }}
           >
             禁用
-          </Button> */}
+          </Button>
         </Space>
       ),
     },
@@ -164,6 +154,17 @@ const ProductionList: React.FC<any> = observer(({}) => {
   /**添加商品 */
   const _addProduction = () => {
     history.push('/production/release-product')
+  }
+
+  const _onDialogSuccess = () => {
+    setSelectedData(null)
+    setShowDialog(false)
+    loadData(pageIndex)
+  }
+
+  const _onDialogClose = () => {
+    setSelectedData(null)
+    setShowDialog(false)
   }
 
   return (
@@ -204,9 +205,6 @@ const ProductionList: React.FC<any> = observer(({}) => {
                 <Button type="primary" htmlType="button" onClick={_addProduction}>
                   添加商品
                 </Button>
-                {/* <Button htmlType="button" type="primary">
-                  下架
-                </Button> */}
               </Space>
             </Form.Item>
           </Row>
@@ -224,6 +222,14 @@ const ProductionList: React.FC<any> = observer(({}) => {
           pageSize: pageSize,
           total: total,
         }}
+      />
+
+      <ChannelDialog
+        id={selectedData?.id}
+        goodsName={selectedData?.goodsName}
+        show={showDialog}
+        onSuccess={_onDialogSuccess}
+        onClose={_onDialogClose}
       />
     </div>
   )

@@ -18,7 +18,9 @@ function AdminLayout(): JSX.Element {
       <Layout className="AdminLayout">
         <Header className="nav-header">
           <div className="logo">山海云途</div>
-          <div className="name">{adminStore.userDetails.nickName}</div>
+          <div className="name">
+            {adminStore.isSubCenter() ? '分中心账号: ' : '集团账号: '} {adminStore.userDetails.nickName}
+          </div>
           <div className="logout" onClick={_logout}>
             退出
           </div>

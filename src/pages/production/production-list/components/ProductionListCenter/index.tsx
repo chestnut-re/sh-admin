@@ -1,14 +1,13 @@
 import { observer } from 'mobx-react-lite'
 import React, { useState, useEffect } from 'react'
 import { Button, Col, Form, Row, Space, Table } from 'antd'
-import { InputTemp, ProductionState, SubCenterProductionState, TravelMode } from '@/components/filter/formItem'
+import { InputTemp, SubCenterProductionState, TravelMode } from '@/components/filter/formItem'
 import './index.less'
 import { ProductionListService } from '@/service/ProductionListService'
 import TimeColumn from '@/components/tableColumn/TimeColumn'
 import TravelModeColumn from '@/components/tableColumn/TravelModeColumn'
 import { useHistory } from 'react-router-dom'
 import { ProductionService } from '@/service/ProductionService'
-import GoodsState from '@/components/tableColumn/GoodsState'
 
 /**
  * 商品库 分中心
@@ -122,17 +121,6 @@ const ProductionListCenter: React.FC<any> = observer(({}) => {
               下架
             </Button>
           )}
-          {/* <Button
-            onClick={() => {
-              ProductionService.ban(record.id).then((res) => {
-                if (res.code === '200') {
-                  loadData(pageIndex)
-                }
-              })
-            }}
-          >
-            禁用
-          </Button> */}
         </Space>
       ),
     },
@@ -200,9 +188,6 @@ const ProductionListCenter: React.FC<any> = observer(({}) => {
                 <Button type="primary" htmlType="button" onClick={_addProduction}>
                   添加商品
                 </Button>
-                {/* <Button htmlType="button" type="primary">
-                  下架
-                </Button> */}
               </Space>
             </Form.Item>
           </Row>
