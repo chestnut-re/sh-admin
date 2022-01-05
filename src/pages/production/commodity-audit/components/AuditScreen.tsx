@@ -48,8 +48,8 @@ const AuditScreen: React.FC<Props> = ({ type }) => {
   const columns = [
     {
       title: '商品ID',
-      align: 'goodsId',
-      render: (text, record, index) => `${index + 1}`,
+      dataIndex: 'goodsId',
+      // render: (text, record, index) => `${index + 1}`,
     },
     {
       title: '商品名称',
@@ -90,16 +90,19 @@ const AuditScreen: React.FC<Props> = ({ type }) => {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button
-            onClick={() => {
-              console.log(record)
-              history.push(
-                `/production/production-detail?channelGoodsId=${record.channelGoodsId}&goodsId=${record.goodsId}&id=${record.goodsId}&type=${type}`
-              )
-            }}
-          >
-            查看
-          </Button>
+          {record?.checkState !== 0 && (
+            <Button
+              onClick={() => {
+                console.log(record)
+                history.push(
+                  `/production/production-detail?channelGoodsId=${record.channelGoodsId}&goodsId=${record.goodsId}&id=${record.goodsId}&type=${type}Check`
+                )
+              }}
+            >
+              查看
+            </Button>
+          )}
+
           {record?.checkState === 0 && (
             <Button
               onClick={() => {

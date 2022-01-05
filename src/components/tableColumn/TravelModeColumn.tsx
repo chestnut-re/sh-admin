@@ -10,7 +10,7 @@ interface Props {
  */
 const TravelModeColumn: React.FC<Props> = ({ travelMode }) => {
   // if (!travelMode) return <p></p>
-  return <p>{travelMode === 0 ? '固定时间出行' : '约定时间出行'}</p>
+  return <>{travelMode === 0 ? '固定' : '约定'}</>
 }
 
 export default TravelModeColumn

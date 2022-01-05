@@ -10,9 +10,9 @@ interface Props {
  */
 const TimeColumn: React.FC<Props> = ({ time }) => {
   if (!time) {
-    return <p></p>
+    return <></>
   }
-  return <p>{dayjs(time).format('YYYY-MM-DD HH:mm:ss')}</p>
+  return <>{dayjs(time).format('YYYY-MM-DD HH:mm:ss')}</>
 }
 
 export default TimeColumn

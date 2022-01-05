@@ -33,7 +33,7 @@ const ReleaseInfoShow: React.FC = () => {
   }
 
   useEffect(() => {
-    const id = query.get('goodsId') ?? ''
+    const id = query.get('id') ?? ''
     ProductionService.getPublishCheckInfo(id).then((res) => {
       setData(res.data)
     })
