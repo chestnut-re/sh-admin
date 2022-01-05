@@ -1,7 +1,8 @@
-
+import { USER_DETAIL } from '@/constants/CookiesC'
 import { getMenus } from '@/service/menu'
 import { UserService } from '@/service/user'
 import { isUserLogin, setJWT } from '@/utils/biz'
+import { getCookie, setCookie } from '@/utils/cookies'
 import { action, makeObservable, observable } from 'mobx'
 
 /**
@@ -11,12 +12,15 @@ import { action, makeObservable, observable } from 'mobx'
  */
 class AdminData {
   menu: any[] = []
+  userDetails: any = {}
 
   constructor() {
     makeObservable(this, {
       menu: observable,
+      userDetails: observable,
       init: action,
       setMenu: action,
+      login: action,
     })
   }
 
@@ -31,6 +35,10 @@ class AdminData {
       if (window.location.pathname !== '/login') {
         window.location.href = '/login'
       }
+    } else {
+      if (getCookie(USER_DETAIL)) {
+        this.userDetails = JSON.parse(getCookie(USER_DETAIL) ?? '')
+      }
     }
   }
 
@@ -39,6 +47,8 @@ class AdminData {
     const loginRes = await UserService.login(username, password)
     console.log(loginRes)
     setJWT(loginRes.data.accessToken)
+    this.userDetails = loginRes.data.userDetails
+    setCookie(USER_DETAIL, JSON.stringify(loginRes.data.userDetails))
     window.location.href = '/'
   }
 

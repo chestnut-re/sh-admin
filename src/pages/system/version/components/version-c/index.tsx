@@ -10,7 +10,7 @@ import { VersionService } from '@/service/VersionService'
 const VersionCPage: React.FC = () => {
   const [form] = Form.useForm()
   const [data, setData] = useState([])
-  const [pageIndex, setPageIndex] = useState(0)
+  const [pageIndex, setPageIndex] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [total, setTotal] = useState()
 

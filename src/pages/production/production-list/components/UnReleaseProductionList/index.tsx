@@ -1,18 +1,17 @@
 import { observer } from 'mobx-react-lite'
 import React, { useState, useEffect } from 'react'
-import { Button, Col, Form, Row, Space, Table, DatePicker, message } from 'antd'
-import { InputTemp } from '@/components/filter/formItem'
+import { Button, Col, Form, Row, Space, Table } from 'antd'
+import { InputTemp, TravelMode } from '@/components/filter/formItem'
 import './index.less'
-import { ProductionDraftService } from '@/service/ProductionDraftService'
+import { ProductionListService } from '@/service/ProductionListService'
 import TimeColumn from '@/components/tableColumn/TimeColumn'
-import { formateTime } from '@/utils/timeUtils'
+import TravelModeColumn from '@/components/tableColumn/TravelModeColumn'
 import { useHistory } from 'react-router-dom'
-import { ProductionService } from '@/service/ProductionService'
 
 /**
- * 商品库 草稿箱
+ * 商品库 待发布
  */
-const DraftListPage: React.FC = observer(() => {
+const UnReleaseProductionListPage: React.FC<any> = observer(({}) => {
   const history = useHistory()
   const [form] = Form.useForm()
   const [data, setData] = useState([])
@@ -26,36 +25,57 @@ const DraftListPage: React.FC = observer(() => {
 
   const loadData = (pageIndex) => {
     const params = form.getFieldsValue()
-    const { timeRange, remain } = params
-
-    ProductionDraftService.list({
-      current: pageIndex,
-      size: pageSize,
-      ...remain,
-      createDateEnd: formateTime(timeRange?.[0]),
-      createDateStart: formateTime(timeRange?.[1]),
-    }).then((res) => {
+    params.state = 1
+    ProductionListService.list({ current: pageIndex, size: pageSize, ...params }).then((res) => {
       setData(res.data.records)
       setTotal(res.data.total)
     })
   }
 
-  const columns = [
+  /**待发布商品库 */
+  const columnsUnRelease = [
     {
       title: '商品ID',
-      dataIndex: 'goodsNo',
+      dataIndex: 'id',
     },
     {
       title: '商品名称',
       dataIndex: 'goodsName',
+      width: 150,
     },
     {
-      title: '创建人',
-      dataIndex: 'createUserName',
+      title: '商品类型标签',
+      dataIndex: 'goodsTypeTag',
+      width: 100,
+    },
+    {
+      title: '出行类型',
+      width: 100,
+      render: (text, record, index) => <TravelModeColumn travelMode={record?.travelMode} />,
+    },
+    {
+      title: '始发地',
+      dataIndex: 'departureCity',
+    },
+    {
+      title: '最近出发时间',
+      render: (text, record, index) => <TimeColumn time={record?.startDate} />,
+    },
+    {
+      title: '库存',
+      dataIndex: 'stock',
+    },
+    {
+      title: '现售价(¥)',
+      dataIndex: 'personCurrentPrice',
+    },
+    {
+      title: '创建渠道',
+      dataIndex: 'createChannelName',
     },
     {
       title: '创建时间',
-      render: (text, record, index) => <TimeColumn time={record?.createTime} />,
+      render: (text, record, index) => <TimeColumn time={record?.updateTime} />,
     },
     {
       title: '操作',
@@ -63,23 +83,18 @@ const DraftListPage: React.FC = observer(() => {
         <Space size="middle">
           <Button
             onClick={() => {
-              console.log(record)
-              history.push(`/production/release-product?id=${record.id}`)
+              history.push(`/production/production-detail?id=${record.id}`)
             }}
           >
-            编辑
+            查看
           </Button>
           <Button
             onClick={() => {
-              ProductionService.del(record.id).then((res) => {
-                if (res.code === '200') {
-                  message.success('删除成功')
-                  loadData(pageIndex)
-                }
-              })
+              console.log(record)
+              history.push(`/production/production-config-detail?id=${record.id}`)
             }}
           >
-            删除
+            配置详情
           </Button>
         </Space>
       ),
@@ -105,22 +120,26 @@ const DraftListPage: React.FC = observer(() => {
     loadData(1)
   }
 
+  /**添加商品 */
+  const _addProduction = () => {
+    history.push('/production/release-product')
+  }
+
   return (
-    <div className="DraftListPage__root">
+    <div className="UnReleaseProductionListPage__root">
       <div>
         <Form name="basic" initialValues={{ remember: true }} onFinish={onFinish} form={form}>
           <Row gutter={[5, 0]} style={{ paddingLeft: '10px' }}>
             <Col span={6}>
-              <InputTemp name="keyword" placeholder="商ID/名称" />
+              <InputTemp name="searchDim" placeholder="商品ID/名称/始发地" />
             </Col>
             <Col span={2} className="table-from-label">
-              创建时间
+              出行类型
             </Col>
-            <Col span={12}>
-              <Form.Item wrapperCol={{ offset: 0, span: 0 }} name="timeRange">
-                <DatePicker.RangePicker showTime={{ format: 'HH:mm' }} format="YYYY-MM-DD HH:mm" />
-              </Form.Item>
+            <Col span={4}>
+              <TravelMode name="travelMode" />
             </Col>
+
             <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
               <Space>
                 <Button type="primary" htmlType="submit">
@@ -132,11 +151,23 @@ const DraftListPage: React.FC = observer(() => {
               </Space>
             </Form.Item>
           </Row>
+          <Row justify="end">
+            <Form.Item>
+              <Space>
+                <Button type="primary" htmlType="button" onClick={_addProduction}>
+                  添加商品
+                </Button>
+                {/* <Button htmlType="button" type="primary">
+                  下架
+                </Button> */}
+              </Space>
+            </Form.Item>
+          </Row>
         </Form>
       </div>
       <Table
         rowKey="id"
-        columns={columns}
+        columns={columnsUnRelease}
         scroll={{ x: 'max-content' }}
         dataSource={[...data]}
         pagination={{
@@ -151,4 +182,4 @@ const DraftListPage: React.FC = observer(() => {
   )
 })
 
-export default DraftListPage
+export default UnReleaseProductionListPage
