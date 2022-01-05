@@ -20,7 +20,7 @@ const ProductionDetail: React.FC = () => {
   const history = useHistory()
 
   useEffect(() => {
-    console.log(query.get('id'))
+    console.log(query.get('id'), query.get('type'))
     ProductionService.get(query.get('id') ?? '').then((res) => {
       console.log(res)
       productionDetailStore.init(res.data)
@@ -35,13 +35,17 @@ const ProductionDetail: React.FC = () => {
 
   return (
     <div>
+      {/* 基本信息 */}
       <BaseInfo />
+      {/* 行程信息 */}
       <TravelInfo />
+      {/* 移动页详情信息 */}
       <DetailPageInfo />
-      {/* 发布审核 */}
+      {/* 发布审核 ->发布信息 */}
       {type === 'publish' && <ReleaseInfo />}
+      {/* 上架审核 ->发布信息 */}
       {type === 'release' && <ReleaseInfoShow />}
-      {/* 上架审核 */}
+      {/* 上架审核 -> 上架信息 */}
       {type === 'release' && <PutOnInfo />}
       {/* 查看详情 */}
       {type === 'detail' && <PutOnInfoShow />}
