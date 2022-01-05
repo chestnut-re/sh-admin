@@ -22,12 +22,14 @@
       // display: inline-block;
       margin: 0 26px 26px;
     }
+    .what-day:last-child {
+      border-bottom: 1px solid #aeb0b8;
+    }
     .what-day {
       // height: 200px;
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       border-top: 1px solid #aeb0b8;
-      border-bottom: 1px solid #aeb0b8;
       border-left: 1px solid #aeb0b8;
       .every {
         // height: 198px;
@@ -42,8 +44,16 @@
             // width: 500px;
             padding: 5px;
             border-right: 1px solid #aeb0b8;
+            // border-bottom: 1px solid #aeb0b8;
+          }
+          .travelTime:not(:last-child),
+          .travelTitle:not(:last-child) {
+            // border-right: 1px solid #aeb0b8;
             border-bottom: 1px solid #aeb0b8;
           }
+          // .type-pay:not(:last-child) {
+          //   border-bottom: 1px solid #aeb0b8;
+          // }
           .type-pay {
             border-bottom: 1px solid #aeb0b8;
             border-right: 1px solid #aeb0b8;
@@ -61,8 +71,9 @@
               text-align: center;
               // width: 80px;
               padding: 5px;
+            }
+            .money:not(:last-child) {
               border-right: 1px solid #aeb0b8;
-              // border-bottom: 1px solid #aeb0b8;
             }
           }
         }

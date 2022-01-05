@@ -176,14 +176,6 @@ const TravelInfo: React.FC = () => {
                                     </Row>
                                   )}
                                 </Col>
-                                {/* <p>备注</p> */}
-                                {/* <Col span={6}></Col> */}
-                                {/* <p>成本价</p> */}
-                                {/* <Col span={1}></Col> */}
-                                {/* <p>市场标价</p> */}
-                                {/* <Col span={1}></Col> */}
-                                {/* <p>现售价</p> */}
-                                {/* <Col span={1}></Col> */}
                               </Row>
                             )
                           })}
