@@ -1,7 +1,7 @@
 import { Space, Table, Tag, Form, Row, Col, Button } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { InputTemp, SelectTemp } from '@/components/filter/formItem'
-import AEVersionCDialog, { DialogMode } from './../version-b/components/AEVersionBDialog'
+import AEVersionDialog, { DialogMode } from '../version-b/components/AEVersionDialog'
+import { VersionService } from '@/service/VersionService'
 
 /**
  * 系统中心-版本管理-C端版本管理
@@ -23,11 +23,10 @@ const VersionCPage: React.FC = () => {
   }, [pageIndex])
 
   const loadData = (pageIndex) => {
-    // BannerService.list({ current: pageIndex, size: pageSize }).then((res) => {
-    //   console.log(res)
-    //   setData(res.data.records)
-    //   setTotal(res.data.total)
-    // })
+    VersionService.list({ searchCount: pageIndex, size: pageSize, platform: 2 }).then((res) => {
+      setData(res.data.records)
+      setTotal(res.data.total)
+    })
   }
 
   const columns = [
@@ -37,27 +36,34 @@ const VersionCPage: React.FC = () => {
     },
     {
       title: '版本号',
-      dataIndex: 'account',
+      dataIndex: 'clientVersionNo',
     },
     {
       title: '下载链接',
-      dataIndex: 'password',
+      dataIndex: 'fileUrl',
     },
     {
       title: '更多内容',
-      dataIndex: 'name',
+      dataIndex: 'versionContent',
     },
     {
       title: '备注',
-      dataIndex: 'role',
+      dataIndex: 'remark',
     },
     {
       title: '是否强制更新',
-      dataIndex: 'createtime',
+      dataIndex: 'mandatoryUpdate',
+      render: (text: any, record: any) => {
+        if (record.mandatoryUpdate == 1) {
+          return `是`
+        } else if (record.mandatoryUpdate == 0) {
+          return `否`
+        }
+      },
     },
     {
       title: '添加时间',
-      dataIndex: 'state',
+      dataIndex: 'updateTime',
     },
     {
       title: '操作',
@@ -127,13 +133,12 @@ const VersionCPage: React.FC = () => {
         dataSource={[...data]}
         pagination={{
           onChange: setPageIndex,
-          showSizeChanger: true,
           showQuickJumper: true,
           pageSize: pageSize,
           total: total,
         }}
       />
-      <AEVersionCDialog
+      <AEVersionDialog
         data={selectedData}
         mode={dialogMode}
         onSuccess={_onDialogSuccess}

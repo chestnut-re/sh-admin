@@ -15,10 +15,10 @@ const VersionPage: React.FC = () => {
     <div className="page-root">
       <Tabs defaultActiveKey="1" onChange={onChange}>
         <Tabs.TabPane tab="C端版本管理" key="1">
-          <VersionBPage />
+          <VersionCPage />
         </Tabs.TabPane>
         <Tabs.TabPane tab="B端版本管理" key="2">
-          <VersionCPage />
+          <VersionBPage />
         </Tabs.TabPane>
       </Tabs>
     </div>

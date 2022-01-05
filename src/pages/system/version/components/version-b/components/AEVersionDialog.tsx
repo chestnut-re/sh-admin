@@ -1,9 +1,10 @@
 import React, { FC, useEffect, useState } from 'react'
 import { Form, Input, Modal, Select, Radio } from 'antd'
 import { HttpCode } from '@/constants/HttpCode'
+import { VersionService } from '@/service/VersionService'
 
 /**
- * b端版本弹框
+ * 添加版本弹框
  */
 
 export type DialogMode = 'add' | 'edit'
@@ -15,17 +16,16 @@ interface Props {
   onSuccess: () => void
   onClose: () => void
 }
-const AEVersionBDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) => {
+const AEVersionDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) => {
   const [form] = Form.useForm()
   const [title, setTitle] = useState('添加版本记录')
   useEffect(() => {
     form.setFieldsValue({
-      bannerImg: data?.bannerImg,
-      title: data?.title,
-      bannerUrl: data?.bannerUrl,
-      sort: data?.sort,
-      startDate: data?.startDate,
-      endDate: data?.endDate,
+      clientVersionNo: data?.clientVersionNo,
+      fileUrl: data?.fileUrl,
+      versionContent: data?.versionContent,
+      remark: data?.remark,
+      mandatoryUpdate: data?.mandatoryUpdate,
     })
     if (mode == 'add') {
       setTitle('添加版本记录')
@@ -40,18 +40,18 @@ const AEVersionBDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
       .then((formData) => {
         if (mode === 'add') {
           // create
-          // BannerService.newBanner({ ...formData }).then((res) => {
-          //   if (res.code === HttpCode.success) {
-          //     onSuccess()
-          //   }
-          // })
+          VersionService.add({ ...formData }).then((res) => {
+            if (res.code === HttpCode.success) {
+              onSuccess()
+            }
+          })
         } else {
           //edit
-          // BannerService.edit({ ...formData }).then((res) => {
-          //   if (res.code === HttpCode.success) {
-          //     onSuccess()
-          //   }
-          // })
+          VersionService.edit({ ...formData }).then((res) => {
+            if (res.code === HttpCode.success) {
+              onSuccess()
+            }
+          })
         }
       })
       .catch((e) => {
@@ -76,19 +76,19 @@ const AEVersionBDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
         autoComplete="off"
         form={form}
       >
-        <Form.Item label="版本号" name="bannerImg" rules={[{ message: '请输入图片相对路径' }]}>
+        <Form.Item label="版本号" name="clientVersionNo" rules={[{ message: '请输入图片相对路径' }]}>
           <Input placeholder="(必填)" />
         </Form.Item>
-        <Form.Item label="下载链接" name="title" rules={[{ message: '请输入标题' }]}>
+        <Form.Item label="下载链接" name="fileUrl" rules={[{ message: '请输入标题' }]}>
           <Input />
         </Form.Item>
-        <Form.Item label="更新内容" name="bannerUrl" rules={[{ message: '请输入跳转地址' }]}>
+        <Form.Item label="更新内容" name="versionContent" rules={[{ message: '请输入跳转地址' }]}>
           <Input placeholder="(必填)" />
         </Form.Item>
-        <Form.Item label="备注" name="sort" rules={[{ message: '请输入排序号' }]}>
+        <Form.Item label="备注" name="remark" rules={[{ message: '请输入排序号' }]}>
           <Input />
         </Form.Item>
-        <Form.Item label="是否强制更新" name="startDate" rules={[{ required: true }]}>
+        <Form.Item label="是否强制更新" name="mandatoryUpdate" rules={[{ required: true }]}>
           <Radio.Group>
             <Radio value={0}>是</Radio>
             <Radio value={1}>否</Radio>
@@ -99,4 +99,4 @@ const AEVersionBDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
   )
 }
 
-export default AEVersionBDialog
+export default AEVersionDialog
