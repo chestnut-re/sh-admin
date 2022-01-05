@@ -62,9 +62,9 @@ const BannerListPage: React.FC = () => {
         if (record.state == 0) {
           return `下线`
         } else if (record.state == 1) {
-          return `上线`
-        } else {
           return `待上线`
+        } else if (record.state == 2) {
+          return `上线`
         }
       },
     },

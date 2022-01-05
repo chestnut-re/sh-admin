@@ -1,3 +1,7 @@
+/*
+ * @Description: 
+ * @LastEditTime: 2022-01-05 10:24:24
+ */
 import { useStore } from '@/store/context'
 import { getJWT } from '@/utils/biz'
 import { Button, Col, Form, Input, Row } from 'antd'
@@ -16,8 +20,8 @@ const LoginPage: React.FC = () => {
     form.setFieldsValue({
       // username: 'qwrqerewty',
       // password: '6623664xing',
-      username: 'admin',
-      password: 'admin',
+      username: '13800000003',
+      password: '123456abcd',
     })
 
     if (getJWT()) {

@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description:功能权限
- * @LastEditTime: 2022-01-04 15:44:10
+ * @LastEditTime: 2022-01-04 17:55:20
  */
 import { Table, Switch, Space, message, Menu } from 'antd'
 import React, { useState, useEffect } from 'react'
@@ -98,7 +98,7 @@ const [adminActList,setAdminActList] = useState([])
       if(switchFc =='admin'){
         getFucValue(tobeActList.concat(Array.from(selectedRowKeys)))
         setSelectedRowKeys(tobeActList.concat(Array.from(selectedRowKeys)))
-      }else{
+      }else{roleList
         getFucValue(adminActList.concat(Array.from(selectedRowKeys)))
         setSelectedRowKeys(adminActList.concat(Array.from(selectedRowKeys)))
       }

@@ -192,7 +192,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
             })}
           </Select>
         </Form.Item>
-        <Form.Item name="roleId" label="角色名称" rules={[{ required: false }]}>
+        <Form.Item name="roleId" label="角色名称" rules={[{ required: true,message:'请输入角色名称' }]}>
           <RoleSelect channelId={channelId} onChange={_changeRoleSelect} value={form.getFieldValue('roleId')} />
         </Form.Item>
         {/* <Form.Item name="state"  valuePropName="checked" label="是否启用"  rules={[{ required: true }]}>
