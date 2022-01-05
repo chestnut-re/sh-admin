@@ -5,6 +5,7 @@ import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import BaseInfo from './components/BaseInfo'
 import CenterPutOnRequest from './components/CenterPutOnRequest'
+import CenterPutOnRequestShow from './components/CenterPutOnRequestShow'
 import DetailPageInfo from './components/DetailPageInfo'
 import PutOnInfo from './components/PutOnInfo'
 import PutOnInfoShow from './components/PutOnInfoShow'
@@ -53,13 +54,14 @@ const ProductionDetail: React.FC = () => {
 
       {/* 分中心 上架申请 centerPublish */}
       {type === 'centerPublish' && <CenterPutOnRequest />}
+      {type === 'release' && <CenterPutOnRequestShow />}
 
-      {/* 上架审核 -> 上架信息 */}
-      {/* {type === 'release' && <PutOnInfo />} */}
-      {type === 'publish' && <PutOnInfo />}
+      {/* 上架审核  */}
+      {type === 'release' && <PutOnInfo />}
+
       {/* 查看详情页 */}
       {/* {type === 'detail' && <PutOnInfoShow />} */}
-      {type === 'release' && <PutOnInfoShow />}
+      {/* {type === 'release' && <PutOnInfoShow />} */}
     </div>
   )
 }

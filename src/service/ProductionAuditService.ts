@@ -25,7 +25,7 @@ export class ProductionAuditService {
   }
 
   /**
-   * 上架审核
+   * 分中心上架商品 审核
    */
   static putOnAudit(data): Promise<any> {
     return axios.post(`/api/operation/check/putawayCheck`, data)

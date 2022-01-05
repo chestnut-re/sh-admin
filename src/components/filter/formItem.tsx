@@ -36,6 +36,20 @@ export const ProductionState: FC<any> = ({ name, ...props }) => {
 }
 
 /**
+ * 分中心商品状态：
+ */
+ export const SubCenterProductionState: FC<any> = ({ name, ...props }) => {
+  return (
+    <Form.Item name={name}>
+      <Select allowClear {...props}>
+        <Select.Option value={2}>已上架</Select.Option>
+        <Select.Option value={1}>已下架</Select.Option>
+      </Select>
+    </Form.Item>
+  )
+}
+
+/**
  * 商品出行类型 0是固定时间出行，1是约定时间出行
  */
 export const TravelMode: FC<any> = ({ name, ...props }) => {

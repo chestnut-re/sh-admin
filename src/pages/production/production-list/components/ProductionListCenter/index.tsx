@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite'
 import React, { useState, useEffect } from 'react'
 import { Button, Col, Form, Row, Space, Table } from 'antd'
-import { InputTemp, ProductionState, TravelMode } from '@/components/filter/formItem'
+import { InputTemp, ProductionState, SubCenterProductionState, TravelMode } from '@/components/filter/formItem'
 import './index.less'
 import { ProductionListService } from '@/service/ProductionListService'
 import TimeColumn from '@/components/tableColumn/TimeColumn'
@@ -11,9 +11,9 @@ import { ProductionService } from '@/service/ProductionService'
 import GoodsState from '@/components/tableColumn/GoodsState'
 
 /**
- * 商品库 总部
+ * 商品库 分中心
  */
-const ProductionList: React.FC<any> = observer(({}) => {
+const ProductionListCenter: React.FC<any> = observer(({}) => {
   const history = useHistory()
   const [form] = Form.useForm()
   const [data, setData] = useState([])
@@ -74,13 +74,12 @@ const ProductionList: React.FC<any> = observer(({}) => {
       dataIndex: 'num',
     },
     {
-      title: '已上架渠道',
-      dataIndex: 'putawayChannelNum',
-    },
-    {
       title: '状态',
       dataIndex: 'state',
-      render: (text, record, index) => <GoodsState state={record?.state} />,
+      render: (text, record, index) => {
+        const str = record.channelGoodsState == 2 ? '已上架' : '未上架'
+        return <>{str}</>
+      },
     },
     {
       title: '创建渠道',
@@ -88,7 +87,7 @@ const ProductionList: React.FC<any> = observer(({}) => {
     },
     {
       title: '创建时间',
-      render: (text, record, index) => <TimeColumn time={record?.updateDate} />,
+      render: (text, record, index) => <TimeColumn time={record?.updateTime} />,
     },
     {
       title: '操作',
@@ -101,7 +100,6 @@ const ProductionList: React.FC<any> = observer(({}) => {
           >
             查看
           </Button>
-          {/* 分中心 */}
           {record?.channelGoodsState !== 2 && (
             <Button
               onClick={() => {
@@ -124,8 +122,6 @@ const ProductionList: React.FC<any> = observer(({}) => {
               下架
             </Button>
           )}
-          {/* 分中心end */}
-
           {/* <Button
             onClick={() => {
               ProductionService.ban(record.id).then((res) => {
@@ -167,7 +163,7 @@ const ProductionList: React.FC<any> = observer(({}) => {
   }
 
   return (
-    <div className="ProductionList__root">
+    <div className="ProductionListCenter__root">
       <div>
         <Form name="basic" initialValues={{ remember: true }} onFinish={onFinish} form={form}>
           <Row gutter={[5, 0]} style={{ paddingLeft: '10px' }}>
@@ -184,7 +180,7 @@ const ProductionList: React.FC<any> = observer(({}) => {
               状态
             </Col>
             <Col span={4}>
-              <ProductionState name="state" />
+              <SubCenterProductionState name="channelGoodsState" />
             </Col>
 
             <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
@@ -229,4 +225,4 @@ const ProductionList: React.FC<any> = observer(({}) => {
   )
 })
 
-export default ProductionList
+export default ProductionListCenter

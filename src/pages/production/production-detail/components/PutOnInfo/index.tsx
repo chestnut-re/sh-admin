@@ -1,7 +1,7 @@
 import useQuery from '@/hooks/useQuery'
 import { ProductionAuditService } from '@/service/ProductionAuditService'
 import { useStore } from '@/store/context'
-import { Button, Form, Input, InputNumber, Radio, Switch } from 'antd'
+import { Button, Form, Input, InputNumber, message, Radio, Switch } from 'antd'
 import { useForm } from 'antd/es/form/Form'
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
@@ -37,23 +37,16 @@ const PutOnInfo: React.FC = () => {
       .then((formData) => {
         console.log(formData)
         const postData = { ...formData }
-        // postData.isDeduction = postData.isDeduction ? 0 : 1
-        // postData.distPlanId = postData.distPlanId.id
-        postData.id = query.get('id')
-        // postData.distPlan = postData.distPlanId.channelPlanList.map(item=>{
-        //   return {
-        //     channelId: '',
-        //     channelName: '',
-        //     distScale: '',
-        //     planName: '',
-        //   }
-        // })
+        postData.id = query.get('channelGoodsId')
         console.log(postData)
-        // ProductionAuditService.putOnAudit(postData).then((res) => {
-        //   if (res.code === '200') {
-        //     history.goBack()
-        //   }
-        // })
+        ProductionAuditService.putOnAudit(postData).then((res) => {
+          if (res.code === '200') {
+            message.success('成功')
+            history.goBack()
+          } else {
+            message.error(res.msg)
+          }
+        })
       })
       .catch((e) => {
         console.error(e)
@@ -62,7 +55,7 @@ const PutOnInfo: React.FC = () => {
 
   return (
     <div className="PutOnInfo__root">
-      <h4>5. 上架申请信息</h4>
+      <h4>6. 上架审核处理</h4>
       <Form name="basic" initialValues={{ remember: true }} autoComplete="off" form={form} {...layout}>
         <Form.Item label="审核结果" name="checkState" rules={[{ required: true }]}>
           <Radio.Group>
@@ -72,6 +65,9 @@ const PutOnInfo: React.FC = () => {
         </Form.Item>
         <Form.Item label="原因" name="checkMag" rules={[{ required: false }]}>
           <Input />
+        </Form.Item>
+        <Form.Item label="团建奖金" name="presetBonus" rules={[{ required: false }]}>
+          <InputNumber />
         </Form.Item>
 
         <Button onClick={_submit}>提交发布</Button>

@@ -38,6 +38,7 @@ class AdminData {
     } else {
       if (getCookie(USER_DETAIL)) {
         this.userDetails = JSON.parse(getCookie(USER_DETAIL) ?? '')
+        console.log('this.userDetails', this.userDetails)
       }
     }
   }
@@ -54,6 +55,11 @@ class AdminData {
 
   setMenu(_menu: any) {
     this.menu = _menu
+  }
+
+  /**是否是分中心 */
+  isSubCenter() {
+    return this.userDetails.channelLevel !== 1
   }
 }
 

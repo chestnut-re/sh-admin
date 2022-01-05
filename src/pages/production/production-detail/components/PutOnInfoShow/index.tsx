@@ -20,7 +20,7 @@ const PutOnInfoShow: React.FC = () => {
 
   return (
     <div className="PutOnInfoShow__root">
-      <h4>5. 上架信息</h4>
+      <h4>6. 上架审核处理</h4>
       <div className="info">
         <div className="one-info">
           <div className="canal">申请渠道 </div>

@@ -2,7 +2,7 @@ import useQuery from '@/hooks/useQuery'
 import { ProductionAuditService } from '@/service/ProductionAuditService'
 import { ProductionService } from '@/service/ProductionService'
 import { useStore } from '@/store/context'
-import { Button, Form, Input, InputNumber, Radio, Switch } from 'antd'
+import { Button, Form, Input, InputNumber, message, Radio, Switch } from 'antd'
 import { useForm } from 'antd/es/form/Form'
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
@@ -47,6 +47,7 @@ const CenterPutOnRequest: React.FC = () => {
         console.log(postData)
         ProductionService.centerPutOnRequest(postData).then((res) => {
           if (res.code === '200') {
+            message.success('上架申请提交成功')
             history.goBack()
           }
         })

@@ -38,9 +38,9 @@ const Commission: React.FC<Props> = ({ value, onChange }) => {
     console.log(
       'goodsTypeHandleChange',
       value,
-      productType.find((i) => i.id == option.key)
+      productType.find((i) => i.distPlanId == option.key)
     )
-    onChange?.(productType.find((i) => i.id == option.key))
+    onChange?.(productType.find((i) => i.distPlanId == option.key))
   }
 
   return (
@@ -60,8 +60,8 @@ const Commission: React.FC<Props> = ({ value, onChange }) => {
     >
       {productType &&
         productType.map((item) => (
-          <Select.Option name={item['planName']} value={item['planName']} key={item['id']}>
-            {item['planName']}
+          <Select.Option name={item['distPlanNam']} value={item['distPlanNam']} key={item['distPlanId']}>
+            {item['distPlanNam']}
           </Select.Option>
         ))}
     </Select>
