@@ -60,6 +60,7 @@ class ProductionData {
       addBaseInfo: action,
       setTravelMode: action,
       addOrderDeadline: action,
+      addRefundDeadline: action,
       copyGood: action,
       removeGood: action,
       addTravelOneDay: action,

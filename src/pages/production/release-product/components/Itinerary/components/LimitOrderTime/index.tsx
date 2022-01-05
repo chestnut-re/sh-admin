@@ -9,7 +9,6 @@ const LimitRefundTime: React.FC = () => {
   const { productionStore } = useStore()
 
   const _onChange = (value) => {
-    //TODO：add
     productionStore.addOrderDeadline(value)
   }
 

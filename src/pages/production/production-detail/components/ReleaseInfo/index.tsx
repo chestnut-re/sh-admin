@@ -38,16 +38,17 @@ const ReleaseInfo: React.FC = () => {
         console.log(formData)
         const postData = { ...formData }
         postData.isDeduction = postData.isDeduction ? 0 : 1
+        postData.distPlan = postData.distPlanId.channelPlanList.map((item) => {
+          return {
+            channelId: item.id,
+            channelName: item.channelName,
+            distScale: item.directScale,
+            planName: postData.distPlanId.planName,
+          }
+        })
         postData.distPlanId = postData.distPlanId.id
         postData.id = query.get('id')
-        // postData.distPlan = postData.distPlanId.channelPlanList.map(item=>{
-        //   return {
-        //     channelId: '',
-        //     channelName: '',
-        //     distScale: '',
-        //     planName: '',
-        //   }
-        // })
+
         console.log(postData)
         ProductionAuditService.publishAudit(postData).then((res) => {
           if (res.code === '200') {

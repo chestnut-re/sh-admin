@@ -47,7 +47,7 @@ const ProductionDetail: React.FC = () => {
       {type === 'release' && <ReleaseInfoShow />}
       {/* 上架审核 -> 上架信息 */}
       {type === 'release' && <PutOnInfo />}
-      {/* 查看详情 */}
+      {/* 查看详情页 */}
       {type === 'detail' && <PutOnInfoShow />}
     </div>
   )

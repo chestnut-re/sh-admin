@@ -6,8 +6,6 @@ import { useStore } from '@/store/context'
 import { observer } from 'mobx-react-lite'
 import HotelDialog from './components/HotelDialog'
 import TravelModel from './components/TravelMode'
-import LimitOrderTime from './components/LimitOrderTime'
-import LimitRefundTime from './components/LimitOrderTime'
 import { createPanesData } from '../../utils'
 import Travel from './components/Travel'
 import ScenicDialog from './components/ScenicDialog'
@@ -16,6 +14,8 @@ import TransportationDialog from './components/TransportationDialog'
 import OriginLocation from './components/OriginLocation'
 import { StickyContainer, Sticky } from 'react-sticky'
 import DateTimeDialog from './components/DateTimeDialog'
+import LimitOrderTime from './components/LimitOrderTime'
+import LimitRefundTime from './components/LimitRefundTime'
 
 /**
  * 行程信息
