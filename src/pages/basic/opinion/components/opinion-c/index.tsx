@@ -1,14 +1,16 @@
-import { Space, Table, Tag, Form, Row, Col, Button, DatePicker, Input } from 'antd'
+import { Space, Table, Tag, Form, Row, Col, Button, DatePicker, Input, Image } from 'antd'
 import React, { useEffect, useState } from 'react'
+import { OpinionService } from '@/service/OpinionService'
+import ImageColumn from '@/components/tableColumn/ImageColumn'
 /**
- * 系统中心-版本管理-C端版本管理
+ * 基础信息管理-意见反馈
  */
 
 const OpinionCPage: React.FC = () => {
   const [form] = Form.useForm()
   const { RangePicker } = DatePicker
   const [data, setData] = useState([])
-  const [pageIndex, setPageIndex] = useState(0)
+  const [pageIndex, setPageIndex] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [total, setTotal] = useState()
 
@@ -17,11 +19,11 @@ const OpinionCPage: React.FC = () => {
   }, [pageIndex])
 
   const loadData = (pageIndex) => {
-    // BannerService.list({ current: pageIndex, size: pageSize }).then((res) => {
-    //   console.log(res)
-    //   setData(res.data.records)
-    //   setTotal(res.data.total)
-    // })
+    OpinionService.list({ current: pageIndex, size: pageSize }).then((res) => {
+      console.log(res)
+      setData(res.data.records)
+      setTotal(res.data.total)
+    })
   }
 
   const columns = [
@@ -31,23 +33,33 @@ const OpinionCPage: React.FC = () => {
     },
     {
       title: '账号',
-      dataIndex: 'account',
+      dataIndex: 'phoneNumber',
     },
     {
       title: '昵称',
-      dataIndex: 'password',
+      dataIndex: 'userNickName',
     },
     {
       title: '反馈图片',
-      dataIndex: 'name',
+      dataIndex: 'feedbackImgUrl',
+      render: (text: any, record: any) => {
+        const imgs = record.feedbackImgUrl?.split(',')
+        return (
+          <Image.PreviewGroup>
+            {imgs.map((item: any, index: any) => {
+              return <Image src={item} key={index} style={{ width: 40, height: 40, marginRight: 4 }} />
+            })}
+          </Image.PreviewGroup>
+        )
+      },
     },
     {
       title: '文字描述',
-      dataIndex: 'role',
+      dataIndex: 'feedbackDescription',
     },
     {
       title: '反馈时间',
-      dataIndex: 'createtime',
+      dataIndex: 'feedbackTime',
     },
   ]
 

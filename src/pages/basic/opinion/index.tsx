@@ -13,14 +13,15 @@ const OpinionPage: React.FC = () => {
 
   return (
     <div className="page-root">
-      <Tabs defaultActiveKey="1" onChange={onChange}>
+      {/* <Tabs defaultActiveKey="1" onChange={onChange}>
         <Tabs.TabPane tab="C端版本管理" key="1">
           <OpinionCPage />
         </Tabs.TabPane>
         <Tabs.TabPane tab="B端版本管理" key="2">
           <OpinionBPage />
         </Tabs.TabPane>
-      </Tabs>
+      </Tabs> */}
+      <OpinionCPage />
     </div>
   )
 }
