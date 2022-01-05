@@ -107,9 +107,17 @@ const AuditScreen: React.FC<Props> = ({ type }) => {
             <Button
               onClick={() => {
                 console.log(record)
-                history.push(
-                  `/production/production-detail?channelGoodsId=${record.channelGoodsId}&goodsId=${record.goodsId}&id=${record.goodsId}&type=${type}`
-                )
+                if (type === 'release') {
+                  // 上架审核
+                  history.push(
+                    `/production/production-detail?channelGoodsId=${record.channelGoodsId}&goodsId=${record.goodsId}&id=${record.goodsId}&type=${type}`
+                  )
+                } else {
+                  // 发布审核
+                  history.push(
+                    `/production/production-detail?channelGoodsId=${record.channelGoodsId}&goodsId=${record.goodsId}&id=${record.goodsId}&type=${type}`
+                  )
+                }
               }}
             >
               审核
