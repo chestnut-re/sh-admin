@@ -229,6 +229,14 @@ export default [
                   path: '/order/allocated-list',
                   hide: false,
                 },
+                {
+                  name: '订单分配',
+                  id: getNanoId(),
+                  type: 'menu',
+                  componentPath: '/order/allocated-list/components/order-allocated',
+                  path: '/order/allocated-list/order-allocated',
+                  hide: false,
+                },
               ],
             },
             {

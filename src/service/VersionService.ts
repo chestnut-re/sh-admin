@@ -24,7 +24,7 @@ export class VersionService {
   /**
    * 编辑
    */
-  static edit(data): Promise<any> {
+  static details(data): Promise<any> {
     return axios.post(`/api/platform/version/getVersion`, data)
   }
 }
