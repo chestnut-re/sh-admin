@@ -45,16 +45,15 @@ const ProductionDetail: React.FC = () => {
       {/* 移动页详情信息 */}
       <DetailPageInfo />
 
-      {/* 发布审核 ->发布信息 */}
+      {/* 3 发布审核*/}
       {type === 'publish' && <ReleaseInfo />}
-      {/* 上架审核 ->发布信息 */}
       {(type === 'release' || type === 'publishCheck' || type === 'releaseCheck' || type === 'centerPublish') && (
         <ReleaseInfoShow />
       )}
 
-      {/* 分中心 上架申请 centerPublish */}
+      {/* 4 分中心 上架申请 centerPublish */}
       {type === 'centerPublish' && <CenterPutOnRequest />}
-      {type === 'release' && <CenterPutOnRequestShow />}
+      {(type === 'release' || type === 'releaseCheck') && <CenterPutOnRequestShow />}
 
       {/* 上架审核  */}
       {type === 'release' && <PutOnInfo />}

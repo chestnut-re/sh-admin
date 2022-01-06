@@ -1,5 +1,5 @@
 import React, { useImperativeHandle, useRef, forwardRef, useState, useEffect } from 'react'
-import { Form, Input, Row, Col, Upload, Select, Image, Spin, message } from 'antd'
+import { Form, Input, Row, Col, Upload, Select, Image, Spin, message, Radio, Switch, InputNumber } from 'antd'
 import './index.less'
 import ProductionTag from '../ProductionTag'
 import { useStore } from '@/store/context'
@@ -15,6 +15,9 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
   const { productionStore } = useStore()
   const [form] = Form.useForm()
 
+  const [goodsLimit, setGoodsLimit] = useState(false)
+  const [goodsLimitUp, setGoodsLimitUp] = useState(false)
+
   useImperativeHandle(ref, () => ({
     next,
   }))
@@ -27,12 +30,34 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
       goodsNickName: productionStore.data.goodsNickName,
       refundAndChangePolicy: productionStore.data.refundAndChangePolicy,
       promotionalImageUrl: productionStore.data.promotionalImageUrl,
+      purchaseConfig: {
+        purchaseDay: productionStore.data.purchaseConfig?.purchaseDay,
+        purchaseNum: productionStore.data.purchaseConfig?.purchaseNum,
+        addType: productionStore.data.purchaseConfig?.addType,
+        addNum: productionStore.data.purchaseConfig?.addNum,
+      },
     })
+
+    if (productionStore.data.purchaseConfig?.purchaseDay) {
+      setGoodsLimit(true)
+    }
+
+    if (productionStore.data.purchaseConfig?.addNum) {
+      setGoodsLimitUp(true)
+    }
   }, [productionStore.data])
 
   const next = () => {
     console.log('BaseInfo next')
     const value = form.getFieldsValue()
+    if(!goodsLimit){
+      productionStore.data.purchaseConfig.purchaseDay = null
+      productionStore.data.purchaseConfig.purchaseNum = null
+    }
+    if(!goodsLimitUp){
+      productionStore.data.purchaseConfig.addType = null
+      productionStore.data.purchaseConfig.addNum = null
+    }
     console.log(value)
     productionStore.addBaseInfo(value)
   }
@@ -45,8 +70,8 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
   return (
     <Form {...layout} form={form} colon={false} size="large" name="product-release" className="BaseInfo_root">
       <Row>
-        <Col span={12}>
-          <Form.Item name="goodsTypeTag" label="商品类型标签">
+        <Col span={16}>
+          <Form.Item name="goodsTypeTag" label="商品分类">
             <ProductionTag />
           </Form.Item>
           <Form.Item name="goodsName" label="商品主标题">
@@ -55,11 +80,81 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
           <Form.Item name="goodsNickName" label="商品副标题">
             <Input />
           </Form.Item>
+          <Form.Item name="goodsType" label="商品类型">
+            <Radio.Group>
+              <Radio value={1}>长线</Radio>
+              <Radio value={2}>短线</Radio>
+            </Radio.Group>
+          </Form.Item>
+
+          <Row>
+            <Col span={10}>
+              <Form.Item label="商品限购">
+                <Switch
+                  checked={goodsLimit}
+                  checkedChildren="开启"
+                  unCheckedChildren="关闭"
+                  onChange={(checked) => {
+                    setGoodsLimit(checked)
+                  }}
+                />
+              </Form.Item>
+            </Col>
+            {goodsLimit && (
+              <>
+                <Col span={6}>
+                  <Form.Item name={['purchaseConfig', 'purchaseDay']} label="">
+                    <InputNumber addonAfter="天" min={0} />
+                  </Form.Item>
+                </Col>
+                <Col span={8}>
+                  <Form.Item name={['purchaseConfig', 'purchaseNum']} label="">
+                    <InputNumber addonBefore="限购" addonAfter="份" min={0} />
+                  </Form.Item>
+                </Col>
+              </>
+            )}
+          </Row>
+
+          <Row>
+            <Col span={10}>
+              <Form.Item label="限购提升">
+                <Switch
+                  checked={goodsLimitUp}
+                  checkedChildren="开启"
+                  unCheckedChildren="关闭"
+                  onChange={(checked) => {
+                    setGoodsLimitUp(checked)
+                  }}
+                />
+              </Form.Item>
+            </Col>
+            {goodsLimitUp && (
+              <>
+                <Col span={6}>
+                  用户分享商品且
+                  <Form.Item name={['purchaseConfig', 'addType']} label="">
+                    <Select>
+                      {/* 限购上限增加任务类型1下单付款，2订单核销*/}
+                      <Select.Option value={1}>下单付款</Select.Option>
+                      <Select.Option value={2}>订单核销</Select.Option>
+                    </Select>
+                  </Form.Item>
+                </Col>
+                <Col span={8}>
+                  <Form.Item name={['purchaseConfig', 'addNum']} label="">
+                    <InputNumber addonBefore="限购加" addonAfter="份" min={0} />
+                  </Form.Item>
+                </Col>
+              </>
+            )}
+          </Row>
+
           <Form.Item name="refundAndChangePolicy" label="退改政策">
             <Input />
           </Form.Item>
         </Col>
-        <Col span={10}>
+        <Col span={8}>
           <Form.Item name="promotionalImageUrl" label="">
             <UploadImage />
           </Form.Item>
