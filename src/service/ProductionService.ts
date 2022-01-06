@@ -88,7 +88,7 @@ export class ProductionService {
   static centerPutOnRequestGet(id: string): Promise<any> {
     return axios.get(`/api/operation/channelShop/putawayInfo`, {
       params: {
-        goodsId: id,
+        channelGoodsId: id,
       },
     })
   }
