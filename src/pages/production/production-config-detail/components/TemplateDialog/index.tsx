@@ -1,15 +1,15 @@
-import { Form, Modal, Col, Row } from 'antd'
-import React, { FC, useEffect } from 'react'
-import UploadImage from '@/components/formItem/UploadImage'
+import { Modal } from 'antd'
+import React, { FC, useEffect, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import { useStore } from '@/store/context'
-import { TemplateType } from '../../template'
+import { templateMap, TemplateType } from '../../template'
+import './index.less'
 
 interface Props {
   type: TemplateType
   show: boolean
   /**内容修改成功回调，页面需要刷新数据 */
-  onSuccess: () => void
+  onSuccess: (template) => void
   onClose: () => void
 }
 
@@ -18,11 +18,18 @@ interface Props {
  */
 const TemplateDialog: FC<Props> = ({ type, show = false, onSuccess, onClose }) => {
   const { productionDetailStore } = useStore()
+  const [templateList, setTemplateList] = useState<any[]>([])
 
-  useEffect(() => {}, [show])
+  const [selectedTemplate, setSelectedTemplate] = useState<any>(null)
+
+  useEffect(() => {
+    setTemplateList(templateMap[type])
+  }, [show])
 
   /**提交数据 */
-  const _handleUpdate = async () => {}
+  const _handleUpdate = async () => {
+    onSuccess(selectedTemplate)
+  }
 
   const _formClose = () => {
     onClose()
@@ -30,9 +37,25 @@ const TemplateDialog: FC<Props> = ({ type, show = false, onSuccess, onClose }) =
 
   return (
     <Modal title="模版" visible={show} onOk={_handleUpdate} onCancel={_formClose} width={1000}>
-      <Row>
-        <Col span={12}></Col>
-      </Row>
+      <div className="TemplateDialog__root">
+        {templateList.map((item) => {
+          const name = item.key === selectedTemplate?.key ? 'templateImgUrlSelected' : 'templateImgUrl'
+          return (
+            <img
+              key={item.key}
+              className={name}
+              src={item.templateImgUrl}
+              onClick={() => {
+                if (item == selectedTemplate) {
+                  setSelectedTemplate(null)
+                } else {
+                  setSelectedTemplate(item)
+                }
+              }}
+            ></img>
+          )
+        })}
+      </div>
     </Modal>
   )
 }
