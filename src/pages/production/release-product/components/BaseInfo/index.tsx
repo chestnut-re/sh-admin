@@ -153,12 +153,8 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
             )}
           </Row>
 
-          {/* <Form.Item label="退改政策">
-            <Select></Select>
-          </Form.Item> */}
-
           <Form.Item name="refundAndChangePolicy" label="退改政策">
-            <RichInput ref={richRef} />
+            <Select></Select>
           </Form.Item>
         </Col>
         <Col span={8}>
