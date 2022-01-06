@@ -1,6 +1,6 @@
 /*
  * @Description: 配置商品详情
- * @LastEditTime: 2022-01-06 14:45:50
+ * @LastEditTime: 2022-01-06 16:39:49
  */
 import { Table, Space, Button, Modal, Form, Row, Col } from 'antd'
 import { ActivitiesService } from '@/service/ActivitiesService'
@@ -11,7 +11,7 @@ import React, { useEffect, useState } from 'react'
 interface Props {
   goodsShow: boolean
   goodsIdList: any
-  onSuccess: (any:any,e?:any) => void
+  onSuccess: (any:any,e:any) => void
   onClose: () => void
 }
 const ActivityGoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess, onClose }) => {
