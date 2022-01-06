@@ -1,4 +1,3 @@
-import { getNanoId } from '@/utils/nanoid'
 import md5 from 'md5'
 import Mock from 'mockjs'
 
@@ -40,7 +39,7 @@ export default [
                 },
                 {
                   name: '发布商品',
-                  id: getNanoId(),
+                  id: md5('/production/release-product'),
                   type: 'menu',
                   icon: '',
                   componentPath: '/production/release-product',
@@ -332,7 +331,7 @@ export default [
                 },
                 {
                   name: '配置管理',
-                  id: getNanoId(),
+                  id: md5('/order/config-management'),
                   type: 'menu',
                   icon: '',
                   componentPath: '/order/config-management',
