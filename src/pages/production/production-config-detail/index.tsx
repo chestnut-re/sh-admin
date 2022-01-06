@@ -8,6 +8,7 @@ import { useHistory } from 'react-router-dom'
 import AEDialog from './components/AEDialog'
 import TemplateItem from './components/TemplateItem'
 import './index.less'
+import { TemplateType } from './template'
 
 /**
  * 商品配置详情页
@@ -19,6 +20,7 @@ const ProductionConfigDetail: React.FC = () => {
 
   const [showDialog, setShowDialog] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
+  const [selectedType, setSelectedType] = useState<TemplateType>('face')
 
   useEffect(() => {
     console.log(query.get('id'))
@@ -39,12 +41,14 @@ const ProductionConfigDetail: React.FC = () => {
 
   /**编辑模版 封面 */
   const _editStart = () => {
+    setSelectedType('face')
     setSelectedData(productionDetailStore.data.goodsDetail.goodsDetailStart)
     setShowDialog(true)
   }
 
   /**编辑模版 封底*/
   const _editEnd = () => {
+    setSelectedType('end')
     setSelectedData(productionDetailStore.data.goodsDetail.goodsDetailEnd)
     setShowDialog(true)
   }
@@ -56,6 +60,7 @@ const ProductionConfigDetail: React.FC = () => {
 
   /**编辑模版 */
   const _editPage = (key: string) => {
+    setSelectedType('center')
     setSelectedData(productionDetailStore.data.goodsDetail.goodsDetailPage.find((i) => i.key === key))
     setShowDialog(true)
   }
@@ -111,7 +116,13 @@ const ProductionConfigDetail: React.FC = () => {
       <Button onClick={_submit}>提交审核</Button>
       <Button onClick={_save}>保存</Button>
 
-      <AEDialog data={selectedData} onSuccess={_onDialogSuccess} show={showDialog} onClose={_onDialogClose} />
+      <AEDialog
+        type={selectedType}
+        data={selectedData}
+        onSuccess={_onDialogSuccess}
+        show={showDialog}
+        onClose={_onDialogClose}
+      />
     </div>
   )
 }
