@@ -1,4 +1,5 @@
 import { getNanoId } from '@/utils/nanoid'
+import md5 from 'md5'
 import Mock from 'mockjs'
 
 export default [
@@ -21,7 +22,7 @@ export default [
             // },
             {
               name: '商品管理',
-              id: getNanoId(),
+              id: md5('production'),
               type: 'menu',
               icon: '',
               componentPath: '/production',
@@ -30,7 +31,7 @@ export default [
               children: [
                 {
                   name: '商品列表',
-                  id: getNanoId(),
+                  id: md5('/production/production-list'),
                   type: 'menu',
                   icon: '',
                   componentPath: '/production/production-list',
@@ -48,7 +49,7 @@ export default [
                 },
                 {
                   name: '商品详情',
-                  id: getNanoId(),
+                  id: md5('/production/production-detail'),
                   type: 'menu',
                   icon: '',
                   componentPath: '/production/production-detail',
@@ -57,7 +58,7 @@ export default [
                 },
                 {
                   name: '商品配置详情',
-                  id: getNanoId(),
+                  id: md5('/production/production-config-detail'),
                   type: 'menu',
                   icon: '',
                   componentPath: '/production/production-config-detail',
@@ -66,7 +67,7 @@ export default [
                 },
                 {
                   name: '商品审核',
-                  id: getNanoId(),
+                  id: md5('/production/commodity-audit'),
                   type: 'menu',
                   icon: '',
                   componentPath: '/production/commodity-audit',
@@ -75,7 +76,7 @@ export default [
                 },
                 {
                   name: '商品配置',
-                  id: getNanoId(),
+                  id: md5('/production/commodity-allocation'),
                   type: 'menu',
                   icon: '',
                   componentPath: '/production/commodity-allocation',
@@ -84,7 +85,7 @@ export default [
                 },
                 {
                   name: '商品分佣方案',
-                  id: getNanoId(),
+                  id: md5('/production/commission'),
                   type: 'menu',
                   icon: '',
                   componentPath: '/production/commission',
@@ -95,7 +96,7 @@ export default [
             },
             {
               name: '营销中心',
-              id: getNanoId(),
+              id: md5('/market'),
               type: 'menu',
               icon: '',
               componentPath: 'market',
@@ -104,7 +105,7 @@ export default [
               children: [
                 {
                   name: 'App活动',
-                  id: getNanoId(),
+                  id: md5('/market/app-market'),
                   type: 'menu',
                   icon: '',
                   componentPath: '/market/app-market',
@@ -131,7 +132,7 @@ export default [
                 },
                 {
                   name: '消息管理',
-                  id: getNanoId(),
+                  id: md5('/market/message'),
                   type: 'menu',
                   icon: '',
                   componentPath: '/market/message',
@@ -140,7 +141,7 @@ export default [
                   children: [
                     {
                       name: '消息管理',
-                      id: getNanoId(),
+                      id: md5('/market/message/message-management'),
                       type: 'menu',
                       icon: '',
                       componentPath: '/market/message/message-management',
@@ -149,7 +150,7 @@ export default [
                     },
                     {
                       name: '消息推送模版',
-                      id: getNanoId(),
+                      id: md5('/market/message/push-template'),
                       type: 'menu',
                       icon: '',
                       componentPath: '/market/message/push-template',
@@ -160,21 +161,21 @@ export default [
                 },
                 {
                   name: '返利活动',
-                  id: getNanoId(),
+                  id: md5('/market/rebate-activity'),
                   type: 'menu',
                   componentPath: '/market/rebate-activity',
                   path: '/market/rebate-activity',
                 },
                 {
                   name: '任务清单',
-                  id: getNanoId(),
+                  id: md5('/market/task-list'),
                   type: 'menu',
                   componentPath: '/market/task-list',
                   path: '/market/task-list',
                 },
                 {
                   name: '活动审核',
-                  id: getNanoId(),
+                  id: md5('/market/review-activity'),
                   type: 'menu',
                   componentPath: '/market/review-activity',
                   path: '/market/review-activity',
@@ -183,7 +184,7 @@ export default [
             },
             {
               name: '渠道管理',
-              id: getNanoId(),
+              id: md5('/channel'),
               type: 'menu',
               icon: '',
               componentPath: 'channel',
@@ -192,7 +193,7 @@ export default [
               children: [
                 {
                   name: '渠道库',
-                  id: getNanoId(),
+                  id: md5('/channel-management'),
                   type: 'menu',
                   icon: '',
                   componentPath: '/channel',
@@ -201,7 +202,7 @@ export default [
                   children: [
                     {
                       name: '渠道列表',
-                      id: getNanoId(),
+                      id: md5('/channel/channel-management/channel-list'),
                       type: 'menu',
                       icon: '',
                       componentPath: '/channel/channel-management/channel-list',
@@ -217,7 +218,7 @@ export default [
                     // },
                     {
                       name: '渠道权限',
-                      id: getNanoId(),
+                      id: md5('/channel/channel-management/authority-management'),
                       type: 'menu',
                       icon: '',
                       componentPath: '/channel/channel-management/authority-management',
@@ -226,7 +227,7 @@ export default [
                     },
                     {
                       name: '渠道分佣方案',
-                      id: getNanoId(),
+                      id: md5('/channel/channel-management/commission-scheme'),
                       type: 'menu',
                       icon: '',
                       componentPath: '/channel/channel-management/commission-scheme',
@@ -237,7 +238,7 @@ export default [
                 },
                 {
                   name: '人员管理',
-                  id: getNanoId(),
+                  id: md5('/channel/personnel'),
                   type: 'menu',
                   icon: '',
                   componentPath: '/channel/personnel',
@@ -248,7 +249,7 @@ export default [
             },
             {
               name: '用户中心',
-              id: getNanoId(),
+              id: md5('/user'),
               type: 'menu',
               icon: '',
               componentPath: '/user',
@@ -257,7 +258,7 @@ export default [
               children: [
                 {
                   name: '用户列表',
-                  id: getNanoId(),
+                  id: md5('/user/list'),
                   type: 'menu',
                   icon: '',
                   componentPath: '/user/list',
@@ -268,7 +269,7 @@ export default [
             },
             {
               name: '订单中心',
-              id: getNanoId(),
+              id: md5('/order'),
               type: 'menu',
               icon: '',
               componentPath: '/order',
@@ -277,7 +278,7 @@ export default [
               children: [
                 {
                   name: '订单列表',
-                  id: getNanoId(),
+                  id: md5('/order/order-list'),
                   type: 'menu',
                   icon: '',
                   componentPath: '/order/order-list',
@@ -286,7 +287,7 @@ export default [
                 },
                 {
                   name: '订单详情',
-                  id: getNanoId(),
+                  id: md5('/order/order-list/components/order-details/OrderDetails'),
                   type: 'menu',
                   icon: '',
                   componentPath: '/order/order-list/components/order-details/OrderDetails',
@@ -295,7 +296,7 @@ export default [
                 },
                 {
                   name: '待分配列表',
-                  id: getNanoId(),
+                  id: md5('/order/allocated-list'),
                   type: 'menu',
                   icon: '',
                   componentPath: '/order/allocated-list',
@@ -304,7 +305,7 @@ export default [
                 },
                 {
                   name: '订单分配',
-                  id: getNanoId(),
+                  id: md5('/order/allocated-list/components/order-allocated'),
                   type: 'menu',
                   icon: '',
                   componentPath: '/order/allocated-list/components/order-allocated',
@@ -313,15 +314,16 @@ export default [
                 },
                 {
                   name: '售后管理',
-                  id: getNanoId(),
+                  id: md5('/order/after-sales'),
                   type: 'menu',
+                  icon: '',
                   componentPath: '/order/after-sales',
                   path: '/order/after-sales',
                   hide: false,
                 },
                 {
                   name: '退款详情',
-                  id: getNanoId(),
+                  id: md5('/order/after-sales/components/details'),
                   type: 'menu',
                   icon: '',
                   componentPath: '/order/after-sales/components/details',
@@ -332,7 +334,7 @@ export default [
             },
             {
               name: '财务中心',
-              id: getNanoId(),
+              id: md5('/finance'),
               type: 'menu',
               icon: '',
               componentPath: '/finance',
@@ -341,7 +343,7 @@ export default [
               children: [
                 {
                   name: '账户中心',
-                  id: getNanoId(),
+                  id: md5('/finance/account'),
                   type: 'menu',
                   icon: '',
                   componentPath: '/finance/account',
@@ -350,7 +352,7 @@ export default [
                 },
                 {
                   name: '销售业绩',
-                  id: getNanoId(),
+                  id: md5('/finance/sales-performance'),
                   type: 'menu',
                   icon: '',
                   componentPath: '/finance/sales-performance',
@@ -368,7 +370,7 @@ export default [
             // },
             {
               name: '基础信息管理',
-              id: getNanoId(),
+              id: md5('basic'),
               type: 'menu',
               icon: '',
               componentPath: 'basic',
@@ -377,7 +379,7 @@ export default [
               children: [
                 {
                   name: '意见反馈',
-                  id: 91,
+                  id: md5('/basic/opinion'),
                   type: 'menu',
                   icon: '',
                   componentPath: '/basic/opinion',
@@ -385,7 +387,7 @@ export default [
                 },
                 {
                   name: '角色权限',
-                  id: getNanoId(),
+                  id: md5('/basic/role-based'),
                   type: 'menu',
                   icon: '',
                   componentPath: '/basic/role-based',
@@ -394,7 +396,7 @@ export default [
                 },
                 {
                   name: '管理员账号',
-                  id: getNanoId(),
+                  id: md5('/system/admin'),
                   type: 'menu',
                   icon: '',
                   componentPath: '/system/admin',
@@ -405,7 +407,7 @@ export default [
             },
             {
               name: '系统中心',
-              id: getNanoId(),
+              id: md5('system'),
               type: 'menu',
               icon: '',
               componentPath: 'system',
@@ -414,7 +416,7 @@ export default [
               children: [
                 {
                   name: '版本管理',
-                  id: getNanoId(),
+                  id: md5('/system/version'),
                   type: 'menu',
                   icon: '',
                   componentPath: '/system/version',
@@ -474,7 +476,7 @@ export default [
 
                 {
                   name: '支付配置',
-                  id: getNanoId(),
+                  id: md5('/system/payment-configuration'),
                   type: 'menu',
                   icon: '',
                   componentPath: '/system/payment-configuration',
