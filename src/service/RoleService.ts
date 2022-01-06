@@ -13,16 +13,17 @@ export default class RoleService {
   static add(data): Promise<any> {
     return axios.post('/api/platform/role/save', data)
   }
-  static del({ id }): Promise<any> {
-    return axios.delete(`/api/sys/role/delete/${id}`)
+  static del(data): Promise<any> {
+    return axios.get(`/api/platform/role/delRole`, {
+      params: data,
+    })
   }
   static get(data): Promise<any> {
-    return axios.get(`/api/platform/role/getRole`,{
-      params:data
+    return axios.get(`/api/platform/role/getRole`, {
+      params: data,
     })
   }
   static edit(data): Promise<any> {
-    return axios.post(`/api/platform/role/update`,data)
+    return axios.post(`/api/platform/role/update`, data)
   }
-  
 }
