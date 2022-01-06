@@ -1,3 +1,4 @@
+
 import useQuery from '@/hooks/useQuery'
 import { ProductionAuditService } from '@/service/ProductionAuditService'
 import { useStore } from '@/store/context'
@@ -77,7 +78,7 @@ const PutOnInfo: React.FC = () => {
         {/* <Form.Item label="分佣方案" name="distPlanId" rules={[{ required: true }]}>
           <Commission onChange={_onCommissionChange} />
         </Form.Item>
-        <div>{JSON.stringify(commission)}</div> */}
+        <div>{JSON.stringify(commission)}</div> 
 
         <Button onClick={_submit}>提交发布</Button>
       </Form> */}

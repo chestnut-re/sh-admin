@@ -118,6 +118,27 @@ export default [
                   //   },
                   // ],
                 },
+                {
+                  name: '返利活动',
+                  id: getNanoId(),
+                  type: 'menu',
+                  componentPath: '/market/rebate-activity',
+                  path: '/market/rebate-activity',
+                },
+                {
+                  name: '任务清单',
+                  id: getNanoId(),
+                  type: 'menu',
+                  componentPath: '/market/task-list',
+                  path: '/market/task-list',
+                },
+                {
+                  name: '活动审核',
+                  id: getNanoId(),
+                  type: 'menu',
+                  componentPath: '/market/review-activity',
+                  path: '/market/review-activity',
+                },
               ],
             },
             {
