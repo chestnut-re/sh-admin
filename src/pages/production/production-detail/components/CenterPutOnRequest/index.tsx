@@ -38,10 +38,9 @@ const CenterPutOnRequest: React.FC = () => {
       .then((formData) => {
         console.log(formData)
         const postData = { ...formData }
-        // postData.isDeduction = postData.isDeduction ? 0 : 1
-        
-        postData.distPlan = postData.distPlanId
-        postData.distPlanId = postData.distPlan.id
+        const savePlan = postData.distPlanId
+        postData.distPlan = savePlan?.distPlan
+        postData.distPlanId = savePlan.distPlanId
         postData.goodsId = query.get('id')
         
         console.log(postData)

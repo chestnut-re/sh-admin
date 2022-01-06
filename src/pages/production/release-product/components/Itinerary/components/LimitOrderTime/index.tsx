@@ -21,7 +21,7 @@ const LimitRefundTime: React.FC = () => {
           controls={false}
           size="small"
           value={productionStore.data.orderDeadline}
-          min={1}
+          min={0}
           onChange={_onChange}
         />
       </div>

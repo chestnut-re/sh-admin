@@ -1,4 +1,4 @@
-import { Form, Modal, Col, Row, Button } from 'antd'
+import { Form, Modal, Col, Row, Button, message } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
 import UploadImage from '@/components/formItem/UploadImage'
 import { observer } from 'mobx-react-lite'
@@ -26,6 +26,7 @@ const AEDialog: FC<Props> = ({ data, type, show = false, onSuccess, onClose }) =
 
   useEffect(() => {
     console.log('data', data)
+    form.resetFields()
     form.setFieldsValue({
       ...data,
     })
@@ -38,6 +39,10 @@ const AEDialog: FC<Props> = ({ data, type, show = false, onSuccess, onClose }) =
       .validateFields()
       .then((formData) => {
         console.log(formData)
+        if(!selectedTemplate){
+          message.error('请选择模版')
+          return
+        }
         const template = { pageTemplateKey: selectedTemplate.key, pageTemplate: selectedTemplate.name }
         if (type === 'center') {
           productionDetailStore.saveTemplate({ ...data, ...formData, ...template })

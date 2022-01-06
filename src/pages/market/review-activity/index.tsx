@@ -1,31 +1,36 @@
 /*
- * @Description:返利活动
- * @LastEditTime: 2022-01-05 13:51:08
+ * @Description: 活动审核
+ * @LastEditTime: 2022-01-05 18:18:02
  */
 import React, { useState, useEffect } from 'react'
-import { Form, Col, Row, Button, Table, Space } from 'antd'
+import { Form, Col, Row, Button, Table, Space, Radio, DatePicker } from 'antd'
 import './index.less'
 import { HttpCode } from '@/constants/HttpCode'
 import AEDialog, { DialogMode } from './components/AEDialog'
 import { InputTemp, StatusRoute } from '@/components/filter/formItem'
 import { ProductionCommission } from '@/service/ProductionCommission'
 import TimeColumn from '@/components/tableColumn/TimeColumn'
-const ProductionCommissionListPage: React.FC = () => {
+import DEDialog from './components/DEDialog'
+const ReviewActivity: React.FC = () => {
+  const { RangePicker } = DatePicker
   const [form] = Form.useForm()
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [total, setTotal] = useState()
+  const [checkState, setCheckState] = useState('')
   const [showDialog, setShowDialog] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
   const [dialogMode, setDialogMode] = useState<DialogMode>('add')
-
+  const [deShowDialog, setDeShowDialog] = useState(false)
   useEffect(() => {
     loadData(pageIndex)
   }, [pageIndex])
 
   const loadData = (pageIndex) => {
     const params = form.getFieldsValue()
+    console.log(params)
+
     ProductionCommission.list({ current: pageIndex, size: pageSize, ...params }).then((res) => {
       setData(res.data.records)
       setTotal(res.data.total)
@@ -62,11 +67,6 @@ const ProductionCommissionListPage: React.FC = () => {
       dataIndex: 'bannerUrl',
     },
     {
-      title: '创建时间',
-      dataIndex: 'updateTime',
-      render: (text, record, index) => <TimeColumn time={record?.updateTime} />,
-    },
-    {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
@@ -88,9 +88,10 @@ const ProductionCommissionListPage: React.FC = () => {
 
   /**编辑 */
   const _editDialog = (record) => {
-    setDialogMode('edit')
+    setDeShowDialog(true)
+    // setDialogMode('edit')
     setSelectedData(record)
-    setShowDialog(true)
+    // setShowDialog(true)
   }
 
   /**添加 */
@@ -127,17 +128,33 @@ const ProductionCommissionListPage: React.FC = () => {
     setPageIndex(page)
     setPageSize(pageSize)
   }
-
+  const onCloseDetail = () => {
+    setDeShowDialog(false)
+  }
   return (
-    <div className="ProductionCommissionListPage__root">
+    <div className="rebateActivity__root">
       <div>
         <Form name="basic" initialValues={{ remember: true }} onFinish={onFinish} form={form}>
-          <Row gutter={[10, 0]}>
+          <Row gutter={[10, 10]}>
             <Col span={1} className="table-from-label"></Col>
-            <Col span={5}>
-              <InputTemp name="planName" placeholder="请输入方案名称" />
+            <Col span={3}>
+              <Radio.Group
+                value={checkState}
+                onChange={(value) => {
+                  setCheckState(value.target.value)
+                }}
+              >
+                <Radio.Button value="">全部</Radio.Button>
+                <Radio.Button value="0">待审核</Radio.Button>
+                <Radio.Button value="1">通过</Radio.Button>
+                <Radio.Button value="2">驳回</Radio.Button>
+              </Radio.Group>
             </Col>
 
+            <Col span={3}>
+              <InputTemp name="planName" placeholder="清单ID/清单名称" />
+            </Col>
+         
             <Col span={1} className="table-from-label">
               状态
             </Col>
@@ -181,8 +198,11 @@ const ProductionCommissionListPage: React.FC = () => {
         show={showDialog}
         onClose={_onDialogClose}
       />
+      <DEDialog show={deShowDialog} onClose={onCloseDetail}>
+        {' '}
+      </DEDialog>
     </div>
   )
 }
 
-export default ProductionCommissionListPage
+export default ReviewActivity
