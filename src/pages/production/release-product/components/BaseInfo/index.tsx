@@ -5,6 +5,8 @@ import ProductionTag from '../ProductionTag'
 import { useStore } from '@/store/context'
 import { observer } from 'mobx-react-lite'
 import UploadImage from '@/components/formItem/UploadImage'
+import RichInput from '@/components/formItem/RichInput'
+import RichTextEditor from 'react-rte'
 
 interface Props {}
 
@@ -14,6 +16,7 @@ interface Props {}
 const BaseInfo: React.FC<Props> = (props, ref) => {
   const { productionStore } = useStore()
   const [form] = Form.useForm()
+  const richRef = useRef()
 
   const [goodsLimit, setGoodsLimit] = useState(false)
   const [goodsLimitUp, setGoodsLimitUp] = useState(false)
@@ -50,11 +53,11 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
   const next = () => {
     console.log('BaseInfo next')
     const value = form.getFieldsValue()
-    if(!goodsLimit){
+    if (!goodsLimit && productionStore.data.purchaseConfig) {
       productionStore.data.purchaseConfig.purchaseDay = null
       productionStore.data.purchaseConfig.purchaseNum = null
     }
-    if(!goodsLimitUp){
+    if (!goodsLimitUp && productionStore.data.purchaseConfig) {
       productionStore.data.purchaseConfig.addType = null
       productionStore.data.purchaseConfig.addNum = null
     }
@@ -151,7 +154,7 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
           </Row>
 
           <Form.Item name="refundAndChangePolicy" label="退改政策">
-            <Input />
+            <Select></Select>
           </Form.Item>
         </Col>
         <Col span={8}>

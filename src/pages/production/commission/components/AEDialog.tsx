@@ -86,9 +86,9 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
         <p>分销商品分佣方案配置</p>
         <Form.Item label="分佣比例" name="saleScale">
           {mode == 'add' ? (
-            <InputNumber style={{ width: '100px' }} addonAfter="%" type="number" />
+            <InputNumber style={{ width: '100px' }} addonAfter="%" type="number" min={0} />
           ) : (
-            <InputNumber style={{ width: '100px' }} addonAfter="%" type="number" readOnly />
+            <InputNumber style={{ width: '100px' }} addonAfter="%" type="number" min={0} readOnly />
           )}
         </Form.Item>
         {mode == 'add' ? (
@@ -113,7 +113,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
             <span>
               且需满
               {/* <Form.Item name="groupSettleDay" style={{ marginBottom: '0', display: 'inline-block' }}> */}
-              <InputNumber value={data?.saleSettleDay} addonAfter="天" style={{ width: 100 }} />
+              <InputNumber value={data?.saleSettleDay} addonAfter="天" style={{ width: 100 }} min={0} />
               {/* </Form.Item> */}
             </span>
           </Form.Item>

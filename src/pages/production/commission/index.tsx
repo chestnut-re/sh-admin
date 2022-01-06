@@ -1,3 +1,7 @@
+/*
+ * @Description:返利活动
+ * @LastEditTime: 2022-01-05 13:51:08
+ */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space } from 'antd'
 import './index.less'
@@ -6,17 +10,12 @@ import AEDialog, { DialogMode } from './components/AEDialog'
 import { InputTemp, StatusRoute } from '@/components/filter/formItem'
 import { ProductionCommission } from '@/service/ProductionCommission'
 import TimeColumn from '@/components/tableColumn/TimeColumn'
-
-/**
- * 商品管理-添加商品佣金
- */
 const ProductionCommissionListPage: React.FC = () => {
   const [form] = Form.useForm()
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [total, setTotal] = useState()
-
   const [showDialog, setShowDialog] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
   const [dialogMode, setDialogMode] = useState<DialogMode>('add')
@@ -27,8 +26,6 @@ const ProductionCommissionListPage: React.FC = () => {
 
   const loadData = (pageIndex) => {
     const params = form.getFieldsValue()
-    console.log(params)
-
     ProductionCommission.list({ current: pageIndex, size: pageSize, ...params }).then((res) => {
       setData(res.data.records)
       setTotal(res.data.total)

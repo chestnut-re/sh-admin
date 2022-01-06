@@ -1,3 +1,4 @@
+
 import useQuery from '@/hooks/useQuery'
 import { ProductionAuditService } from '@/service/ProductionAuditService'
 import { useStore } from '@/store/context'
@@ -67,8 +68,9 @@ const PutOnInfo: React.FC = () => {
           <Input />
         </Form.Item>
         <Form.Item label="团建奖金" name="presetBonus" rules={[{ required: false }]}>
-          <InputNumber />
+          <InputNumber min={0}/>
         </Form.Item>
+        <div>{JSON.stringify(commission)}</div> 
 
         <Button onClick={_submit}>提交发布</Button>
       </Form>

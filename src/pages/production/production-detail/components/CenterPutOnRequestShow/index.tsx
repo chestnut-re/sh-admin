@@ -28,7 +28,7 @@ const CenterPutOnRequestShow: React.FC = () => {
     // }
   ]
   useEffect(() => {
-    const id = query.get('id') ?? ''
+    const id = query.get('channelGoodsId') ?? ''
     ProductionService.centerPutOnRequestGet(id).then((res) => {
       setData(res.data)
     })

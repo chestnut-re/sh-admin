@@ -4,7 +4,7 @@
  * @LastEditTime: 2021-12-30 20:30:54
  */
 import React, { useState, useEffect } from 'react'
-import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
+import { Form, Col, Row, Button, Table, Space, Select, message } from 'antd'
 import { InputTemp } from '@/components/filter/formItem'
 import AddUserDialog, { DialogMode } from './components/AddUserDialog'
 import { analysisName } from '@/utils/tree'
@@ -90,7 +90,7 @@ const RolePage: React.FC = () => {
         <Space size="middle">
           {/* <Button >查看</Button> */}
           <Button onClick={() => showAddDialog(record, false)}>编辑</Button>
-          {/* <Button>删除</Button> */}
+          <Button onClick={() => _delete(record)}>删除</Button>
         </Space>
       ),
     },
@@ -107,6 +107,15 @@ const RolePage: React.FC = () => {
 
   const onReset = () => {
     form.resetFields()
+  }
+
+  const _delete = (record) => {
+    RoleService.del({ roleId: record.id }).then((res) => {
+      if (res.code == 200) {
+        message.success('角色删除成功')
+        loadData()
+      }
+    })
   }
 
   const showAddDialog = (record, add = true) => {
@@ -148,10 +157,8 @@ const RolePage: React.FC = () => {
               form={form}
             >
               <Row gutter={[10, 0]}>
-                <Col  className="table-from-label">
-                  搜索条件
-                </Col>
-                <Col >
+                <Col className="table-from-label">搜索条件</Col>
+                <Col>
                   <InputTemp name="roleNameLike" placeholder="角色名称" />
                 </Col>
                 {/* <Col span={1} className="table-from-label">

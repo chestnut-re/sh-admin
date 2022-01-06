@@ -57,7 +57,7 @@ const ScenicDialog: React.FC<Props> = ({ visible, onCancel, activeKey }) => {
               <Input />
             </Form.Item>
             <Form.Item {...layout} name="visitingTime" label="游览时长" rules={[{ required: true }]}>
-              <InputNumber placeholder="时间(分钟)" />
+              <InputNumber placeholder="时间(分钟)" min={0} />
             </Form.Item>
             <Form.Item {...layout} label="门票成本价格" style={{ marginBottom: 0 }}>
               <Form.Item
@@ -65,14 +65,14 @@ const ScenicDialog: React.FC<Props> = ({ visible, onCancel, activeKey }) => {
                 rules={[{ required: true }]}
                 style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}
               >
-                <InputNumber placeholder="成人价" />
+                <InputNumber placeholder="成人价" min={0} />
               </Form.Item>
               <Form.Item
                 name="childCostPrice"
                 rules={[{ required: true }]}
                 style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 8px' }}
               >
-                <InputNumber placeholder="儿童价" />
+                <InputNumber placeholder="儿童价" min={0} />
               </Form.Item>
             </Form.Item>
             <Form.Item {...layout} label="门票标价" style={{ marginBottom: 0 }}>
@@ -81,14 +81,14 @@ const ScenicDialog: React.FC<Props> = ({ visible, onCancel, activeKey }) => {
                 rules={[{ required: true }]}
                 style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}
               >
-                <InputNumber placeholder="成人价" />
+                <InputNumber placeholder="成人价" min={0} />
               </Form.Item>
               <Form.Item
                 name="childMarkPrice"
                 rules={[{ required: true }]}
                 style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 8px' }}
               >
-                <InputNumber placeholder="儿童价" />
+                <InputNumber placeholder="儿童价" min={0} />
               </Form.Item>
             </Form.Item>
             <Form.Item {...layout} label="现售价" style={{ marginBottom: 0 }}>
@@ -97,14 +97,14 @@ const ScenicDialog: React.FC<Props> = ({ visible, onCancel, activeKey }) => {
                 rules={[{ required: true }]}
                 style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}
               >
-                <InputNumber placeholder="成人价" />
+                <InputNumber placeholder="成人价" min={0} />
               </Form.Item>
               <Form.Item
                 name="childCurrentPrice"
                 rules={[{ required: true }]}
                 style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 8px' }}
               >
-                <InputNumber placeholder="儿童价" />
+                <InputNumber placeholder="儿童价" min={0} />
               </Form.Item>
             </Form.Item>
             <Form.Item {...layout} name={'remark'} label="其他备注">
