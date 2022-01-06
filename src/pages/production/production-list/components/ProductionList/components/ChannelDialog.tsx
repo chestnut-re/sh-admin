@@ -1,7 +1,7 @@
 import { InputTemp } from '@/components/filter/formItem'
 import TimeColumn from '@/components/tableColumn/TimeColumn'
-import TravelModeColumn from '@/components/tableColumn/TravelModeColumn'
-import { Button, Col, Form, Modal, Row, Space, Table } from 'antd'
+import { ProductionService } from '@/service/ProductionService'
+import { Button, Col, Form, message, Modal, Row, Space, Table } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
 
 interface Props {
@@ -24,48 +24,50 @@ const ChannelDialog: FC<Props> = ({ id, goodsName, show = false, onSuccess, onCl
   const [total, setTotal] = useState()
 
   useEffect(() => {
-    loadData(pageIndex)
+    if (show) {
+      loadData(pageIndex)
+    }
   }, [pageIndex, show])
 
   const loadData = (pageIndex) => {
     const params = form.getFieldsValue()
-    // ProductionListService.list({ current: pageIndex, size: pageSize, ...params }).then((res) => {
-    //   setData(res.data.records)
-    //   setTotal(res.data.total)
-    // })
+    ProductionService.goodsChannelList({ current: pageIndex, size: pageSize, ...params, goodsId: id }).then((res) => {
+      setData(res.data.records)
+      setTotal(res.data.total)
+    })
   }
 
   const columns = [
     {
       title: '渠道ID',
-      dataIndex: 'id',
+      dataIndex: 'channelId',
     },
     {
       title: '渠道名称',
-      dataIndex: 'goodsName',
+      dataIndex: 'channelName',
       width: 150,
     },
     {
       title: '责任人',
-      dataIndex: 'goodsTypeTag',
+      dataIndex: 'channelPerson',
       width: 100,
     },
     {
       title: '责任人手机号',
       width: 100,
-      dataIndex: 'goodsTypeTag',
+      dataIndex: 'phoneNumber',
     },
     {
       title: '责任区域',
-      dataIndex: 'departureCity',
+      dataIndex: 'channelRegionsName',
     },
     {
       title: '累计销量',
-      dataIndex: 'stock',
+      dataIndex: 'salesTotal',
     },
     {
       title: '渠道上架时间',
-      render: (text, record, index) => <TimeColumn time={record?.startDate} />,
+      render: (text, record, index) => <TimeColumn time={record?.shelfTime} />,
     },
     {
       title: '操作',
@@ -73,11 +75,14 @@ const ChannelDialog: FC<Props> = ({ id, goodsName, show = false, onSuccess, onCl
         <Space size="middle">
           <Button
             onClick={() => {
-              // ProductionService.ban(record.id).then((res) => {
-              //   if (res.code === '200') {
-              //     loadData(pageIndex)
-              //   }
-              // })
+              ProductionService.soldOutByHead({ channelId: record.channelId, goodsId: id }).then((res) => {
+                if (res.code === '200') {
+                  message.success('下架成功')
+                  loadData(pageIndex)
+                } else {
+                  message.error(res.msg)
+                }
+              })
             }}
           >
             下架
@@ -118,7 +123,7 @@ const ChannelDialog: FC<Props> = ({ id, goodsName, show = false, onSuccess, onCl
           <Row gutter={[10, 0]}>
             <Col span={1} className="table-from-label"></Col>
             <Col span={5}>
-              <InputTemp name="planName" placeholder="请输入方案名称" />
+              <InputTemp name="keyword" placeholder="请输入渠道名称" />
             </Col>
 
             <Form.Item wrapperCol={{ offset: 2, span: 0 }}>

@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import React, { useState, useEffect } from 'react'
-import { Button, Col, Form, Row, Space, Table } from 'antd'
+import { Button, Col, Form, message, Row, Space, Table } from 'antd'
 import { InputTemp, SubCenterProductionState, TravelMode } from '@/components/filter/formItem'
 import './index.less'
 import { ProductionListService } from '@/service/ProductionListService'
@@ -111,9 +111,12 @@ const ProductionListCenter: React.FC<any> = observer(({}) => {
           {record?.channelGoodsState === 2 && (
             <Button
               onClick={() => {
-                ProductionService.soldOut(record.id).then((res) => {
+                ProductionService.soldOutByChannel({ goodsId: record.id }).then((res) => {
                   if (res.code === '200') {
+                    message.success('下架成功')
                     loadData(pageIndex)
+                  } else {
+                    message.error(res.msg)
                   }
                 })
               }}

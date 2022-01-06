@@ -30,7 +30,7 @@ const RichInput: React.ForwardRefRenderFunction<any, any> = ({ value, onChange }
   }
 
   const setValue = (value) => {
-    setRichValue(value)
+    setRichValue(createValueFromString(value, 'html'))
   }
 
   return <RichTextEditor value={richValue} onChange={setRichValue} />

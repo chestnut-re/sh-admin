@@ -15,8 +15,7 @@ const ProductionListWrap: React.FC = () => {
     console.log(activeKey)
   }
 
-  console.log('adminStore.isSubCenter()', adminStore.isSubCenter());
-  
+  console.log('adminStore.isSubCenter()', adminStore.isSubCenter())
 
   return (
     <div className="page-root">
@@ -25,9 +24,11 @@ const ProductionListWrap: React.FC = () => {
           {adminStore.isSubCenter() && <ProductionListCenter />}
           {!adminStore.isSubCenter() && <ProductionList />}
         </Tabs.TabPane>
-        <Tabs.TabPane tab="待发布商品库" key="2">
-          <UnReleaseProductionListPage />
-        </Tabs.TabPane>
+        {!adminStore.isSubCenter() && (
+          <Tabs.TabPane tab="待发布商品库" key="2">
+            <UnReleaseProductionListPage />
+          </Tabs.TabPane>
+        )}
       </Tabs>
     </div>
   )

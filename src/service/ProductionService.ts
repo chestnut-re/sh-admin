@@ -69,6 +69,20 @@ export class ProductionService {
   }
 
   /**
+   * 分中心下架商品
+   */
+  static soldOutByChannel(data): Promise<any> {
+    return axios.post('/api/operation/channelShop/soldOutByChannel', data)
+  }
+
+  /**
+   * 总部下架分中心商品
+   */
+  static soldOutByHead(data): Promise<any> {
+    return axios.post('/api/operation/channelShop/soldOutByHead', data)
+  }
+
+  /**
    * 分中心上架商品，回显
    */
   static centerPutOnRequestGet(id: string): Promise<any> {
@@ -88,6 +102,19 @@ export class ProductionService {
         size: 10,
         current: 1,
         ...data,
+      },
+    })
+  }
+
+  /**
+   * 商品关联渠道列表
+   */
+  static goodsChannelList({ size = 30, current, ...params }): Promise<any> {
+    return axios.get('/api/operation/channelShop/getGoodsChannelPage', {
+      params: {
+        size,
+        current,
+        ...params,
       },
     })
   }
