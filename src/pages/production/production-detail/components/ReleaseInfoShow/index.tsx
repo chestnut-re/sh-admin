@@ -1,6 +1,7 @@
 import useQuery from '@/hooks/useQuery'
 import { ProductionService } from '@/service/ProductionService'
 import { useStore } from '@/store/context'
+import { divide } from 'lodash'
 import { observer } from 'mobx-react-lite'
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
@@ -45,21 +46,30 @@ const ReleaseInfoShow: React.FC = () => {
       <div>{JSON.stringify(data)}</div>
       <div className="box">
         <div className="left">
-          <div>审核结果 {data?.checkState == 1 ? '通过' : '不通过'}</div>
+          <div>
+            审核结果 {data?.checkState == 1 ? '通过' : '不通过'}
+            {data?.checkState == 2 && <div>失败原因 {data?.checkMag}</div>}
+          </div>
           <div>添加库存</div>
           <div>代币抵现</div>
           <div className="manual">
             <div>手工补现</div>
-            <div>
+            <div className="manual-right">
               <div className="amount">
                 <div>补销量</div>
                 <div>补点赞量</div>
                 <div>补分享量</div>
               </div>
-              <div>手工补量直接影响前端展示数值，商品的数据由真实销量和手工补量构成</div>
+              <div className="amount-text">手工补量直接影响前端展示数值，商品的数据由真实销量和手工补量构成</div>
             </div>
           </div>
-          <div>分佣方案</div>
+          <div>
+            <div>分佣方案</div>
+            <div>
+              <div>选定的分佣方案名称占位</div>
+              <div></div>
+            </div>
+          </div>
         </div>
         <div className="right">
           <div>发布渠道</div>
