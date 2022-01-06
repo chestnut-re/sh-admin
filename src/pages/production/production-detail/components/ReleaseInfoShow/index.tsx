@@ -48,10 +48,10 @@ const ReleaseInfoShow: React.FC = () => {
           <div>审核结果 {data?.checkState == 1 ? '通过' : '不通过'}</div>
           <div>添加库存</div>
           <div>代币抵现</div>
-          <div>
+          <div className="manual">
             <div>手工补现</div>
             <div>
-              <div>
+              <div className="amount">
                 <div>补销量</div>
                 <div>补点赞量</div>
                 <div>补分享量</div>
