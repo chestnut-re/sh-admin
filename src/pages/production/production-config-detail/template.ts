@@ -11,7 +11,7 @@ export const faceTemplate = [
   {
     key: 'face0',
     name: '封面0',
-    templateImgUrl: '',
+    templateImgUrl: '', // 模版展示图
   },
 ]
 
@@ -22,7 +22,7 @@ export const centerTemplate = [
   {
     key: 'center0',
     name: '中间0',
-    templateImgUrl: '',
+    templateImgUrl: '', // 模版展示图
   },
 ]
 
@@ -33,7 +33,7 @@ export const endTemplate = [
   {
     key: 'end0',
     name: '封底0',
-    templateImgUrl: '',
+    templateImgUrl: '', // 模版展示图
   },
 ]
 
