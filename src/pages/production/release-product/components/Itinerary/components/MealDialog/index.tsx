@@ -58,7 +58,7 @@ const MealDialog: React.FC<Props> = ({ visible, onCancel, activeKey }) => {
               <Input />
             </Form.Item>
             <Form.Item {...layout} name="limitPeople" label="团餐人限">
-              <InputNumber />
+              <InputNumber min={0} />
             </Form.Item>
             <PriceItem />
             <Form.Item {...layout} name={'remark'} label="其他备注">

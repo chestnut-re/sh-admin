@@ -67,7 +67,7 @@ const PutOnInfo: React.FC = () => {
           <Input />
         </Form.Item>
         <Form.Item label="团建奖金" name="presetBonus" rules={[{ required: false }]}>
-          <InputNumber />
+          <InputNumber min={0}/>
         </Form.Item>
 
         <Button onClick={_submit}>提交发布</Button>

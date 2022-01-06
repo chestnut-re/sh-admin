@@ -75,13 +75,13 @@ const ReleaseInfo: React.FC = () => {
           <Input />
         </Form.Item>
         <Form.Item label="添加库存" name="stock" rules={[{ required: true }]}>
-          <InputNumber addonAfter="/出发日" />
+          <InputNumber addonAfter="/出发日" min={0} />
         </Form.Item>
         <Form.Item label="代币抵现" name="isDeduction" rules={[{ required: true }]}>
           <Switch checkedChildren="开启" unCheckedChildren="关闭" />
         </Form.Item>
         <Form.Item label='最多可抵"现售价"' name="deductionScale" rules={[{ required: true }]}>
-          <InputNumber />
+          <InputNumber min={0} />
         </Form.Item>
         <Form.Item {...layout} label="手工补量" style={{ marginBottom: 0 }}>
           <Form.Item
@@ -90,7 +90,7 @@ const ReleaseInfo: React.FC = () => {
             rules={[{ required: true }]}
             style={{ display: 'inline-block', width: 'calc(20% - 8px)' }}
           >
-            <InputNumber />
+            <InputNumber min={0} />
           </Form.Item>
           <Form.Item
             label="补点赞量"
@@ -98,7 +98,7 @@ const ReleaseInfo: React.FC = () => {
             rules={[{ required: true }]}
             style={{ display: 'inline-block', width: 'calc(20% - 8px)', margin: '0 8px' }}
           >
-            <InputNumber />
+            <InputNumber min={0} />
           </Form.Item>
           <Form.Item
             label="补分享量"
@@ -106,7 +106,7 @@ const ReleaseInfo: React.FC = () => {
             rules={[{ required: true }]}
             style={{ display: 'inline-block', width: 'calc(20% - 8px)', margin: '0 8px' }}
           >
-            <InputNumber />
+            <InputNumber min={0} />
           </Form.Item>
         </Form.Item>
 
