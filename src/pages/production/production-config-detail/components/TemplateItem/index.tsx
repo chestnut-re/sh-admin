@@ -16,8 +16,7 @@ interface Props {
 const TemplateItem: React.FC<Props> = ({ data, onDel, onEdit }) => {
   return (
     <div className="TemplateItem__root">
-      <p>{JSON.stringify(data)}</p>
-
+      <img className="bg" src={data.backgroundImage} />
       <Button
         onClick={() => {
           onEdit(data.key)

@@ -1,10 +1,13 @@
-import { Form, Modal, Col, Row } from 'antd'
-import React, { FC, useEffect } from 'react'
+import { Form, Modal, Col, Row, Button } from 'antd'
+import React, { FC, useEffect, useState } from 'react'
 import UploadImage from '@/components/formItem/UploadImage'
 import { observer } from 'mobx-react-lite'
 import { useStore } from '@/store/context'
+import TemplateDialog from '../TemplateDialog'
+import { getTemplate, TemplateType } from '../../template'
 
 interface Props {
+  type: TemplateType
   data: any
   show: boolean
   /**内容修改成功回调，页面需要刷新数据 */
@@ -15,15 +18,19 @@ interface Props {
 /**
  * 添加&编辑
  */
-const AEDialog: FC<Props> = ({ data, show = false, onSuccess, onClose }) => {
+const AEDialog: FC<Props> = ({ data, type, show = false, onSuccess, onClose }) => {
   const { productionDetailStore } = useStore()
   const [form] = Form.useForm()
+  const [showTemplateDialog, setShowTemplateDialog] = useState<boolean>(false)
+  const [selectedTemplate, setSelectedTemplate] = useState<any>(null)
 
   useEffect(() => {
+    console.log('data', data)
     form.setFieldsValue({
       ...data,
     })
-  }, [show])
+    setSelectedTemplate(getTemplate(data?.pageTemplateKey))
+  }, [show, data])
 
   /**提交数据 */
   const _handleUpdate = async () => {
@@ -31,7 +38,14 @@ const AEDialog: FC<Props> = ({ data, show = false, onSuccess, onClose }) => {
       .validateFields()
       .then((formData) => {
         console.log(formData)
-        productionDetailStore.saveTemplate({ ...data, ...formData })
+        const template = { pageTemplateKey: selectedTemplate.key, pageTemplate: selectedTemplate.name }
+        if (type === 'center') {
+          productionDetailStore.saveTemplate({ ...data, ...formData, ...template })
+        } else if (type === 'end') {
+          productionDetailStore.saveTemplateEnd({ ...data, ...formData, ...template })
+        } else if (type === 'face') {
+          productionDetailStore.saveTemplateFace({ ...data, ...formData, ...template })
+        }
         onSuccess()
       })
       .catch((e) => {
@@ -42,6 +56,16 @@ const AEDialog: FC<Props> = ({ data, show = false, onSuccess, onClose }) => {
   const _formClose = () => {
     form.resetFields()
     onClose()
+  }
+
+  const _onDialogSuccess = (template) => {
+    setSelectedTemplate(template)
+    setShowTemplateDialog(false)
+  }
+
+  const _onDialogClose = () => {
+    setSelectedTemplate(null)
+    setShowTemplateDialog(false)
   }
 
   return (
@@ -57,6 +81,14 @@ const AEDialog: FC<Props> = ({ data, show = false, onSuccess, onClose }) => {
             labelCol={{ span: 6 }}
             wrapperCol={{ span: 16 }}
           >
+            <Button
+              onClick={() => {
+                setShowTemplateDialog(true)
+              }}
+            >
+              选择模版
+            </Button>
+            {selectedTemplate?.name}
             <Form.Item label="商品名称" name="detailTitleImage" rules={[{ required: false }]}>
               <UploadImage />
             </Form.Item>
@@ -78,6 +110,8 @@ const AEDialog: FC<Props> = ({ data, show = false, onSuccess, onClose }) => {
           </Form>
         </Col>
       </Row>
+
+      <TemplateDialog show={showTemplateDialog} type={type} onClose={_onDialogClose} onSuccess={_onDialogSuccess} />
     </Modal>
   )
 }

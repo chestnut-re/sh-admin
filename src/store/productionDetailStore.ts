@@ -54,19 +54,27 @@ class ProductionDetailData {
 
   /**编辑模版，保存模版 */
   saveTemplate(d) {
-    console.log(d)
+    console.log('saveTemplate', d)
     if (d.key === this.data.goodsDetail.goodsDetailStart) {
-      this.data.goodsDetail.goodsDetailStart = { ...this.data.goodsDetail.goodsDetailStart, ...d }
+      this.data.goodsDetail.goodsDetailStart = { ...d }
     } else if (d.key === this.data.goodsDetail.goodsDetailEnd) {
-      this.data.goodsDetail.goodsDetailEnd = { ...this.data.goodsDetail.goodsDetailEnd, ...d }
+      this.data.goodsDetail.goodsDetailEnd = { ...d }
     } else {
       this.data.goodsDetail.goodsDetailPage = this.data.goodsDetail.goodsDetailPage.map((item) => {
         if (item.key === d.key) {
-          item = { ...item, ...d }
+          item = { ...d }
         }
         return item
       })
     }
+  }
+
+  saveTemplateFace(d) {
+    this.data.goodsDetail.goodsDetailStart = { ...d }
+  }
+
+  saveTemplateEnd(d) {
+    this.data.goodsDetail.goodsDetailEnd = { ...d }
   }
 
   clearData() {
