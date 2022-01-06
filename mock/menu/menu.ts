@@ -328,6 +328,15 @@ export default [
                   path: '/order/after-sales/details',
                   hide: true,
                 },
+                {
+                  name: '配置管理',
+                  id: getNanoId(),
+                  type: 'menu',
+                  icon: '',
+                  componentPath: '/order/config-management',
+                  path: '/order/config-management',
+                  hide: false,
+                },
               ],
             },
             {
