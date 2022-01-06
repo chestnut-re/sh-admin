@@ -45,6 +45,7 @@ specifiers:
   less: ^4.1.1
   less-loader: ^8.0.0
   lodash: ^4.17.21
+  md5: ^2.3.0
   mini-css-extract-plugin: ^1.4.1
   mobx: ^6.3.10
   mobx-react-lite: ^3.2.2
@@ -58,7 +59,6 @@ specifiers:
   react-amap: ^1.2.8
   react-dom: ^17.0.2
   react-router-dom: ^5.2.0
-  react-rte: ^0.16.4
   react-sticky: ^6.0.3
   style-loader: ^2.0.0
   ts-node: ^9.1.1
@@ -82,6 +82,7 @@ dependencies:
   js-cookie: 3.0.1
   json-bigint: 1.0.0
   lodash: 4.17.21
+  md5: 2.3.0
   mobx: 6.3.10
   mobx-react-lite: 3.2.2_65e9936076dc1bc58dcf4e626b32cb4a
   moment: 2.29.1
@@ -91,7 +92,6 @@ dependencies:
   react-amap: 1.2.8
   react-dom: 17.0.2_react@17.0.2
   react-router-dom: 5.3.0_react@17.0.2
-  react-rte: 0.16.4_react-dom@17.0.2+react@17.0.2
   react-sticky: 6.0.3_react-dom@17.0.2+react@17.0.2
 
 devDependencies:
@@ -2385,13 +2385,6 @@ packages:
       - supports-color
     dev: true
 
-  /babel-runtime/6.26.0:
-    resolution: {integrity: sha1-llxwWGaOgrVde/4E/yM3vItWR/4=}
-    dependencies:
-      core-js: 2.6.12
-      regenerator-runtime: 0.11.1
-    dev: false
-
   /balanced-match/1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
     dev: true
@@ -2593,6 +2586,10 @@ packages:
       supports-color: 7.2.0
     dev: true
 
+  /charenc/0.0.2:
+    resolution: {integrity: sha1-wKHS86cJLgN3S/qD8UwPxXkKhmc=}
+    dev: false
+
   /chokidar/2.1.8:
     resolution: {integrity: sha512-ZmZUazfOzf0Nve7duiCKD23PFSCs4JPoYyccjUFF3aQkQadqBhfzhjkwBH2mNOG9cTBwhamM37EIsIkZw3nRgg==}
     deprecated: Chokidar 2 will break on node v14+. Upgrade to chokidar 3 with 15x less dependencies.
@@ -2616,10 +2613,6 @@ packages:
     resolution: {integrity: sha512-p3KULyQg4S7NIHixdwbGX+nFHkoBiA4YQmyWtjb8XngSKV124nJmRysgAeujbUVb15vh+RvFUfCPqU7rXk+hZg==}
     engines: {node: '>=6.0'}
     dev: true
-
-  /class-autobind/0.1.4:
-    resolution: {integrity: sha1-NFFsSRZ8+NP2Od3Bhrz6Imiv/zQ=}
-    dev: false
 
   /class-utils/0.3.6:
     resolution: {integrity: sha512-qOhPa/Fj7s6TY8H8esGu5QNpMMQxz79h+urzrNYN6mn+9BnxlDGf5QZ+XeCDsxSjPqsSR56XOZOJmpeurnLMeg==}
@@ -2895,6 +2888,10 @@ packages:
       shebang-command: 2.0.0
       which: 2.0.2
     dev: true
+
+  /crypt/0.0.2:
+    resolution: {integrity: sha1-iNf/fsDfuG9xPch7u0LQRNPmxBs=}
+    dev: false
 
   /css-declaration-sorter/6.1.3:
     resolution: {integrity: sha512-SvjQjNRZgh4ULK1LDJ2AduPKUKxIqmtU7ZAyi47BTV+M90Qvxr9AB6lKlLbDUfXqI9IQeYA8LbAsCZPpJEV3aA==}
@@ -3340,73 +3337,6 @@ packages:
     resolution: {integrity: sha512-IrPdXQsk2BbzvCBGBOTmmSH5SodmqZNt4ERAZDmW4CT+tL8VtvinqywuANaFu4bOMWki16nqf0e4oC0QIaDr/g==}
     engines: {node: '>=10'}
     dev: true
-
-  /draft-js-export-html/1.4.1_draft-js@0.11.7+immutable@3.8.2:
-    resolution: {integrity: sha512-G4VGBSalPowktIE4wp3rFbhjs+Ln9IZ2FhXeHjsZDSw0a2+h+BjKu5Enq+mcsyVb51RW740GBK8Xbf7Iic51tw==}
-    peerDependencies:
-      draft-js: '>=0.10.0'
-      immutable: 3.x.x
-    dependencies:
-      draft-js: 0.11.7_react-dom@17.0.2+react@17.0.2
-      draft-js-utils: 1.4.0_draft-js@0.11.7+immutable@3.8.2
-      immutable: 3.8.2
-    dev: false
-
-  /draft-js-export-markdown/1.4.0_draft-js@0.11.7+immutable@3.8.2:
-    resolution: {integrity: sha512-blfAvlhGhjVlHNaZ5WJKlrXhcftnwwC5VC+Eu3ztOGpGLaOom4hxhBjbKEWjvbQZJ9zL+xo57ukm39prYZMG5Q==}
-    peerDependencies:
-      draft-js: '>=0.10.0'
-      immutable: 3.x.x
-    dependencies:
-      draft-js: 0.11.7_react-dom@17.0.2+react@17.0.2
-      draft-js-utils: 1.4.0_draft-js@0.11.7+immutable@3.8.2
-      immutable: 3.8.2
-    dev: false
-
-  /draft-js-import-element/1.4.0_draft-js@0.11.7+immutable@3.8.2:
-    resolution: {integrity: sha512-WmYT5PrCm47lGL5FkH6sRO3TTAcn7qNHsD3igiPqLG/RXrqyKrqN4+wBgbcT2lhna/yfWTRtgzAbQsSJoS1Meg==}
-    peerDependencies:
-      draft-js: '>=0.10.0'
-      immutable: 3.x.x
-    dependencies:
-      draft-js: 0.11.7_react-dom@17.0.2+react@17.0.2
-      draft-js-utils: 1.4.0_draft-js@0.11.7+immutable@3.8.2
-      immutable: 3.8.2
-      synthetic-dom: 1.4.0
-    dev: false
-
-  /draft-js-import-html/1.4.1_draft-js@0.11.7+immutable@3.8.2:
-    resolution: {integrity: sha512-KOZmtgxZriCDgg5Smr3Y09TjubvXe7rHPy/2fuLSsL+aSzwUDwH/aHDA/k47U+WfpmL4qgyg4oZhqx9TYJV0tg==}
-    peerDependencies:
-      draft-js: '>=0.10.0'
-      immutable: 3.x.x
-    dependencies:
-      draft-js: 0.11.7_react-dom@17.0.2+react@17.0.2
-      draft-js-import-element: 1.4.0_draft-js@0.11.7+immutable@3.8.2
-      immutable: 3.8.2
-    dev: false
-
-  /draft-js-import-markdown/1.4.0_draft-js@0.11.7+immutable@3.8.2:
-    resolution: {integrity: sha512-mpKUxzDM+x7W+eCZegCAxl3QJzNGA3Y+DbBMMekzCdPHONLJAZ1QYYjegbXa6+pZGq8FAIhgWaVbfKWMb8M8dQ==}
-    peerDependencies:
-      draft-js: '>=0.10.0'
-      immutable: 3.x.x
-    dependencies:
-      draft-js: 0.11.7_react-dom@17.0.2+react@17.0.2
-      draft-js-import-element: 1.4.0_draft-js@0.11.7+immutable@3.8.2
-      immutable: 3.8.2
-      synthetic-dom: 1.4.0
-    dev: false
-
-  /draft-js-utils/1.4.0_draft-js@0.11.7+immutable@3.8.2:
-    resolution: {integrity: sha512-8s9FFuKC+lOWGwJ0b3om2PF+uXrqQPaEQlPJI7UxdzxTYGMeKouMPA9+YlPn52zcAVElIZtd2tXj6eQmvlKelw==}
-    peerDependencies:
-      draft-js: '>=0.10.0'
-      immutable: 3.x.x
-    dependencies:
-      draft-js: 0.11.7_react-dom@17.0.2+react@17.0.2
-      immutable: 3.8.2
-    dev: false
 
   /draft-js/0.11.7_react-dom@17.0.2+react@17.0.2:
     resolution: {integrity: sha512-ne7yFfN4sEL82QPQEn80xnADR8/Q6ALVworbC5UOSzOvjffmYfFsr3xSZtxbIirti14R7Y33EZC5rivpLgIbsg==}
@@ -4450,11 +4380,6 @@ packages:
     engines: {node: '>=0.8.0'}
     dev: false
 
-  /immutable/3.8.2:
-    resolution: {integrity: sha1-wkOZUUVbs5kT2vKBN28VMOEErfM=}
-    engines: {node: '>=0.10.0'}
-    dev: false
-
   /import-fresh/3.3.0:
     resolution: {integrity: sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==}
     engines: {node: '>=6'}
@@ -4591,7 +4516,6 @@ packages:
 
   /is-buffer/1.1.6:
     resolution: {integrity: sha512-NcdALwpXkTm5Zvvbk7owOUSvVvBKDgKP5/ewfXEznmQFfs4ZRmanOeKBTjRVjka3QFoN6XJ+9F3USqfHqTaU5w==}
-    dev: true
 
   /is-callable/1.2.4:
     resolution: {integrity: sha512-nsuwtxZfMX67Oryl9LCQ+upnC0Z0BgpwntpS89m1H/TLF0zNfzfLMV/9Wa/6MZsj0acpEjAO0KF1xT6ZdLl95w==}
@@ -5124,6 +5048,14 @@ packages:
     dependencies:
       object-visit: 1.0.1
     dev: true
+
+  /md5/2.3.0:
+    resolution: {integrity: sha512-T1GITYmFaKuO91vxyoQMFETst+O71VUPEU3ze5GNzDm0OWdP8v1ziTaAEPUr/3kLsY3Sftgz242A1SetQiDL7g==}
+    dependencies:
+      charenc: 0.0.2
+      crypt: 0.0.2
+      is-buffer: 1.1.6
+    dev: false
 
   /mdn-data/2.0.14:
     resolution: {integrity: sha512-dn6wd0uw5GsdswPFfsgMp5NSB0/aDe6fK94YJV/AJDYXL6HVLWBsxeq7js7Ad+mU2K9LAlwpk6kN2D5mwCPVow==}
@@ -7133,26 +7065,6 @@ packages:
       tiny-warning: 1.0.3
     dev: false
 
-  /react-rte/0.16.4_react-dom@17.0.2+react@17.0.2:
-    resolution: {integrity: sha512-47VXnSeYh9N+J9M068fW2B+hglTczNo/E9iDx/k+22fVaclK+FpzeQD9t2sBj/BxviXvBI7nbSuyQ/goj/z9Hw==}
-    peerDependencies:
-      react: 0.14.x || 15.x.x || 16.x.x
-      react-dom: 0.14.x || 15.x.x || 16.x.x
-    dependencies:
-      babel-runtime: 6.26.0
-      class-autobind: 0.1.4
-      classnames: 2.3.1
-      draft-js: 0.11.7_react-dom@17.0.2+react@17.0.2
-      draft-js-export-html: 1.4.1_draft-js@0.11.7+immutable@3.8.2
-      draft-js-export-markdown: 1.4.0_draft-js@0.11.7+immutable@3.8.2
-      draft-js-import-html: 1.4.1_draft-js@0.11.7+immutable@3.8.2
-      draft-js-import-markdown: 1.4.0_draft-js@0.11.7+immutable@3.8.2
-      draft-js-utils: 1.4.0_draft-js@0.11.7+immutable@3.8.2
-      immutable: 3.8.2
-      react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
-    dev: false
-
   /react-sticky/6.0.3_react-dom@17.0.2+react@17.0.2:
     resolution: {integrity: sha512-LNH4UJlRatOqo29/VHxDZOf6fwbgfgcHO4mkEFvrie5FuaZCSTGtug5R8NGqJ0kSnX8gHw8qZN37FcvnFBJpTQ==}
     peerDependencies:
@@ -7220,10 +7132,6 @@ packages:
   /regenerate/1.4.2:
     resolution: {integrity: sha512-zrceR/XhGYU/d/opr2EKO7aRHUeiBI8qjtfHqADTwZd6Szfy16la6kqD0MIUs5z5hx6AaKa+PixpPrR289+I0A==}
     dev: true
-
-  /regenerator-runtime/0.11.1:
-    resolution: {integrity: sha512-MguG95oij0fC3QV3URf4V2SDYGJhJnJGqvIIgdECeODCT98wSWDAJ94SSuVpYQUoTcGUIL6L4yNB7j1DFFHSBg==}
-    dev: false
 
   /regenerator-runtime/0.13.9:
     resolution: {integrity: sha512-p3VT+cOEgxFsRRA9X4lkI1E+k2/CtnKtU4gcxyaCUreilL/vqI6CdZ3wxVUx3UOUg+gnUOQQcRI7BmSI656MYA==}
@@ -7980,10 +7888,6 @@ packages:
       picocolors: 1.0.0
       stable: 0.1.8
     dev: true
-
-  /synthetic-dom/1.4.0:
-    resolution: {integrity: sha512-mHv51ZsmZ+ShT/4s5kg+MGUIhY7Ltq4v03xpN1c8T1Krb5pScsh/lzEjyhrVD0soVDbThbd2e+4dD9vnDG4rhg==}
-    dev: false
 
   /table/6.7.5:
     resolution: {integrity: sha512-LFNeryOqiQHqCVKzhkymKwt6ozeRhlm8IL1mE8rNUurkir4heF6PzMyRgaTa4tlyPTGGgXuvVOF/OLWiH09Lqw==}

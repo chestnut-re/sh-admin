@@ -1,5 +1,44 @@
 .ProductionConfigDetail__root {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  .template {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .btn-one {
+    display: flex;
+    justify-content: center;
+    margin: 60px auto 20px;
+    .button-add {
+      width: 375px;
+      border: 1px dashed #5e7ce0;
+      border-radius: 2px;
+      font-size: 14px;
+      font-weight: 400;
+      color: #5e7ce0;
+      padding: 14px auto;
+      .img-add {
+        width: 16px;
+        height: 16px;
+        margin-right: 6px;
+      }
+    }
+  }
+  .btn-two {
+    display: flex;
+    justify-content: center;
+    margin: 10px auto;
+    .button-box {
+      width: 174px;
+      font-size: 14px;
+      font-weight: 400;
+      color: #fff;
+      background: #5e7ce0;
+      line-height: 24px;
+      padding: 8px auto;
+      border-radius: 2px;
+    }
+    .button-box:first-child {
+      margin-right: 48px;
+    }
+  }
 }

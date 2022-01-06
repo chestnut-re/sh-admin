@@ -36,23 +36,26 @@ const TemplateDialog: FC<Props> = ({ type, show = false, onSuccess, onClose }) =
   }
 
   return (
-    <Modal title="模版" visible={show} onOk={_handleUpdate} onCancel={_formClose} width={1000}>
+    <Modal title="选择模版" visible={show} onOk={_handleUpdate} onCancel={_formClose} width={1000}>
       <div className="TemplateDialog__root">
         {templateList.map((item) => {
           const name = item.key === selectedTemplate?.key ? 'templateImgUrlSelected' : 'templateImgUrl'
           return (
-            <img
-              key={item.key}
-              className={name}
-              src={item.templateImgUrl}
-              onClick={() => {
-                if (item == selectedTemplate) {
-                  setSelectedTemplate(null)
-                } else {
-                  setSelectedTemplate(item)
-                }
-              }}
-            ></img>
+            <div key={item.key} className="mould">
+              <img
+                key={item.key}
+                className={name}
+                src={item.templateImgUrl}
+                onClick={() => {
+                  if (item == selectedTemplate) {
+                    setSelectedTemplate(null)
+                  } else {
+                    setSelectedTemplate(item)
+                  }
+                }}
+              ></img>
+              <div className="mould-name">{item.name}</div>
+            </div>
           )
         })}
       </div>

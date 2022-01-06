@@ -74,7 +74,7 @@ const AEDialog: FC<Props> = ({ data, type, show = false, onSuccess, onClose }) =
   }
 
   return (
-    <Modal title="模版" visible={show} onOk={_handleUpdate} onCancel={_formClose} width={1000}>
+    <Modal title={data?.pageTemplate} visible={show} onOk={_handleUpdate} onCancel={_formClose} width={1000}>
       <Row>
         <Col span={12}></Col>
         <Col span={12}>

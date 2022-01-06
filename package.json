@@ -76,6 +76,7 @@
     "js-cookie": "^3.0.1",
     "json-bigint": "^1.0.0",
     "lodash": "^4.17.21",
+    "md5": "^2.3.0",
     "mobx": "^6.3.10",
     "mobx-react-lite": "^3.2.2",
     "moment": "^2.29.1",

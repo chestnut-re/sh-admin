@@ -13,6 +13,11 @@ export const faceTemplate = [
     name: '封面0',
     templateImgUrl: '', // 模版展示图
   },
+  {
+    key: 'face1',
+    name: '封面1',
+    templateImgUrl: '', // 模版展示图
+  },
 ]
 
 /**
@@ -24,6 +29,41 @@ export const centerTemplate = [
     name: '中间0',
     templateImgUrl: '', // 模版展示图
   },
+  {
+    key: 'center1',
+    name: '中间1',
+    templateImgUrl: '', // 模版展示图
+  },
+  {
+    key: 'center2',
+    name: '中间2',
+    templateImgUrl: '', // 模版展示图
+  },
+  {
+    key: 'center3',
+    name: '中间3',
+    templateImgUrl: '', // 模版展示图
+  },
+  {
+    key: 'center4',
+    name: '中间4',
+    templateImgUrl: '', // 模版展示图
+  },
+  {
+    key: 'center5',
+    name: '中间5',
+    templateImgUrl: '', // 模版展示图
+  },
+  {
+    key: 'center6',
+    name: '中间6',
+    templateImgUrl: '', // 模版展示图
+  },
+  {
+    key: 'center7',
+    name: '中间7',
+    templateImgUrl: '', // 模版展示图
+  },
 ]
 
 /**
@@ -33,6 +73,11 @@ export const endTemplate = [
   {
     key: 'end0',
     name: '封底0',
+    templateImgUrl: '', // 模版展示图
+  },
+  {
+    key: 'end1',
+    name: '封底1',
     templateImgUrl: '', // 模版展示图
   },
 ]

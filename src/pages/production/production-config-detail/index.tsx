@@ -7,8 +7,9 @@ import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import AEDialog from './components/AEDialog'
 import TemplateItem from './components/TemplateItem'
-import './index.less'
 import { TemplateType } from './template'
+import add from '@/assets/img/add.png'
+import './index.less'
 
 /**
  * 商品配置详情页
@@ -102,19 +103,32 @@ const ProductionConfigDetail: React.FC = () => {
 
   return (
     <div className="ProductionConfigDetail__root">
-      {productionDetailStore?.data?.goodsDetail && (
-        <TemplateItem data={productionDetailStore?.data?.goodsDetail?.goodsDetailStart} onEdit={_editStart} />
-      )}
-      {productionDetailStore?.data?.goodsDetail &&
-        productionDetailStore?.data?.goodsDetail.goodsDetailPage.map((item) => {
-          return <TemplateItem key={item.key} data={item} onDel={_delPage} onEdit={_editPage} />
-        })}
-      {productionDetailStore?.data?.goodsDetail && (
-        <TemplateItem data={productionDetailStore?.data?.goodsDetail?.goodsDetailEnd} onEdit={_editEnd} />
-      )}
-      <Button onClick={_addTemplate}>添加模版</Button>
-      <Button onClick={_submit}>提交审核</Button>
-      <Button onClick={_save}>保存</Button>
+      <div className="template">
+        {productionDetailStore?.data?.goodsDetail && (
+          <TemplateItem data={productionDetailStore?.data?.goodsDetail?.goodsDetailStart} onEdit={_editStart} />
+        )}
+        {productionDetailStore?.data?.goodsDetail &&
+          productionDetailStore?.data?.goodsDetail.goodsDetailPage.map((item) => {
+            return <TemplateItem key={item.key} data={item} onDel={_delPage} onEdit={_editPage} />
+          })}
+        {productionDetailStore?.data?.goodsDetail && (
+          <TemplateItem data={productionDetailStore?.data?.goodsDetail?.goodsDetailEnd} onEdit={_editEnd} />
+        )}
+      </div>
+      <div className="btn-one">
+        <Button className="button-add" onClick={_addTemplate}>
+          <img className="img-add" src={add} />
+          添加模版
+        </Button>
+      </div>
+      <div className="btn-two">
+        <Button className="button-box" onClick={_submit}>
+          提交审核
+        </Button>
+        <Button className="button-box" onClick={_save}>
+          保存
+        </Button>
+      </div>
 
       <AEDialog
         type={selectedType}
