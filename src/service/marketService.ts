@@ -1,6 +1,6 @@
 /*
  * @Description:
- * @LastEditTime: 2022-01-07 15:08:56
+ * @LastEditTime: 2022-01-07 18:37:25
  */
 import axios from '@/request'
 export class marketService {
@@ -55,8 +55,8 @@ export class taskService {
   /**
    * get
    */
-  static get({ id }): Promise<any> {
-    return axios.get(`/api/market/taskInventory/get/${id}`, { params: {} })
+  static get(id ): Promise<any> {
+    return axios.get(`/api/market/taskInventory/get/${id}`)
   }
 
   /**

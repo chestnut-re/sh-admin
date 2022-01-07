@@ -1,3 +1,7 @@
+/*
+ * @Description: 
+ * @LastEditTime: 2022-01-07 17:13:50
+ */
 import { getNanoId } from '@/utils/nanoid'
 import { action, makeObservable, observable } from 'mobx'
 
@@ -20,6 +24,7 @@ class ProductionDetailData {
 
   init(_data) {
     this.data = _data
+    console.log('_data',_data_data_data_data)
     if (!this.data) return
     if (!this.data.goodsDetail) {
       this.data.goodsDetail = {
