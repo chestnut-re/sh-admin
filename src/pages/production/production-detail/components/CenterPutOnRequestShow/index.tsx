@@ -11,6 +11,7 @@ const { Column, ColumnGroup } = Table
 
 /**
  * 分中心上架申请 展示
+ * 总中心视角，查看所有的上架申请
  */
 const CenterPutOnRequestShow: React.FC = () => {
   const history = useHistory()

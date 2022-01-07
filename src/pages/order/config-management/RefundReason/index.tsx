@@ -1,17 +1,16 @@
 /*
  * @Description:退改政策
- * @LastEditTime: 2022-01-07 14:03:01
+ * @LastEditTime: 2022-01-07 13:25:17
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Modal, message } from 'antd'
 import './index.less'
 import AEAddDialog, { DialogMode } from './components/AEAddDialog'
-import { ConfigManagementService } from '@/service/OrderService'
+import { ConfigRefundService } from '@/service/OrderService'
 import { HttpCode } from '@/constants/HttpCode'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
-import DEDialog from '@/components/components/Dedialog'
-import ShowRefund from './components/ShowRefund'
-const RefundPolicyPage: React.FC = () => {
+import { formateTime } from '@/utils/timeUtils'
+const RefundReason: React.FC = () => {
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
   const [pageSize, setPageSize] = useState(20)
@@ -20,13 +19,13 @@ const RefundPolicyPage: React.FC = () => {
   const [showDialog, setShowDialog] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
   const [dialogMode, setDialogMode] = useState<DialogMode>('add')
-  const [deShowDialog, setDeShowDialog] = useState(false)
+
   useEffect(() => {
     loadData(pageIndex)
   }, [pageIndex])
 
   const loadData = (pageIndex) => {
-    ConfigManagementService.list({ current: pageIndex, size: pageSize }).then((res) => {
+    ConfigRefundService.list({ current: pageIndex, size: pageSize }).then((res) => {
       setData(res.data.records)
       setTotal(res.data.total)
     })
@@ -38,8 +37,8 @@ const RefundPolicyPage: React.FC = () => {
       render: (text, record, index) => `${index + 1}`,
     },
     {
-      title: '退订名称',
-      dataIndex: 'policyName',
+      title: '退款理由',
+      dataIndex: 'dictValue',
     },
     {
       title: '创建人',
@@ -48,20 +47,13 @@ const RefundPolicyPage: React.FC = () => {
     {
       title: '创建时间',
       dataIndex: 'createTime',
+      render: (text, record, index) => `${formateTime(record.createTime)}`,
     },
 
     {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button
-            onClick={() => {
-              setDeShowDialog(true)
-              setSelectedData(record)
-            }}
-          >
-            查看
-          </Button>
           <Button onClick={() => _editDialog(record)}>编辑</Button>
           <Button onClick={() => _delItem(record)}>删除</Button>
         </Space>
@@ -78,7 +70,7 @@ const RefundPolicyPage: React.FC = () => {
       okText: '确认',
       cancelText: '取消',
       onOk: () => {
-        ConfigManagementService.del({ id: record.id }).then((res) => {
+        ConfigRefundService.del({ id: record.id }).then((res) => {
           if (res.code === HttpCode.success) {
             loadData(pageIndex)
             message.success('删除成功')
@@ -116,12 +108,7 @@ const RefundPolicyPage: React.FC = () => {
     setSelectedData(null)
     setShowDialog(false)
   }
-  const _editGo = (record) => {
-    setDeShowDialog(false)
-    setDialogMode('edit')
-    setSelectedData(record)
-    setShowDialog(true)
-  }
+
   return (
     <div className="channel-list">
       <div>
@@ -157,13 +144,8 @@ const RefundPolicyPage: React.FC = () => {
         show={showDialog}
         onClose={_onDialogClose}
       />
-      <DEDialog
-        show={deShowDialog}
-        onChange={() => setDeShowDialog(false)}
-        data={() => <ShowRefund data={selectedData} editGo={_editGo}></ShowRefund>}
-      ></DEDialog>
     </div>
   )
 }
 
-export default RefundPolicyPage
+export default RefundReason

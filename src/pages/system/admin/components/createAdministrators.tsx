@@ -121,7 +121,7 @@ const CreateAdminDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onC
           name="mobile"
           rules={[{ required: true, message: '请输入手机号/账号' }]}
         >
-          <Input />
+          <Input readOnly={mode == 'edit' ? true : false} />
         </Form.Item>
       </Form>
     </Modal>

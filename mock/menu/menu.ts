@@ -327,7 +327,7 @@ export default [
                   icon: '',
                   componentPath: '/order/after-sales/components/details',
                   path: '/order/after-sales/details',
-                  hide: true,
+                  hide: false,
                 },
                 {
                   name: '配置管理',

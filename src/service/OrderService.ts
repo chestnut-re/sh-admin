@@ -1,12 +1,8 @@
 /*
  * @Description:
- * @LastEditTime: 2022-01-06 18:40:52
+ * @LastEditTime: 2022-01-07 11:54:40
  */
 import axios from '@/request'
-
-/**
- * 管理员数据
- */
 
 export class ConfigManagementService {
   /**
@@ -28,7 +24,7 @@ export class ConfigManagementService {
    * 删除
    */
   static del({ id }): Promise<any> {
-    return axios.delete(`/api/market/taskInventory/${id}`)
+    return axios.post(`/api/platform/policy/deleteRefundPolicyById/${id}`)
   }
 
   /**
@@ -43,6 +39,49 @@ export class ConfigManagementService {
    */
   static editState(data): Promise<any> {
     return axios.post(`/api/platform/policy/update`, data)
+  }
+  static edit(id,data): Promise<any> {
+    return axios.post(`/api/platform/policy/update`, data)
+  }
+}
+
+/**
+ * @description: 退款理由
+ */
+
+ export class ConfigRefundService {
+  /**
+   * 列表
+   */
+  static list(data): Promise<any> {
+    return axios.get('/api/platform/dictionary/getDictionaryItemIPage', {
+      params: {data,...{dictCode:'HD1'}},
+    })
+  }
+
+
+  /**
+   * 删除
+   */
+  static del({ id }): Promise<any> {
+    return axios.post(`/api/platform/dictionary/deleteRefundItem`,{id:id})
+  }
+
+  /**
+   * 新增
+   */
+  static add(data): Promise<any> {
+    return axios.post(`/api/platform/dictionary/addRefundItem`, data)
+  }
+
+  /**
+   * 编辑
+   */
+  static editState(data): Promise<any> {
+    return axios.post(`/api/platform/policy/update`, data)
+  }
+  static edit(id,data): Promise<any> {
+    return axios.post(`/api/platform/dictionary/updateRefundItem`, data)
   }
 }
 

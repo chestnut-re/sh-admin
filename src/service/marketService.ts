@@ -1,6 +1,6 @@
 /*
  * @Description:
- * @LastEditTime: 2022-01-06 16:19:04
+ * @LastEditTime: 2022-01-07 15:08:56
  */
 import axios from '@/request'
 export class marketService {
@@ -38,11 +38,7 @@ export class marketService {
    * 编辑
    */
   static edit(data): Promise<any> {
-    return axios.put(`/api/market/rebate/update`, {
-      params: {
-        data,
-      },
-    })
+    return axios.put(`/api/market/rebate/update`, data)
   }
 }
 
