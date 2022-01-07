@@ -106,8 +106,6 @@ const BannerListPage: React.FC = () => {
         ActivitiesService.del({ id: record.id }).then((res) => {
           if (res.code === HttpCode.success) {
             loadData(pageIndex)
-          }else{
-            message.error(res.message)
           }
         })
       },

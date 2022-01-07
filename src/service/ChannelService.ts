@@ -1,6 +1,6 @@
 /*
  * @Description:渠道管理
- * @LastEditTime: 2021-12-30 14:55:32
+ * @LastEditTime: 2022-01-07 18:07:08
  */
 import axios from '@/request'
 
@@ -14,7 +14,7 @@ export default class ChannelService {
     return axios.post('/api/market/channel/save', data)
   }
   static del({ id }): Promise<any> {
-    return axios.delete(`/api/market/channel/delete/${id}`)
+    return axios.delete(`/api/market/channel/${id}`)
   }
   static get(id): Promise<any> {
     return axios.get(`/api/market/channel/getInfo/${id}`)
@@ -50,6 +50,9 @@ export default class ChannelService {
      */
     saveChannelPlan(data): Promise<any> {
       return axios.post(`/api/market/channel/saveChannelDistPlan`, data)
+    },
+     del({ id }): Promise<any> {
+      return axios.delete(`/api/market/channel/dist/plan/delete/${id}`)
     },
     edit(data): Promise<any> {
       return axios.put(`/api/market/channel/dist/plan/update`, data)

@@ -1,6 +1,6 @@
 /*
  * @Description: 任务清单
- * @LastEditTime: 2022-01-06 17:17:17
+ * @LastEditTime: 2022-01-07 18:08:26
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Modal, message } from 'antd'
@@ -8,10 +8,10 @@ import './index.less'
 import AEBannerDialog, { DialogMode } from './components/AETaskDialog'
 import { taskService } from '@/service/marketService'
 import { HttpCode } from '@/constants/HttpCode'
-import RemainTime from '@/components/tableColumn/RemainTime'
+import TaskBasicInfo  from './components/TaskBasicInfo/TaskBasicInfo'
 import ImageColumn from '@/components/tableColumn/ImageColumn'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
-import DEDialog from '../rebate-activity/components/DEDialog'
+import DEDialog from '@/components/components/Dedialog'
 const TaskListPage: React.FC = () => {
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
@@ -82,8 +82,6 @@ const TaskListPage: React.FC = () => {
         taskService.editState({ id: record.id, state: record.state == 0 ? 1 : 0 }).then((res) => {
           if (res.code === HttpCode.success) {
             loadData(pageIndex)
-          } else {
-            message.error(res.message)
           }
         })
       },
@@ -102,8 +100,6 @@ const TaskListPage: React.FC = () => {
           if (res.code === HttpCode.success) {
             message.success('删除成功了')
             loadData(pageIndex)
-          } else {
-            message.error(res.message)
           }
         })
       },
@@ -119,7 +115,7 @@ const TaskListPage: React.FC = () => {
   const onFinish = () => {
     setDialogMode('add')
     setSelectedData(null)
-    // setShowDialog(true)
+    setShowDialog(true)
   }
 
   const onFinishFailed = (errorInfo: any) => {
@@ -128,7 +124,7 @@ const TaskListPage: React.FC = () => {
 
   const _onDialogSuccess = () => {
     setSelectedData(null)
-    // setShowDialog(false)
+    setShowDialog(false)
     loadData(pageIndex)
   }
 
@@ -172,7 +168,7 @@ const TaskListPage: React.FC = () => {
         show={showDialog}
         onClose={_onDialogClose}
       />
-      <DEDialog show={deShowDialog} data={selectedData}></DEDialog>
+      <DEDialog   onChange={() => setDeShowDialog(false)} show={deShowDialog} data={()=><TaskBasicInfo dataValue={selectedData}></TaskBasicInfo>}></DEDialog>
     </div>
   )
 }

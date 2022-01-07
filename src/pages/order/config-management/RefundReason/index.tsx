@@ -1,6 +1,6 @@
 /*
  * @Description:退改政策
- * @LastEditTime: 2022-01-07 13:25:17
+ * @LastEditTime: 2022-01-07 18:08:39
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Modal, message } from 'antd'
@@ -74,9 +74,7 @@ const RefundReason: React.FC = () => {
           if (res.code === HttpCode.success) {
             loadData(pageIndex)
             message.success('删除成功')
-          } else {
-            message.error(res.message)
-          }
+          } 
         })
       },
     })

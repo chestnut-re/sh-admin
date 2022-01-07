@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道列表
- * @LastEditTime: 2022-01-07 14:14:19
+ * @LastEditTime: 2022-01-07 18:08:01
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space,Modal,message } from 'antd'
@@ -115,9 +115,7 @@ const ChannelPage: React.FC = () => {
           if (res.code == 200) {
             loadData()
             message.success('删除成功')
-          } else {
-            message.error(res.message)
-          }
+          } 
         })
       },
     })

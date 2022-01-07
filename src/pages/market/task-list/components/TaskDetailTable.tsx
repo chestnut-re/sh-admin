@@ -1,6 +1,6 @@
 /*
  * @Description: 配置商品详情
- * @LastEditTime: 2022-01-06 16:52:35
+ * @LastEditTime: 2022-01-07 16:09:33
  */
 import { Table, Space, Button } from 'antd'
 import React, { useEffect, useState } from 'react'
@@ -26,8 +26,9 @@ const ActivityDetailTable: React.FC<Props> = ({ goodsIdList, onSuccess }) => {
   //   setData(goodsList)
   // }
   const _delItem = (record, index) => {
-    goodsIdLists.splice(index, 1)
-    onSuccess(goodsIdLists)
+   data.splice(index, 1)
+    // console.log(data,'goodsIdLists.splice(index, 1)')
+    onSuccess(data)
   }
   const columns = [
     {
@@ -50,7 +51,7 @@ const ActivityDetailTable: React.FC<Props> = ({ goodsIdList, onSuccess }) => {
 
   return (
     <div className="page-root">
-      <Table rowKey="goodsId" columns={columns} dataSource={[...data]} pagination={false} />
+      <Table rowKey="id" columns={columns} dataSource={[...data]} pagination={false} />
     </div>
   )
 }

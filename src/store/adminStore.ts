@@ -1,3 +1,7 @@
+/*
+ * @Description:
+ * @LastEditTime: 2022-01-07 18:01:23
+ */
 import { USER_DETAIL } from '@/constants/CookiesC'
 import { getMenus } from '@/service/menu'
 import { UserService } from '@/service/user'
@@ -28,6 +32,9 @@ class AdminData {
     /// init menu
     const res = await getMenus()
     this.setMenu(res.data.menus)
+    // const user = JSON.parse(getCookie(USER_DETAIL) ?? '')
+    // const res = await getMenus(user?.userId)
+    // this.setMenu(res.data)
     // console.log(JSON.stringify(res))
 
     if (!isUserLogin()) {
@@ -54,6 +61,7 @@ class AdminData {
   }
 
   setMenu(_menu: any) {
+
     this.menu = _menu
   }
 

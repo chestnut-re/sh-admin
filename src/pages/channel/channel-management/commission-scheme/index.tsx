@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道分佣列表
- * @LastEditTime: 2022-01-04 11:30:49
+ * @LastEditTime: 2022-01-07 18:08:14
  */
 import React, { useState, useEffect } from 'react'
-import { Form, Col, Row, Button, Table, Space, Select } from 'antd'
+import { Form, Col, Row, Button, Table, Space, Select,Modal,message } from 'antd'
 import { InputTemp } from '@/components/filter/formItem'
 import AddCommissionSchemeDialog, { DialogMode } from './components/AddCommissionSchemeDialog'
 import { formateTime } from '@/utils/timeUtils'
@@ -92,11 +92,29 @@ const CommissionSchemePage: React.FC = () => {
           <Button onClick={() => showAddDialog(record, 'see')}>查看</Button>
           <Button onClick={() => showAddDialog(record, 'edit')}>编辑</Button>
           {/* <Button>删除</Button> */}
+          <Button onClick={() => _delItem(record)} danger>删除</Button>
         </Space>
       ),
     },
   ]
-
+  /**删除 */
+  const _delItem = (record) => {
+    Modal.confirm({
+      title: '提示',
+      // icon: <ExclamationCircleOutlined />,
+      content: '确定要删除当前',
+      okText: '确认',
+      cancelText: '取消',
+      onOk: () => {
+        ChannelService.ChannelPlan.del({ id: record.id }).then((res) => {
+          if (res.code == 200) {
+            loadData()
+            message.success('删除成功')
+          }
+        })
+      },
+    })
+  }
   const onFinish = (values: any) => {
     console.log('Success:', values)
     loadData()

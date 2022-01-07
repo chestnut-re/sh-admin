@@ -4,7 +4,7 @@ import React, { FC, useEffect, useState } from 'react'
 // import dayjsFormat from 'dayjsFormat'
 import { dayjsFormat } from '@/utils/dayFormate'
 import UploadImage from '@/components/formItem/UploadImage'
-import ActivityGoodsTable from './TaskGoodsTable'
+import ActivityGoodsTable from '../../rebate-activity/components/GoodsTable'
 import ActivityDetailTable from './TaskDetailTable'
 import { specialState } from '@/utils/enum'
 export type DialogMode = 'add' | 'edit'
@@ -48,6 +48,17 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
           ...formData,
         }
         if (mode === 'add') {
+          postData.taskInventoryGood = formData.taskInventoryGood.map(res=>{
+            return{
+              activityId:res.activityId,
+              activityName:res.activityName,
+              goodsId:res.goodsId,
+              goodsName:res.goodsName,
+              goodsNickName:res.goodsNickName,
+              goodsNo:res.goodsNo,
+              promotionalImageUrl:res.promotionalImageUrl,
+            }
+          })
           ActivitiesService.save(postData).then((res) => {
             if (res.code === '200' || res.code == 200) {
               onSuccess()
@@ -91,6 +102,7 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
     form.setFieldsValue({
       taskInventoryGood: e,
     })
+    console.log(e,'xxx')
     setGoodsRoleList(e)
   }
   return (
