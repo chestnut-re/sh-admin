@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Col, Row, Button, Table, Space, Radio, DatePicker } from 'antd'
+import { Form, Col, Row, Button, Table, Space, Radio, DatePicker,Modal,message } from 'antd'
 import './index.less'
 import { HttpCode } from '@/constants/HttpCode'
 import AEDialog, { DialogMode } from './components/AEDialog'
@@ -96,7 +96,8 @@ const RebateActivity: React.FC = () => {
           <Button onClick={() => _editGoodsDialog(record)}>关联商品</Button>
           <Button onClick={() => _editActivityDialog(record)}>关联清单</Button>
           <Button onClick={() => _editDialog(record)}>数据统计</Button>
-          <Button onClick={() => _editDialog(record)}>删除</Button>
+          {/* <Button onClick={() => _editDialog(record)}>删除</Button> */}
+          <Button onClick={() => _delItem(record)} danger>删除</Button>
         </Space>
       ),
     },
@@ -160,12 +161,23 @@ const RebateActivity: React.FC = () => {
     setActivityShowDialog(false)
   }
   
+
   /**删除 */
   const _delItem = (record) => {
-    marketService.del({ id: record.id }).then((res) => {
-      if (res.code === HttpCode.success) {
-        loadData(pageIndex)
-      }
+    Modal.confirm({
+      title: '提示',
+      // icon: <ExclamationCircleOutlined />,
+      content: '确定要删除当前',
+      okText: '确认',
+      cancelText: '取消',
+      onOk: () => {
+        marketService.del({ id: record.id }).then((res) => {
+          if (res.code == 200) {
+            loadData(pageIndex)
+            message.success('删除成功')
+          } 
+        })
+      },
     })
   }
 

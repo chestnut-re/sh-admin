@@ -1,4 +1,5 @@
-import { ActivitiesService } from '@/service/ActivitiesService'
+
+import { taskService } from '@/service/marketService'
 import { Form, Input, Modal, Select, DatePicker, Button, Row, Col, Radio } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
 // import dayjsFormat from 'dayjsFormat'
@@ -59,7 +60,7 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
               promotionalImageUrl:res.promotionalImageUrl,
             }
           })
-          ActivitiesService.save(postData).then((res) => {
+          taskService.add(postData).then((res) => {
             if (res.code === '200' || res.code == 200) {
               onSuccess()
             }
@@ -68,7 +69,7 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
           // postData.id = data.id
           // delete postData.activityDate
           // delete postData.taskInventoryGood
-          // ActivitiesService.edit(postData).then((res) => {
+          // taskService.edit(postData).then((res) => {
           //   if (res.code === '200' || res.code == 200) {
           //     onSuccess()
           //   }

@@ -1,6 +1,6 @@
 /*
  * @Description:
- * @LastEditTime: 2022-01-07 16:40:49
+ * @LastEditTime: 2022-01-07 18:37:25
  */
 import axios from '@/request'
 export class marketService {

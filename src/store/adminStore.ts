@@ -1,6 +1,6 @@
 /*
  * @Description:
- * @LastEditTime: 2022-01-07 18:01:23
+ * @LastEditTime: 2022-01-07 18:34:58
  */
 import { USER_DETAIL } from '@/constants/CookiesC'
 import { getMenus } from '@/service/menu'

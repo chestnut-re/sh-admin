@@ -1,6 +1,6 @@
 /*
  * @Description: 任务清单
- * @LastEditTime: 2022-01-07 18:08:26
+ * @LastEditTime: 2022-01-07 18:40:23
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Modal, message } from 'antd'
@@ -40,7 +40,6 @@ const TaskListPage: React.FC = () => {
     {
       title: '清单名称',
       dataIndex: 'name',
-      render: (text: any, record: any) => <ImageColumn url={record.activityImg} />,
     },
     {
       title: '关联商品数量',
