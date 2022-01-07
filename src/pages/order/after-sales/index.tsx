@@ -7,6 +7,7 @@ import { OrderService } from '@/service/OrderService'
 import ChannelService from '@/service/ChannelService'
 import { HttpCode } from '@/constants/HttpCode'
 import dayjs from 'dayjs'
+import ExamineDialog from './components/examine/ExamineDialog'
 /**
  * 售后管理
  */
@@ -22,6 +23,8 @@ const AfterSalesListPage: React.FC = () => {
   const [total, setTotal] = useState()
   const [channelData, setChannelData] = useState([])
   const [formData, setFormData] = useState({})
+  const [selectedData, setSelectedData] = useState(null)
+  const [showDialog, setShowDialog] = useState(false)
 
   const options = [
     { label: '全部', value: '全部', innerWidth: '40px' },
@@ -106,19 +109,23 @@ const AfterSalesListPage: React.FC = () => {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button>同意</Button>
-          <Button>驳回</Button>
+          <Button onClick={() => _editDialog(record)}>审核</Button>
           <Button
             onClick={() => {
               toDetails(record)
             }}
           >
-            详情
+            查看
           </Button>
         </Space>
       ),
     },
   ]
+
+  const _editDialog = (record) => {
+    setSelectedData(record)
+    setShowDialog(true)
+  }
 
   const toDetails = (record: any) => {
     history.push('/order/after-sales/details', {
@@ -139,6 +146,17 @@ const AfterSalesListPage: React.FC = () => {
     form.resetFields()
     setPageIndex(1)
     loadData(1)
+  }
+
+  const _onDialogClose = () => {
+    setSelectedData(null)
+    setShowDialog(false)
+  }
+
+  const _onDialogSuccess = () => {
+    setSelectedData(null)
+    setShowDialog(false)
+    loadData(pageIndex)
   }
 
   return (
@@ -166,7 +184,7 @@ const AfterSalesListPage: React.FC = () => {
           form={form}
         >
           <Row gutter={[5, 0]} style={{ paddingLeft: '40px' }}>
-            <Col span={4}>
+            {/* {/* <Col span={4}>
               <Form.Item>
                 <Select style={{ width: 120 }} defaultValue={1}>
                   <Select.Option value={1}>订单编号</Select.Option>
@@ -174,8 +192,8 @@ const AfterSalesListPage: React.FC = () => {
                   <Select.Option value={3}>买家手机号</Select.Option>
                 </Select>
               </Form.Item>
-            </Col>
-            <Col span={4} style={{ marginLeft: '-60px' }}>
+            </Col> */}
+            <Col span={2}>
               <Form.Item name="channelId">
                 <Input />
               </Form.Item>
@@ -189,19 +207,32 @@ const AfterSalesListPage: React.FC = () => {
               </Form.Item>
             </Col>
             <Col span={4} className="table-from-label">
-              渠道审核状态
+              订单售后状态
             </Col>
             <Col span={2}>
-              <Form.Item>
+              <Form.Item name="refundState">
                 <Select style={{ width: 120 }}>
                   <Select.Option value={''}>全部</Select.Option>
-                  <Select.Option value={2}>待审核</Select.Option>
-                  <Select.Option value={3}>已同意</Select.Option>
-                  <Select.Option value={1}>已驳回</Select.Option>
+                  <Select.Option value={2}>退款成功</Select.Option>
+                  <Select.Option value={3}>退款失败</Select.Option>
+                  <Select.Option value={1}>退款中</Select.Option>
                 </Select>
               </Form.Item>
             </Col>
-            <Form.Item wrapperCol={{ offset: 10, span: 0 }}>
+            <Col span={4} className="table-from-label">
+              渠道审核状态
+            </Col>
+            <Col span={2}>
+              <Form.Item name="auditState">
+                <Select>
+                  <Select.Option value={''}>全部</Select.Option>
+                  <Select.Option value={0}>待审核</Select.Option>
+                  <Select.Option value={1}>已同意</Select.Option>
+                  <Select.Option value={2}>已驳回</Select.Option>
+                </Select>
+              </Form.Item>
+            </Col>
+            <Form.Item wrapperCol={{ offset: 0, span: 0 }}>
               <Space>
                 <Button type="primary" htmlType="submit">
                   查询
@@ -227,6 +258,7 @@ const AfterSalesListPage: React.FC = () => {
           total: total,
         }}
       />
+      <ExamineDialog data={selectedData} onSuccess={_onDialogSuccess} show={showDialog} onClose={_onDialogClose} />
     </div>
   )
 }
