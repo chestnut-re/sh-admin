@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道权限
- * @LastEditTime: 2021-12-30 14:16:31
+ * @LastEditTime: 2022-01-07 14:30:37
  */
 import React, { useState, useEffect } from 'react'
 import { Menu, Col, Row, Checkbox, Radio, Input, Tooltip } from 'antd'
@@ -36,6 +36,7 @@ const AuthorityManagement: React.FC = () => {
       if (current == 'one') {
         setStructure([])
         const id = JSON.parse(JSON.stringify(data[0]))?.id
+        console.log(id, 'id')
         setStructure(data)
         setChannelId(id)
         getDetail()
@@ -48,6 +49,7 @@ const AuthorityManagement: React.FC = () => {
       }
     })
   }
+  
   const getDetail = () => {
     if (!!channelId) {
       ChannelService.get(channelId).then((res) => {
@@ -98,7 +100,7 @@ const AuthorityManagement: React.FC = () => {
                 <Menu.Item key="admin">管理后台权限</Menu.Item>
                 <Menu.Item key="toB">B端权限</Menu.Item>
               </Menu>
-              <TableScheme channelDetail={channelDetail} chanId={channelId} switchFc={switchFunc} />
+              <TableScheme channelDetail={channelDetail} goSuccess={getDetail} chanId={channelId} switchFc={switchFunc} />
             </>
           ) : (
             <>

@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道列表
- * @LastEditTime: 2022-01-07 14:06:58
+ * @LastEditTime: 2022-01-07 14:14:19
  */
 import React, { useState, useEffect } from 'react'
-import { Form, Col, Row, Button, Table, Space,Modal } from 'antd'
+import { Form, Col, Row, Button, Table, Space,Modal,message } from 'antd'
 import { InputTemp } from '@/components/filter/formItem'
 import AddChannelDialog, { DialogMode } from './components/AddChannelDialog'
 import { analysisName } from '@/utils/newTree'
