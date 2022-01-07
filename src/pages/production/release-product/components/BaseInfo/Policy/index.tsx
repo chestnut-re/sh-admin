@@ -23,7 +23,7 @@ const Policy: React.FC<Props> = ({ value, onChange }) => {
   const loadOptions = (value: string) => {
     setFetching(true)
     setData([])
-    ConfigManagementService.list({ policyName: value, size: 10, current: 1 }).then((res) => {
+    ConfigManagementService.list({ policyName: value, size: 100, current: 1 }).then((res) => {
       setFetching(false)
       setData(res.data.records)
     })
