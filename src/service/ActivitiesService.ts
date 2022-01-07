@@ -1,6 +1,6 @@
 /*
  * @Description: 
- * @LastEditTime: 2022-01-04 18:34:57
+ * @LastEditTime: 2022-01-07 14:38:57
  */
 import axios from '@/request'
 
@@ -54,4 +54,10 @@ export class ActivitiesService {
         params:data
       })
     }
+    static activityGoodsPage(data): Promise<any> {
+      return axios.get(`/api/operation/activity/activityGoodsPage`,{
+        params:data
+      })
+    }
+    
 }

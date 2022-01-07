@@ -1,6 +1,6 @@
 /*
  * @Description: 配置商品详情
- * @LastEditTime: 2022-01-07 14:44:08
+ * @LastEditTime: 2022-01-07 15:23:03
  */
 import { Table, Space, Button, Modal, Form, Row, Col } from 'antd'
 import { ActivitiesService } from '@/service/ActivitiesService'
@@ -14,15 +14,11 @@ interface Props {
   onSuccess: (any:any,e?:any) => void
   onClose: () => void
 }
-const ActivityGoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess, onClose }) => {
+const GoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess, onClose }) => {
   const [form] = Form.useForm()
-  const [keyword, setKeyword] = useState('')
   const [roleList, setRoleList] = useState('')
   const [selectedRows, setSelectedRows] = useState([])
   const [data, setData] = useState([])
-  const _delItem = (record) => {
-    console.log('---')
-  }
 
   useEffect(() => {
     setRoleList(JSON.parse(JSON.stringify(goodsIdList)))
@@ -93,7 +89,7 @@ const ActivityGoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess
 
         <Table
           columns={columns}
-          rowKey={(record) => record.goodsId}
+          rowKey={(record) => record.id}
           rowSelection={{ ...rowSelection }}
           pagination={false}
           dataSource={data}
@@ -103,4 +99,4 @@ const ActivityGoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess
   )
 }
 
-export default ActivityGoodsTable
+export default GoodsTable
