@@ -1,12 +1,11 @@
-import React, { useImperativeHandle, useRef, forwardRef, useState, useEffect } from 'react'
-import { Form, Input, Row, Col, Upload, Select, Image, Spin, message, Radio, Switch, InputNumber } from 'antd'
+import React, { useImperativeHandle, useState, useEffect } from 'react'
+import { Form, Input, Row, Col, Select, Radio, Switch, InputNumber } from 'antd'
 import './index.less'
 import ProductionTag from '../ProductionTag'
 import { useStore } from '@/store/context'
 import { observer } from 'mobx-react-lite'
 import UploadImage from '@/components/formItem/UploadImage'
-import RichInput from '@/components/formItem/RichInput'
-import RichTextEditor from 'react-rte'
+import Policy from './Policy'
 
 interface Props {}
 
@@ -16,7 +15,6 @@ interface Props {}
 const BaseInfo: React.FC<Props> = (props, ref) => {
   const { productionStore } = useStore()
   const [form] = Form.useForm()
-  const richRef = useRef()
 
   const [goodsLimit, setGoodsLimit] = useState(false)
   const [goodsLimitUp, setGoodsLimitUp] = useState(false)
@@ -154,7 +152,7 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
           </Row>
 
           <Form.Item name="refundAndChangePolicy" label="退改政策">
-            <Select></Select>
+            <Policy />
           </Form.Item>
         </Col>
         <Col span={8}>

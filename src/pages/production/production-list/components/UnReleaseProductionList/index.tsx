@@ -83,7 +83,7 @@ const UnReleaseProductionListPage: React.FC<any> = observer(({}) => {
         <Space size="middle">
           <Button
             onClick={() => {
-              history.push(`/production/production-detail?id=${record.id}`)
+              history.push(`/production/production-detail?id=${record.id}&type=unRelease`)
             }}
           >
             查看
