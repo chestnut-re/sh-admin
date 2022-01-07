@@ -1,9 +1,7 @@
 import useQuery from '@/hooks/useQuery'
-import { ProductionAuditService } from '@/service/ProductionAuditService'
 import { ProductionService } from '@/service/ProductionService'
 import { useStore } from '@/store/context'
-import { Button, Form, Input, InputNumber, message, Radio, Switch } from 'antd'
-import { useForm } from 'antd/es/form/Form'
+import { Button, Form, message } from 'antd'
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
@@ -39,10 +37,10 @@ const CenterPutOnRequest: React.FC = () => {
         console.log(formData)
         const postData = { ...formData }
         const savePlan = postData.distPlanId
-        postData.distPlan = savePlan?.distPlan
-        postData.distPlanId = savePlan.distPlanId
+        postData.channelPlanList = savePlan?.channelPlanList
+        postData.distPlanId = savePlan.id
         postData.goodsId = query.get('id')
-        
+
         console.log(postData)
         ProductionService.centerPutOnRequest(postData).then((res) => {
           if (res.code === '200') {

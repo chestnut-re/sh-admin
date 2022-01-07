@@ -24,7 +24,7 @@ const Commission: React.FC<Props> = ({ value, onChange }) => {
   const loadOptions = (value: string) => {
     setFetching(true)
     setProductType([])
-    ProductionService.getChannelDistPlan({ planName: value }).then((res) => {
+    ChannelService.ChannelPlan.getChannelDistPlan({ planName: value }).then((res) => {
       setFetching(false)
       setProductType(res.data.records)
     })
@@ -38,9 +38,9 @@ const Commission: React.FC<Props> = ({ value, onChange }) => {
     console.log(
       'goodsTypeHandleChange',
       value,
-      productType.find((i) => i.distPlanId == option.key)
+      productType.find((i) => i.id == option.key)
     )
-    onChange?.(productType.find((i) => i.distPlanId == option.key))
+    onChange?.(productType.find((i) => i.id == option.key))
   }
 
   return (
@@ -60,8 +60,8 @@ const Commission: React.FC<Props> = ({ value, onChange }) => {
     >
       {productType &&
         productType.map((item) => (
-          <Select.Option name={item['distPlanNam']} value={item['distPlanNam']} key={item['distPlanId']}>
-            {item['distPlanNam']}
+          <Select.Option name={item['planName']} value={item['planName']} key={item['id']}>
+            {item['planName']}
           </Select.Option>
         ))}
     </Select>
