@@ -65,7 +65,7 @@ const ReleaseInfoShow: React.FC = () => {
   return (
     <div className="ReleaseInfoShow__root">
       <h4>4. 发布信息</h4>
-      <div>{JSON.stringify(data)}</div>
+      {/* <div>{JSON.stringify(data)}</div> */}
       <div className="box">
         <div className="left">
           <div>
@@ -86,9 +86,8 @@ const ReleaseInfoShow: React.FC = () => {
             </div>
           </div>
           <div>
-            <div>分佣方案</div>
+            <div>分佣方案 {data.distPlanId}</div>
             <div>
-              <div>选定的分佣方案名称占位</div>
               <div>
                 <Table dataSource={data?.distPlan} columns={columns} bordered />
               </div>

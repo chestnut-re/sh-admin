@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Table, Tag, Space } from 'antd'
 import './index.less'
+import Item from 'antd/lib/list/Item'
 const { Column, ColumnGroup } = Table
 
 /**
@@ -16,66 +17,79 @@ const CenterPutOnRequestShow: React.FC = () => {
   const query = useQuery()
   const { productionDetailStore } = useStore()
   const [data, setData] = useState<any>({})
+  const [distPlan, setDistPlan] = useState<any[]>([])
 
-  const dataList = [
-    // {
-    //   key: '1',
-    //   firstName: 'John',
-    //   lastName: 'Brown',
-    //   age: 32,
-    //   address: 'New York No. 1 Lake Park',
-    //   tags: ['nice', 'developer'],
-    // }
-  ]
   useEffect(() => {
     const id = query.get('channelGoodsId') ?? ''
     ProductionService.centerPutOnRequestGet(id).then((res) => {
       setData(res.data)
+      const arr: any = []
+      treeToList(arr, res.data.distPlan)
+      setDistPlan(arr)
     })
   }, [])
 
-  const layout = {
-    labelCol: { span: 4 },
-    wrapperCol: { span: 20 },
+  const treeToList = (arr, tree) => {
+    console.log(tree)
+    // tree.map((item, index) => {
+    //   console.log(item.saleAuth)
+    // })
+    // return
+
+    arr.push({
+      channelLeave: tree.channelLeave,
+      distScale: tree.distScale,
+      outLetScale: tree.outLetScale,
+      saleAuth: tree.saleAuth,
+      serviceCharge: tree.serviceCharge,
+    })
+    arr.map((item, index) => {
+      item.saleAuth.map((it) => {
+        console.log(it, item)
+        item['s' + it.level] = it.saleScale
+      })
+    })
+    console.log('arr', arr)
+    if (tree.children) {
+      treeToList(arr, tree.children)
+    } else {
+      return arr
+    }
+    // for (const item of tree) {
+    //   if (item.children && item.children.length > 0) {
+    //     const sitem = { ...item }
+    //     delete sitem.children
+    //     arr = arr.concat(sitem, treeToList(item.children))
+    //   } else {
+    //     delete item.children
+    //     arr.push(item)
+    //   }
+    // }
+    // return arr
   }
 
   return (
     <div className="CenterPutOnRequestShow__root">
       <h4>5. 上架申请信息</h4>
-      <div>{JSON.stringify(data)}</div>
+      {/* <div>{JSON.stringify(data)}</div> */}
       <div className="info">
         <div className="one-info">
-          <div className="canal">申请渠道 </div>
-          <div>责任区域 </div>
+          <div className="canal">上架渠道 {distPlan?.length} </div>
         </div>
-        <div>申请人 </div>
-        <div>申请时间 </div>
-        <div>分佣方案 </div>
+        <div>分佣方案 {data.distPlanId}</div>
         <div>
-          表格
-          <Table dataSource={dataList} bordered>
-            <Column title="直销方" dataIndex="age" key="age" />
-            <Column title="直销分佣" dataIndex="age" key="age" />
+          <Table dataSource={distPlan} bordered>
+            <Column title="上架渠道（等级）" dataIndex="channelLeave" key="channelLeave" />
+            <Column title="分佣方案名称（暂定等级）" dataIndex="channelLeave" key="channelLeave" />
+            <Column title="直销方（分佣）" dataIndex="outLetScale" key="outLetScale" />
+            <Column title="直销分佣" dataIndex="outLetScale" key="outLetScale" />
             <ColumnGroup title="分销分佣">
-              <Column title="二级名称" dataIndex="firstName" key="firstName" />
-              <Column title="三级名称" dataIndex="lastName" key="lastName" />
-              <Column title="四级名称" dataIndex="lastName" key="lastName" />
+              <Column title="二级名称" dataIndex="s2" key="firstName" />
+              <Column title="三级名称" dataIndex="s3" key="lastName" />
+              <Column title="四级名称" dataIndex="s4" key="lastName" />
             </ColumnGroup>
-            <Column title="发团服务费" dataIndex="address" key="address" />
-            <Column
-              title="合计分佣"
-              dataIndex="tags"
-              key="tags"
-              render={(tags) => (
-                <>
-                  {tags.map((tag) => (
-                    <Tag color="blue" key={tag}>
-                      {tag}
-                    </Tag>
-                  ))}
-                </>
-              )}
-            />
+            <Column title="发团服务费" dataIndex="serviceCharge" key="serviceCharge" />
+            <Column title="合计分佣" dataIndex="distScale" key="distScale" />
           </Table>
         </div>
       </div>
