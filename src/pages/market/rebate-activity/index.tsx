@@ -6,8 +6,10 @@ import AEDialog, { DialogMode } from './components/AEDialog'
 import { InputTemp, StatusRoute } from '@/components/filter/formItem'
 import { marketService } from '@/service/marketService'
 import TimeColumn from '@/components/tableColumn/TimeColumn'
-import DEDialog from './components/DEDialog'
-import ActivityGoodsTable from '../app-market/activities/components/ActivityGoodsTable'
+import DEDialog from '@/components/components/Dedialog'
+import RebateBasicInfo from './components/BasicInfo/BasicInfo'
+import GoodsTable from './components/GoodsTable'
+import ActivityTable from './components/ActivityTable'
 const RebateActivity: React.FC = () => {
   const { RangePicker } = DatePicker
   const [form] = Form.useForm()
@@ -22,7 +24,11 @@ const RebateActivity: React.FC = () => {
   const [deShowDialog, setDeShowDialog] = useState(false)
   const [goodsShowDialog, setGoodsShowDialog] = useState(false)
   const [goodsRoleList, setGoodsRoleList] = useState<Array<any>>([])
-const [selectRecord,setSelectRecord] =  useState<string>('')
+  const [selectRecord, setSelectRecord] = useState<string>('')
+
+  const [activityShowDialog, setActivityShowDialog] = useState(false)
+  const [activityRoleList, setActivityRoleList] = useState<Array<any>>([])
+
   useEffect(() => {
     loadData(pageIndex)
   }, [pageIndex])
@@ -88,7 +94,7 @@ const [selectRecord,setSelectRecord] =  useState<string>('')
         <Space size="middle">
           <Button onClick={() => _editDialog(record)}>查看</Button>
           <Button onClick={() => _editGoodsDialog(record)}>关联商品</Button>
-          <Button onClick={() => _editDialog(record)}>关联清单</Button>
+          <Button onClick={() => _editActivityDialog(record)}>关联清单</Button>
           <Button onClick={() => _editDialog(record)}>数据统计</Button>
           <Button onClick={() => _editDialog(record)}>删除</Button>
         </Space>
@@ -96,17 +102,64 @@ const [selectRecord,setSelectRecord] =  useState<string>('')
     },
   ]
   const _editGoodsDialog = (record) => {
-    const list = (record.taskInventoryGood??[]).map(res=>{
+    const list = (record.taskInventoryGood ?? []).map((res) => {
       return res.goodsId
     })
     setSelectRecord(record.id)
     setGoodsShowDialog(true)
     setGoodsRoleList(list)
   }
-  const goodsOnSuccess = (rowKeys,rowList)=>{
-    console.log(rowKeys,rowList)
+  const _editActivityDialog = (record) => {
+    const list = (record.paperList ?? []).map((res) => {
+      return res.id
+    })
+    setSelectRecord(record.id)
+    setActivityShowDialog(true)
+    setActivityRoleList(list)
+  }
+  
+  const goodsOnSuccess = (rowKeys, rowList) => {
+    const goodsList = rowList.map((res) => {
+      return {
+        activityId: '',
+        activityName: '',
+        goodsId: res.id,
+        goodsName: res.goodsName,
+        goodsNickName: res.goodsNickName,
+        goodsNo: res.goodsNo,
+      }
+    })
+    marketService.edit({ id: selectRecord, goodsList: goodsList }).then((res) => {
+      if (res.code === HttpCode.success) {
+        loadData(pageIndex)
+      }
+    })
     setGoodsShowDialog(false)
   }
+  const activityOnSuccess = (rowKeys, rowList) => {
+    const List = rowList.map((res) => {
+      return {
+        code: res.code,
+        createChannel: res.createChannel,
+        createChannelName: res.createChannelName,
+        createTime: res.createTime,
+        createUser: res.createUser,
+        createUserName: res.createUserName,
+        id: res.id,
+        isDeleted: res.isDeleted,
+        mathFlag: res.goodsNo,
+        name:res.name,
+        state:res.state
+      }
+    })
+    marketService.edit({ id: selectRecord, paperList: List }).then((res) => {
+      if (res.code === HttpCode.success) {
+        loadData(pageIndex)
+      }
+    })
+    setActivityShowDialog(false)
+  }
+  
   /**删除 */
   const _delItem = (record) => {
     marketService.del({ id: record.id }).then((res) => {
@@ -238,13 +291,25 @@ const [selectRecord,setSelectRecord] =  useState<string>('')
         show={showDialog}
         onClose={_onDialogClose}
       />
-      <DEDialog show={deShowDialog} data={selectedData} ></DEDialog>
-      <ActivityGoodsTable
+        <DEDialog
+        show={deShowDialog}
+        onChange={() => setDeShowDialog(false)}
+        data={()=> <RebateBasicInfo data={selectedData}></RebateBasicInfo>}
+        // data={() => <ShowRefund data={selectedData} editGo={_editGo}></ShowRefund>}
+      ></DEDialog>
+
+      <GoodsTable
         goodsShow={goodsShowDialog}
         onSuccess={goodsOnSuccess}
         goodsIdList={goodsRoleList}
         onClose={() => setGoodsShowDialog(false)}
-      ></ActivityGoodsTable>
+      ></GoodsTable>
+      <ActivityTable
+        goodsShow={activityShowDialog}
+        onSuccess={activityOnSuccess}
+        goodsIdList={activityRoleList}
+        onClose={() => setActivityShowDialog(false)}
+      ></ActivityTable>
     </div>
   )
 }

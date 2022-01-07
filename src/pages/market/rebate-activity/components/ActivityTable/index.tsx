@@ -1,9 +1,9 @@
 /*
- * @Description: 配置商品详情
- * @LastEditTime: 2022-01-07 14:44:08
+ * @Description: 配置关联清单
+ * @LastEditTime: 2022-01-07 15:29:41
  */
 import { Table, Space, Button, Modal, Form, Row, Col } from 'antd'
-import { ActivitiesService } from '@/service/ActivitiesService'
+import { taskService } from '@/service/marketService'
 
 import { InputTemp } from '@/components/filter/formItem'
 import React, { useEffect, useState } from 'react'
@@ -14,15 +14,11 @@ interface Props {
   onSuccess: (any:any,e?:any) => void
   onClose: () => void
 }
-const ActivityGoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess, onClose }) => {
+const ActivityTable: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess, onClose }) => {
   const [form] = Form.useForm()
-  const [keyword, setKeyword] = useState('')
   const [roleList, setRoleList] = useState('')
   const [selectedRows, setSelectedRows] = useState([])
   const [data, setData] = useState([])
-  const _delItem = (record) => {
-    console.log('---')
-  }
 
   useEffect(() => {
     setRoleList(JSON.parse(JSON.stringify(goodsIdList)))
@@ -32,19 +28,37 @@ const ActivityGoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess
       getGoodsDetail()
     }
   }, [goodsShow])
-  const getGoodsDetail = async () => {
+  const getGoodsDetail =  () => {
     const params = form.getFieldsValue()
-    const res = await ActivitiesService.activityGoodsPage({ ...params })
-    setData(res?.data.records)
+    taskService.list({ current: 1, size: 100,...params}).then((res) => {
+      setData(res?.data.records)
+      // setTotal(res.data.total)
+    })
+
+  
   }
   const columns = [
     {
-      title: '商品ID',
+      title: '清单ID',
       dataIndex: 'goodsId',
     },
     {
-      title: '商品名称',
-      dataIndex: 'goodsName',
+      title: '清单名称',
+      dataIndex: 'name',
+    },
+    {
+      title: '关联商品数量',
+      dataIndex: 'activityDetailImg',
+      render: (text: any, record: any) => `${record.taskInventoryGood?.length??0}`,
+    },
+    {
+      title: '关联活动',
+      dataIndex: '',
+    },
+    {
+      title: '状态',
+      dataIndex: 'activityTitle',
+      render: (text: any, record: any) => `${record.state == 0 ? '启用' : '禁用'}`,
     },
   ]
   const _handleUpdate = () => {
@@ -72,7 +86,7 @@ const ActivityGoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess
   }
   return (
     <div className="goodsTable__root">
-      <Modal title="商品管理" width={700} visible={goodsShow} onOk={_handleUpdate} onCancel={_formClose}>
+      <Modal title="配置关联清单" width={700} visible={goodsShow} onOk={_handleUpdate} onCancel={_formClose}>
         <Form name="basic" initialValues={{ keyword: '' }} onFinish={onFinish} form={form}>
           <Row gutter={[5, 0]} style={{ paddingLeft: '10px' }}>
             <Col span={12}>
@@ -93,7 +107,7 @@ const ActivityGoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess
 
         <Table
           columns={columns}
-          rowKey={(record) => record.goodsId}
+          rowKey={(record) => record.id}
           rowSelection={{ ...rowSelection }}
           pagination={false}
           dataSource={data}
@@ -103,4 +117,4 @@ const ActivityGoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess
   )
 }
 
-export default ActivityGoodsTable
+export default ActivityTable

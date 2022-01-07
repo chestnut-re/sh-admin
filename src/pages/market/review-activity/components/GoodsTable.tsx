@@ -14,7 +14,7 @@ interface Props {
   onSuccess: (any:any,e?:any) => void
   onClose: () => void
 }
-const ActivityGoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess, onClose }) => {
+const GoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess, onClose }) => {
   const [form] = Form.useForm()
   const [keyword, setKeyword] = useState('')
   const [roleList, setRoleList] = useState('')
@@ -103,4 +103,4 @@ const ActivityGoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess
   )
 }
 
-export default ActivityGoodsTable
+export default GoodsTable

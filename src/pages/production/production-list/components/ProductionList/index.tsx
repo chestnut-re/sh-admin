@@ -111,7 +111,9 @@ const ProductionList: React.FC<any> = observer(({}) => {
         <Space size="middle">
           <Button
             onClick={() => {
-              history.push(`/production/production-detail?id=${record.id}`)
+              history.push(
+                `/production/production-detail?channelGoodsId=${record.channelGoodsId}&id=${record.id}&type=detailList`
+              )
             }}
           >
             查看

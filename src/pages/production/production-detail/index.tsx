@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom'
 import BaseInfo from './components/BaseInfo'
 import CenterPutOnRequest from './components/CenterPutOnRequest'
 import CenterPutOnRequestShow from './components/CenterPutOnRequestShow'
+import CenterPutOnRequestShowSubCenter from './components/CenterPutOnRequestShowSubCenter'
 import DetailPageInfo from './components/DetailPageInfo'
 import PutOnInfo from './components/PutOnInfo'
 import PutOnInfoShow from './components/PutOnInfoShow'
@@ -19,7 +20,7 @@ import './index.less'
  */
 const ProductionDetail: React.FC = () => {
   const query = useQuery()
-  const { productionDetailStore } = useStore()
+  const { adminStore, productionDetailStore } = useStore()
   const history = useHistory()
 
   useEffect(() => {
@@ -43,23 +44,30 @@ const ProductionDetail: React.FC = () => {
       {/* 行程信息 */}
       <TravelInfo />
       {/* 移动页详情信息 */}
-      <DetailPageInfo />
+      {type !== 'unRelease' && <DetailPageInfo />}
 
       {/* 3 发布审核*/}
       {type === 'publish' && <ReleaseInfo />}
-      {(type === 'release' || type === 'publishCheck' || type === 'releaseCheck' || type === 'centerPublish') && (
-        <ReleaseInfoShow />
-      )}
+      {(type === 'release' ||
+        type === 'publishCheck' ||
+        type === 'releaseCheck' ||
+        type === 'centerPublish' ||
+        type === 'detailList') && <ReleaseInfoShow />}
 
       {/* 4 分中心 上架申请 centerPublish */}
       {type === 'centerPublish' && <CenterPutOnRequest />}
-      {(type === 'release' || type === 'releaseCheck') && <CenterPutOnRequestShow />}
+      {(type === 'release' || type === 'releaseCheck' || type === 'detailList') && adminStore.isSubCenter && (
+        <CenterPutOnRequestShowSubCenter />
+      )}
+      {(type === 'release' || type === 'releaseCheck' || type === 'detailList') && !adminStore.isSubCenter && (
+        <CenterPutOnRequestShow />
+      )}
 
       {/* 上架审核  */}
       {type === 'release' && <PutOnInfo />}
 
       {/* 查看详情页 */}
-      {/* {type === 'detail' && <PutOnInfoShow />} */}
+      {type === 'detail' || (type === 'detailList' && <PutOnInfoShow />)}
       {/* {type === 'release' && <PutOnInfoShow />} */}
     </div>
   )

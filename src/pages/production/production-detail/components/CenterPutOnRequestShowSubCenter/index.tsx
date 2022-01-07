@@ -10,9 +10,9 @@ const { Column, ColumnGroup } = Table
 
 /**
  * 分中心上架申请 展示
- * 总中心视角，查看所有的上架申请
+ * 分中心视角，查看自己的申请
  */
-const CenterPutOnRequestShow: React.FC = () => {
+const CenterPutOnRequestShowSubCenter: React.FC = () => {
   const history = useHistory()
   const query = useQuery()
   const { productionDetailStore } = useStore()
@@ -84,4 +84,4 @@ const CenterPutOnRequestShow: React.FC = () => {
   )
 }
 
-export default observer(CenterPutOnRequestShow)
+export default observer(CenterPutOnRequestShowSubCenter)

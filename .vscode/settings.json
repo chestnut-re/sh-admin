@@ -3,6 +3,7 @@
         "adcode",
         "antd",
         "Cascader",
-        "Popconfirm"
+        "Popconfirm",
+        "tinified"
     ]
 }
