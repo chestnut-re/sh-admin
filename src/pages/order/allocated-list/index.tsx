@@ -8,7 +8,7 @@ import ChannelService from '@/service/ChannelService'
 import { HttpCode } from '@/constants/HttpCode'
 import dayjs from 'dayjs'
 /**
- * 订单列表
+ * 待分配列表
  */
 const AllocatedListPage: React.FC = () => {
   const history = useHistory()
@@ -30,19 +30,19 @@ const AllocatedListPage: React.FC = () => {
     form.validateFields().then((query) => {
       const payBeginTime = query.time ? dayjs(query.time[0]).format('YYYY-MM-DD HH:mm:ss') : ''
       const payEndTime = query.time ? dayjs(query.time[1]).format('YYYY-MM-DD HH:mm:ss') : ''
-      OrderService.list({
-        current: pageIndex,
-        size: pageSize,
-        payBeginTime,
-        payEndTime,
-        channelId: query.channelId,
-        orderType: query.orderType,
-        source: query.source,
-        state: query.state,
-      }).then((res) => {
-        setData(res.data.records)
-        setTotal(res.data.total)
-      })
+      // OrderService.list({
+      //   current: pageIndex,
+      //   size: pageSize,
+      //   payBeginTime,
+      //   payEndTime,
+      //   channelId: query.channelId,
+      //   orderType: query.orderType,
+      //   source: query.source,
+      //   state: query.state,
+      // }).then((res) => {
+      //   setData(res.data.records)
+      //   setTotal(res.data.total)
+      // })
     })
   }
 
