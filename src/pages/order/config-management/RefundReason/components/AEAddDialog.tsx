@@ -1,12 +1,10 @@
 /*
- * @Description:
- * @LastEditTime: 2022-01-07 11:25:05
+ * @Description:退款理由
+ * @LastEditTime: 2022-01-07 11:50:22
  */
-import { ConfigManagementService } from '@/service/OrderService'
-import { Form, Input, Modal, Select, DatePicker, Button, Row, Col, Radio } from 'antd'
+import { ConfigRefundService } from '@/service/OrderService'
+import { Form, Input, Modal} from 'antd'
 import React, { FC, useEffect, useState } from 'react'
-// import RichInput from '@/components/formItem/RichInput'
-import Editor from './Editor'
 export type DialogMode = 'add' | 'edit'
 interface Props {
   data: any
@@ -16,21 +14,14 @@ interface Props {
   onClose: () => void
 }
 
-/**
- * 添加&编辑
- */
 const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) => {
   const [form] = Form.useForm()
-  const [content, setContent] = useState('')
-  const [defaultValue, setDefaultValue] = useState('')
   useEffect(() => {
     if (show) {
       form.setFieldsValue({
         id: data?.id,
-        policyName: data?.policyName,
-        policyContent: data?.policyContent,
+        dictValue: data?.dictValue,
       })
-      setDefaultValue(data?.policyContent)
     }
   }, [show])
 
@@ -43,14 +34,14 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
           ...formData,
         }
         if (mode === 'add') {
-          ConfigManagementService.add(postData).then((res) => {
+          ConfigRefundService.add(postData).then((res) => {
             if (res.code === '200' || res.code == 200) {
               onSuccess()
             }
           })
         } else {
           postData.id = data.id
-          ConfigManagementService.edit(data.id,postData).then((res) => {
+          ConfigRefundService.edit(data.id,postData).then((res) => {
             if (res.code === '200' || res.code == 200) {
               onSuccess()
             }
@@ -66,12 +57,9 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
     form.resetFields()
     onClose()
   }
-  const changeRich = (e) => {
-    setContent(e)
-  }
   return (
     <>
-      <Modal title="退改政策" width={800} visible={show} onOk={_handleUpdate} onCancel={_formClose}>
+      <Modal title="退款理由" width={800} visible={show} onOk={_handleUpdate} onCancel={_formClose}>
         <Form
           name="basic"
           labelCol={{ span: 6 }}
@@ -80,11 +68,8 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
           autoComplete="off"
           form={form}
         >
-          <Form.Item label="政策名称" name="policyName" rules={[{ required: false, message: '请输入活动标题' }]}>
+          <Form.Item label="退款理由" name="dictValue" rules={[{ required: false, message: '请输入活动标题' }]}>
             <Input />
-          </Form.Item>
-          <Form.Item label="政策内容" name="policyContent" rules={[{ required: false, message: '请输入副标题' }]}>
-            <Editor onChange={changeRich} value={defaultValue}></Editor>
           </Form.Item>
         </Form>
       </Modal>

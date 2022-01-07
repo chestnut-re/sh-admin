@@ -1,13 +1,13 @@
 /*
  * @Description: APP营销
- * @LastEditTime: 2022-01-06 18:08:03
+ * @LastEditTime: 2022-01-07 11:35:39
  */
 import { Tabs } from 'antd'
 import React from 'react'
 import RefundPolicy from './RefundPolicy'
-import Banner from './banner'
+import Banner from './RefundReason'
 
-const AppMarket: React.FC = () => {
+const ConfigManagement: React.FC = () => {
   const onChange = (activeKey: string) => {
     console.log(activeKey)
   }
@@ -26,4 +26,4 @@ const AppMarket: React.FC = () => {
   )
 }
 
-export default AppMarket
+export default ConfigManagement

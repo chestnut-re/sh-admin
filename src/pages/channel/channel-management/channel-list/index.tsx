@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道列表
- * @LastEditTime: 2021-12-31 15:02:51
+ * @LastEditTime: 2022-01-07 14:06:58
  */
 import React, { useState, useEffect } from 'react'
-import { Form, Col, Row, Button, Table, Space } from 'antd'
+import { Form, Col, Row, Button, Table, Space,Modal } from 'antd'
 import { InputTemp } from '@/components/filter/formItem'
 import AddChannelDialog, { DialogMode } from './components/AddChannelDialog'
 import { analysisName } from '@/utils/newTree'
@@ -96,12 +96,32 @@ const ChannelPage: React.FC = () => {
         <Space size="middle">
           <Button onClick={() => showAddDialog(record, 'see')}>查看</Button>
           <Button onClick={() => showAddDialog(record, 'edit')}>编辑</Button>
-          {/* <Button>删除</Button> */}
+          <Button onClick={() => _delItem(record)} danger>删除</Button>
         </Space>
       ),
     },
   ]
 
+  /**删除 */
+  const _delItem = (record) => {
+    Modal.confirm({
+      title: '提示',
+      // icon: <ExclamationCircleOutlined />,
+      content: '确定要删除当前',
+      okText: '确认',
+      cancelText: '取消',
+      onOk: () => {
+        ChannelService.del({ id: record.id }).then((res) => {
+          if (res.code == 200) {
+            loadData()
+            message.success('删除成功')
+          } else {
+            message.error(res.message)
+          }
+        })
+      },
+    })
+  }
   const onFinish = (values: any) => {
     console.log('Success:', values)
     loadData()

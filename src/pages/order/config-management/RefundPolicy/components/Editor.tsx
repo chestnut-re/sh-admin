@@ -1,19 +1,24 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /*
- * @Description: 
- * @LastEditTime: 2022-01-06 20:12:18
+ * @Description:
+ * @LastEditTime: 2022-01-07 11:21:07
  */
 
 import React, { FC, useEffect, useState } from 'react'
 import E from 'wangeditor'
 interface Props {
-  onChange?: (e:any) => void
+  onChange: (e: any) => void
+  value?: any
 }
-const Edit: FC<Props> = ({ onChange }) => {
-  const [content, setContent] = useState('')
-  let editor = null
+const Edit: FC<Props> = ({ onChange, value }) => {
+  const [isEditor, setIsEditor] = useState(false)
+  let editor
 
   useEffect(() => {
     editor = new E('#div1')
+    editor.config.onchange = (newHtml) => {
+      onChange(newHtml)
+    }
     editor.config.menus = [
       'head', // 标题
       'bold', // 粗体
@@ -55,26 +60,18 @@ const Edit: FC<Props> = ({ onChange }) => {
       上传: 'Upload',
       创建: 'init',
     }
-    /**一定要创建 */
     editor.create()
-    editor.txt.html('')
-    editor.config.onchange =  (newHtml)=> {
-      console.log('change 之后最新的 html', newHtml)
-      onChange(newHtml)
+    setIsEditor(true)
+    return () => {
+      setIsEditor(false)
+      editor.destroy()
     }
-        // return () => {
-    //   editor.destroy()
-    // }
-  }, [])
-
-  useEffect(()=>{
-    getHtml()
-  }, [content])
-
-  // 获取html方法1
-  function getHtml() {
-    editor.txt.html(content)
-  }
+  }, [value])
+  useEffect(() => {
+    if (editor) {
+      editor.txt.html(value)
+    }
+  }, [value, isEditor])
 
   return (
     <div>
