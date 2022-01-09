@@ -1,14 +1,9 @@
-import { Form, Input, Modal, DatePicker, Row, Col, InputNumber, Switch, Select, TreeSelect, Cascader } from 'antd'
+import { Form, Modal, Switch, Select, Cascader } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
 import { DialogMode, personType } from '@/utils/enum'
-import RoleSelect from '@/components/formItem/RoleSelect'
-import ChannelService from '@/service/ChannelService'
 import { CommonService } from '@/service/CommonService'
 import { ContactsCenterApi } from '@/service/ContactsCenter'
-import { PersonService } from '@/service/PersonService'
-import { cityDispose, lastOneJoin } from '@/utils/tree'
 import { HttpCode } from '@/constants/HttpCode'
-import Item from 'antd/lib/list/Item'
 
 interface Props {
   data: any
@@ -39,7 +34,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
       form.setFieldsValue({
           userId: data?.userId,
           channel: findParentNodeArray(leader,"1475343300440576000").map((item)=>item.id),
-          state: true,
+          state: data.state?true:false,
         })
     }else{
       form.resetFields()
@@ -86,13 +81,12 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
     const { code, data } = await ContactsCenterApi.userList({ channelId: channelId })
     console.log('res :>> ', data)
     if (code === '200' && data) {
-      let resList = data.map((item) => {
+      const resList = data.map((item) => {
         return {
           value: item.id,
           label: item.name,
         }
       })
-      resList = [{ value: '1478239342974685200', label: '邢浩' }]
       setUserLists(resList)
     }
   }
@@ -134,6 +128,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
       })
   }
 
+  //关闭弹窗，清空表单数据
   const _formClose = () => {
     form.resetFields()
     onClose()
@@ -148,7 +143,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
   }
 
   return (
-    <Modal title="添加客服" forceRender maskClosable={false} visible={show} onOk={_handleUpdate} onCancel={_formClose}>
+    <Modal title={mode==="add"?"添加客服":"修改客服"} forceRender maskClosable={false} visible={show} onOk={_handleUpdate} onCancel={_formClose}>
       <Form
         name="basic"
         labelCol={{ span: 6 }}
@@ -174,7 +169,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
           <Select style={{ width: '100%' }} placeholder="请选择客服人员" options={userLists} />
         </Form.Item>
         <Form.Item name="state" valuePropName="checked" label="是否启用">
-          <Switch checked={false} />
+          <Switch checkedChildren="启用" unCheckedChildren="禁用" checked={false} />
         </Form.Item>
       </Form>
     </Modal>
