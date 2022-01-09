@@ -26,20 +26,11 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
   const [form] = Form.useForm()
   const [structure, setStructure] = useState<any>(null)
   const [leader, setLeader] = useState<any[]>([])
-  const [channelId, setChannelId] = useState<string>('')
-  const [level, setLevel] = useState<number>(0)
   const [userLists, setUserLists] = useState<any[]>([])
   useEffect(() => {
     getLeaders()
   }, [])
 
-  useEffect(() => {
-    // getLeaders()
-    form.setFieldsValue({
-      supUserId: undefined,
-      roleId: undefined,
-    })
-  }, [channelId])
 
   useEffect(() => {
     console.log('datadatadatadatadata :>> ', data);
@@ -54,7 +45,6 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
       form.resetFields()
     }
   
-    
   }, [show])
 
 
@@ -87,13 +77,9 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
   //获取渠道数据
   const getLeaders = async () => {
     const { code, data } = await CommonService.getStructure()
-    console.log('resredatadatadatasresresres :>> ', data)
-
-    // console.log(,'---')
-    setLeader([data])
-
-    console.log('查找结果', findParentNodeArray([data],"1475343300440576000",));
-
+        if (code==="200"&&data) {
+          setLeader([data])
+        }
      }
   //根据渠道id获取 渠道下的人员
   const getUserList = async (channelId) => {
@@ -153,12 +139,12 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
     onClose()
   }
 
+  //渠道改变回调
   const onSelectHandel = (val) => {
     if (!val && structure) {
       const { id } = structure
       getUserList(id)
     }
-    console.log('params :>> ', val)
   }
 
   return (

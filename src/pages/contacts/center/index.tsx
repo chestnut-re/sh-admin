@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { ContactsCenterApi } from '@/service/ContactsCenter'
 import dayjs from 'dayjs'
 import AEDialog from './component/AEDialog'
-import { DialogMode, createChannel } from '@/utils/enum'
+import { DialogMode } from '@/utils/enum'
 import './index.less'
 /**
  * 客服中心-客服列表
