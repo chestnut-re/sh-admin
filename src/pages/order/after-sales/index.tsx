@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 import { Radio, Row, Col, Space, Input, Select, Button, Form, DatePicker, Table } from 'antd'
 import { SelectState, OrderRoute, OrderType, OrderState } from '@/components/filter/formItem'
 import './index.less'
-import { OrderService } from '@/service/OrderService'
+import { AllocatedOrderService } from '@/service/OrderService'
 import ChannelService from '@/service/ChannelService'
 import { HttpCode } from '@/constants/HttpCode'
 import dayjs from 'dayjs'
@@ -43,19 +43,17 @@ const AfterSalesListPage: React.FC = () => {
     form.validateFields().then((query) => {
       const payBeginTime = query.time ? dayjs(query.time[0]).format('YYYY-MM-DD HH:mm:ss') : ''
       const payEndTime = query.time ? dayjs(query.time[1]).format('YYYY-MM-DD HH:mm:ss') : ''
-      // OrderService.list({
-      //   current: pageIndex,
-      //   size: pageSize,
-      //   payBeginTime,
-      //   payEndTime,
-      //   channelId: query.channelId,
-      //   orderType: query.orderType,
-      //   source: query.source,
-      //   state: query.state,
-      // }).then((res) => {
-      //   setData(res.data.records)
-      //   setTotal(res.data.total)
-      // })
+      AllocatedOrderService.afterList({
+        current: pageIndex,
+        size: pageSize,
+        orderBeginTime: payBeginTime,
+        orderEndTime: payEndTime,
+        refundState: query.refundState,
+        auditState: query.auditState,
+      }).then((res) => {
+        setData(res.data.records)
+        setTotal(res.data.total)
+      })
     })
   }
 
