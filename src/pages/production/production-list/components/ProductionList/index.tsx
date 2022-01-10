@@ -87,7 +87,7 @@ const ProductionList: React.FC<any> = observer(({}) => {
               setShowDialog(true)
             }}
           >
-            {record.putawayChannelNum} 0
+            {record.putawayChannelNum}
           </Button>
         )
       },
