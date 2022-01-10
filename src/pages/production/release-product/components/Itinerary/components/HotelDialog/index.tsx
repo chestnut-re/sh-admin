@@ -54,10 +54,15 @@ const HotelDialog: React.FC<Props> = ({ visible, onCancel, activeKey }) => {
         <Row>
           {/* 添加酒店 */}
           <Col span={12}>
-            <Form.Item {...layout} name="hotelName" label="酒店名称" rules={[{ required: true }]}>
+            <Form.Item
+              {...layout}
+              name="hotelName"
+              label="酒店名称"
+              rules={[{ required: true, message: '请输入酒店名称' }]}
+            >
               <Input />
             </Form.Item>
-            <Form.Item {...layout} name="roomType" label="选择房型" rules={[{ required: true }]}>
+            <Form.Item {...layout} name="roomType" label="选择房型" rules={[{ required: true, message: '请选择房型' }]}>
               <Select placeholder="房型" allowClear>
                 <Select.Option value="单人间">单人间</Select.Option>
                 <Select.Option value="大床双人间">大床双人间</Select.Option>

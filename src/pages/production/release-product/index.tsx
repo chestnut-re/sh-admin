@@ -43,8 +43,10 @@ const ReleaseProductPage: React.FC = () => {
   /**下一步 */
   const next = () => {
     if (current === 0) {
-      baseInfoRef.current.next()
-      setCurrent(current + 1)
+      baseInfoRef.current.validate().then((res) => {
+        baseInfoRef.current.next()
+        setCurrent(current + 1)
+      })
     } else if (current == 1) {
       const postData = { ...productionStore.data }
       postData.inDraftBox = 0 // 非草稿箱，待发布
