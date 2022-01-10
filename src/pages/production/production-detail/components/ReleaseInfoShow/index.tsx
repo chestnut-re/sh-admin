@@ -99,7 +99,7 @@ const ReleaseInfoShow: React.FC = () => {
           <div>上架人</div>
           <div>上架时间</div>
           <div className="btn">
-            <button>查看发布审核记录</button>
+            {/* <button>查看发布审核记录</button> */}
           </div>
         </div>
       </div>

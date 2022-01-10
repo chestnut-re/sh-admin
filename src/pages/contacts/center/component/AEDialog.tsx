@@ -26,56 +26,78 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
     getLeaders()
   }, [])
 
-
   useEffect(() => {
-    console.log('datadatadatadatadata :>> ', data);
+    console.log('datadatadatadatadata :>> ', data)
 
-    if (mode!='add') {
-      form.setFieldsValue({
-          userId: data?.userId,
-          channel: findParentNodeArray(leader,"1475343300440576000").map((item)=>item.id),
-          state: data.state?true:false,
-        })
-    }else{
+    if (mode != 'add' && show) {
+      getContactsDateil(data.id)
+    } else {
       form.resetFields()
     }
-  
   }, [show])
 
+  // useEffect(()=>{
+  //   form.resetFields(["userId"])
+  // },[structure])
 
-  //根据子节点查找所有父节点数据
-  const findParentNodeArray = (array, parentSubjectCode)=> {
+  const getContactsDateil = (id) => {
+    ContactsCenterApi.detail({ id })
+      .then((res) => {
+        const { code, data } = res
+        console.log('res 详情数据:>> ', res)
 
-    console.log('array, parentSubjectCode :>> ', array, parentSubjectCode);
-      const parentSubjectStock = [] // 存储父节点
-      let going = true // 是否已找到要查到的节点
-      const findParentNode = function(array, code) {
-        console.log('array, code :>> ', array, code);
-         array.forEach(item => {
-              if(!going) { return }
-              parentSubjectStock.push(item)
-              if(item.id === code) {
-                  going = false
-              } else if(item.children) {
-                  findParentNode(item.children, code)
-              } else {
-                 parentSubjectStock.pop() 
-              }
-             })
-          if(going) parentSubjectStock.pop() 
-      }
-      findParentNode(array, parentSubjectCode)
-      return parentSubjectStock
+        if (code === '200' && data) {
+          const { userId, channelId, state, channelName } = data
+          getUserList(channelId)
+          form.setFieldsValue({
+            userId: userId,
+            channel: findParentNodeArray(leader, channelId).map((item) => item.id),
+            state: state ? true : false,
+          })
+          setStructure({
+            name: channelName,
+            id: channelId,
+          })
+        }
+      })
+      .catch((err) => {
+        console.log('err :>> ', err)
+      })
   }
 
+  //根据子节点查找所有父节点数据
+  const findParentNodeArray = (array, parentSubjectCode) => {
+    console.log('array, parentSubjectCode :>> ', array, parentSubjectCode)
+    const parentSubjectStock = [] // 存储父节点
+    let going = true // 是否已找到要查到的节点
+    const findParentNode = function (array, code) {
+      console.log('array, code :>> ', array, code)
+      array.forEach((item) => {
+        if (!going) {
+          return
+        }
+        parentSubjectStock.push(item as never)
+        if (item.id === code) {
+          going = false
+        } else if (item.children) {
+          findParentNode(item.children, code)
+        } else {
+          parentSubjectStock.pop()
+        }
+      })
+      if (going) parentSubjectStock.pop()
+    }
+    findParentNode(array, parentSubjectCode)
+    return parentSubjectStock
+  }
 
   //获取渠道数据
   const getLeaders = async () => {
     const { code, data } = await CommonService.getStructure()
-        if (code==="200"&&data) {
-          setLeader([data])
-        }
-     }
+    if (code === '200' && data) {
+      setLeader([data])
+    }
+  }
   //根据渠道id获取 渠道下的人员
   const getUserList = async (channelId) => {
     const { code, data } = await ContactsCenterApi.userList({ channelId: channelId })
@@ -84,7 +106,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
       const resList = data.map((item) => {
         return {
           value: item.id,
-          label: item.name,
+          label: item.name ? item.name : '未知',
         }
       })
       setUserLists(resList)
@@ -109,14 +131,13 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
         }
 
         if (mode === 'add') {
-         
           ContactsCenterApi.add(params).then((res) => {
             if (res.code === HttpCode.success) {
               onSuccess()
             }
           })
         } else {
-          ContactsCenterApi.edit({ ...formData, id: data.id }).then((res) => {
+          ContactsCenterApi.edit({ ...params, id: data.id }).then((res) => {
             if (res.code === HttpCode.success) {
               onSuccess()
             }
@@ -143,7 +164,14 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
   }
 
   return (
-    <Modal title={mode==="add"?"添加客服":"修改客服"} forceRender maskClosable={false} visible={show} onOk={_handleUpdate} onCancel={_formClose}>
+    <Modal
+      title={mode === 'add' ? '添加客服' : '修改客服'}
+      forceRender
+      maskClosable={false}
+      visible={show}
+      onOk={_handleUpdate}
+      onCancel={_formClose}
+    >
       <Form
         name="basic"
         labelCol={{ span: 6 }}
@@ -159,13 +187,14 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
             onChange={(_, selectedOptions) => {
               console.log('_,selectedOptions :>> ', _, selectedOptions)
               setStructure(selectedOptions[selectedOptions.length - 1])
+              form.resetFields(['userId'])
             }}
             placeholder="请选择所属渠道"
             onDropdownVisibleChange={onSelectHandel}
             changeOnSelect
           />
         </Form.Item>
-        <Form.Item label="选择客服" name="userId" rules={[{ required: true, message: '请选择' }]}>
+        <Form.Item label="选择客服" name="userId" rules={[{ required: true, message: '请选择客服人员' }]}>
           <Select style={{ width: '100%' }} placeholder="请选择客服人员" options={userLists} />
         </Form.Item>
         <Form.Item name="state" valuePropName="checked" label="是否启用">

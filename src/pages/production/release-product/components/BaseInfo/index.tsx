@@ -21,6 +21,7 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
 
   useImperativeHandle(ref, () => ({
     next,
+    validate,
   }))
 
   useEffect(() => {
@@ -47,6 +48,10 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
       setGoodsLimitUp(true)
     }
   }, [productionStore.data])
+
+  const validate = () => {
+    return form.validateFields()
+  }
 
   const next = () => {
     console.log('BaseInfo next')
@@ -75,7 +80,7 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
           <Form.Item name="goodsTypeTag" label="商品分类">
             <ProductionTag />
           </Form.Item>
-          <Form.Item name="goodsName" label="商品主标题">
+          <Form.Item name="goodsName" label="商品主标题" rules={[{ required: true, message: '请输入商品主标题' }]}>
             <Input />
           </Form.Item>
           <Form.Item name="goodsNickName" label="商品副标题">

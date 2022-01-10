@@ -1,5 +1,5 @@
 /*
- * @Description: 
+ * @Description:
  * @LastEditTime: 2022-01-07 17:13:50
  */
 import { getNanoId } from '@/utils/nanoid'
@@ -24,7 +24,7 @@ class ProductionDetailData {
 
   init(_data) {
     this.data = _data
-    console.log('_data',_data_data_data_data)
+    console.log('_data', _data)
     if (!this.data) return
     if (!this.data.goodsDetail) {
       this.data.goodsDetail = {

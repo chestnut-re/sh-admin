@@ -91,6 +91,14 @@ const UnReleaseProductionListPage: React.FC<any> = observer(({}) => {
           <Button
             onClick={() => {
               console.log(record)
+              history.push(`/production/release-product?id=${record.id}`)
+            }}
+          >
+            编辑
+          </Button>
+          <Button
+            onClick={() => {
+              console.log(record)
               history.push(`/production/production-config-detail?id=${record.id}`)
             }}
           >
