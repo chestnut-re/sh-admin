@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Col, Row, Button, Table, Space, Radio, DatePicker,Modal,message } from 'antd'
+import { Form, Col, Row, Button, Table, Space, Radio, DatePicker, Modal, message } from 'antd'
 import './index.less'
 import { HttpCode } from '@/constants/HttpCode'
 import AEDialog, { DialogMode } from './components/AEDialog'
@@ -55,7 +55,7 @@ const RebateActivity: React.FC = () => {
     {
       title: '返利比例',
       dataIndex: 'scale',
-      render: (text, record, index) => `${record.scale + '%'}`,
+      render: (text, record, index) => `${record.scale ?? 0 + '%'}`,
     },
     {
       title: '返利方式',
@@ -68,8 +68,8 @@ const RebateActivity: React.FC = () => {
     },
     {
       title: '关联商品数',
-      dataIndex: ' taskInventoryGood',
-      render: (text, record, index) => `${(record.taskInventoryGood ?? []).length}`,
+      dataIndex: ' goodsList',
+      render: (text, record, index) => `${(record.goodsList ?? []).length}`,
     },
     {
       title: '关联任务清单量',
@@ -80,6 +80,8 @@ const RebateActivity: React.FC = () => {
       dataIndex: 'state',
       render: (text, record, index) => {
         const stateEnum = {
+          undefined: '全部',
+          null: '全部',
           1: '进行中',
           2: '已结束',
           3: '未开始',
@@ -94,15 +96,16 @@ const RebateActivity: React.FC = () => {
           <Button onClick={() => _editDialog(record)}>查看</Button>
           <Button onClick={() => _editGoodsDialog(record)}>关联商品</Button>
           <Button onClick={() => _editActivityDialog(record)}>关联清单</Button>
-          <Button onClick={() => _editDialog(record)}>数据统计</Button>
-          {/* <Button onClick={() => _editDialog(record)}>删除</Button> */}
-          <Button onClick={() => _delItem(record)} danger>删除</Button>
+          {/* <Button onClick={() => _editDialog(record)}>数据统计</Button> */}
+          <Button onClick={() => _delItem(record)} danger>
+            删除
+          </Button>
         </Space>
       ),
     },
   ]
   const _editGoodsDialog = (record) => {
-    const list = (record.taskInventoryGood ?? []).map((res) => {
+    const list = (record.goodsList ?? []).map((res) => {
       return res.goodsId
     })
     setSelectRecord(record.id)
@@ -117,49 +120,52 @@ const RebateActivity: React.FC = () => {
     setActivityShowDialog(true)
     setActivityRoleList(list)
   }
-  
+
   const goodsOnSuccess = (rowKeys, rowList) => {
-    const goodsList = rowList.map((res) => {
-      return {
-        activityId: '',
-        activityName: '',
-        goodsId: res.id,
-        goodsName: res.goodsName,
-        goodsNickName: res.goodsNickName,
-        goodsNo: res.goodsNo,
-      }
-    })
-    marketService.edit({ id: selectRecord, goodsList: goodsList }).then((res) => {
-      if (res.code === HttpCode.success) {
-        loadData(pageIndex)
-      }
-    })
+    if (rowList.length > 0) {
+      const goodsList = rowList.map((res) => {
+        return {
+          activityId: '',
+          activityName: '',
+          goodsId: res.id,
+          goodsName: res.goodsName,
+          goodsNickName: res.goodsNickName,
+          goodsNo: res.goodsNo,
+        }
+      })
+      marketService.edit({ id: selectRecord, goodsList: goodsList }).then((res) => {
+        if (res.code === HttpCode.success) {
+          loadData(pageIndex)
+        }
+      })
+    }
     setGoodsShowDialog(false)
   }
   const activityOnSuccess = (rowKeys, rowList) => {
-    const List = rowList.map((res) => {
-      return {
-        code: res.code,
-        createChannel: res.createChannel,
-        createChannelName: res.createChannelName,
-        createTime: res.createTime,
-        createUser: res.createUser,
-        createUserName: res.createUserName,
-        id: res.id,
-        isDeleted: res.isDeleted,
-        mathFlag: res.goodsNo,
-        name:res.name,
-        state:res.state
-      }
-    })
-    marketService.edit({ id: selectRecord, paperList: List }).then((res) => {
-      if (res.code === HttpCode.success) {
-        loadData(pageIndex)
-      }
-    })
+    if (rowList.length > 0) {
+      const List = rowList.map((res) => {
+        return {
+          code: res.code,
+          createChannel: res.createChannel,
+          createChannelName: res.createChannelName,
+          createTime: res.createTime,
+          createUser: res.createUser,
+          createUserName: res.createUserName,
+          id: res.id,
+          isDeleted: res.isDeleted,
+          mathFlag: res.goodsNo,
+          name: res.name,
+          state: res.state,
+        }
+      })
+      marketService.edit({ id: selectRecord, paperList: List }).then((res) => {
+        if (res.code === HttpCode.success) {
+          loadData(pageIndex)
+        }
+      })
+    }
     setActivityShowDialog(false)
   }
-  
 
   /**删除 */
   const _delItem = (record) => {
@@ -174,7 +180,7 @@ const RebateActivity: React.FC = () => {
           if (res.code == 200) {
             loadData(pageIndex)
             message.success('删除成功')
-          } 
+          }
         })
       },
     })
@@ -182,11 +188,11 @@ const RebateActivity: React.FC = () => {
 
   /**编辑 */
   const _editDialog = (record) => {
-    setDeShowDialog(!deShowDialog)
-
-    // setDialogMode('edit')
-    setSelectedData(record)
-    // setShowDialog(true)
+    console.log(record,'record')
+    marketService.get(record.id).then(res=>{
+      setDeShowDialog(!deShowDialog)
+      setSelectedData(res?.data)
+  })
   }
 
   /**添加 */
@@ -302,10 +308,10 @@ const RebateActivity: React.FC = () => {
         show={showDialog}
         onClose={_onDialogClose}
       />
-        <DEDialog
+      <DEDialog
         show={deShowDialog}
         onChange={() => setDeShowDialog(false)}
-        data={()=> <RebateBasicInfo data={selectedData}></RebateBasicInfo>}
+        data={() => <RebateBasicInfo data={selectedData}></RebateBasicInfo>}
         // data={() => <ShowRefund data={selectedData} editGo={_editGo}></ShowRefund>}
       ></DEDialog>
 

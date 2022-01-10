@@ -1,6 +1,6 @@
 /*
  * @Description:
- * @LastEditTime: 2022-01-10 13:26:58
+ * @LastEditTime: 2022-01-10 16:33:48
  */
 import axios from '@/request'
 export class marketService {
@@ -16,7 +16,7 @@ export class marketService {
   /**
    * get
    */
-  static get({ id }): Promise<any> {
+  static get(id): Promise<any> {
     return axios.get(`/api/market/rebate/get/${id}`, { params: {} })
   }
 

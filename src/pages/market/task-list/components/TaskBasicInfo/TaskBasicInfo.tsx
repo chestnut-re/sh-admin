@@ -51,7 +51,7 @@ const TaskBasicInfo: FC<Props> = ({ dataValue }) => {
               {data?.mathFlag==1?'随机匹配':'关联地域'}
             </Descriptions.Item>
             <Descriptions.Item span={24} label="分享商品">
-              <Table rowKey="goodsId" bordered dataSource={dataSourceValue} columns={columns} pagination={false} />
+              <Table rowKey="goodsNo" bordered dataSource={dataSourceValue} columns={columns} pagination={false} />
             </Descriptions.Item>
           </Descriptions>
         </Col>

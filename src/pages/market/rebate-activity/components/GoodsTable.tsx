@@ -1,6 +1,6 @@
 /*
  * @Description: 配置商品详情
- * @LastEditTime: 2022-01-07 15:23:03
+ * @LastEditTime: 2022-01-10 14:48:39
  */
 import { Table, Space, Button, Modal, Form, Row, Col } from 'antd'
 import { ActivitiesService } from '@/service/ActivitiesService'
@@ -11,7 +11,7 @@ import React, { useEffect, useState } from 'react'
 interface Props {
   goodsShow: boolean
   goodsIdList: any
-  onSuccess: (any:any,e?:any) => void
+  onSuccess: (any: any, e?: any) => void
   onClose: () => void
 }
 const GoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess, onClose }) => {
@@ -22,9 +22,11 @@ const GoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess, onClos
 
   useEffect(() => {
     setRoleList(JSON.parse(JSON.stringify(goodsIdList)))
+    console.log(roleList, 'roleList')
   }, [goodsIdList])
   useEffect(() => {
     if (goodsShow) {
+      setSelectedRows([])
       getGoodsDetail()
     }
   }, [goodsShow])
@@ -44,7 +46,7 @@ const GoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess, onClos
     },
   ]
   const _handleUpdate = () => {
-    onSuccess(roleList,selectedRows)
+    onSuccess(roleList, selectedRows)
   }
   const _formClose = () => {
     onClose()

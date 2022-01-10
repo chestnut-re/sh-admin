@@ -1,6 +1,6 @@
 /*
  * @Description: 任务清单
- * @LastEditTime: 2022-01-07 18:40:23
+ * @LastEditTime: 2022-01-07 18:08:26
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Modal, message } from 'antd'
@@ -8,7 +8,7 @@ import './index.less'
 import AEBannerDialog, { DialogMode } from './components/AETaskDialog'
 import { taskService } from '@/service/marketService'
 import { HttpCode } from '@/constants/HttpCode'
-import TaskBasicInfo  from './components/TaskBasicInfo/TaskBasicInfo'
+import TaskBasicInfo from './components/TaskBasicInfo/TaskBasicInfo'
 import ImageColumn from '@/components/tableColumn/ImageColumn'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import DEDialog from '@/components/components/Dedialog'
@@ -167,7 +167,11 @@ const TaskListPage: React.FC = () => {
         show={showDialog}
         onClose={_onDialogClose}
       />
-      <DEDialog   onChange={() => setDeShowDialog(false)} show={deShowDialog} data={()=><TaskBasicInfo dataValue={selectedData}></TaskBasicInfo>}></DEDialog>
+      <DEDialog
+        onChange={() => setDeShowDialog(false)}
+        show={deShowDialog}
+        data={() => <TaskBasicInfo dataValue={selectedData}></TaskBasicInfo>}
+      ></DEDialog>
     </div>
   )
 }
