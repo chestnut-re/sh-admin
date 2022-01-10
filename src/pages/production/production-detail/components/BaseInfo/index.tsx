@@ -15,7 +15,7 @@ const BaseInfo: React.FC = () => {
       <h4>1. 基本信息</h4>
       <Row className="my-info">
         <Col className="left" span={18}>
-          <div>商品类型标签: {productionDetailStore.data?.goodsTypeTag}</div>
+          <div>商品分类: {productionDetailStore.data?.goodsTypeTag}</div>
           <div>商品主标题: {productionDetailStore.data?.goodsName}</div>
           <div>商品副标题: {productionDetailStore.data?.goodsNickName}</div>
           <div>退改政策: {productionDetailStore.data?.refundAndChangePolicy}</div>

@@ -38,6 +38,7 @@ const ReleaseInfo: React.FC = () => {
         console.log(formData)
         const postData = { ...formData }
         postData.isDeduction = postData.isDeduction ? 0 : 1
+        postData.isHot = postData.isHot ? 0 : 1
         postData.distPlan = postData.distPlanId.channelPlanList.map((item) => {
           return {
             channelId: item.id,
@@ -79,6 +80,9 @@ const ReleaseInfo: React.FC = () => {
         </Form.Item>
         <Form.Item label="代币抵现" name="isDeduction" rules={[{ required: true }]}>
           <Switch checkedChildren="开启" unCheckedChildren="关闭" />
+        </Form.Item>
+        <Form.Item label="是否热销" name="isHot" rules={[{ required: true }]}>
+          <Switch checkedChildren="是" unCheckedChildren="否" />
         </Form.Item>
         <Form.Item label='最多可抵"现售价"' name="deductionScale" rules={[{ required: true }]}>
           <InputNumber min={0} />

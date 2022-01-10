@@ -39,11 +39,10 @@ const ProductionTag: React.FC<Props> = ({value, onChange}) => {
 
   return (
     <Select
-      mode="multiple"
       allowClear
       value={value}
       style={{ width: '100%' }}
-      placeholder="请选择商品类型标签"
+      placeholder="请选择商品分类"
       onChange={goodsTypeHandleChange}
       onSearch={debounceFetcher}
       notFoundContent={fetching ? <Spin /> : '暂无数据'}
