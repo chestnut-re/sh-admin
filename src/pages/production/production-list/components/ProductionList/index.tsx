@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import React, { useState, useEffect } from 'react'
-import { Button, Col, Form, Row, Space, Table } from 'antd'
+import { Button, Col, Form, message, Row, Space, Table } from 'antd'
 import { InputTemp, ProductionState, TravelMode } from '@/components/filter/formItem'
 import './index.less'
 import { ProductionListService } from '@/service/ProductionListService'
@@ -118,13 +118,40 @@ const ProductionList: React.FC<any> = observer(({}) => {
           >
             查看
           </Button>
+          {/* 未发布可以删除 */}
+          {record?.state !== 2 && (
+            <Button
+              onClick={() => {
+                ProductionService.del(record.id).then((res) => {
+                  if (res.code === '200') {
+                    message.success('删除成功')
+                    loadData(pageIndex)
+                  }
+                })
+              }}
+            >
+              删除
+            </Button>
+          )}
+
+          {record?.state !== 2 && (
+            <Button
+              onClick={() => {
+                console.log(record)
+                history.push(`/production/release-product?id=${record.id}`)
+              }}
+            >
+              编辑
+            </Button>
+          )}
+
           <Button
             onClick={() => {
-              // ProductionService.ban(record.id).then((res) => {
-              //   if (res.code === '200') {
-              //     loadData(pageIndex)
-              //   }
-              // })
+              ProductionService.ban(record.id).then((res) => {
+                if (res.code === '200') {
+                  loadData(pageIndex)
+                }
+              })
             }}
           >
             禁用
