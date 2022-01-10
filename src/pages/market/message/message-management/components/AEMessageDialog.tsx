@@ -2,7 +2,7 @@ import { getRolesAll } from '@/service/role'
 import { Form, Input, Modal, Select, Radio, Checkbox, Switch } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
 import { HttpCode } from '@/constants/HttpCode'
-// import { AdminService } from '@/service/AdminService'
+import { MessageService } from '@/service/MessageService'
 
 export type DialogMode = 'add' | 'edit'
 
@@ -23,66 +23,43 @@ const { TextArea } = Input
  */
 const AEMessageDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) => {
   const [form] = Form.useForm()
-  const [role, setRole] = useState('全部')
-  const [state, setState] = React.useState(1)
+  const [messageType, setMessageType] = React.useState(0)
+  const [selectData, setSelectData] = useState({})
 
-  const roleList = [
-    {
-      key: 1,
-      value: '全部',
-    },
-    {
-      key: 2,
-      value: '超管',
-    },
-    {
-      key: 3,
-      value: '运营管家',
-    },
-    {
-      key: 4,
-      value: '运营商品小二',
-    },
-    {
-      key: 5,
-      value: '运营营销小二',
-    },
-    {
-      key: 6,
-      value: '运营渠道小二',
-    },
-    {
-      key: 7,
-      value: '运营财务小二',
-    },
-    {
-      key: 8,
-      value: '分中心',
-    },
-  ]
+  useEffect(() => {
+    if (data?.id) {
+      getDetails()
+    }
+  }, [show])
 
   useEffect(() => {
     form.setFieldsValue({
-      roleName: data?.roleName,
-      nickName: data?.nickName,
-      mobile: data?.mobile,
-      state: data?.state,
+      pushLink: selectData?.pushLink,
+      pushTitle: selectData?.pushTitle,
+      pushContent: selectData?.pushContent,
+      messageType: selectData?.messageType,
+      pushUser: selectData?.pushUser,
     })
-  }, [show])
+  }, [selectData])
+
+  const getDetails = () => {
+    MessageService.details(data?.id).then((res) => {
+      setSelectData(res.data)
+    })
+  }
 
   /**提交数据 */
   const _handleUpdate = async () => {
     form
       .validateFields()
       .then((formData) => {
-        console.log(formData)
         if (mode === 'add') {
           // create
-          // AdminService.add({ ...formData, roleId: 0 }).then((res) => {
-          //   if (res.code === HttpCode.success) {
-          //     onSuccess()
-          //   }
-          // })
+          MessageService.add({ ...formData }).then((res) => {
+            if (res.code === HttpCode.success) {
+              onSuccess()
+            }
+          })
         } else {
           //edit
           // BannerService.edit({ ...formData }).then((res) => {
@@ -114,41 +91,43 @@ const AEMessageDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClo
         autoComplete="off"
         form={form}
       >
-        <Form.Item label="推送用户" name="roleName">
-          <Select defaultValue={''}>
-            <Option value={''}>全部</Option>
+        <Form.Item label="推送用户" name="pushUser">
+          <Select>
+            <Option value={0}>全部</Option>
+            <Option value={1}>B端用户</Option>
+            <Option value={2}>C端用户</Option>
           </Select>
         </Form.Item>
-        <Form.Item label="消息类型" name="state">
-          <Radio.Group defaultValue={0} onChange={(e) => setState(e.target.value)} value={state}>
+        <Form.Item label="消息类型" name="messageType">
+          <Radio.Group onChange={(e) => setMessageType(e.target.value)} value={messageType}>
             <Radio value={0}>APP推送</Radio>
             <Radio value={1}>站内信</Radio>
             <Radio value={2}>短信</Radio>
           </Radio.Group>
         </Form.Item>
 
-        {state === 0 ? (
+        {messageType === 0 ? (
           <>
-            <Form.Item label="推送链接" name="mobile">
+            <Form.Item label="推送链接" name="pushLink">
               <Input />
             </Form.Item>
           </>
         ) : (
           <></>
         )}
-        {state !== 2 ? (
+        {messageType !== 2 ? (
           <>
-            <Form.Item label="推送标题" name="mobile">
+            <Form.Item label="推送标题" name="pushTitle">
               <Input />
             </Form.Item>
           </>
         ) : (
           <></>
         )}
-        <Form.Item label="推送内容" name="content">
+        <Form.Item label="推送内容" name="pushContent">
           <TextArea rows={4} />
         </Form.Item>
-        {state === 2 ? (
+        {/* {messageType === 2 ? (
           <div>
             发送条数&nbsp;&nbsp;&nbsp;&nbsp;发送条数：
             <span>200</span>
@@ -157,7 +136,7 @@ const AEMessageDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClo
           </div>
         ) : (
           <></>
-        )}
+        )} */}
       </Form>
     </Modal>
   )

@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import './index.less'
-import { Button, Table, Space, Form, Row, Col, Select, DatePicker, Input } from 'antd'
+import { Button, Table, Space, Form, Row, Col, Select, DatePicker, Input, message } from 'antd'
 import AEMessageDialog, { DialogMode } from './components/AEMessageDialog'
+import { MessageService } from '@/service/MessageService'
+import dayjs from 'dayjs'
+import { HttpCode } from '@/constants/HttpCode'
 /**
  * 消息管理
  */
 const MessageListPage: React.FC = () => {
   const [form] = Form.useForm()
-  const { Option } = Select
   const { RangePicker } = DatePicker
-  // const [data, setData] = useState([])
+  const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [total, setTotal] = useState()
@@ -22,18 +24,21 @@ const MessageListPage: React.FC = () => {
   }, [pageIndex])
 
   const loadData = (pageIndex) => {
-    // AdminService.list({ current: pageIndex, pageSize: pageSize }).then((res) => {
-    //   console.log(res)
-    //   setData(res.data.records)
-    //   setTotal(res.data.total)
-    // })
+    form.validateFields().then((query) => {
+      const beginTime = query.time ? dayjs(query.time[0]).format('YYYY-MM-DD HH:mm:ss') : ''
+      const endTime = query.time ? dayjs(query.time[1]).format('YYYY-MM-DD HH:mm:ss') : ''
+      MessageService.list({
+        current: pageIndex,
+        size: pageSize,
+        title: query.title,
+        createTimeStart: beginTime,
+        createTimeEnd: endTime,
+      }).then((res) => {
+        setData(res.data.records)
+        setTotal(res.data.total)
+      })
+    })
   }
-
-  const data = [
-    {
-      nickName: '1',
-    },
-  ]
 
   const columns = [
     {
@@ -42,31 +47,40 @@ const MessageListPage: React.FC = () => {
     },
     {
       title: '消息标题',
-      dataIndex: 'nickName',
+      dataIndex: 'pushTitle',
     },
     {
       title: '发布内容',
-      dataIndex: 'mobile',
+      dataIndex: 'pushContent',
     },
 
     {
       title: '推送方式',
-      dataIndex: 'state',
+      dataIndex: 'messageType',
+      render: (text: any, record: any) => {
+        if (record?.messageType == '0') {
+          return `APP推送`
+        } else if (record?.messageType == '1') {
+          return `站内信`
+        } else if (record?.messageType == '2') {
+          return `短信`
+        }
+      },
     },
     {
       title: '推送时间',
-      dataIndex: 'roleName',
+      dataIndex: 'createTime',
     },
     {
       title: '发布人员',
-      dataIndex: 'roleName',
+      dataIndex: 'createUser',
     },
     {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
           <Button onClick={() => _editDialog(record)}>查看</Button>
-          <Button>删除</Button>
+          <Button onClick={() => _delete(record)}>删除</Button>
         </Space>
       ),
     },
@@ -99,6 +113,21 @@ const MessageListPage: React.FC = () => {
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo)
   }
+
+  const _delete = (record) => {
+    MessageService.del(record.id).then((res) => {
+      if (res.code === HttpCode.success) {
+        message.success('删除成功')
+        loadData(pageIndex)
+      }
+    })
+  }
+
+  const _reset = () => {
+    form.resetFields()
+    loadData(pageIndex)
+  }
+
   return (
     <div className="message__root">
       <div className="message-header">
@@ -114,7 +143,7 @@ const MessageListPage: React.FC = () => {
         >
           <Row gutter={[5, 0]} style={{ paddingLeft: '40px' }}>
             <Col span={4}>
-              <Form.Item>
+              <Form.Item name="title">
                 <Input placeholder="请输入消息标题" />
               </Form.Item>
             </Col>
@@ -131,7 +160,9 @@ const MessageListPage: React.FC = () => {
                 <Button type="primary" htmlType="submit">
                   查询
                 </Button>
-                <Button htmlType="button">重置</Button>
+                <Button htmlType="button" onClick={_reset}>
+                  重置
+                </Button>
                 <Button htmlType="button" type="primary" onClick={_addMessage}>
                   发布消息
                 </Button>

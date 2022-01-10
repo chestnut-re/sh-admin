@@ -44,7 +44,7 @@ const UnReleaseProductionListPage: React.FC<any> = observer(({}) => {
       width: 150,
     },
     {
-      title: '商品类型标签',
+      title: '商品分类',
       dataIndex: 'goodsTypeTag',
       width: 100,
     },
