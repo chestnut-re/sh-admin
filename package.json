@@ -73,6 +73,7 @@
     "axios": "^0.21.1",
     "dayjs": "^1.10.7",
     "draft-js": "^0.11.7",
+    "easemob-websdk": "^4.0.1",
     "js-cookie": "^3.0.1",
     "json-bigint": "^1.0.0",
     "lodash": "^4.17.21",
