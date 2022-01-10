@@ -62,8 +62,8 @@ const ContactsCenter: React.FC = () => {
       const [Start, End] = Times
       bodyData = {
         ...bodyData,
-        createTimeStart: dayjs(Start).format('YYYY-MM-DD'),
-        createTimeEnd: dayjs(End).format('YYYY-MM-DD'),
+        createTimeStart: dayjs(Start).unix()* 1000,
+        createTimeEnd: dayjs(End).unix()* 1000,
       }
     }
     ContactsCenterApi.list(bodyData).then((res) => {

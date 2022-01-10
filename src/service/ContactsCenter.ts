@@ -38,4 +38,12 @@ export class ContactsCenterApi {
    static delete(data): Promise<any> {
     return axios.delete(`/api/users/admin/cusService/delete/${data.id}`)
   }
+
+  /**
+   * 获取客服详情
+   */
+   static detail(params): Promise<any> {
+     console.log(`id`, params)
+    return axios.get(`/api/users/admin/cusService/get/${params.id}`)
+  }
 }
