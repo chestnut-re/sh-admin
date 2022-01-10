@@ -1,39 +1,29 @@
-import { Space, Table, Tag, Form, Row, Col, Button, Checkbox } from 'antd'
+import { Space, Table, Tag, Form, Row, Col, Button, Checkbox, message } from 'antd'
 import React, { useEffect, useState } from 'react'
-import AEVersionDialog, { DialogMode } from './components/AEVersionDialog'
-import { VersionService } from '@/service/VersionService'
+import AEVersionDialog, { DialogMode, DialogType } from './components/AEVersionDialog'
+import { MessageService } from '@/service/MessageService'
+import { HttpCode } from '@/constants/HttpCode'
 
 /**
- * 系统中心-版本管理-C端版本管理
+ * 系统中心-版本管理-B端消息模版
  */
 
-const TemplateCPage: React.FC = () => {
-  const [form] = Form.useForm()
-  // const [data, setData] = useState([])
-  const [pageIndex, setPageIndex] = useState(1)
-  const [pageSize, setPageSize] = useState(10)
-  const [total, setTotal] = useState()
-
+const TemplateBPage: React.FC = () => {
+  const [data, setData] = useState([])
   const [showDialog, setShowDialog] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
-  const [dialogMode, setDialogMode] = useState<DialogMode>('add')
+  const [dialogMode, setDialogMode] = useState<DialogMode>('get')
+  const [dialogType, setDialogType] = useState<DialogType>('0')
 
   useEffect(() => {
-    loadData(pageIndex)
-  }, [pageIndex])
+    loadData()
+  }, [])
 
-  const loadData = (pageIndex) => {
-    // VersionService.list({ searchCount: pageIndex, size: pageSize, platform: 2 }).then((res) => {
-    //   setData(res.data.records)
-    //   setTotal(res.data.total)
-    // })
+  const loadData = () => {
+    MessageService.templateList({ pushApp: 1 }).then((res) => {
+      setData(res.data)
+    })
   }
-
-  const data = [
-    {
-      clientVersionNo: '订单创建时',
-    },
-  ]
 
   const columns = [
     {
@@ -42,96 +32,188 @@ const TemplateCPage: React.FC = () => {
     },
     {
       title: '消息类型',
-      dataIndex: 'clientVersionNo',
+      dataIndex: 'messageType',
+      render: (text: any, record: any) => {
+        if (record?.messageType == '20') {
+          return `订单创建时`
+        } else if (record?.messageType == '21') {
+          return `订单付款后`
+        } else if (record?.messageType == '22') {
+          return `订单完成`
+        } else if (record?.messageType == '23') {
+          return `订单退款通知`
+        } else if (record?.messageType == '24') {
+          return `提现审核通知`
+        } else if (record?.messageType == '25') {
+          return `建团`
+        } else if (record?.messageType == '26') {
+          return `发团通知`
+        } else if (record?.messageType == '27') {
+          return `修改出发时间`
+        } else if (record?.messageType == '28') {
+          return `行程结束`
+        } else if (record?.messageType == '29') {
+          return `人员变动通知（进团/出团）`
+        } else if (record?.messageType == '210') {
+          return `沟通权限申请通知`
+        } else if (record?.messageType == '211') {
+          return `区域库审核通知`
+        }
+      },
     },
     {
       title: '站内消息',
-      dataIndex: 'fileUrl',
+      dataIndex: 'isPushMail',
       render: (text: any, record: any) => {
         return (
           <Space>
-            <Checkbox>是否发送</Checkbox>
-            <Button>编辑内容</Button>
-            <Button>查看内容</Button>
+            <Checkbox
+              onChange={(e) => _checkedMail(record, e)}
+              defaultChecked={record.isPushMail == '1' ? true : false}
+            >
+              是否发送
+            </Checkbox>
+            <Button onClick={() => _editDialogMail(record)}>编辑内容</Button>
+            <Button onClick={() => _getDialogMail(record)}>查看内容</Button>
           </Space>
         )
       },
     },
     {
       title: '手机短信',
-      dataIndex: 'versionContent',
+      dataIndex: 'isPushShortMsg',
       render: (text: any, record: any) => {
         return (
           <Space>
-            <Checkbox>是否发送</Checkbox>
-            <Button>编辑内容</Button>
-            <Button>查看内容</Button>
+            <Checkbox
+              onChange={(e) => _checkedMsg(record, e)}
+              defaultChecked={record.isPushShortMsg == '1' ? true : false}
+            >
+              是否发送
+            </Checkbox>
+            <Button onClick={() => _editDialogMsg(record)}>编辑内容</Button>
+            <Button onClick={() => _getDialogMsg(record)}>查看内容</Button>
           </Space>
         )
       },
     },
     {
       title: 'APP消息推送',
-      dataIndex: 'remark',
+      dataIndex: 'isPushApp',
       render: (text: any, record: any) => {
         return (
           <Space>
-            <Checkbox>是否发送</Checkbox>
-            <Button>编辑内容</Button>
-            <Button>查看内容</Button>
+            <Checkbox defaultChecked={record.isPushApp == '1' ? true : false} onChange={(e) => _checkedApp(record, e)}>
+              是否发送
+            </Checkbox>
+            <Button onClick={() => _editDialogApp(record)}>编辑内容</Button>
+            <Button onClick={() => _getDialogApp(record)}>查看内容</Button>
           </Space>
         )
       },
     },
   ]
 
-  /**编辑 */
-  const _editDialog = (record) => {
+  const _checkedApp = (record, e) => {
+    MessageService.templateOn({
+      messageType: record.messageType,
+      pushApp: 1,
+      isPushApp: e.target.checked == true ? '1' : '0',
+    }).then((res) => {
+      if (res.code === HttpCode.success) {
+        message.success('修改成功')
+        loadData()
+      }
+    })
+  }
+  const _checkedMsg = (record, e) => {
+    MessageService.templateOn({
+      messageType: record.messageType,
+      pushApp: 1,
+      isPushShortMsg: e.target.checked == true ? '1' : '0',
+    }).then((res) => {
+      if (res.code === HttpCode.success) {
+        message.success('修改成功')
+        loadData()
+      }
+    })
+  }
+  const _checkedMail = (record, e) => {
+    MessageService.templateOn({
+      messageType: record.messageType,
+      pushApp: 1,
+      isPushMail: e.target.checked == true ? '1' : '0',
+    }).then((res) => {
+      if (res.code === HttpCode.success) {
+        message.success('修改成功')
+        loadData()
+      }
+    })
+  }
+
+  /**编辑App */
+  const _editDialogApp = (record) => {
     setDialogMode('edit')
+    setDialogType('2')
+    setSelectedData(record)
+    setShowDialog(true)
+    console.log(record, 'rrr')
+  }
+  /**编辑短信 */
+  const _editDialogMsg = (record) => {
+    setDialogMode('edit')
+    setDialogType('1')
+    setSelectedData(record)
+    setShowDialog(true)
+  }
+  /**编辑站内信 */
+  const _editDialogMail = (record) => {
+    setDialogMode('edit')
+    setDialogType('0')
     setSelectedData(record)
     setShowDialog(true)
   }
 
-  const onFinish = (values: any) => {
+  /**查看站内信 */
+  const _getDialogMail = (record) => {
+    setDialogMode('get')
+    setDialogType('0')
+    setSelectedData(record)
     setShowDialog(true)
-    setDialogMode('add')
   }
 
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo)
+  /**查看短信 */
+  const _getDialogMsg = (record) => {
+    setDialogMode('get')
+    setDialogType('1')
+    setSelectedData(record)
+    setShowDialog(true)
+  }
+
+  /**查看app */
+  const _getDialogApp = (record) => {
+    setDialogMode('get')
+    setDialogType('2')
+    setSelectedData(record)
+    setShowDialog(true)
   }
 
   const _onDialogSuccess = () => {
     setSelectedData(null)
     setShowDialog(false)
-    loadData(pageIndex)
   }
 
   const _onDialogClose = () => {
     setSelectedData(null)
     setShowDialog(false)
   }
-  const _addVersion = () => {
-    setDialogMode('add')
-    setShowDialog(true)
-  }
   return (
     <div className="page-root">
-      <Table
-        rowKey="id"
-        columns={columns}
-        scroll={{ x: 'max-content' }}
-        dataSource={[...data]}
-        pagination={{
-          onChange: setPageIndex,
-          showQuickJumper: true,
-          pageSize: pageSize,
-          total: total,
-        }}
-      />
+      <Table rowKey="id" columns={columns} scroll={{ x: 'max-content' }} dataSource={[...data]} />
       <AEVersionDialog
         data={selectedData}
         mode={dialogMode}
+        type={dialogType}
         onSuccess={_onDialogSuccess}
         show={showDialog}
         onClose={_onDialogClose}
@@ -140,4 +222,4 @@ const TemplateCPage: React.FC = () => {
   )
 }
 
-export default TemplateCPage
+export default TemplateBPage
