@@ -31,6 +31,7 @@ const HotelDialog: React.FC<Props> = ({ visible, onCancel, activeKey }) => {
   }
 
   const handleCancel = () => {
+    form.resetFields()
     onCancel()
   }
 
