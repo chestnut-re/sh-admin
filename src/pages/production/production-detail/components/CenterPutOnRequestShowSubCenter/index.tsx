@@ -46,12 +46,12 @@ const CenterPutOnRequestShowSubCenter: React.FC = () => {
       <div>{JSON.stringify(data)}</div>
       <div className="info">
         <div className="one-info">
-          <div className="canal">申请渠道 </div>
+          <div className="canal">申请渠道 {data?.channelName} </div>
           <div>责任区域 </div>
         </div>
-        <div>申请人 </div>
-        <div>申请时间 </div>
-        <div>分佣方案 </div>
+        <div>申请人 {data?.channelPerson}</div>
+        <div>申请时间 {data?.createTime}</div>
+        <div>分佣方案 {data?.distPlanName} </div>
         <div>
           表格
           <Table dataSource={dataList} bordered>

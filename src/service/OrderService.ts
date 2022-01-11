@@ -1,6 +1,6 @@
 /*
  * @Description:
- * @LastEditTime: 2022-01-07 11:54:40
+ * @LastEditTime: 2022-01-10 18:00:03
  */
 import axios from '@/request'
 
@@ -58,7 +58,14 @@ export class ConfigRefundService {
       params: { data, ...{ dictCode: 'HD1' } },
     })
   }
-
+  static getSet(data): Promise<any> {
+    return axios.get('/api/platform/dictionary/getDictionaryItemIPage', {
+      params: { data, ...{ dictCode: 'HD3' } },
+    })
+  }
+  static orderSettings(data): Promise<any> {
+    return axios.post(`/api/platform/dictionary/orderSettings`, data)
+  }
   /**
    * 删除
    */

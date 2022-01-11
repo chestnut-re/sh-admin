@@ -9,7 +9,7 @@ import './index.less'
  */
 const BaseInfo: React.FC = () => {
   const { productionDetailStore } = useStore()
-
+  // document.getElementById('policy').innerHTML = productionDetailStore.data?.refundAndChangePolicy
   return (
     <div className="BaseInfo__root">
       <h4>1. 基本信息</h4>
@@ -18,7 +18,7 @@ const BaseInfo: React.FC = () => {
           <div>商品分类: {productionDetailStore.data?.goodsTypeTag}</div>
           <div>商品主标题: {productionDetailStore.data?.goodsName}</div>
           <div>商品副标题: {productionDetailStore.data?.goodsNickName}</div>
-          <div>退改政策: {productionDetailStore.data?.refundAndChangePolicy}</div>
+          <div id="policy">退改政策: {productionDetailStore.data?.refundAndChangePolicy}</div>
         </Col>
         <Col className="right" span={6}>
           <div>创建渠道: {productionDetailStore.data?.createChannelName}</div>

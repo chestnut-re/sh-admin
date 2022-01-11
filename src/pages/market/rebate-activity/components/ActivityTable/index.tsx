@@ -1,6 +1,6 @@
 /*
  * @Description: 配置关联清单
- * @LastEditTime: 2022-01-07 15:29:41
+ * @LastEditTime: 2022-01-10 14:49:52
  */
 import { Table, Space, Button, Modal, Form, Row, Col } from 'antd'
 import { taskService } from '@/service/marketService'
@@ -22,6 +22,7 @@ const ActivityTable: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess, onC
 
   useEffect(() => {
     setRoleList(JSON.parse(JSON.stringify(goodsIdList)))
+    setSelectedRows([])
   }, [goodsIdList])
   useEffect(() => {
     if (goodsShow) {

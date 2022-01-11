@@ -1,16 +1,19 @@
 /*
  * @Description:查看
- * @LastEditTime: 2022-01-10 10:46:07
+ * @LastEditTime: 2022-01-10 16:40:26
  */
 import React, { useState, FC, useEffect } from 'react'
 import { Drawer, Button, Descriptions, Table, Row, Col } from 'antd'
 import './index.less'
-
-const BasicInfo: FC = ({ data }) => {
-  const dataSource = [
-
-  ]
-
+interface props {
+  data: any
+}
+const BasicInfo: FC<props> = ({ data }) => {
+  const [dataSource,setDataSource] = useState([])
+  useEffect(() => {
+    // setDataSource(data?.)
+    console.log(data, '-')
+  }, [data])
   const columns = [
     {
       title: '返利任务方式',
@@ -40,27 +43,27 @@ const BasicInfo: FC = ({ data }) => {
         <Col span={17} className="basic-l">
           <Descriptions>
             <Descriptions.Item span={24} label="活动名称">
-              {data?.activityName}
+              {data?.name}
             </Descriptions.Item>
             <Descriptions.Item span={24} label="活动时间">
-              {data?.startTime}-{data?.endTime}
+              {data?.beginTime}-{data?.endTime}
             </Descriptions.Item>
             <Descriptions.Item span={24} label="返利比例">
               {data?.scale}
             </Descriptions.Item>
             <Descriptions.Item span={24} label="分享文案">
-              {data?.description}
+              {data?.shareAmount}
             </Descriptions.Item>
             <Descriptions.Item span={24} label="返利配置">
               <Table bordered dataSource={dataSource} columns={columns} pagination={false} />
             </Descriptions.Item>
           </Descriptions>
         </Col>
-        <Col span={6} className="basic-r">
+        <Col span={7} className="basic-r">
           <Descriptions>
             {/* <Descriptions.Item span={24} label="创建渠道"></Descriptions.Item> */}
             <Descriptions.Item span={24} label="创建人">
-              {data?.createUser}
+              {data?.createUserName}
             </Descriptions.Item>
             <Descriptions.Item span={24} label="创建时间">
               {data?.createTime}
