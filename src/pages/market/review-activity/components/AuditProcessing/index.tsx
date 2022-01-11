@@ -1,27 +1,27 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description:查看
- * @LastEditTime: 2022-01-10 14:33:57
+ * @LastEditTime: 2022-01-11 11:56:55
  */
 import React, { useState, FC, useEffect } from 'react'
-import { Drawer, Button, Descriptions, Table, Row, Col, Radio, Form } from 'antd'
+import { Drawer, Button, Input, Radio, Form } from 'antd'
 import { taskService } from '@/service/marketService'
 import './index.less'
 interface Props {
-  dataValue: any
+  data: any
 }
-const AuditProcessing: FC<Props> = ({ dataValue }) => {
+const AuditProcessing: FC<Props> = ({ data }) => {
   const [form] = Form.useForm()
-  const [data, setData] = useState([])
+  const [dataList, setData] = useState([])
   const [dataSourceValue, setDataSource] = useState([])
   useEffect(() => {
-    if (!!dataValue) {
-      taskService.get(dataValue?.id).then((res) => {
-        setData(res?.data)
-        setDataSource(res?.data?.taskInventoryGood)
-      })
+    if (!!data) {
+      // taskService.get(JSON.parse(data)?.id).then((res) => {
+      //   setData(res?.data)
+      //   setDataSource(res?.data?.taskInventoryGood)
+      // })
     }
-  }, [dataValue])
+  }, [data])
   const goShowRecord = () => {
     console.log('---')
   }
@@ -59,18 +59,10 @@ const AuditProcessing: FC<Props> = ({ dataValue }) => {
       </Row> */}
 
       {/* className="basic-l" */}
-      <Form
-        name="basic"
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 16 }}
-        initialValues={{ remember: true }}
-        onFinish={onFinish}
-        autoComplete="off"
-        form={form}
-      >
+      <Form name="basic" onFinish={onFinish} form={form}>
         <Form.Item
-          label="Username"
-          name="username"
+          label="auditResult"
+          name="审核结果"
           rules={[{ required: true, message: 'Please input your username!' }]}
         >
           <Radio.Group>
@@ -78,6 +70,9 @@ const AuditProcessing: FC<Props> = ({ dataValue }) => {
             <Radio.Button value="b">驳回</Radio.Button>
           </Radio.Group>
         </Form.Item>
+        <Form.Item name='驳回原因' label="refuseReason">
+        <Input.TextArea />
+      </Form.Item>
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
           <Button type="primary" htmlType="submit">
             提交上线

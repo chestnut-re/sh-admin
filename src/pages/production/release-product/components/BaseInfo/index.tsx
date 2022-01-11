@@ -16,7 +16,7 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
   const { productionStore } = useStore()
   const [form] = Form.useForm()
 
-  const [goodsLimit, setGoodsLimit] = useState(false)
+  const [goodsLimit, setGoodsLimit] = useState(true)
   const [goodsLimitUp, setGoodsLimitUp] = useState(false)
 
   useEffect(() => {
@@ -86,7 +86,20 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
           <Form.Item name="goodsTypeTag" label="商品分类">
             <ProductionTag />
           </Form.Item>
-          <Form.Item name="goodsName" label="商品主标题" rules={[{ required: true, message: '请输入商品主标题' }]}>
+          <Form.Item
+            name="goodsName"
+            label="商品主标题"
+            rules={[
+              // { required: true, message: '请输入商品主标题' },
+              {
+                validator: async (_, names) => {
+                  if (!names.trim()) {
+                    return Promise.reject(new Error('请输入商品主标题'))
+                  }
+                },
+              },
+            ]}
+          >
             <Input maxLength={20} />
           </Form.Item>
           <Form.Item name="goodsNickName" label="商品副标题">
@@ -100,8 +113,8 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
           </Form.Item>
 
           <Row>
-            <Col span={10}>
-              <Form.Item label="商品限购">
+            <Col span={8}>
+              <Form.Item label="商品限购" labelCol={{ span: 8 }} wrapperCol={{ span: 8 }}>
                 <Switch
                   checked={goodsLimit}
                   checkedChildren="开启"
@@ -116,12 +129,23 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
               <>
                 <Col span={6}>
                   <Form.Item name={['purchaseConfig', 'purchaseDay']} label="">
-                    <InputNumber addonAfter="天" min={0} />
+                    <InputNumber
+                      addonAfter="天"
+                      min={0}
+                      step={1}
+                      defaultValue={180}
+                      formatter={(value: any) => {
+                        if (value) {
+                          return Math.floor(value)
+                        }
+                        return value
+                      }}
+                    />
                   </Form.Item>
                 </Col>
-                <Col span={8}>
+                <Col span={10}>
                   <Form.Item name={['purchaseConfig', 'purchaseNum']} label="">
-                    <InputNumber addonBefore="限购" addonAfter="份" min={0} defaultValue={180} />
+                    <InputNumber addonBefore="限购" addonAfter="份" min={0} step={1} />
                   </Form.Item>
                 </Col>
               </>
@@ -130,8 +154,8 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
 
           {goodsLimit && (
             <Row>
-              <Col span={10}>
-                <Form.Item label="限购提升">
+              <Col span={8}>
+                <Form.Item label="限购提升" labelCol={{ span: 8 }} wrapperCol={{ span: 8 }}>
                   <Switch
                     checked={goodsLimitUp}
                     checkedChildren="开启"
@@ -154,7 +178,7 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
                       </Select>
                     </Form.Item>
                   </Col>
-                  <Col span={8}>
+                  <Col span={10}>
                     <Form.Item name={['purchaseConfig', 'addNum']} label="">
                       <InputNumber addonBefore="限购加" addonAfter="份" min={0} />
                     </Form.Item>

@@ -1,6 +1,6 @@
 /*
  * @Description:查看
- * @LastEditTime: 2022-01-10 16:40:26
+ * @LastEditTime: 2022-01-11 11:39:29
  */
 import React, { useState, FC, useEffect } from 'react'
 import { Drawer, Button, Descriptions, Table, Row, Col } from 'antd'
@@ -11,7 +11,6 @@ interface props {
 const BasicInfo: FC<props> = ({ data }) => {
   const [dataSource,setDataSource] = useState([])
   useEffect(() => {
-    // setDataSource(data?.)
     console.log(data, '-')
   }, [data])
   const columns = [

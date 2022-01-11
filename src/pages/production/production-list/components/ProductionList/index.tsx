@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import React, { useState, useEffect } from 'react'
-import { Button, Col, Form, message, Row, Space, Table } from 'antd'
+import { Button, Col, Form, message, Modal, Row, Space, Table } from 'antd'
 import { InputTemp, ProductionState, TravelMode } from '@/components/filter/formItem'
 import './index.less'
 import { ProductionListService } from '@/service/ProductionListService'
@@ -126,11 +126,19 @@ const ProductionList: React.FC<any> = observer(({}) => {
           {record?.state !== 2 && (
             <Button
               onClick={() => {
-                ProductionService.del(record.id).then((res) => {
-                  if (res.code === '200') {
-                    message.success('删除成功')
-                    loadData(pageIndex)
-                  }
+                Modal.confirm({
+                  title: '提示',
+                  content: '确定要删除当前',
+                  okText: '确认',
+                  cancelText: '取消',
+                  onOk: () => {
+                    ProductionService.del(record.id).then((res) => {
+                      if (res.code === '200') {
+                        message.success('删除成功')
+                        loadData(pageIndex)
+                      }
+                    })
+                  },
                 })
               }}
             >

@@ -71,18 +71,32 @@ const ReleaseProductPage: React.FC = () => {
    */
   const onDraft = () => {
     if (current === 0) {
-      baseInfoRef.current.next()
+      baseInfoRef.current.validate().then((res) => {
+        baseInfoRef.current.next()
+        const postData = { ...productionStore.data }
+        postData.inDraftBox = 1 // 草稿箱
+        ProductionService.save(postData).then((res) => {
+          if (res.code === '200') {
+            message.success('成功')
+            history.goBack()
+          } else {
+            message.error(res.msg)
+          }
+        })
+      })
+      return
+    } else {
+      const postData = { ...productionStore.data }
+      postData.inDraftBox = 1 // 草稿箱
+      ProductionService.save(postData).then((res) => {
+        if (res.code === '200') {
+          message.success('成功')
+          history.goBack()
+        } else {
+          message.error(res.msg)
+        }
+      })
     }
-    const postData = { ...productionStore.data }
-    postData.inDraftBox = 1 // 草稿箱
-    ProductionService.save(postData).then((res) => {
-      if (res.code === '200') {
-        message.success('成功')
-        history.goBack()
-      } else {
-        message.error(res.msg)
-      }
-    })
   }
 
   return (
