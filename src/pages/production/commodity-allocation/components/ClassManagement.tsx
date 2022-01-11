@@ -14,7 +14,7 @@ const ClassManagement: React.FC = () => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [addClassName, setAddClassName] = useState('')
   const [parentList, setParentList] = useState([])
-  const [parent, setParent] = useState('')
+  const [parent, setParent] = useState('0')
 
   const handleOk = () => {
     AllocationService.edit([{ operationType: 1, sortName: addClassName, parentId: parent }]).then((res) => {
