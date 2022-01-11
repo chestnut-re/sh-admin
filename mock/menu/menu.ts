@@ -367,6 +367,15 @@ export default [
                   path: '/finance/financial-management',
                   hide: false,
                 },
+                {
+                  name: '提现审核',
+                  id: md5('/finance/withdrawal-review'),
+                  type: 'menu',
+                  icon: '',
+                  componentPath: '/finance/withdrawal-review',
+                  path: '/finance/withdrawal-review',
+                  hide: false,
+                },
               ],
             },
             {
