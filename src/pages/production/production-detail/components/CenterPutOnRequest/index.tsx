@@ -61,7 +61,7 @@ const CenterPutOnRequest: React.FC = () => {
         <Form.Item label="分佣方案" name="distPlanId" rules={[{ required: true }]}>
           <Commission onChange={_onCommissionChange} />
         </Form.Item>
-        <div>{JSON.stringify(commission)}</div>
+        {/* <div>{JSON.stringify(commission)}</div> */}
 
         <Button onClick={_submit}>提交申请</Button>
       </Form>
