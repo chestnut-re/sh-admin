@@ -129,10 +129,6 @@ const AccountPage: React.FC = () => {
               <Form name="basic" initialValues={{ remember: true }} onFinish={onFinish} form={form}>
                 <Row gutter={[10, 0]}>
                   <Col span={1} className="table-from-label"></Col>
-                  <Col span={5}>
-                    <InputTemp name="name" placeholder="请输入人员名称" />
-                  </Col>
-
                   <Col span={1} className="table-from-label">
                     渠道
                   </Col>
@@ -149,7 +145,9 @@ const AccountPage: React.FC = () => {
                       </Select>
                     </Form.Item>
                   </Col>
-
+                  <Col span={5}>
+                    <InputTemp name="name" placeholder="请输入人员名称" />
+                  </Col>
                   <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
                     <Space>
                       <Button type="primary" htmlType="submit">

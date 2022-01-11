@@ -1,29 +1,29 @@
 /*
  * @Description: 关联商品信息
- * @LastEditTime: 2022-01-10 13:35:15
+ * @LastEditTime: 2022-01-11 11:45:15
  */
 import { Table, Space, Button, Modal, Form, Row, Col, Select } from 'antd'
-import { ActivitiesService } from '@/service/ActivitiesService'
+import { rebateService } from '@/service/marketService'
 import { InputTemp } from '@/components/filter/formItem'
 import React, { useEffect, useState } from 'react'
 
 interface Props {
-  id: any
+  data: any
 }
 
-const AssociatedGoods: React.FC<Props> = ({ id }) => {
+const AssociatedGoods: React.FC<Props> = ({ data }) => {
   const [form] = Form.useForm()
-  const [data, setData] = useState([])
+  const [dataList, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
   const [pageSize, setPageSize] = useState(20)
   const [total, setTotal] = useState()
   useEffect(() => {
     getGoodsDetail()
-  }, [pageIndex, id])
+  }, [pageIndex, data])
 
   const getGoodsDetail = async () => {
     const params = form.getFieldsValue()
-    const res = await ActivitiesService.activityGoodsPage({ ...params })
+    const res = await rebateService.rebateGoodsPage({ ...params })
     setData(res?.data.records)
     setTotal(res.data?.total)
   }
@@ -94,7 +94,7 @@ const AssociatedGoods: React.FC<Props> = ({ id }) => {
         rowKey="userId"
         columns={columns}
         scroll={{ x: 'max-content' }}
-        dataSource={data}
+        dataSource={dataList}
         pagination={{
           onChange: onPaginationChange,
           showSizeChanger: false,

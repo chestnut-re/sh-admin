@@ -162,7 +162,7 @@ const AfterSalesListPage: React.FC = () => {
       <div className="sales-header">
         <span className="header-title">售后管理</span>
       </div>
-      <div className="sales-tabs">
+      {/* <div className="sales-tabs">
         <Radio.Group
           options={options}
           onChange={(e) => {
@@ -172,7 +172,7 @@ const AfterSalesListPage: React.FC = () => {
           optionType="button"
           buttonStyle="solid"
         />
-      </div>
+      </div> */}
       <div className="order-form">
         <Form
           name="basic"

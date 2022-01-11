@@ -1,6 +1,6 @@
 /*
  * @Description:
- * @LastEditTime: 2022-01-10 16:33:48
+ * @LastEditTime: 2022-01-11 11:43:35
  */
 import axios from '@/request'
 export class marketService {
@@ -40,13 +40,21 @@ export class marketService {
   static edit(data): Promise<any> {
     return axios.put(`/api/market/rebate/update`, data)
   }
+  /**
+   * 
+   */
+  static rebateAuditApply(data): Promise<any> {
+    return axios.post(`/api/market/activity/rebateAuditApply`, data)
+  }
+
+  
 }
 export class rebateService {
   /**
    * 列表
    */
   static list(data): Promise<any> {
-    return axios.get('/api/market/rebate/rebateAuditPage', {
+    return axios.get('/api/market/activity/applyAuditPage', {
       params: data,
     })
   }
@@ -70,6 +78,13 @@ export class rebateService {
   static rebateAudit(data): Promise<any> {
     return axios.post(`/api/market/rebate/rebateAudit`, data)
   }
+  static rebateGoodsPage(data): Promise<any> {
+    return axios.get(`/api/market/rebate/rebateGoodsPage`, {
+      params: data,
+    })
+  }
+
+
 }
 
 export class taskService {

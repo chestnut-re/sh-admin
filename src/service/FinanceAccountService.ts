@@ -63,3 +63,29 @@ export class FinanceAccountService {
     return axios.put(`/api/operation/banner/update`, data)
   }
 }
+export class WithdrawalReviewService {
+  /**
+   * 渠道提现列表
+   */
+  static channelList(data): Promise<any> {
+    return axios.get('/api/wallet/a/bizCashPage', {
+      params: data,
+    })
+  }
+
+  /**
+   * 用户提现列表
+   */
+  static userList(data): Promise<any> {
+    return axios.get('/api/wallet/a/custCashPage', {
+      params: data,
+    })
+  }
+
+  /**
+   * 提现审核
+   */
+  static edit(data): Promise<any> {
+    return axios.post(`/api/wallet/a/cashAudit`, data)
+  }
+}

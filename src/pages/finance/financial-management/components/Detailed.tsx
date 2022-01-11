@@ -1,20 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Button, Input, Row, Col, Select, Space, Table } from 'antd'
+import { Form, Button, Row, Col, Select, Space, Table, DatePicker } from 'antd'
 import './index.less'
-import ChannelService from '@/service/ChannelService'
 import { HttpCode } from '@/constants/HttpCode'
 
-/**账户管理 */
-const SalesListPage: React.FC = () => {
+/**财务管理-财务明细 */
+const DetailedPage: React.FC = () => {
   const [form] = Form.useForm()
+  const { RangePicker } = DatePicker
   const { Option } = Select
-  const [channel, setChannel] = useState('全部')
-  const [person, setPerson] = useState('全部')
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [total, setTotal] = useState()
-  const [channelData, setChannelData] = useState([])
 
   useEffect(() => {
     loadData(pageIndex)
@@ -28,33 +25,21 @@ const SalesListPage: React.FC = () => {
     // })
   }
 
-  const getChannel = () => {
-    ChannelService.list({ pages: 1, size: 10 }).then((res) => {
-      if (res.code === HttpCode.success) {
-        setChannelData(res.data?.records ?? [])
-      }
-    })
-  }
-
   const columns = [
-    {
-      title: '序号',
-      render: (text, record, index) => `${index + 1}`,
-    },
     {
       title: '订单编号',
       dataIndex: 'nickName',
     },
     {
-      title: '分佣类型',
+      title: '订单状态',
       dataIndex: 'mobile',
     },
     {
-      title: '账户变化',
+      title: '入账金额(¥)',
       dataIndex: 'roleName',
     },
     {
-      title: '时间',
+      title: '入账时间',
       dataIndex: 'state',
     },
   ]
@@ -77,19 +62,12 @@ const SalesListPage: React.FC = () => {
           form={form}
         >
           <Row gutter={[5, 0]}>
-            <Col span={2} className="table-from-label">
-              收支状态
-            </Col>
             <Col span={4}>
               <Form.Item name="channelId">
-                <Select value={channelData} style={{ width: 120 }}>
-                  {channelData?.map((item: any) => {
-                    return (
-                      <Option value={item.id} key={item.id}>
-                        {item.name}
-                      </Option>
-                    )
-                  })}
+                <Select style={{ width: 120 }}>
+                  <Option value={0}>今天</Option>
+                  <Option value={1}>近7天</Option>
+                  <Option value={2}>近30天</Option>
                 </Select>
               </Form.Item>
             </Col>
@@ -97,34 +75,31 @@ const SalesListPage: React.FC = () => {
               时间筛选
             </Col>
             <Col span={4}>
-              <Form.Item name="channelId"></Form.Item>
+              <Form.Item name="time">
+                <RangePicker showTime />
+              </Form.Item>
+            </Col>
+            <Col span={4}>
+              <Form.Item name="channelId">
+                <Select style={{ width: 120 }}>
+                  <Option value={0}>销售明细</Option>
+                  <Option value={1}>退款明细</Option>
+                  <Option value={2}>运营资金明细</Option>
+                  <Option value={3}>分佣明细</Option>
+                  <Option value={4}>提现明细</Option>
+                </Select>
+              </Form.Item>
             </Col>
             <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
               <Space>
                 <Button type="primary" htmlType="submit">
                   查询
                 </Button>
-                <Button
-                  htmlType="submit"
-                  onClick={() => {
-                    setChannel('全部')
-                    setPerson('全部')
-                  }}
-                >
-                  重置
-                </Button>
+                <Button htmlType="button">重置</Button>
               </Space>
             </Form.Item>
           </Row>
         </Form>
-      </div>
-      <div className="sales">
-        <span>待释放：</span>
-        <span></span>
-        <span>支出：</span>
-        <span></span>
-        <span>收入：</span>
-        <span></span>
       </div>
       <Table
         rowKey="id"
@@ -133,7 +108,6 @@ const SalesListPage: React.FC = () => {
         dataSource={[...data]}
         pagination={{
           onChange: setPageIndex,
-          showSizeChanger: true,
           showQuickJumper: true,
           pageSize: pageSize,
           total: total,
@@ -142,4 +116,4 @@ const SalesListPage: React.FC = () => {
     </div>
   )
 }
-export default SalesListPage
+export default DetailedPage
