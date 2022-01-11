@@ -15,15 +15,20 @@ const BaseInfo: React.FC = () => {
       <h4>1. 基本信息</h4>
       <Row className="my-info">
         <Col className="left" span={18}>
-          <div>商品分类: {productionDetailStore.data?.goodsTypeTag}</div>
+          <div>
+            商品分类: {productionDetailStore.data?.goodsTypeTag}
+            {/* {productionDetailStore.data?.goodsTypeTag.map((item, index) => {
+              return <span key={index}> {item}</span>
+            })} */}
+          </div>
           <div>商品主标题: {productionDetailStore.data?.goodsName}</div>
           <div>商品副标题: {productionDetailStore.data?.goodsNickName}</div>
           <div id="policy">退改政策: {productionDetailStore.data?.refundAndChangePolicy}</div>
         </Col>
         <Col className="right" span={6}>
           <div>创建渠道: {productionDetailStore.data?.createChannelName}</div>
-          <div>创建人: {productionDetailStore.data?.createUserName}</div>
-          <div>创建时间: {productionDetailStore.data?.createTime}</div>
+          <div>创建人: {productionDetailStore.data?.updateUserName}</div>
+          <div>创建时间: {productionDetailStore.data?.updateTime}</div>
         </Col>
       </Row>
     </div>

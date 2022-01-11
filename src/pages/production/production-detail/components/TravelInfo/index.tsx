@@ -17,9 +17,10 @@ const TravelInfo: React.FC = () => {
     <div className="TravelInfo__root">
       <h4>2. 行程信息</h4>
       <div className="time">
-        <div>出行时间:</div>
-        <div>截止下单时间:</div>
-        <div>截止退款时间:</div>
+        <div>出行时间:{productionDetailStore.data?.travelMode == 0 ? '固定时间' : '约定时间'}</div>
+        <div>截止下单时间: {productionDetailStore.data?.orderDeadline}小时</div>
+        <div>截止退款时间: {productionDetailStore.data?.refundDeadline}小时</div>
+        <div>始发地: {productionDetailStore.data?.departureCity}</div>
       </div>
       <div className="tabs">
         <Tabs onChange={callback} type="card">

@@ -32,11 +32,6 @@ const CenterPutOnRequestShow: React.FC = () => {
 
   const treeToList = (arr, tree) => {
     console.log(tree)
-    // tree.map((item, index) => {
-    //   console.log(item.saleAuth)
-    // })
-    // return
-
     arr.push({
       channelLeave: tree.channelLeave,
       distScale: tree.distScale,
