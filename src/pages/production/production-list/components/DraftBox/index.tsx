@@ -26,7 +26,7 @@ const DraftListPage: React.FC = observer(() => {
 
   const loadData = (pageIndex) => {
     const params = form.getFieldsValue()
-    const { timeRange, remain } = params
+    const { timeRange, ...remain } = params
 
     ProductionDraftService.list({
       current: pageIndex,
