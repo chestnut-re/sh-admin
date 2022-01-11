@@ -129,12 +129,22 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
               <>
                 <Col span={6}>
                   <Form.Item name={['purchaseConfig', 'purchaseDay']} label="">
-                    <InputNumber addonAfter="天" min={0} />
+                    <InputNumber
+                      addonAfter="天"
+                      min={0}
+                      step={1}
+                      formatter={(value: any) => {
+                        if (value) {
+                          return Math.floor(value)
+                        }
+                        return value
+                      }}
+                    />
                   </Form.Item>
                 </Col>
                 <Col span={8}>
                   <Form.Item name={['purchaseConfig', 'purchaseNum']} label="">
-                    <InputNumber addonBefore="限购" addonAfter="份" min={0} defaultValue={180} />
+                    <InputNumber addonBefore="限购" addonAfter="份" min={0} defaultValue={180} step={1} />
                   </Form.Item>
                 </Col>
               </>
