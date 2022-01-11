@@ -13,7 +13,6 @@ import StepView from './../StepView'
  */
 const AllocatedDetailsPage: React.FC = () => {
   const history = useHistory()
-  const [dataM, setDataM] = useState([])
   const [dataD, setDataD] = useState([])
   const [data, setData] = useState([])
   const [current, setCurrent] = useState(0)
@@ -42,20 +41,6 @@ const AllocatedDetailsPage: React.FC = () => {
     //   }
     // })
   }
-  const columnsM = [
-    {
-      title: '手机号',
-      dataIndex: 'phoneNumber',
-    },
-    {
-      title: '昵称',
-      dataIndex: '',
-    },
-    {
-      title: '常住地',
-      dataIndex: '',
-    },
-  ]
   const columnsD = [
     {
       title: '订单关系',
@@ -163,8 +148,6 @@ const AllocatedDetailsPage: React.FC = () => {
           <div>{data.deductionPrice ? data.deductionPrice : 0}</div>
         </div>
       </div>
-      <div className="details-title">买家信息</div>
-      <Table rowKey="id" columns={columnsM} scroll={{ x: 'max-content' }} dataSource={[...dataM]} />
       <div className="details-title">订单关联人</div>
       <Table rowKey="id" columns={columnsD} scroll={{ x: 'max-content' }} dataSource={[...dataD]} />
       <div className="ReleaseProduct__root">
