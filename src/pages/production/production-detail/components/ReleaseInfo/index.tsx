@@ -48,6 +48,11 @@ const ReleaseInfo: React.FC = () => {
             planName: postData.distPlanId.planName,
           }
         })
+        
+        postData.saleScale = postData.distPlanId.saleScale
+        postData.saleSettleDay = postData.distPlanId.saleSettleDay
+        postData.saleSettleType = postData.distPlanId.saleSettleType
+
         postData.distPlanId = postData.distPlanId.id
         postData.id = query.get('id')
 
@@ -127,7 +132,7 @@ const ReleaseInfo: React.FC = () => {
         <Form.Item label="分佣方案" name="distPlanId" rules={[{ required: true }]}>
           <Commission onChange={_onCommissionChange} />
         </Form.Item>
-        {/* <div>{JSON.stringify(commission)}</div> */}
+        <div>{JSON.stringify(commission)}</div>
 
         <Button onClick={_submit}>提交发布</Button>
       </Form>
