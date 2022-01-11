@@ -1,6 +1,6 @@
 /*
  * @Description: 配置关联清单
- * @LastEditTime: 2022-01-10 14:49:52
+ * @LastEditTime: 2022-01-11 11:20:25
  */
 import { Table, Space, Button, Modal, Form, Row, Col } from 'antd'
 import { taskService } from '@/service/marketService'
@@ -91,7 +91,7 @@ const ActivityTable: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess, onC
         <Form name="basic" initialValues={{ keyword: '' }} onFinish={onFinish} form={form}>
           <Row gutter={[5, 0]} style={{ paddingLeft: '10px' }}>
             <Col span={12}>
-              <InputTemp name="keyword" placeholder="商品名称" />
+              <InputTemp name="keyword" placeholder="清单名称" />
             </Col>
             <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
               <Space>

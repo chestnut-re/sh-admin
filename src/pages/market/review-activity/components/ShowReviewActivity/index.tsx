@@ -1,6 +1,6 @@
 /*
  * @Description: 活动审核查看
- * @LastEditTime: 2022-01-10 13:38:58
+ * @LastEditTime: 2022-01-11 11:35:05
  */
 import { Table, Space, Button, Modal, Form, Row, Col } from 'antd'
 import BasicInfo from '../../../rebate-activity/components/BasicInfo/BasicInfo'
@@ -9,8 +9,12 @@ import AuditProcessing from '../AuditProcessing'
 import LinkedList from '../LinkedList'
 import React, { useEffect, useState } from 'react'
 import './index.less'
-interface Props {}
-const ShowReviewActivity: React.FC<Props> = ({}) => {
+interface Props {
+  data:any
+  showType:any
+
+}
+const ShowReviewActivity: React.FC<Props> = ({data,showType}) => {
   const [form] = Form.useForm()
   useEffect(() => {
     console.log('---')
@@ -19,13 +23,13 @@ const ShowReviewActivity: React.FC<Props> = ({}) => {
   return (
     <div className="ShowReviewActivity__root">
       <div className="header-title">1.基本信息</div>
-      <BasicInfo></BasicInfo>
+      <BasicInfo data={data}></BasicInfo>
       <div className="header-title">2.关联商品信息</div>
-      <AssociatedGoods></AssociatedGoods>
+      <AssociatedGoods data={data}></AssociatedGoods>
       <div className="header-title">3.关联清单信息</div>
-      <LinkedList></LinkedList>
+      <LinkedList data={data}></LinkedList>
       <div className="header-title">4.上线审核处理</div>
-      <AuditProcessing></AuditProcessing>
+      <AuditProcessing data={data} showType={showType}></AuditProcessing>
     </div>
   )
 }

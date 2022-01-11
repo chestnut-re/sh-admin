@@ -10,6 +10,9 @@ import DEDialog from '@/components/components/Dedialog'
 import RebateBasicInfo from './components/BasicInfo/BasicInfo'
 import GoodsTable from './components/GoodsTable'
 import ActivityTable from './components/ActivityTable'
+import ModalDialog from '@/components/components/ModalDialog'
+import ShowTaskModal from './components/ShowTaskModal'
+import ShowGoodsTaskModal from './components/ShowGoodsTaskModal'
 const RebateActivity: React.FC = () => {
   const { RangePicker } = DatePicker
   const [form] = Form.useForm()
@@ -25,9 +28,12 @@ const RebateActivity: React.FC = () => {
   const [goodsShowDialog, setGoodsShowDialog] = useState(false)
   const [goodsRoleList, setGoodsRoleList] = useState<Array<any>>([])
   const [selectRecord, setSelectRecord] = useState<string>('')
+  const [rebateName, setrebateName] = useState('')
   const [activityShowDialog, setActivityShowDialog] = useState(false)
   const [activityRoleList, setActivityRoleList] = useState<Array<any>>([])
-
+  const [showGoodsDialog, setShowGoodsDialog] = useState(false)
+  const [modalData, setModalData] = useState('')
+  const [showType, setShowType] = useState('')
   useEffect(() => {
     loadData(pageIndex)
   }, [pageIndex])
@@ -69,11 +75,34 @@ const RebateActivity: React.FC = () => {
     {
       title: '关联商品数',
       dataIndex: ' goodsList',
-      render: (text, record, index) => `${(record.goodsList ?? []).length}`,
+      render: (text, record, index) => (
+        <div
+          onClick={() => {
+            setShowType('goods')
+            setShowGoodsDialog(true)
+            setModalData(JSON.stringify(record.goodsList))
+            console.log(showType)
+          }}
+        >
+          {(record.goodsList ?? []).length}
+        </div>
+      ),
     },
     {
       title: '关联任务清单量',
-      render: (text, record, index) => `${(record.paperList ?? []).length}`,
+      render: (text, record, index) => (
+        <div
+          onClick={() => {
+            setShowType('task')
+            setShowGoodsDialog(true)
+            setModalData(JSON.stringify(record.paperList))
+
+            console.log(showType)
+          }}
+        >
+          {(record.paperList ?? []).length}
+        </div>
+      ),
     },
     {
       title: '状态',
@@ -109,6 +138,7 @@ const RebateActivity: React.FC = () => {
       return res.goodsId
     })
     setSelectRecord(record.id)
+    setrebateName(record.name)
     setGoodsShowDialog(true)
     setGoodsRoleList(list)
   }
@@ -117,6 +147,7 @@ const RebateActivity: React.FC = () => {
       return res.id
     })
     setSelectRecord(record.id)
+    setrebateName(record.name)
     setActivityShowDialog(true)
     setActivityRoleList(list)
   }
@@ -124,45 +155,30 @@ const RebateActivity: React.FC = () => {
   const goodsOnSuccess = (rowKeys, rowList) => {
     if (rowList.length > 0) {
       const goodsList = rowList.map((res) => {
-        return {
-          activityId: '',
-          activityName: '',
-          goodsId: res.id,
-          goodsName: res.goodsName,
-          goodsNickName: res.goodsNickName,
-          goodsNo: res.goodsNo,
-        }
+        return res.id
       })
-      marketService.edit({ id: selectRecord, goodsList: goodsList }).then((res) => {
-        if (res.code === HttpCode.success) {
-          loadData(pageIndex)
-        }
-      })
+      marketService
+        .rebateAuditApply({ rebateId: selectRecord, rebateName: rebateName, type: 1, goodsList: goodsList })
+        .then((res) => {
+          if (res.code === HttpCode.success) {
+            loadData(pageIndex)
+          }
+        })
     }
     setGoodsShowDialog(false)
   }
   const activityOnSuccess = (rowKeys, rowList) => {
     if (rowList.length > 0) {
       const List = rowList.map((res) => {
-        return {
-          code: res.code,
-          createChannel: res.createChannel,
-          createChannelName: res.createChannelName,
-          createTime: res.createTime,
-          createUser: res.createUser,
-          createUserName: res.createUserName,
-          id: res.id,
-          isDeleted: res.isDeleted,
-          mathFlag: res.goodsNo,
-          name: res.name,
-          state: res.state,
-        }
+        return res.id
       })
-      marketService.edit({ id: selectRecord, paperList: List }).then((res) => {
-        if (res.code === HttpCode.success) {
-          loadData(pageIndex)
-        }
-      })
+      marketService
+        .rebateAuditApply({ rebateId: selectRecord, rebateName, rebateName, type: 2, paperList: List })
+        .then((res) => {
+          if (res.code === HttpCode.success) {
+            loadData(pageIndex)
+          }
+        })
     }
     setActivityShowDialog(false)
   }
@@ -188,11 +204,11 @@ const RebateActivity: React.FC = () => {
 
   /**编辑 */
   const _editDialog = (record) => {
-    console.log(record,'record')
-    marketService.get(record.id).then(res=>{
+    console.log(record, 'record')
+    marketService.get(record.id).then((res) => {
       setDeShowDialog(!deShowDialog)
       setSelectedData(res?.data)
-  })
+    })
   }
 
   /**添加 */
@@ -327,6 +343,12 @@ const RebateActivity: React.FC = () => {
         goodsIdList={activityRoleList}
         onClose={() => setActivityShowDialog(false)}
       ></ActivityTable>
+      <ModalDialog
+        show={showGoodsDialog}
+        title={showType == 'goods' ? '关联商品管理' : '关联任务清单'}
+        data={() => <ShowGoodsTaskModal data={modalData} showType={showType}></ShowGoodsTaskModal>}
+        onChange={() => setShowGoodsDialog(false)}
+      ></ModalDialog>
     </div>
   )
 }

@@ -1,6 +1,6 @@
 /*
  * @Description: 活动审核
- * @LastEditTime: 2022-01-10 11:20:06
+ * @LastEditTime: 2022-01-11 11:37:28
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Radio } from 'antd'
@@ -16,18 +16,16 @@ const ReviewActivity: React.FC = () => {
   const [pageSize, setPageSize] = useState(10)
   const [total, setTotal] = useState()
   const [checkState, setCheckState] = useState('')
-  const [deShowDialog, setDeShowDialog] = useState(true)
-  const [dialogMode, setDialogMode] = useState('add')
+  const [deShowDialog, setDeShowDialog] = useState(false)
+  const [ActRecord, setActRecord] = useState('')
+  const [showType, setShowType] = useState('')
   useEffect(() => {
-    form.setFieldsValue({
-      rebateId: '1478979552465346560',
-    })
     loadData(pageIndex)
   }, [pageIndex])
 
   const loadData = (pageIndex) => {
     const params = form.getFieldsValue()
-    rebateService.list({ current: pageIndex, size: pageSize, ...params }).then((res) => {
+    rebateService.list({ current: pageIndex, size: pageSize, ...params, auditResult: checkState }).then((res) => {
       setData(res.data.records)
       setTotal(res.data.total)
     })
@@ -41,20 +39,17 @@ const ReviewActivity: React.FC = () => {
 
     {
       title: '活动名称',
-      dataIndex: 'planName',
+      dataIndex: 'rebateName',
     },
     {
       title: '创建人',
-      dataIndex: 'planName',
+      dataIndex: 'createUserName',
     },
     {
       title: '创建时间',
-      dataIndex: 'planName',
+      dataIndex: 'createTime',
     },
-    {
-      title: '活动名称',
-      dataIndex: 'planName',
-    },
+
     {
       title: '状态',
       dataIndex: 'state',
@@ -67,19 +62,39 @@ const ReviewActivity: React.FC = () => {
       },
     },
     {
+      title: '驳回原因',
+      dataIndex: 'refuseReason',
+    },
+    {
       title: '审核人',
-      dataIndex: 'bannerUrl',
+      dataIndex: 'auditUserName',
     },
     {
       title: '审核时间',
-      dataIndex: 'bannerUrl',
+      dataIndex: 'auditTime',
     },
     {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button onClick={() => _editDialog(record)}>查看</Button>
-          <Button onClick={() => _editDialog(record)}>审核</Button>
+          <Button
+            onClick={() => {
+              setDeShowDialog(true)
+              setActRecord(JSON.stringify(record))
+              setShowType('show')
+            }}
+          >
+            查看
+          </Button>
+          <Button
+            onClick={() => {
+              setDeShowDialog(true)
+              setActRecord(JSON.stringify(record))
+              setShowType('update')
+            }}
+          >
+            审核
+          </Button>
         </Space>
       ),
     },
@@ -113,6 +128,7 @@ const ReviewActivity: React.FC = () => {
                 value={checkState}
                 onChange={(value) => {
                   setCheckState(value.target.value)
+                  loadData(pageIndex)
                 }}
               >
                 <Radio.Button value="">全部</Radio.Button>
@@ -121,8 +137,9 @@ const ReviewActivity: React.FC = () => {
                 <Radio.Button value="2">驳回</Radio.Button>
               </Radio.Group>
             </Col>
+
             <Col span={3}>
-              <InputTemp name="rebateId" placeholder="清单ID/清单名称" />
+              <InputTemp name="idOrName" placeholder="清单ID/清单名称" />
             </Col>
             <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
               <Space>
@@ -154,7 +171,7 @@ const ReviewActivity: React.FC = () => {
       <DEDialog
         show={deShowDialog}
         onChange={() => setDeShowDialog(false)}
-        data={() => <ShowReviewActivity></ShowReviewActivity>}
+        data={() => <ShowReviewActivity data={ActRecord} showType={showType}></ShowReviewActivity>}
         // data={() => <ShowRefund data={selectedData} editGo={_editGo}></ShowRefund>}
       ></DEDialog>
     </div>
