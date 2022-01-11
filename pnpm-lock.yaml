@@ -36,6 +36,7 @@ specifiers:
   dotenv: ^8.2.0
   draft-js: ^0.11.7
   easemob-websdk: ^4.0.1
+  echarts: ^5.2.2
   eslint: ^7.24.0
   eslint-plugin-react: ^7.23.2
   eslint-plugin-react-hooks: ^4.2.0
@@ -82,6 +83,7 @@ dependencies:
   dayjs: 1.10.7
   draft-js: 0.11.7_react-dom@17.0.2+react@17.0.2
   easemob-websdk: 4.0.1
+  echarts: 5.2.2
   js-cookie: 3.0.1
   json-bigint: 1.0.0
   lodash: 4.17.21
@@ -3374,6 +3376,13 @@ packages:
 
   /easemob-websdk/4.0.1:
     resolution: {integrity: sha512-9CaALqdii6OrTMm8Hc97On5lJCHQFhIU0wTavDESB/Hh3zDRH4kYdKzUnoG+6c1O4/UCbVbeD/h/zOjzDNShoQ==}
+    dev: false
+
+  /echarts/5.2.2:
+    resolution: {integrity: sha512-yxuBfeIH5c+0FsoRP60w4De6omXhA06c7eUYBsC1ykB6Ys2yK5fSteIYWvkJ4xJVLQgCvAdO8C4mN6MLeJpBaw==}
+    dependencies:
+      tslib: 2.3.0
+      zrender: 5.2.1
     dev: false
 
   /ee-first/1.1.1:
@@ -8074,6 +8083,10 @@ packages:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
     dev: true
 
+  /tslib/2.3.0:
+    resolution: {integrity: sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg==}
+    dev: false
+
   /tslib/2.3.1:
     resolution: {integrity: sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==}
 
@@ -8604,3 +8617,9 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
+
+  /zrender/5.2.1:
+    resolution: {integrity: sha512-M3bPGZuyLTNBC6LiNKXJwSCtglMp8XUEqEBG+2MdICDI3d1s500Y4P0CzldQGsqpRVB7fkvf3BKQQRxsEaTlsw==}
+    dependencies:
+      tslib: 2.3.0
+    dev: false
