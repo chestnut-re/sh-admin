@@ -49,23 +49,20 @@ const TravelInfo: React.FC = () => {
                                   {e.travelGoods.airTicket && (
                                     <Row>
                                       <Col span={11} className="travelGoods">
-                                        交通：{e.travelGoods.airTicket.departAirport}飞
+                                        交通：飞机\{e.travelGoods.airTicket.departAirport}飞
                                         {e.travelGoods.airTicket.arriveAirport}\{e.travelGoods.airTicket.aircraftCabin}
                                       </Col>
                                       <Col span={10} className="remark">
                                         {e.travelGoods.airTicket.remark}
                                       </Col>
                                       <Col span={1} className="money">
-                                        {e.travelGoods.airTicket.personCostPrice +
-                                          e.travelGoods.airTicket.childCostPrice}
+                                        {e.travelGoods.airTicket.personCostPrice}
                                       </Col>
                                       <Col span={1} className="money">
-                                        {e.travelGoods.airTicket.personMarkPrice +
-                                          e.travelGoods.airTicket.childMarkPrice}
+                                        {e.travelGoods.airTicket.personMarkPrice}
                                       </Col>
                                       <Col span={1} className="money">
-                                        {e.travelGoods.airTicket.personCurrentPrice +
-                                          e.travelGoods.airTicket.childCurrentPrice}
+                                        {e.travelGoods.airTicket.personCurrentPrice}
                                       </Col>
                                     </Row>
                                   )}
@@ -78,13 +75,13 @@ const TravelInfo: React.FC = () => {
                                         {e.travelGoods.hotel.remark}
                                       </Col>
                                       <Col span={1} className="money">
-                                        {e.travelGoods.hotel.personCostPrice + e.travelGoods.hotel.childCostPrice}
+                                        {e.travelGoods.hotel.personCostPrice}
                                       </Col>
                                       <Col span={1} className="money">
-                                        {e.travelGoods.hotel.personMarkPrice + e.travelGoods.hotel.childMarkPrice}
+                                        {e.travelGoods.hotel.personMarkPrice}
                                       </Col>
                                       <Col span={1} className="money">
-                                        {e.travelGoods.hotel.personCurrentPrice + e.travelGoods.hotel.childCurrentPrice}
+                                        {e.travelGoods.hotel.personCurrentPrice}
                                       </Col>
                                     </Row>
                                   )}
@@ -98,16 +95,13 @@ const TravelInfo: React.FC = () => {
                                         {e.travelGoods.restaurant.remark}
                                       </Col>
                                       <Col span={1} className="money">
-                                        {e.travelGoods.restaurant.personCostPrice +
-                                          e.travelGoods.restaurant.childCostPrice}
+                                        {e.travelGoods.restaurant.personCostPrice}
                                       </Col>
                                       <Col span={1} className="money">
-                                        {e.travelGoods.restaurant.personMarkPrice +
-                                          e.travelGoods.restaurant.childMarkPrice}
+                                        {e.travelGoods.restaurant.personMarkPrice}
                                       </Col>
                                       <Col span={1} className="money">
-                                        {e.travelGoods.restaurant.personCurrentPrice +
-                                          e.travelGoods.restaurant.childCurrentPrice}
+                                        {e.travelGoods.restaurant.personCurrentPrice}
                                       </Col>
                                     </Row>
                                   )}
@@ -122,43 +116,41 @@ const TravelInfo: React.FC = () => {
                                         {e.travelGoods.scenicSpot.remark}
                                       </Col>
                                       <Col span={1} className="money">
-                                        {e.travelGoods.scenicSpot.personCostPrice +
-                                          e.travelGoods.scenicSpot.childCostPrice}
+                                        {e.travelGoods.scenicSpot.personCostPrice}
                                       </Col>
                                       <Col span={1} className="money">
-                                        {e.travelGoods.scenicSpot.personMarkPrice +
-                                          e.travelGoods.scenicSpot.childMarkPrice}
+                                        {e.travelGoods.scenicSpot.personMarkPrice}
                                       </Col>
                                       <Col span={1} className="money">
-                                        {e.travelGoods.scenicSpot.personCurrentPrice +
-                                          e.travelGoods.scenicSpot.childCurrentPrice}
+                                        {e.travelGoods.scenicSpot.personCurrentPrice}
                                       </Col>
                                     </Row>
                                   )}
                                   {e.travelGoods.bus && (
                                     <Row>
                                       <Col span={11} className="travelGoods">
-                                        交通：{e.travelGoods.bus.departureStation}\车型：{e.travelGoods.bus.busType}
+                                        交通：大巴\{e.travelGoods.bus.departureStation}\车型：
+                                        {e.travelGoods.bus.busType}
                                         \使用类型：{e.travelGoods.bus.busUseType}
                                       </Col>
                                       <Col span={10} className="remark">
                                         {e.travelGoods.bus.remark}
                                       </Col>
                                       <Col span={1} className="money">
-                                        {e.travelGoods.bus.personCostPrice + e.travelGoods.bus.childCostPrice}
+                                        {e.travelGoods.bus.personCostPrice}
                                       </Col>
                                       <Col span={1} className="money">
-                                        {e.travelGoods.bus.personMarkPrice + e.travelGoods.bus.childMarkPrice}
+                                        {e.travelGoods.bus.personMarkPrice}
                                       </Col>
                                       <Col span={1} className="money">
-                                        {e.travelGoods.bus.personCurrentPrice + e.travelGoods.bus.childCurrentPrice}
+                                        {e.travelGoods.bus.personCurrentPrice}
                                       </Col>
                                     </Row>
                                   )}
                                   {e.travelGoods.train && (
                                     <Row>
                                       <Col span={11} className="travelGoods">
-                                        交通：{e.travelGoods.train.departureStation}到
+                                        交通：火车\{e.travelGoods.train.departureStation}到
                                         {e.travelGoods.train.arrivalStation}
                                         \类型：{e.travelGoods.train.trainsType}\{e.travelGoods.train.seat}
                                       </Col>
@@ -166,13 +158,13 @@ const TravelInfo: React.FC = () => {
                                         {e.travelGoods.train.remark}
                                       </Col>
                                       <Col span={1} className="money">
-                                        {e.travelGoods.train.personCostPrice + e.travelGoods.train.childCostPrice}
+                                        {e.travelGoods.train.personCostPrice}
                                       </Col>
                                       <Col span={1} className="money">
-                                        {e.travelGoods.train.personMarkPrice + e.travelGoods.train.childMarkPrice}
+                                        {e.travelGoods.train.personMarkPrice}
                                       </Col>
                                       <Col span={1} className="money">
-                                        {e.travelGoods.train.personCurrentPrice + e.travelGoods.train.childCurrentPrice}
+                                        {e.travelGoods.train.personCurrentPrice}
                                       </Col>
                                     </Row>
                                   )}
