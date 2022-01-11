@@ -17,7 +17,7 @@ const CenterPutOnRequestShowSubCenter: React.FC = () => {
   const query = useQuery()
   const { productionDetailStore } = useStore()
   const [data, setData] = useState<any>({})
-
+  const [distPlan, setDistPlan] = useState<any[]>([])
   const dataList = [
     // {
     //   key: '1',
@@ -28,16 +28,41 @@ const CenterPutOnRequestShowSubCenter: React.FC = () => {
     //   tags: ['nice', 'developer'],
     // }
   ]
+  const layout = {
+    labelCol: { span: 4 },
+    wrapperCol: { span: 20 },
+  }
   useEffect(() => {
     const id = query.get('channelGoodsId') ?? ''
     ProductionService.centerPutOnRequestGet(id).then((res) => {
       setData(res.data)
+      const arr: any = []
+      treeToList(arr, res.data.distPlan)
+      setDistPlan(arr)
     })
   }, [])
-
-  const layout = {
-    labelCol: { span: 4 },
-    wrapperCol: { span: 20 },
+  const treeToList = (arr, tree) => {
+    console.log(tree)
+    return
+    arr.push({
+      channelLeave: tree.channelLeave,
+      distScale: tree.distScale,
+      outLetScale: tree.outLetScale,
+      saleAuth: tree.saleAuth,
+      serviceCharge: tree.serviceCharge,
+    })
+    arr.map((item, index) => {
+      item.saleAuth.map((it) => {
+        console.log(it, item)
+        item['s' + it.level] = it.saleScale
+      })
+    })
+    console.log('arr', arr)
+    if (tree.children) {
+      treeToList(arr, tree.children)
+    } else {
+      return arr
+    }
   }
 
   return (
@@ -53,30 +78,16 @@ const CenterPutOnRequestShowSubCenter: React.FC = () => {
         <div>申请时间 {data?.createTime}</div>
         <div>分佣方案 {data?.distPlanName} </div>
         <div>
-          表格
           <Table dataSource={dataList} bordered>
-            <Column title="直销方" dataIndex="age" key="age" />
-            <Column title="直销分佣" dataIndex="age" key="age" />
+            <Column title="渠道名称" dataIndex="age" key="age" />
+            <Column title="直销分佣比例" dataIndex="age" key="age" />
+            <Column title="直销分佣比例" dataIndex="age" key="age" />
             <ColumnGroup title="分销分佣">
               <Column title="二级名称" dataIndex="firstName" key="firstName" />
               <Column title="三级名称" dataIndex="lastName" key="lastName" />
               <Column title="四级名称" dataIndex="lastName" key="lastName" />
             </ColumnGroup>
             <Column title="发团服务费" dataIndex="address" key="address" />
-            <Column
-              title="合计分佣"
-              dataIndex="tags"
-              key="tags"
-              render={(tags) => (
-                <>
-                  {tags.map((tag) => (
-                    <Tag color="blue" key={tag}>
-                      {tag}
-                    </Tag>
-                  ))}
-                </>
-              )}
-            />
           </Table>
         </div>
       </div>

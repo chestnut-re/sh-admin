@@ -95,9 +95,9 @@ const ReleaseInfoShow: React.FC = () => {
           </div>
         </div>
         <div className="right">
-          <div>发布渠道: {data?.createChannelName}</div>
-          <div>上架人: {data?.createUserName}</div>
-          <div>上架时间</div>
+          <div>审核渠道: {data?.checkChannelName}</div>
+          <div>审核人: {data?.checkUser}</div>
+          <div>审核时间: {data?.checkTime}</div>
           <div className="btn">{/* <button>查看发布审核记录</button> */}</div>
         </div>
       </div>
