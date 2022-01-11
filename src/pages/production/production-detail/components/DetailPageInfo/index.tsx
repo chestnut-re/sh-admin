@@ -73,7 +73,7 @@ const DetailPageInfo: React.FC = () => {
                       </div>
                       <div>商品名称</div>
                     </div>
-                    {item?.contentImages.map((it, i) => {
+                    {item?.contentImages?.map((it, i) => {
                       return (
                         <div key={i}>
                           <div className="pic-box">

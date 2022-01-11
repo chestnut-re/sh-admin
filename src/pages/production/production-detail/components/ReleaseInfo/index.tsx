@@ -85,7 +85,7 @@ const ReleaseInfo: React.FC = () => {
           <Switch checkedChildren="是" unCheckedChildren="否" />
         </Form.Item>
         <Form.Item label='最多可抵"现售价"' name="deductionScale" rules={[{ required: true }]}>
-          <InputNumber min={0} />
+          <InputNumber min={0} addonAfter="%" />
         </Form.Item>
         <Form.Item {...layout} label="手工补量" style={{ marginBottom: 0 }}>
           <Form.Item
@@ -121,7 +121,7 @@ const ReleaseInfo: React.FC = () => {
         <Form.Item label="分佣方案" name="distPlanId" rules={[{ required: true }]}>
           <Commission onChange={_onCommissionChange} />
         </Form.Item>
-        <div>{JSON.stringify(commission)}</div>
+        {/* <div>{JSON.stringify(commission)}</div> */}
 
         <Button onClick={_submit}>提交发布</Button>
       </Form>

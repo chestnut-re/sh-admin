@@ -16,7 +16,7 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
   const { productionStore } = useStore()
   const [form] = Form.useForm()
 
-  const [goodsLimit, setGoodsLimit] = useState(false)
+  const [goodsLimit, setGoodsLimit] = useState(true)
   const [goodsLimitUp, setGoodsLimitUp] = useState(false)
 
   useEffect(() => {
@@ -86,7 +86,20 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
           <Form.Item name="goodsTypeTag" label="商品分类">
             <ProductionTag />
           </Form.Item>
-          <Form.Item name="goodsName" label="商品主标题" rules={[{ required: true, message: '请输入商品主标题' }]}>
+          <Form.Item
+            name="goodsName"
+            label="商品主标题"
+            rules={[
+              // { required: true, message: '请输入商品主标题' },
+              {
+                validator: async (_, names) => {
+                  if (!names.trim()) {
+                    return Promise.reject(new Error('请输入商品主标题'))
+                  }
+                },
+              },
+            ]}
+          >
             <Input maxLength={20} />
           </Form.Item>
           <Form.Item name="goodsNickName" label="商品副标题">
