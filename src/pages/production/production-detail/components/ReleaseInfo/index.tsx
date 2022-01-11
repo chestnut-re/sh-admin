@@ -1,7 +1,7 @@
 import useQuery from '@/hooks/useQuery'
 import { ProductionAuditService } from '@/service/ProductionAuditService'
 import { useStore } from '@/store/context'
-import { Button, Form, Input, InputNumber, Radio, Switch } from 'antd'
+import { Button, Form, Input, InputNumber, Radio, RadioChangeEvent, Switch } from 'antd'
 import { useForm } from 'antd/es/form/Form'
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
@@ -19,6 +19,7 @@ const ReleaseInfo: React.FC = () => {
 
   const [form] = Form.useForm()
   const [commission, setCommission] = useState<any>({})
+  const [checkState, setCheckState] = useState<boolean>(false)
 
   const layout = {
     labelCol: { span: 4 },
@@ -61,18 +62,23 @@ const ReleaseInfo: React.FC = () => {
         console.error(e)
       })
   }
+  
+
+  const _onCheckStateChange = (e: RadioChangeEvent)=>{
+    setCheckState(e.target.value !== 1)
+  }
 
   return (
     <div className="ReleaseInfo__root">
       <h4>4. 发布信息</h4>
       <Form name="basic" initialValues={{ remember: true }} autoComplete="off" form={form} {...layout}>
         <Form.Item label="审核结果" name="checkState" rules={[{ required: true }]}>
-          <Radio.Group>
+          <Radio.Group onChange={_onCheckStateChange}>
             <Radio value={1}>通过</Radio>
             <Radio value={2}>驳回</Radio>
           </Radio.Group>
         </Form.Item>
-        <Form.Item label="原因" name="checkMag" rules={[{ required: false }]}>
+        <Form.Item label="原因" name="checkMag" rules={[{ required: checkState }]}>
           <Input />
         </Form.Item>
         <Form.Item label="添加库存" name="stock" rules={[{ required: true }]}>

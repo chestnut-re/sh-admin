@@ -59,7 +59,11 @@ const DateTimeDialog: FC<Props> = ({ activeKey, show, onClose, mode }) => {
     <Modal title="设置时间" visible={show} onOk={_handleUpdate} onCancel={onClose} maskClosable={false}>
       {mode === 'single' && <DatePicker value={moment(dateTime)} format={dateFormat} onChange={_onSingleChange} />}
       {mode === 'scope' && (
-        <RangePicker value={[moment(dateTime[0]), moment(dateTime[1])]} format={dateFormat} onChange={_onScopeChange} />
+        <RangePicker
+          value={dateTime != null ? [moment(dateTime[0]), moment(dateTime[1])] : undefined}
+          format={dateFormat}
+          onChange={_onScopeChange}
+        />
       )}
     </Modal>
   )

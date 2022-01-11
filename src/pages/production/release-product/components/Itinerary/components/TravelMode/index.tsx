@@ -15,7 +15,7 @@ const TravelModel: React.FC = () => {
     <div className="TravelModel__root">
       出行时间:
       <Radio.Group
-        defaultValue={0}
+        value={productionStore.data.travelMode}
         buttonStyle="solid"
         onChange={(value) => {
           productionStore.setTravelMode(value.target.value)

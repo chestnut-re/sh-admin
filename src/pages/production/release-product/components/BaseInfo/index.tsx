@@ -169,13 +169,28 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
               {goodsLimitUp && (
                 <>
                   <Col span={6}>
-                    用户分享商品且
+                    <span>用户分享商品且</span>
                     <Form.Item name={['purchaseConfig', 'addType']} label="">
                       <Select>
                         {/* 限购上限增加任务类型1下单付款，2订单核销*/}
                         <Select.Option value={1}>下单付款</Select.Option>
                         <Select.Option value={2}>订单核销</Select.Option>
                       </Select>
+                    </Form.Item>
+                  </Col>
+                  <Col span={7}>
+                    <Form.Item name={['purchaseConfig', 'finishNum']} label="">
+                      <InputNumber
+                        addonAfter="笔订单"
+                        min={0}
+                        step={1}
+                        formatter={(value: any) => {
+                          if (value) {
+                            return Math.floor(value)
+                          }
+                          return value
+                        }}
+                      />
                     </Form.Item>
                   </Col>
                   <Col span={10}>
