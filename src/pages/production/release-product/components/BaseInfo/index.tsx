@@ -35,6 +35,7 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
     form.setFieldsValue({
       goodsTypeTag: productionStore.data.goodsTypeTag,
       goodsName: productionStore.data.goodsName,
+      goodsType: productionStore.data.goodsType,
       goodsNickName: productionStore.data.goodsNickName,
       refundAndChangePolicy: productionStore.data.refundAndChangePolicy,
       promotionalImageUrl: productionStore.data.promotionalImageUrl,
@@ -43,6 +44,7 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
         purchaseNum: productionStore.data.purchaseConfig?.purchaseNum,
         addType: productionStore.data.purchaseConfig?.addType,
         addNum: productionStore.data.purchaseConfig?.addNum,
+        finishNum: productionStore.data.purchaseConfig?.finishNum,
       },
     })
 
@@ -82,7 +84,7 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
   return (
     <Form {...layout} form={form} colon={false} size="large" name="product-release" className="BaseInfo_root">
       <Row>
-        <Col span={16}>
+        <Col span={20}>
           <Form.Item name="goodsTypeTag" label="商品分类">
             <ProductionTag />
           </Form.Item>
@@ -92,6 +94,8 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
             rules={[
               // { required: true, message: '请输入商品主标题' },
               {
+                required: true,
+                message: '请输入商品主标题',
                 validator: async (_, names) => {
                   if (!names.trim()) {
                     return Promise.reject(new Error('请输入商品主标题'))
@@ -207,11 +211,11 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
             <Policy />
           </Form.Item>
         </Col>
-        <Col span={8}>
+        {/* <Col span={8}>
           <Form.Item name="promotionalImageUrl" label="">
             <UploadImage />
           </Form.Item>
-        </Col>
+        </Col> */}
       </Row>
     </Form>
   )
