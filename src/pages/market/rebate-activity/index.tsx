@@ -13,6 +13,7 @@ import ActivityTable from './components/ActivityTable'
 import ModalDialog from '@/components/components/ModalDialog'
 import ShowTaskModal from './components/ShowTaskModal'
 import ShowGoodsTaskModal from './components/ShowGoodsTaskModal'
+import {formateTime} from '@/utils/timeUtils'
 const RebateActivity: React.FC = () => {
   const { RangePicker } = DatePicker
   const [form] = Form.useForm()
@@ -40,9 +41,15 @@ const RebateActivity: React.FC = () => {
 
   const loadData = (pageIndex) => {
     const params = form.getFieldsValue()
-    console.log(params)
+    const query = { ...params }
+    // const query
+    if (params.time) {
+      query.startTime = formateTime(params.time[0])
+      query.endTime = formateTime(params.time[1])
+      delete query.time
+    }
 
-    marketService.list({ current: pageIndex, size: pageSize, ...params }).then((res) => {
+    marketService.list({ current: pageIndex, size: pageSize, ...query }).then((res) => {
       setData(res.data.records)
       setTotal(res.data.total)
     })
@@ -155,7 +162,8 @@ const RebateActivity: React.FC = () => {
   const goodsOnSuccess = (rowKeys, rowList) => {
     if (rowList.length > 0) {
       const goodsList = rowList.map((res) => {
-        return res.id
+        res.goodsId = res.id
+        return res
       })
       marketService
         .rebateAuditApply({ rebateId: selectRecord, rebateName: rebateName, type: 1, goodsList: goodsList })
@@ -170,7 +178,7 @@ const RebateActivity: React.FC = () => {
   const activityOnSuccess = (rowKeys, rowList) => {
     if (rowList.length > 0) {
       const List = rowList.map((res) => {
-        return res.id
+        return res
       })
       marketService
         .rebateAuditApply({ rebateId: selectRecord, rebateName, rebateName, type: 2, paperList: List })
@@ -256,22 +264,24 @@ const RebateActivity: React.FC = () => {
           <Row gutter={[10, 10]}>
             <Col span={1} className="table-from-label"></Col>
             <Col span={3}>
-              <Radio.Group
-                value={checkState}
-                onChange={(value) => {
-                  setCheckState(value.target.value)
-                }}
-              >
-                <Radio.Button value="">全部</Radio.Button>
-                <Radio.Button value="0">进行中</Radio.Button>
-                <Radio.Button value="1">已结束</Radio.Button>
-                <Radio.Button value="2">未开始</Radio.Button>
-                {/* checkState 0 待审核 1审核通过 2审核不通过 */}
-              </Radio.Group>
+              <Form.Item name="state">
+                <Radio.Group
+                  value={checkState}
+                  onChange={(value) => {
+                    setCheckState(value.target.value)
+                  }}
+                >
+                  <Radio.Button value="">全部</Radio.Button>
+                  <Radio.Button value="0">进行中</Radio.Button>
+                  <Radio.Button value="1">已结束</Radio.Button>
+                  <Radio.Button value="2">未开始</Radio.Button>
+                  {/* checkState 0 待审核 1审核通过 2审核不通过 */}
+                </Radio.Group>
+              </Form.Item>
             </Col>
             {/* <Col span={1} className="table-from-label"></Col> */}
             <Col span={3}>
-              <InputTemp name="planName" placeholder="活动ID/活动名称" />
+              <InputTemp name="rebateName" placeholder="活动ID/活动名称" />
             </Col>
             <Col span={1} className="table-from-label">
               创建时间
@@ -281,12 +291,12 @@ const RebateActivity: React.FC = () => {
                 <RangePicker showTime />
               </Form.Item>
             </Col>
-            <Col span={1} className="table-from-label">
+            {/* <Col span={1} className="table-from-label">
               状态
             </Col>
             <Col span={3}>
               <StatusRoute name="state" />
-            </Col>
+            </Col> */}
 
             <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
               <Space>
@@ -327,7 +337,7 @@ const RebateActivity: React.FC = () => {
       <DEDialog
         show={deShowDialog}
         onChange={() => setDeShowDialog(false)}
-        data={() => <RebateBasicInfo data={selectedData}></RebateBasicInfo>}
+        data={() => <RebateBasicInfo data={JSON.stringify(selectedData)}></RebateBasicInfo>}
         // data={() => <ShowRefund data={selectedData} editGo={_editGo}></ShowRefund>}
       ></DEDialog>
 

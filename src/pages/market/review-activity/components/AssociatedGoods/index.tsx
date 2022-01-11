@@ -1,12 +1,11 @@
 /*
  * @Description: 关联商品信息
- * @LastEditTime: 2022-01-11 11:45:15
+ * @LastEditTime: 2022-01-11 16:23:59
  */
 import { Table, Space, Button, Modal, Form, Row, Col, Select } from 'antd'
 import { rebateService } from '@/service/marketService'
 import { InputTemp } from '@/components/filter/formItem'
 import React, { useEffect, useState } from 'react'
-
 interface Props {
   data: any
 }
@@ -18,12 +17,15 @@ const AssociatedGoods: React.FC<Props> = ({ data }) => {
   const [pageSize, setPageSize] = useState(20)
   const [total, setTotal] = useState()
   useEffect(() => {
-    getGoodsDetail()
+    if (!!data) {
+      console.log(JSON.parse(data),'0000000')
+      getGoodsDetail()
+    }
   }, [pageIndex, data])
 
   const getGoodsDetail = async () => {
     const params = form.getFieldsValue()
-    const res = await rebateService.rebateGoodsPage({ ...params })
+    const res = await rebateService.rebateGoodsPage({ ...params, rebateAuditId: JSON.parse(data)?.id ,current:pageIndex,size:pageSize})
     setData(res?.data.records)
     setTotal(res.data?.total)
   }
@@ -50,15 +52,16 @@ const AssociatedGoods: React.FC<Props> = ({ data }) => {
     setPageSize(pageSize)
   }
   const enumState = {
-    '1': 'ss',
-    '2': 'ss',
+    '': '全部',
+    '0': '启用',
+    '1': '禁用',
   }
   return (
     <div className="goodsTable__root">
-      <Form name="basic" initialValues={{ keyword: '' }} onFinish={onFinish} form={form}>
+      <Form name="basic" initialValues={{ idOrNameSate: '', state: '' }} onFinish={onFinish} form={form}>
         <Row gutter={[5, 0]} style={{ paddingLeft: '10px' }}>
           <Col span={12}>
-            <InputTemp name="keyword" placeholder="商品名称" />
+            <InputTemp name="idOrNameSate" placeholder="商品名称" />
           </Col>
           <Col span={1} className="table-from-label">
             状态
@@ -66,13 +69,15 @@ const AssociatedGoods: React.FC<Props> = ({ data }) => {
           <Col span={3}>
             <Form.Item name="state">
               <Select allowClear>
-                {Object.keys(enumState).map((item) => {
-                  return (
-                    <Select.Option key={item} value={item}>
-                      {enumState[item]}
-                    </Select.Option>
-                  )
-                })}
+                {Object.keys(enumState)
+                  .sort()
+                  .map((item) => {
+                    return (
+                      <Select.Option key={item} value={item}>
+                        {enumState[item]}
+                      </Select.Option>
+                    )
+                  })}
               </Select>
             </Form.Item>
           </Col>
@@ -91,7 +96,7 @@ const AssociatedGoods: React.FC<Props> = ({ data }) => {
       </Form>
 
       <Table
-        rowKey="userId"
+        rowKey="goodsId"
         columns={columns}
         scroll={{ x: 'max-content' }}
         dataSource={dataList}
