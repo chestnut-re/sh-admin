@@ -166,7 +166,7 @@ const Itinerary = (props, ref) => {
                   行程+1天
                 </Button>
               </div>
-              <div className="item">现售价 合计: ￥{productionStore.getCurrentPrice(activeKey)}</div>
+              <div className="item">现售价 合计: ￥{productionStore.getCurrentPrice(activeKey) / 100}</div>
             </div>
           </div>
         </Row>

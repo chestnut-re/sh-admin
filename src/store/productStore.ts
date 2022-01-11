@@ -198,12 +198,12 @@ class ProductionData {
 
   updateGoods(goodsPrice) {
     //更新商品价格
-    goodsPrice.childCostPrice = getPriceFromTravels(goodsPrice.travels, 'childCostPrice')
-    goodsPrice.childCurrentPrice = getPriceFromTravels(goodsPrice.travels, 'childCurrentPrice')
-    goodsPrice.childMarkPrice = getPriceFromTravels(goodsPrice.travels, 'childMarkPrice')
-    goodsPrice.personCostPrice = getPriceFromTravels(goodsPrice.travels, 'personCostPrice')
-    goodsPrice.personCurrentPrice = getPriceFromTravels(goodsPrice.travels, 'personCurrentPrice')
-    goodsPrice.personMarkPrice = getPriceFromTravels(goodsPrice.travels, 'personMarkPrice')
+    goodsPrice.childCostPrice = getPriceFromTravels(goodsPrice.travels, 'childCostPrice') * 100
+    goodsPrice.childCurrentPrice = getPriceFromTravels(goodsPrice.travels, 'childCurrentPrice') * 100
+    goodsPrice.childMarkPrice = getPriceFromTravels(goodsPrice.travels, 'childMarkPrice') * 100
+    goodsPrice.personCostPrice = getPriceFromTravels(goodsPrice.travels, 'personCostPrice') * 100
+    goodsPrice.personCurrentPrice = getPriceFromTravels(goodsPrice.travels, 'personCurrentPrice') * 100
+    goodsPrice.personMarkPrice = getPriceFromTravels(goodsPrice.travels, 'personMarkPrice') * 100
     // end
     // 更新商品天数
     goodsPrice.days = goodsPrice.travels.length
