@@ -1,71 +1,93 @@
 import React, { FC, useEffect, useState } from 'react'
-import { Form, Input, Modal, Select, Radio } from 'antd'
+import { Form, Input, Modal, Select, Radio, message } from 'antd'
 import { HttpCode } from '@/constants/HttpCode'
-import { VersionService } from '@/service/VersionService'
+import { MessageService } from '@/service/MessageService'
 
 /**
  * 添加版本弹框
  */
 
-export type DialogMode = 'add' | 'edit'
+export type DialogMode = 'get' | 'edit'
+
+export type DialogType = '0' | '1' | '2'
 interface Props {
   data: any
   mode: DialogMode
+  type: DialogType
   show: boolean
   /**内容修改成功回调，页面需要刷新数据 */
   onSuccess: () => void
   onClose: () => void
 }
-const AEVersionDialog: FC<Props> = ({ data, mode, show = true, onSuccess, onClose }) => {
+const AEVersionDialog: FC<Props> = ({ data, mode, type, show = false, onSuccess, onClose }) => {
   const [form] = Form.useForm()
-  const [title, setTitle] = useState('添加版本记录')
-  const [versionData, setVersionData] = useState({})
+  const { TextArea } = Input
+  const [title, setTitle] = useState('查看')
+  const [contentData, setContentData] = useState({})
   useEffect(() => {
-    if (data?.id) {
-      getVersion()
+    if (data?.messageType) {
+      getContent()
     }
-    if (mode == 'add') {
-      setTitle('添加版本记录')
+    if (mode == 'edit') {
+      setTitle('编辑')
     } else {
-      setTitle('修改版本记录')
+      setTitle('查看')
     }
   }, [show])
 
   useEffect(() => {
+    let messageType
+    if (data?.messageType == '10') {
+      messageType = `订单创建时`
+    } else if (data?.messageType == '11') {
+      messageType = `订单付款后`
+    } else if (data?.messageType == '12') {
+      messageType = `订单完成`
+    } else if (data?.messageType == '13') {
+      messageType = `订单退款成功`
+    } else if (data?.messageType == '14') {
+      messageType = `订单退款失败`
+    } else if (data?.messageType == '15') {
+      messageType = `提现审核成功`
+    } else if (data?.messageType == '16') {
+      messageType = `提现审核失败`
+    } else if (data?.messageType == '17') {
+      messageType = `发团通知`
+    } else if (data?.messageType == '18') {
+      messageType = `修改出发时间`
+    } else if (data?.messageType == '19') {
+      messageType = `行程结束`
+    } else if (data?.messageType == '110') {
+      messageType = `进团`
+    } else if (data?.messageType == '111') {
+      messageType = `出团`
+    }
     form.setFieldsValue({
-      clientVersionNo: versionData?.clientVersionNo,
-      fileUrl: versionData?.fileUrl,
-      versionContent: versionData?.versionContent,
-      remark: versionData?.remark,
-      mandatoryUpdate: versionData?.mandatoryUpdate,
+      titleType: contentData?.titleType,
+      messageType: messageType,
+      title: contentData?.title,
+      content: contentData?.content,
     })
-  }, [versionData])
+  }, [contentData])
 
-  const getVersion = () => {
-    VersionService.details({ id: data?.id }).then((res) => {
-      setVersionData(res.data)
+  const getContent = () => {
+    MessageService.templateGet({ messageType: data?.messageType, pushType: type }).then((res) => {
+      setContentData(res.data)
     })
   }
-
   /**提交数据 */
   const _handleUpdate = async () => {
     form
       .validateFields()
       .then((formData) => {
-        if (mode === 'add') {
-          // create
-          VersionService.add({ ...formData, platform: 2 }).then((res) => {
+        if (mode === 'edit') {
+          MessageService.templateEdit({ ...formData, pushType: type, messageType: data?.messageType }).then((res) => {
             if (res.code === HttpCode.success) {
               onSuccess()
             }
           })
         } else {
-          //edit
-          VersionService.add({ ...formData, platform: 2, id: data.id }).then((res) => {
-            if (res.code === HttpCode.success) {
-              onSuccess()
-            }
-          })
+          onSuccess()
         }
       })
       .catch((e) => {
@@ -90,23 +112,28 @@ const AEVersionDialog: FC<Props> = ({ data, mode, show = true, onSuccess, onClos
         autoComplete="off"
         form={form}
       >
-        <Form.Item label="版本号" name="clientVersionNo" rules={[{ message: '请输入图片相对路径' }]}>
-          <Input placeholder="(必填)" />
+        <Form.Item label="消息类型" name="messageType">
+          <Input readOnly={mode == 'edit' ? false : true} />
         </Form.Item>
-        <Form.Item label="下载链接" name="fileUrl" rules={[{ message: '请输入标题' }]}>
-          <Input />
-        </Form.Item>
-        <Form.Item label="更新内容" name="versionContent" rules={[{ message: '请输入跳转地址' }]}>
-          <Input placeholder="(必填)" />
-        </Form.Item>
-        <Form.Item label="备注" name="remark" rules={[{ message: '请输入排序号' }]}>
-          <Input />
-        </Form.Item>
-        <Form.Item label="是否强制更新" name="mandatoryUpdate" rules={[{ required: true }]}>
-          <Radio.Group defaultValue={0}>
-            <Radio value={1}>是</Radio>
-            <Radio value={0}>否</Radio>
-          </Radio.Group>
+        <Form.Item label="标签说明"></Form.Item>
+        {type == '1' ? (
+          ''
+        ) : (
+          <>
+            <Form.Item label="推送标题" name="titleType">
+              <Radio.Group defaultValue={0}>
+                <Radio value={1}>自定义</Radio>
+                <Radio value={0}>商品名称</Radio>
+              </Radio.Group>
+            </Form.Item>
+            <Form.Item label="" name="title" style={{ marginLeft: 120 }}>
+              <Input />
+            </Form.Item>
+          </>
+        )}
+
+        <Form.Item label="推送内容" name="content">
+          <TextArea rows={6} />
         </Form.Item>
       </Form>
     </Modal>

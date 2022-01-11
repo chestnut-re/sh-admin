@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 import { Radio, Row, Col, Space, Input, Select, Button, Form, DatePicker, Table } from 'antd'
 import { SelectState, OrderRoute, OrderType, OrderState } from '@/components/filter/formItem'
 import './index.less'
-import { OrderService } from '@/service/OrderService'
+import { AllocatedOrderService } from '@/service/OrderService'
 import ChannelService from '@/service/ChannelService'
 import { HttpCode } from '@/constants/HttpCode'
 import dayjs from 'dayjs'
@@ -30,19 +30,16 @@ const AllocatedListPage: React.FC = () => {
     form.validateFields().then((query) => {
       const payBeginTime = query.time ? dayjs(query.time[0]).format('YYYY-MM-DD HH:mm:ss') : ''
       const payEndTime = query.time ? dayjs(query.time[1]).format('YYYY-MM-DD HH:mm:ss') : ''
-      // OrderService.list({
-      //   current: pageIndex,
-      //   size: pageSize,
-      //   payBeginTime,
-      //   payEndTime,
-      //   channelId: query.channelId,
-      //   orderType: query.orderType,
-      //   source: query.source,
-      //   state: query.state,
-      // }).then((res) => {
-      //   setData(res.data.records)
-      //   setTotal(res.data.total)
-      // })
+      AllocatedOrderService.list({
+        current: pageIndex,
+        size: pageSize,
+        orderBeginTime: payBeginTime,
+        orderEndTime: payEndTime,
+        source: query.source,
+      }).then((res) => {
+        setData(res.data.records)
+        setTotal(res.data.total)
+      })
     })
   }
 
@@ -50,7 +47,6 @@ const AllocatedListPage: React.FC = () => {
     ChannelService.list({ pages: 1, size: 10 }).then((res) => {
       if (res.code === HttpCode.success) {
         setChannelData(res.data?.records ?? [])
-        console.log(channelData, 'ccc')
       }
     })
   }
@@ -164,31 +160,7 @@ const AllocatedListPage: React.FC = () => {
           form={form}
         >
           <Row gutter={[5, 0]} style={{ paddingLeft: '40px' }}>
-            {/* <Col span={6}>
-              <Select value={selData} style={{ width: 120 }} onChange={(value) => setSelData(value)}>
-                {selectData?.map((item) => {
-                  return (
-                    <Option value={item.value} key={item.key}>
-                      {item.value}
-                    </Option>
-                  )
-                })}
-              </Select>
-              {selData === '渠道名称' ? (
-                <Select value={selData} style={{ width: 120 }} onChange={(value) => setSelData(value)}>
-                  {selectData?.map((item) => {
-                    return (
-                      <Option value={item.value} key={item.key}>
-                        {item.value}
-                      </Option>
-                    )
-                  })}
-                </Select>
-              ) : (
-                <Input style={{ width: 120 }} />
-              )}
-            </Col> */}
-            <Col span={2} className="table-from-label">
+            {/* <Col span={2} className="table-from-label">
               渠道名称
             </Col>
             <Col span={4}>
@@ -203,34 +175,26 @@ const AllocatedListPage: React.FC = () => {
                   })}
                 </Select>
               </Form.Item>
-            </Col>
+            </Col> */}
             <Col span={2} className="table-from-label">
               下单时间
             </Col>
-            <Col span={4}>
+            <Col span={6}>
               <Form.Item name="time">
                 <RangePicker showTime />
               </Form.Item>
             </Col>
-            <Col span={2} className="table-from-label">
+            {/* <Col span={2} className="table-from-label">
               订单类型
             </Col>
             <Col span={2}>
               <OrderType name="orderType" />
-            </Col>
+            </Col> */}
             <Col span={2} className="table-from-label">
               下单途径
             </Col>
             <Col span={2}>
               <OrderRoute name="source" />
-            </Col>
-          </Row>
-          <Row gutter={[5, 0]} style={{ marginLeft: '-52px' }} justify="start">
-            <Col span={4} className="table-from-label">
-              订单/售后状态
-            </Col>
-            <Col span={2}>
-              <OrderState name="state" />
             </Col>
             <Form.Item wrapperCol={{ offset: 4, span: 0 }}>
               <Space>
@@ -243,6 +207,14 @@ const AllocatedListPage: React.FC = () => {
               </Space>
             </Form.Item>
           </Row>
+          {/* <Row gutter={[5, 0]} style={{ marginLeft: '-52px' }} justify="start"> */}
+          {/* <Col span={4} className="table-from-label">
+              订单/售后状态
+            </Col>
+            <Col span={2}>
+              <OrderState name="state" />
+            </Col> */}
+          {/* </Row> */}
         </Form>
       </div>
       <Table

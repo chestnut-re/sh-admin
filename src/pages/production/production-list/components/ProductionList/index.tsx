@@ -48,7 +48,7 @@ const ProductionList: React.FC<any> = observer(({}) => {
       width: 150,
     },
     {
-      title: '商品类型标签',
+      title: '商品分类',
       dataIndex: 'goodsTypeTag',
       width: 100,
     },
@@ -76,6 +76,10 @@ const ProductionList: React.FC<any> = observer(({}) => {
     {
       title: '累计销量',
       dataIndex: 'num',
+    },
+    {
+      title: '营销活动',
+      dataIndex: '',
     },
     {
       title: '已上架渠道',

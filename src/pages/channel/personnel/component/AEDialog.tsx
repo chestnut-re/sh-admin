@@ -24,6 +24,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
   const [structure, setStructure] = useState<any[]>([])
   const [leader, setLeader] = useState<any[]>([])
   const [channelId, setChannelId] = useState<string>('')
+  const [name, setName] = useState<string>('')
   const [level, setLevel] = useState<number>(0)
   useEffect(() => {
     getChannel()
@@ -72,7 +73,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
     PersonService.getStructure().then((res) => {
       const data = cityDispose([res?.data], 'children')
       const str = data[0]['level'] == 1 ? data[0]['children'] : data
-      console.log(str)
+      // console.log(str)
       setStructure(str)
     })
   }
@@ -94,13 +95,15 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
     form
       .validateFields()
       .then((formData) => {
-        console.log(formData)
+        console.log(channelId,'------')
+        console.log(name,'----0000')
+        
         if (mode === 'add') {
           const params = { ...formData }
           params.state = params.state ? 1 : 0
           delete params.channel
           params.address = lastOneJoin(formData.address)
-          PersonService.add({ ...params }).then((res) => {
+          PersonService.add({ ...params,channelId:channelId,channelName:name }).then((res) => {
             if (res.code === HttpCode.success) {
               onSuccess()
             }
@@ -125,8 +128,9 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
 
   /**渠道修改了 */
   const changeStructure = (e, data) => {
-    console.log(e, data)
+    // console.log(e, data)
     setLevel(data[data.length - 1]?.level)
+    setName(data[data.length - 1]?.name)
     if (e.length > 0) {
       setChannelId(e[e.length - 1])
     }

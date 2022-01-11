@@ -6,6 +6,9 @@ import dayjs from 'dayjs'
 import moment from 'moment'
 import UploadImage from '@/components/formItem/UploadImage'
 import { formateTime } from '@/utils/timeUtils'
+import locale from 'antd/lib/date-picker/locale/zh_CN'
+import 'moment/locale/zh-cn'
+moment.locale('zh-cn')
 
 export type DialogMode = 'add' | 'edit'
 
@@ -23,6 +26,7 @@ interface Props {
  */
 const AEBannerDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) => {
   const [form] = Form.useForm()
+  const { RangePicker } = DatePicker
 
   useEffect(() => {
     form.setFieldsValue({
@@ -40,9 +44,8 @@ const AEBannerDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClos
     form
       .validateFields()
       .then((formData) => {
-        console.log(formData)
-        formData.startDate = formateTime(formData.startDate)
-        formData.endDate = formateTime(formData.endDate)
+        formData.startDate = formData.time ? dayjs(formData.time[0]).format('YYYY-MM-DD HH:mm:ss') : ''
+        formData.endDate = formData.time ? dayjs(formData.time[1]).format('YYYY-MM-DD HH:mm:ss') : ''
         if (mode === 'add') {
           // create
           BannerService.newBanner({ ...formData }).then((res) => {
@@ -70,7 +73,7 @@ const AEBannerDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClos
   }
 
   return (
-    <Modal title="用户" visible={show} onOk={_handleUpdate} onCancel={_formClose}>
+    <Modal title="轮播图配置" visible={show} onOk={_handleUpdate} onCancel={_formClose}>
       <Form
         name="basic"
         labelCol={{ span: 6 }}
@@ -91,11 +94,8 @@ const AEBannerDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClos
         <Form.Item label="排序" name="sort">
           <Input />
         </Form.Item>
-        <Form.Item label="展示开始时间" name="startDate">
-          <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" />
-        </Form.Item>
-        <Form.Item label="展示结束时间" name="endDate">
-          <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" />
+        <Form.Item label="展示时段" name="time">
+          <RangePicker showTime locale={locale} />
         </Form.Item>
       </Form>
     </Modal>
