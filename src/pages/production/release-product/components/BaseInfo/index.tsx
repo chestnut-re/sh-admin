@@ -85,20 +85,19 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
     <Form {...layout} form={form} colon={false} size="large" name="product-release" className="BaseInfo_root">
       <Row>
         <Col span={20}>
-          <Form.Item name="goodsTypeTag" label="商品分类">
+          <Form.Item name="goodsTypeTag" label="商品分类" rules={[{ required: true, message: '请选择商品分类！' }]}>
             <ProductionTag />
           </Form.Item>
           <Form.Item
             name="goodsName"
             label="商品主标题"
             rules={[
-              // { required: true, message: '请输入商品主标题' },
               {
                 required: true,
                 message: '请输入商品主标题',
                 validator: async (_, names) => {
                   if (!names.trim()) {
-                    return Promise.reject(new Error('请输入商品主标题'))
+                    return Promise.reject(new Error('请输入商品主标题！'))
                   }
                 },
               },
@@ -106,10 +105,24 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
           >
             <Input maxLength={20} />
           </Form.Item>
-          <Form.Item name="goodsNickName" label="商品副标题">
+          <Form.Item
+            name="goodsNickName"
+            label="商品副标题"
+            rules={[
+              {
+                required: true,
+                message: '请输入商品副标题',
+                validator: async (_, names) => {
+                  if (!names.trim()) {
+                    return Promise.reject(new Error('请输入商品副标题！'))
+                  }
+                },
+              },
+            ]}
+          >
             <Input maxLength={40} />
           </Form.Item>
-          <Form.Item name="goodsType" label="商品类型">
+          <Form.Item name="goodsType" label="商品类型" rules={[{ required: true, message: '请选择商品类型！' }]}>
             <Radio.Group>
               <Radio value={1}>长线</Radio>
               <Radio value={2}>短线</Radio>
@@ -207,7 +220,11 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
             </Row>
           )}
 
-          <Form.Item name="refundAndChangePolicy" label="退改政策">
+          <Form.Item
+            name="refundAndChangePolicy"
+            label="退改政策"
+            rules={[{ required: true, message: '请选择退改政策！' }]}
+          >
             <Policy />
           </Form.Item>
         </Col>
