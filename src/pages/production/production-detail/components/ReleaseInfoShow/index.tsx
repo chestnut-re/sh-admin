@@ -35,7 +35,7 @@ const ReleaseInfoShow: React.FC = () => {
   }
   const columns = [
     {
-      title: '分佣类型',
+      title: '分佣方案名称',
       dataIndex: 'planName',
       key: 'planName',
     },
@@ -45,12 +45,12 @@ const ReleaseInfoShow: React.FC = () => {
       key: 'distScale',
     },
     {
-      title: '应用渠道',
+      title: '分中心渠道等级',
       dataIndex: 'channelId',
       key: 'channelId',
     },
     {
-      title: '结算要求',
+      title: '分中心名称',
       dataIndex: 'channelName',
       key: 'channelName',
     },
@@ -95,12 +95,10 @@ const ReleaseInfoShow: React.FC = () => {
           </div>
         </div>
         <div className="right">
-          <div>发布渠道</div>
-          <div>上架人</div>
+          <div>发布渠道: {data?.createChannelName}</div>
+          <div>上架人: {data?.createUserName}</div>
           <div>上架时间</div>
-          <div className="btn">
-            {/* <button>查看发布审核记录</button> */}
-          </div>
+          <div className="btn">{/* <button>查看发布审核记录</button> */}</div>
         </div>
       </div>
     </div>
