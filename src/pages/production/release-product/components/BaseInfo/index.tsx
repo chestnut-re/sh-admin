@@ -113,8 +113,8 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
           </Form.Item>
 
           <Row>
-            <Col span={10}>
-              <Form.Item label="商品限购">
+            <Col span={8}>
+              <Form.Item label="商品限购" labelCol={{ span: 8 }} wrapperCol={{ span: 8 }}>
                 <Switch
                   checked={goodsLimit}
                   checkedChildren="开启"
@@ -133,6 +133,7 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
                       addonAfter="天"
                       min={0}
                       step={1}
+                      defaultValue={180}
                       formatter={(value: any) => {
                         if (value) {
                           return Math.floor(value)
@@ -142,9 +143,9 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
                     />
                   </Form.Item>
                 </Col>
-                <Col span={8}>
+                <Col span={10}>
                   <Form.Item name={['purchaseConfig', 'purchaseNum']} label="">
-                    <InputNumber addonBefore="限购" addonAfter="份" min={0} defaultValue={180} step={1} />
+                    <InputNumber addonBefore="限购" addonAfter="份" min={0} step={1} />
                   </Form.Item>
                 </Col>
               </>
@@ -153,8 +154,8 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
 
           {goodsLimit && (
             <Row>
-              <Col span={10}>
-                <Form.Item label="限购提升">
+              <Col span={8}>
+                <Form.Item label="限购提升" labelCol={{ span: 8 }} wrapperCol={{ span: 8 }}>
                   <Switch
                     checked={goodsLimitUp}
                     checkedChildren="开启"
@@ -177,7 +178,7 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
                       </Select>
                     </Form.Item>
                   </Col>
-                  <Col span={8}>
+                  <Col span={10}>
                     <Form.Item name={['purchaseConfig', 'addNum']} label="">
                       <InputNumber addonBefore="限购加" addonAfter="份" min={0} />
                     </Form.Item>
