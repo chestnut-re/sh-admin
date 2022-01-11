@@ -85,7 +85,7 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
     <Form {...layout} form={form} colon={false} size="large" name="product-release" className="BaseInfo_root">
       <Row>
         <Col span={20}>
-          <Form.Item name="goodsTypeTag" label="商品分类" rules={[{ required: true, message: '请选择商品分类！' }]}>
+          <Form.Item name="goodsTypeTag" label="商品分类">
             <ProductionTag />
           </Form.Item>
           <Form.Item
@@ -105,24 +105,10 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
           >
             <Input maxLength={20} />
           </Form.Item>
-          <Form.Item
-            name="goodsNickName"
-            label="商品副标题"
-            rules={[
-              {
-                required: true,
-                message: '请输入商品副标题',
-                validator: async (_, names) => {
-                  if (!names.trim()) {
-                    return Promise.reject(new Error('请输入商品副标题！'))
-                  }
-                },
-              },
-            ]}
-          >
+          <Form.Item name="goodsNickName" label="商品副标题">
             <Input maxLength={40} />
           </Form.Item>
-          <Form.Item name="goodsType" label="商品类型" rules={[{ required: true, message: '请选择商品类型！' }]}>
+          <Form.Item name="goodsType" label="商品类型">
             <Radio.Group>
               <Radio value={1}>长线</Radio>
               <Radio value={2}>短线</Radio>
@@ -130,7 +116,7 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
           </Form.Item>
 
           <Row>
-            <Col span={8}>
+            <Col span={6}>
               <Form.Item label="商品限购" labelCol={{ span: 8 }} wrapperCol={{ span: 8 }}>
                 <Switch
                   checked={goodsLimit}
@@ -144,7 +130,7 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
             </Col>
             {goodsLimit && (
               <>
-                <Col span={6}>
+                <Col span={5}>
                   <Form.Item name={['purchaseConfig', 'purchaseDay']} label="">
                     <InputNumber
                       addonAfter="天"
@@ -160,7 +146,7 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
                     />
                   </Form.Item>
                 </Col>
-                <Col span={10}>
+                <Col span={11}>
                   <Form.Item name={['purchaseConfig', 'purchaseNum']} label="">
                     <InputNumber addonBefore="限购" addonAfter="份" min={0} step={1} />
                   </Form.Item>
@@ -171,7 +157,7 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
 
           {goodsLimit && (
             <Row>
-              <Col span={8}>
+              <Col span={6}>
                 <Form.Item label="限购提升" labelCol={{ span: 8 }} wrapperCol={{ span: 8 }}>
                   <Switch
                     checked={goodsLimitUp}
@@ -185,7 +171,7 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
               </Col>
               {goodsLimitUp && (
                 <>
-                  <Col span={6}>
+                  <Col span={5}>
                     <span>用户分享商品且</span>
                     <Form.Item name={['purchaseConfig', 'addType']} label="">
                       <Select>
@@ -195,7 +181,7 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
                       </Select>
                     </Form.Item>
                   </Col>
-                  <Col span={7}>
+                  <Col span={5}>
                     <Form.Item name={['purchaseConfig', 'finishNum']} label="">
                       <InputNumber
                         addonAfter="笔订单"
@@ -210,7 +196,7 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
                       />
                     </Form.Item>
                   </Col>
-                  <Col span={10}>
+                  <Col span={8}>
                     <Form.Item name={['purchaseConfig', 'addNum']} label="">
                       <InputNumber addonBefore="限购加" addonAfter="份" min={0} />
                     </Form.Item>
@@ -220,11 +206,7 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
             </Row>
           )}
 
-          <Form.Item
-            name="refundAndChangePolicy"
-            label="退改政策"
-            rules={[{ required: true, message: '请选择退改政策！' }]}
-          >
+          <Form.Item name="refundAndChangePolicy" label="退改政策">
             <Policy />
           </Form.Item>
         </Col>
