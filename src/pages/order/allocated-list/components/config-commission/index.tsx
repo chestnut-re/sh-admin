@@ -14,7 +14,7 @@ const ConfigCommission: React.FC = () => {
           <span>￥10</span>
         </div>
         <div className="mid">
-          <div className="midLeft">
+          {/* <div className="midLeft">
             <p style={{ textAlign: 'center' }}>关系归属渠道</p>
             <div className="guanxi">
               <span>上上上级姓名</span>
@@ -41,7 +41,7 @@ const ConfigCommission: React.FC = () => {
               <span>%</span>
               <span style={{ marginLeft: '10px' }}>￥0</span>
             </div>
-          </div>
+          </div> */}
           <div className="midMid">
             <p style={{ textAlign: 'center' }}>推荐渠道</p>
             <div className="guanxi">

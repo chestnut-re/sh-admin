@@ -15,15 +15,15 @@ const AllocatedListPage: React.FC = () => {
   const [form] = Form.useForm()
   const { Option } = Select
   const { RangePicker } = DatePicker
-  const [data, setData] = useState([])
+  // const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [total, setTotal] = useState()
   const [channelData, setChannelData] = useState([])
 
   useEffect(() => {
-    // loadData(pageIndex)
-    getChannel()
+    loadData(pageIndex)
+    // getChannel()
   }, [pageIndex])
 
   const loadData = (pageIndex) => {
@@ -37,7 +37,7 @@ const AllocatedListPage: React.FC = () => {
         orderEndTime: payEndTime,
         source: query.source,
       }).then((res) => {
-        setData(res.data.records)
+        // setData(res.data.records)
         setTotal(res.data.total)
       })
     })
@@ -50,6 +50,12 @@ const AllocatedListPage: React.FC = () => {
       }
     })
   }
+
+  const data = [
+    {
+      orderNo: 1,
+    },
+  ]
 
   const columns = [
     {
@@ -160,22 +166,11 @@ const AllocatedListPage: React.FC = () => {
           form={form}
         >
           <Row gutter={[5, 0]} style={{ paddingLeft: '40px' }}>
-            {/* <Col span={2} className="table-from-label">
-              渠道名称
-            </Col>
             <Col span={4}>
-              <Form.Item name="channelId">
-                <Select value={channelData} style={{ width: 120 }}>
-                  {channelData?.map((item: any) => {
-                    return (
-                      <Option value={item.id} key={item.id}>
-                        {item.name}
-                      </Option>
-                    )
-                  })}
-                </Select>
+              <Form.Item name="name">
+                <Input />
               </Form.Item>
-            </Col> */}
+            </Col>
             <Col span={2} className="table-from-label">
               下单时间
             </Col>
@@ -184,12 +179,6 @@ const AllocatedListPage: React.FC = () => {
                 <RangePicker showTime />
               </Form.Item>
             </Col>
-            {/* <Col span={2} className="table-from-label">
-              订单类型
-            </Col>
-            <Col span={2}>
-              <OrderType name="orderType" />
-            </Col> */}
             <Col span={2} className="table-from-label">
               下单途径
             </Col>
@@ -207,14 +196,6 @@ const AllocatedListPage: React.FC = () => {
               </Space>
             </Form.Item>
           </Row>
-          {/* <Row gutter={[5, 0]} style={{ marginLeft: '-52px' }} justify="start"> */}
-          {/* <Col span={4} className="table-from-label">
-              订单/售后状态
-            </Col>
-            <Col span={2}>
-              <OrderState name="state" />
-            </Col> */}
-          {/* </Row> */}
         </Form>
       </div>
       <Table

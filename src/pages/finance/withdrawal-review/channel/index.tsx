@@ -39,8 +39,10 @@ const ChannelPage: React.FC = () => {
         sts: query.sts,
         name: query.name,
       }).then((res) => {
+        // if (res.code === HttpCode.success) {
         setData(res.records)
         setTotal(res.total)
+        // }
       })
     })
   }
