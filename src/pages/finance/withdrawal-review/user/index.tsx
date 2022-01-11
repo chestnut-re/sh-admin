@@ -1,7 +1,6 @@
 import { Space, Table, Tag, Form, Row, Col, Button, DatePicker, Input, Image, Select } from 'antd'
 import React, { useEffect, useState } from 'react'
 import ChannelService from '@/service/ChannelService'
-import dayjs from 'dayjs'
 import { HttpCode } from '@/constants/HttpCode'
 import { WithdrawalReviewService } from '@/service/FinanceAccountService'
 import AEBannerDialog, { DialogMode } from './components/AEBannerDialog'
@@ -39,8 +38,10 @@ const UserPage: React.FC = () => {
         sts: query.sts,
         name: query.name,
       }).then((res) => {
+        // if (res.code === HttpCode.success) {
         setData(res.records)
         setTotal(res.total)
+        // }
       })
     })
   }
