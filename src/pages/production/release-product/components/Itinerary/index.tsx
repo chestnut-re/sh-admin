@@ -111,7 +111,9 @@ const Itinerary = (props, ref) => {
                     </Sticky>
                   )
                 }}
-                tabBarExtraContent={<Button onClick={() => productionStore.copyGood()}>复制</Button>}
+                tabBarExtraContent={
+                  dialogMode === 'single' ? <Button onClick={() => productionStore.copyGood()}>复制</Button> : <></>
+                }
               >
                 {panesData.map((item) => (
                   <Tabs.TabPane tab={item.title} key={item.key}>
