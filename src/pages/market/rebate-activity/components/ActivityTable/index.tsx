@@ -1,6 +1,6 @@
 /*
  * @Description: 配置关联清单
- * @LastEditTime: 2022-01-11 19:34:39
+ * @LastEditTime: 2022-01-12 11:12:33
  */
 import { Table, Space, Button, Modal, Form, Row, Col, Select } from 'antd'
 import { taskService } from '@/service/marketService'
@@ -37,7 +37,7 @@ const ActivityTableModal: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess
   }, [goodsShow])
   const getGoodsDetail = () => {
     const params = form.getFieldsValue()
-    taskService.list({ current: 1, size: 100, ...params }).then((res) => {
+    taskService.list({ current: 1, size: 1000, ...params }).then((res) => {
       setData(res?.data.records)
     })
   }
@@ -131,7 +131,6 @@ const ActivityTableModal: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess
           columns={columns}
           rowKey='id'
           rowSelection={{ ...rowSelection }}
-          pagination={false}
           dataSource={data}
         />
       </Modal>
