@@ -1,6 +1,6 @@
 /*
  * @Description:查看
- * @LastEditTime: 2022-01-11 15:05:06
+ * @LastEditTime: 2022-01-11 19:03:48
  */
 import React, { useState, FC, useEffect } from 'react'
 import { Drawer, Button, Descriptions, Table, Row, Col } from 'antd'
@@ -15,6 +15,7 @@ const BasicInfo: FC<props> = ({ data }) => {
 
   useEffect(() => {
     if (!!data) {
+      console.log(JSON.parse(data),'JSON.parse(data)JSON.parse(data)JSON.parse(data)')
       let list = []
       marketService.get(JSON.parse(data)?.rebateId).then((res) => {
         setDataSource(res?.data)

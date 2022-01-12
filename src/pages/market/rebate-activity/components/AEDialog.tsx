@@ -1,6 +1,6 @@
 /*
  * @Description:
- * @LastEditTime: 2022-01-06 14:43:16
+ * @LastEditTime: 2022-01-11 17:30:14
  */
 import { Form, Input, Modal, InputNumber, Radio, Switch, Row, Col, Checkbox, DatePicker } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
@@ -106,7 +106,10 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
         {/* <Form.Item label="活动结束时间" name="endTime" rules={[{ required: true, message: '请输入' }]}>
           <Input style={{ width: '200px' }} />
         </Form.Item> */}
-        <Form.Item label="返利比例" name="scale">
+        <Form.Item label="返利比例" name="scale" rules={[{
+                    pattern: /^[0-9]\d{0,1}$/,
+                    message: '请输入0-100的整数!',
+                  }]}>
           <InputNumber addonBefore="实付款" style={{ width: '160px' }} addonAfter="%" type="number" />
         </Form.Item>
         <Form.Item label="分享文案" name="description" rules={[{ required: true, message: '请输入' }]}>

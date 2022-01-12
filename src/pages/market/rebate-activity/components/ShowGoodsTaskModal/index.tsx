@@ -1,10 +1,10 @@
 /*
  * @Description:
- * @LastEditTime: 2022-01-11 10:57:17
+ * @LastEditTime: 2022-01-11 19:24:11
  */
 //             <Table rowKey="goodsNo" bordered dataSource={dataSourceValue} columns={columns} pagination={false} />
 
-import React, { useEffect,useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Form, Button, Table, Col, Row, Space } from 'antd'
 interface Props {
   data: any
@@ -13,7 +13,7 @@ interface Props {
 const ShowGoodsTaskModal: React.FC<Props> = ({ data, showType }) => {
   const [RoleData, setRoleData] = useState([])
   useEffect(() => {
-    if(data){
+    if (!!data) {
       setRoleData(JSON.parse(data))
     }
   }, [data, showType])
@@ -39,7 +39,7 @@ const ShowGoodsTaskModal: React.FC<Props> = ({ data, showType }) => {
             title: '关联时间',
             align: 'center',
             dataIndex: 'releTime',
-          }
+          },
         ]
       : [
           {
@@ -50,22 +50,23 @@ const ShowGoodsTaskModal: React.FC<Props> = ({ data, showType }) => {
           {
             title: '清单ID',
             align: 'center',
-            dataIndex: 'account',
+            dataIndex: 'id',
           },
           {
             title: '清单名称',
             align: 'center',
-            dataIndex: 'password',
+            dataIndex: 'name',
           },
           {
             title: '关联时间',
             align: 'center',
             dataIndex: 'releTime',
-          }
+          },
         ]
 
   return (
     <>
+      {JSON.parse(data)}
       <Table key="id" columns={columns} dataSource={[...RoleData]} pagination={false} />
     </>
   )

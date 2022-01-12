@@ -13,7 +13,7 @@ import ActivityTable from './components/ActivityTable'
 import ModalDialog from '@/components/components/ModalDialog'
 import ShowTaskModal from './components/ShowTaskModal'
 import ShowGoodsTaskModal from './components/ShowGoodsTaskModal'
-import {formateTime} from '@/utils/timeUtils'
+import { formateTime } from '@/utils/timeUtils'
 const RebateActivity: React.FC = () => {
   const { RangePicker } = DatePicker
   const [form] = Form.useForm()
@@ -23,7 +23,7 @@ const RebateActivity: React.FC = () => {
   const [total, setTotal] = useState()
   const [checkState, setCheckState] = useState('')
   const [showDialog, setShowDialog] = useState(false)
-  const [selectedData, setSelectedData] = useState(null)
+  const [selectedData, setSelectedData] = useState('')
   const [dialogMode, setDialogMode] = useState<DialogMode>('add')
   const [deShowDialog, setDeShowDialog] = useState(false)
   const [goodsShowDialog, setGoodsShowDialog] = useState(false)
@@ -87,7 +87,7 @@ const RebateActivity: React.FC = () => {
           onClick={() => {
             setShowType('goods')
             setShowGoodsDialog(true)
-            setModalData(JSON.stringify(record.goodsList))
+            setModalData(JSON.stringify(record.goodsList ?? []))
             console.log(showType)
           }}
         >
@@ -100,11 +100,17 @@ const RebateActivity: React.FC = () => {
       render: (text, record, index) => (
         <div
           onClick={() => {
+            const data = (record.paperList ?? []).map((res) => {
+              return {
+                releTime: res.releTime,
+                name: res.name,
+                id: res.id,
+              }
+            })
             setShowType('task')
             setShowGoodsDialog(true)
-            setModalData(JSON.stringify(record.paperList))
-
-            console.log(showType)
+            // setModalData(JSON.stringify(record.paperList ?? []))
+            setModalData(JSON.stringify(data))
           }}
         >
           {(record.paperList ?? []).length}
@@ -153,6 +159,7 @@ const RebateActivity: React.FC = () => {
     const list = (record.paperList ?? []).map((res) => {
       return res.id
     })
+
     setSelectRecord(record.id)
     setrebateName(record.name)
     setActivityShowDialog(true)
@@ -189,13 +196,13 @@ const RebateActivity: React.FC = () => {
         })
     }
     setActivityShowDialog(false)
+    setActivityRoleList([])
   }
 
   /**删除 */
   const _delItem = (record) => {
     Modal.confirm({
       title: '提示',
-      // icon: <ExclamationCircleOutlined />,
       content: '确定要删除当前',
       okText: '确认',
       cancelText: '取消',
@@ -213,10 +220,10 @@ const RebateActivity: React.FC = () => {
   /**编辑 */
   const _editDialog = (record) => {
     console.log(record, 'record')
-    marketService.get(record.id).then((res) => {
-      setDeShowDialog(!deShowDialog)
-      setSelectedData(res?.data)
-    })
+    const data = { ...record }
+    data.rebateId = record.id
+    setDeShowDialog(!deShowDialog)
+    setSelectedData(JSON.stringify(data ?? []))
   }
 
   /**添加 */
@@ -239,13 +246,13 @@ const RebateActivity: React.FC = () => {
   }
 
   const _onDialogSuccess = () => {
-    setSelectedData(null)
+    setSelectedData('')
     setShowDialog(false)
     loadData(pageIndex)
   }
 
   const _onDialogClose = () => {
-    setSelectedData(null)
+    setSelectedData('')
     setShowDialog(false)
   }
 
@@ -337,7 +344,7 @@ const RebateActivity: React.FC = () => {
       <DEDialog
         show={deShowDialog}
         onChange={() => setDeShowDialog(false)}
-        data={() => <RebateBasicInfo data={JSON.stringify(selectedData)}></RebateBasicInfo>}
+        data={() => <RebateBasicInfo data={selectedData}></RebateBasicInfo>}
         // data={() => <ShowRefund data={selectedData} editGo={_editGo}></ShowRefund>}
       ></DEDialog>
 
@@ -351,7 +358,10 @@ const RebateActivity: React.FC = () => {
         goodsShow={activityShowDialog}
         onSuccess={activityOnSuccess}
         goodsIdList={activityRoleList}
-        onClose={() => setActivityShowDialog(false)}
+        onClose={() => {
+          setActivityShowDialog(false)
+          setActivityRoleList([])
+        }}
       ></ActivityTable>
       <ModalDialog
         show={showGoodsDialog}
