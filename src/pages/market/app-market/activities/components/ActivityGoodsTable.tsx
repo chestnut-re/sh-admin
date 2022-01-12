@@ -1,6 +1,6 @@
 /*
  * @Description: 配置商品详情
- * @LastEditTime: 2022-01-12 11:19:28
+ * @LastEditTime: 2022-01-12 15:31:14
  */
 import { Table, Space, Button, Modal, Form, Row, Col } from 'antd'
 import { ActivitiesService } from '@/service/ActivitiesService'
@@ -68,7 +68,7 @@ const ActivityGoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess
   }
   const resetTable = () => {
     form.resetFields()
-    getGoodsDetail
+    getGoodsDetail()
     console.log('---')
   }
   return (
