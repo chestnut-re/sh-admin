@@ -19,6 +19,7 @@ class ProductionDetailData {
       addTemplate: action,
       removeTemplate: action,
       saveTemplate: action,
+      setPromotionImgUrl: action,
     })
   }
 
@@ -80,6 +81,10 @@ class ProductionDetailData {
 
   saveTemplateEnd(d) {
     this.data.goodsDetail.goodsDetailEnd = { ...d }
+  }
+
+  setPromotionImgUrl(value) {
+    this.data.promotionalImageUrl = value
   }
 
   clearData() {

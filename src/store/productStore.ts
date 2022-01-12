@@ -124,6 +124,16 @@ class ProductionData {
       return item
     })
     // end
+    // 重置行程信息
+    const nowDay = Date.now()
+    this.data.goodsPrices = [
+      {
+        startDate: nowDay,
+        endDate: nowDay,
+        key: getNanoId(),
+        travels: [{ whatDay: whatDay[0], key: getNanoId() }],
+      },
+    ]
     console.log(this.data)
   }
 
@@ -147,6 +157,7 @@ class ProductionData {
     const newGoodsPrices = cloneDeep(this.data.goodsPrices[this.data.goodsPrices.length - 1])
     const k = getNanoId()
     newGoodsPrices.key = k
+    delete newGoodsPrices.goodsPriceId
     this.data.goodsPrices = [...this.data.goodsPrices, newGoodsPrices]
   }
 

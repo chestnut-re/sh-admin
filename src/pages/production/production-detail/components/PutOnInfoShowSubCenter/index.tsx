@@ -7,16 +7,16 @@ import { useHistory } from 'react-router-dom'
 import './index.less'
 
 /**
- * 上架信息展示：总公司视角
+ * 上架信息展示: 分中心视角
  */
-const PutOnInfoShow: React.FC = () => {
+const PutOnInfoShowSubCenter: React.FC = () => {
   const history = useHistory()
   const query = useQuery()
   const { productionDetailStore } = useStore()
   const [data, setData] = useState<any>({})
 
   useEffect(() => {
-    const id = query.get('channelGoodsId') ?? ''
+    const id = query.get('id') ?? ''
     ProductionService.channelGoodsListByGoodsId(id).then((res) => {
       setData(res.data)
     })
@@ -45,4 +45,4 @@ const PutOnInfoShow: React.FC = () => {
   )
 }
 
-export default observer(PutOnInfoShow)
+export default observer(PutOnInfoShowSubCenter)

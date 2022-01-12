@@ -18,26 +18,18 @@ const CenterPutOnRequestShowSubCenter: React.FC = () => {
   const { productionDetailStore } = useStore()
   const [data, setData] = useState<any>({})
   const [distPlan, setDistPlan] = useState<any[]>([])
-  const dataList = [
-    // {
-    //   key: '1',
-    //   firstName: 'John',
-    //   lastName: 'Brown',
-    //   age: 32,
-    //   address: 'New York No. 1 Lake Park',
-    //   tags: ['nice', 'developer'],
-    // }
-  ]
+
   const layout = {
     labelCol: { span: 4 },
     wrapperCol: { span: 20 },
   }
   useEffect(() => {
+    console.log('subcenter CenterPutOnRequestShowSubCenter');
     const id = query.get('channelGoodsId') ?? ''
     ProductionService.centerPutOnRequestGet(id).then((res) => {
       setData(res.data)
       const arr: any = []
-      treeToList(arr, res.data.channelPlanList)
+      treeToList(arr, res.data?.channelPlanList)
       setDistPlan(arr)
     })
   }, [])

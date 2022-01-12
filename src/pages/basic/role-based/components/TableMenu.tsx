@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description:功能权限
- * @LastEditTime: 2022-01-04 17:55:20
+ * @LastEditTime: 2022-01-12 13:58:11
  */
 import { Table, Switch, Space, message, Menu } from 'antd'
 import React, { useState, useEffect } from 'react'
@@ -15,6 +15,7 @@ interface Props {
   adminType: boolean
   bType: boolean
   roleList: any
+  datachannel:any
   getFucValue: (string) => void
   _setBType: (string) => void
   _setAdminType: (string) => void
@@ -24,7 +25,7 @@ const TableMenu: React.FC<Props> = ({
   adminType,
   bType,
   roleList,
-  channelDetail,
+  datachannel,
   getFucValue,
   _setAdminType,
   _setBType,
@@ -40,11 +41,12 @@ const [adminActList,setAdminActList] = useState([])
     init()
  
     // setSelectedRowKeys([])
-  }, [switchFc])
+  }, [switchFc,datachannel])
 
   const init = async () => {
     const res = await getMenusType({
       platformType: switchFc == 'admin' ? 0 : 1,
+      channelId:datachannel?.channelId
     })
     const menuList = cityDispose(res?.data, 'children')
     setMenu(menuList)

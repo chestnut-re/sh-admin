@@ -21,12 +21,10 @@ const CenterPutOnRequestShow: React.FC = () => {
   const [distPlan, setDistPlan] = useState<any[]>([])
 
   useEffect(() => {
-    const id = query.get('channelGoodsId') ?? ''
-    ProductionService.centerPutOnRequestGet(id).then((res) => {
+    console.log('center CenterPutOnRequestShow');
+    const id = query.get('id') ?? ''
+    ProductionService.channelGoodsListByGoodsId(id).then((res) => {
       setData(res.data)
-      const arr: any = []
-      treeToList(arr, res.data.distPlan)
-      setDistPlan(arr)
     })
   }, [])
 
@@ -67,7 +65,7 @@ const CenterPutOnRequestShow: React.FC = () => {
   return (
     <div className="CenterPutOnRequestShow__root">
       <h4>5. 上架申请信息</h4>
-      {/* <div>{JSON.stringify(data)}</div> */}
+      <div>{JSON.stringify(data)}</div>
       <div className="info">
         <div className="one-info">
           <div className="canal">上架渠道 {distPlan?.length} </div>

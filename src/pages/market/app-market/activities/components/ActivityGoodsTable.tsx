@@ -1,6 +1,6 @@
 /*
  * @Description: 配置商品详情
- * @LastEditTime: 2022-01-07 14:44:08
+ * @LastEditTime: 2022-01-12 15:31:14
  */
 import { Table, Space, Button, Modal, Form, Row, Col } from 'antd'
 import { ActivitiesService } from '@/service/ActivitiesService'
@@ -11,7 +11,7 @@ import React, { useEffect, useState } from 'react'
 interface Props {
   goodsShow: boolean
   goodsIdList: any
-  onSuccess: (any:any,e?:any) => void
+  onSuccess: (any: any, e?: any) => void
   onClose: () => void
 }
 const ActivityGoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess, onClose }) => {
@@ -35,11 +35,11 @@ const ActivityGoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess
   const getGoodsDetail = async () => {
     const params = form.getFieldsValue()
     const res = await ActivitiesService.activityGoodsPage({ ...params })
-    setData(res?.data.records)
+    setData(res?.data)
   }
   const columns = [
     {
-      title: '商品ID',
+      title: '商品I1D',
       dataIndex: 'goodsId',
     },
     {
@@ -48,7 +48,7 @@ const ActivityGoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess
     },
   ]
   const _handleUpdate = () => {
-    onSuccess(roleList,selectedRows)
+    onSuccess(roleList, selectedRows)
   }
   const _formClose = () => {
     onClose()
@@ -68,6 +68,7 @@ const ActivityGoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess
   }
   const resetTable = () => {
     form.resetFields()
+    getGoodsDetail()
     console.log('---')
   }
   return (
@@ -95,7 +96,6 @@ const ActivityGoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess
           columns={columns}
           rowKey={(record) => record.goodsId}
           rowSelection={{ ...rowSelection }}
-          pagination={false}
           dataSource={data}
         />
       </Modal>
