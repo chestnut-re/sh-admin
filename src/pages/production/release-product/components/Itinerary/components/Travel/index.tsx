@@ -26,7 +26,7 @@ const Travel: React.FC<Props> = ({ activeKey, data }) => {
               {item.travelDetails &&
                 item.travelDetails.map((travelDetail) => {
                   return (
-                    <Row key={travelDetail.key}>
+                    <Row key={travelDetail.key} className="travel-detail">
                       <Col span={4}>
                         <TimePicker
                           value={moment(travelDetail.travelTime || '12:00', 'HH:mm')}

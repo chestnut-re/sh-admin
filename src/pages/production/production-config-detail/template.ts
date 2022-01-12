@@ -11,7 +11,8 @@ export const faceTemplate = [
   {
     key: 'face0',
     name: '封面0',
-    templateImgUrl: '', // 模版展示图
+    templateImgUrl:
+      'https://h5-cdn.mountainseas.cn/img/%E4%B8%89%E4%BA%9A%E4%BA%94%E6%97%A5%E8%87%AA%E7%94%B1%E8%A1%8C%E5%B0%81%E9%9D%A21-35ee.png', // 模版展示图
   },
   {
     key: 'face1',
