@@ -60,57 +60,57 @@ const DetailPageInfo: React.FC = () => {
         </div>
         <div>
           {productionDetailStore.data?.goodsDetail.goodsDetailPage.map((item, index) => {
-            // return (
-            //   <div key={index} className="item">
-            //     <div className="item-name">内容页{index + 1}</div>
-            //     <div className="title">模版名称: {item.pageTemplate}</div>
-            //     <div className="title">
-            //       图片素材:
-            //       <div className="title-box">
-            //         <div>
-            //           <div className="pic-box">
-            //             <img src={item.detailTitleImage} alt="" />
-            //           </div>
-            //           <div>商品名称</div>
-            //         </div>
-            //         {item?.contentImages?.map((it, i) => {
-            //           return (
-            //             <div key={i}>
-            //               <div className="pic-box">
-            //                 <img src={it} alt="" />
-            //               </div>
-            //               <div>轮播图{i + 1}</div>
-            //             </div>
-            //           )
-            //         })}
-            //         <div>
-            //           <div className="pic-box">
-            //             <img src={item.detailDescImage} alt="" />
-            //           </div>
-            //           <div>商品简介</div>
-            //         </div>
-            //         <div>
-            //           <div className="pic-box">
-            //             <img src={item.backgroundImage} alt="" />
-            //           </div>
-            //           <div>背景</div>
-            //         </div>
-            //         <div>
-            //           <div className="pic-box">
-            //             <img src={item.submitOrderImage} alt="" />
-            //           </div>
-            //           <div>按钮</div>
-            //         </div>
-            //         <div>
-            //           <div className="pic-box">
-            //             <img src={item.priceImage} alt="" />
-            //           </div>
-            //           <div>价格</div>
-            //         </div>
-            //       </div>
-            //     </div>
-            //   </div>
-            // )
+            return (
+              <div key={index} className="item">
+                <div className="item-name">内容页{index + 1}</div>
+                <div className="title">模版名称: {item.pageTemplate}</div>
+                <div className="title">
+                  图片素材:
+                  <div className="title-box">
+                    <div>
+                      <div className="pic-box">
+                        <img src={item.detailTitleImage} alt="" />
+                      </div>
+                      <div>商品名称</div>
+                    </div>
+                    {item?.contentImages?.map((it, i) => {
+                      return (
+                        <div key={i}>
+                          <div className="pic-box">
+                            <img src={it} alt="" />
+                          </div>
+                          <div>轮播图{i + 1}</div>
+                        </div>
+                      )
+                    })}
+                    <div>
+                      <div className="pic-box">
+                        <img src={item.detailDescImage} alt="" />
+                      </div>
+                      <div>商品简介</div>
+                    </div>
+                    <div>
+                      <div className="pic-box">
+                        <img src={item.backgroundImage} alt="" />
+                      </div>
+                      <div>背景</div>
+                    </div>
+                    <div>
+                      <div className="pic-box">
+                        <img src={item.submitOrderImage} alt="" />
+                      </div>
+                      <div>按钮</div>
+                    </div>
+                    <div>
+                      <div className="pic-box">
+                        <img src={item.priceImage} alt="" />
+                      </div>
+                      <div>价格</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )
           })}
         </div>
         <div className="end">

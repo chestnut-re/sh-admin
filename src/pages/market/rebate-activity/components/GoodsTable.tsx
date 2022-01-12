@@ -1,6 +1,6 @@
 /*
  * @Description: 配置商品详情
- * @LastEditTime: 2022-01-10 14:48:39
+ * @LastEditTime: 2022-01-11 19:30:13
  */
 import { Table, Space, Button, Modal, Form, Row, Col } from 'antd'
 import { ActivitiesService } from '@/service/ActivitiesService'
@@ -91,7 +91,7 @@ const GoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess, onClos
 
         <Table
           columns={columns}
-          rowKey={(record) => record.id}
+          rowKey='id'
           rowSelection={{ ...rowSelection }}
           pagination={false}
           dataSource={data}

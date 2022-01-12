@@ -1,6 +1,6 @@
 /*
  * @Description:
- * @LastEditTime: 2022-01-11 16:35:43
+ * @LastEditTime: 2022-01-11 18:52:18
  */
 
 import React, { useEffect, useState } from 'react'
@@ -39,6 +39,7 @@ const ShowAuditRecord: React.FC<Props> = ({ data }) => {
       title: '审核项目',
       align: 'center',
       dataIndex: 'rebateName',
+      render: (text, record, index) => `${record.type == 1 ? '商品' : '清单'}`,
     },
     {
       title: '审核内容',
