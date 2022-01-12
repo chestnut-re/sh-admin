@@ -157,17 +157,19 @@ const ProductionList: React.FC<any> = observer(({}) => {
             </Button>
           )}
 
-          <Button
-            onClick={() => {
-              ProductionService.ban(record.id).then((res) => {
-                if (res.code === '200') {
-                  loadData(pageIndex)
-                }
-              })
-            }}
-          >
-            禁用
-          </Button>
+          {record?.state !== 0 && (
+            <Button
+              onClick={() => {
+                ProductionService.ban(record.id).then((res) => {
+                  if (res.code === '200') {
+                    loadData(pageIndex)
+                  }
+                })
+              }}
+            >
+              禁用
+            </Button>
+          )}
         </Space>
       ),
     },
