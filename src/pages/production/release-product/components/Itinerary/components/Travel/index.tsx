@@ -27,7 +27,7 @@ const Travel: React.FC<Props> = ({ activeKey, data }) => {
                 item.travelDetails.map((travelDetail) => {
                   return (
                     <Row key={travelDetail.key}>
-                      <Col>
+                      <Col span={4}>
                         <TimePicker
                           value={moment(travelDetail.travelTime || '12:00', 'HH:mm')}
                           format={'HH:mm'}
@@ -36,7 +36,7 @@ const Travel: React.FC<Props> = ({ activeKey, data }) => {
                           }}
                         />
                       </Col>
-                      <Col>
+                      <Col span={6}>
                         <Input
                           value={travelDetail.travelTitle}
                           onChange={(e) => {
@@ -44,11 +44,12 @@ const Travel: React.FC<Props> = ({ activeKey, data }) => {
                           }}
                         />
                       </Col>
-                      <Col>
+                      <Col span={6}>
                         <TravelType data={travelDetail} />
                       </Col>
                       <Col>
                         <Button
+                          className="del-btn"
                           danger
                           onClick={() => {
                             productionStore.delTravelDetail(activeKey, item.key, travelDetail.key)

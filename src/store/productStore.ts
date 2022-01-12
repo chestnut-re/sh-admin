@@ -4,7 +4,7 @@ import { cloneDeep } from 'lodash'
 import { action, makeObservable, observable } from 'mobx'
 
 /**计算总价格 */
-const getPriceFromTravels = (travels: any[], priceKeyStr: string) => {
+export const getPriceFromTravels = (travels: any[], priceKeyStr: string) => {
   let sum = 0
   travels.map((item) => {
     item.travelDetails.map((travelDetail) => {

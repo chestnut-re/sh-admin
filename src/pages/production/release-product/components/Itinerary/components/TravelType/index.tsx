@@ -35,7 +35,7 @@ const TravelType: React.FC<Props> = ({ data }) => {
   return (
     <>
       {data.travelType !== 0 && (
-        <div>
+        <div className="travelType__root">
           {travelTypeNameMap[data.travelType]} - {title}
         </div>
       )}

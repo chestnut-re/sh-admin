@@ -114,10 +114,9 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
               <Radio value={2}>短线</Radio>
             </Radio.Group>
           </Form.Item>
-
-          <Row>
-            <Col span={6}>
-              <Form.Item label="商品限购" labelCol={{ span: 8 }} wrapperCol={{ span: 8 }}>
+          <Form.Item label="商品限购">
+            <Row>
+              <Col span={4} className="switch">
                 <Switch
                   checked={goodsLimit}
                   checkedChildren="开启"
@@ -126,67 +125,16 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
                     setGoodsLimit(checked)
                   }}
                 />
-              </Form.Item>
-            </Col>
-            {goodsLimit && (
-              <>
-                <Col span={5}>
-                  <Form.Item name={['purchaseConfig', 'purchaseDay']} label="">
-                    <InputNumber
-                      addonAfter="天"
-                      min={0}
-                      step={1}
-                      defaultValue={180}
-                      formatter={(value: any) => {
-                        if (value) {
-                          return Math.floor(value)
-                        }
-                        return value
-                      }}
-                    />
-                  </Form.Item>
-                </Col>
-                <Col span={11}>
-                  <Form.Item name={['purchaseConfig', 'purchaseNum']} label="">
-                    <InputNumber addonBefore="限购" addonAfter="份" min={0} step={1} />
-                  </Form.Item>
-                </Col>
-              </>
-            )}
-          </Row>
-
-          {goodsLimit && (
-            <Row>
-              <Col span={6}>
-                <Form.Item label="限购提升" labelCol={{ span: 8 }} wrapperCol={{ span: 8 }}>
-                  <Switch
-                    checked={goodsLimitUp}
-                    checkedChildren="开启"
-                    unCheckedChildren="关闭"
-                    onChange={(checked) => {
-                      setGoodsLimitUp(checked)
-                    }}
-                  />
-                </Form.Item>
               </Col>
-              {goodsLimitUp && (
+              {goodsLimit && (
                 <>
-                  <Col span={5}>
-                    <span>用户分享商品且</span>
-                    <Form.Item name={['purchaseConfig', 'addType']} label="">
-                      <Select>
-                        {/* 限购上限增加任务类型1下单付款，2订单核销*/}
-                        <Select.Option value={1}>下单付款</Select.Option>
-                        <Select.Option value={2}>订单核销</Select.Option>
-                      </Select>
-                    </Form.Item>
-                  </Col>
-                  <Col span={5}>
-                    <Form.Item name={['purchaseConfig', 'finishNum']} label="">
+                  <Col span={10}>
+                    <Form.Item name={['purchaseConfig', 'purchaseDay']} label="">
                       <InputNumber
-                        addonAfter="笔订单"
+                        addonAfter="天"
                         min={0}
                         step={1}
+                        defaultValue={180}
                         formatter={(value: any) => {
                           if (value) {
                             return Math.floor(value)
@@ -196,14 +144,65 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
                       />
                     </Form.Item>
                   </Col>
-                  <Col span={8}>
-                    <Form.Item name={['purchaseConfig', 'addNum']} label="">
-                      <InputNumber addonBefore="限购加" addonAfter="份" min={0} />
+                  <Col span={10}>
+                    <Form.Item name={['purchaseConfig', 'purchaseNum']} label="">
+                      <InputNumber addonBefore="限购" addonAfter="份" min={0} step={1} />
                     </Form.Item>
                   </Col>
                 </>
               )}
             </Row>
+          </Form.Item>
+
+          {goodsLimit && (
+            <Form.Item label="限购提升">
+              <Row>
+                <Col span={4} className="switch">
+                  <Switch
+                    checked={goodsLimitUp}
+                    checkedChildren="开启"
+                    unCheckedChildren="关闭"
+                    onChange={(checked) => {
+                      setGoodsLimitUp(checked)
+                    }}
+                  />
+                </Col>
+
+                {goodsLimitUp && (
+                  <>
+                    <Col span={8}>
+                      <Form.Item name={['purchaseConfig', 'addType']} label="用户分享商品且">
+                        <Select>
+                          {/* 限购上限增加任务类型1下单付款，2订单核销*/}
+                          <Select.Option value={1}>下单付款</Select.Option>
+                          <Select.Option value={2}>订单核销</Select.Option>
+                        </Select>
+                      </Form.Item>
+                    </Col>
+                    <Col span={6}>
+                      <Form.Item name={['purchaseConfig', 'finishNum']} label="">
+                        <InputNumber
+                          addonAfter="笔订单"
+                          min={0}
+                          step={1}
+                          formatter={(value: any) => {
+                            if (value) {
+                              return Math.floor(value)
+                            }
+                            return value
+                          }}
+                        />
+                      </Form.Item>
+                    </Col>
+                    <Col span={6}>
+                      <Form.Item name={['purchaseConfig', 'addNum']} label="">
+                        <InputNumber addonBefore="限购加" addonAfter="份" min={0} />
+                      </Form.Item>
+                    </Col>
+                  </>
+                )}
+              </Row>
+            </Form.Item>
           )}
 
           <Form.Item name="refundAndChangePolicy" label="退改政策">

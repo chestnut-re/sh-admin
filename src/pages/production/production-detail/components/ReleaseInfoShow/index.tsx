@@ -6,6 +6,7 @@ import { observer } from 'mobx-react-lite'
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Table, Tag, Space } from 'antd'
+import dayjs from 'dayjs'
 import './index.less'
 
 /**
@@ -96,8 +97,8 @@ const ReleaseInfoShow: React.FC = () => {
         </div>
         <div className="right">
           <div>审核渠道: {data?.checkChannelName}</div>
-          <div>审核人: {data?.checkUser}</div>
-          <div>审核时间: {data?.checkTime}</div>
+          <div>审核人: {data?.checkUserName}</div>
+          <div>审核时间: {dayjs(data?.checkTime).format('YYYY-MM-DD HH:mm:ss')}</div>
           <div className="btn">{/* <button>查看发布审核记录</button> */}</div>
         </div>
       </div>
