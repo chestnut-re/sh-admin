@@ -1,6 +1,6 @@
 /*
  * @Description: 添加角色
- * @LastEditTime: 2022-01-04 15:34:47
+ * @LastEditTime: 2022-01-12 13:57:33
  */
 
 import { Form, Input, Modal, Cascader, Switch, message } from 'antd'
@@ -171,6 +171,7 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
           _setAdminType={_setAdminType}
           _setBType={_setBType}
           bType={bType}
+          datachannel={datachannel}
           roleList={roleList}
         ></TableMenu>
       </Form>
