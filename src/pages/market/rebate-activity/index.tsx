@@ -181,6 +181,7 @@ const RebateActivity: React.FC = () => {
         })
     }
     setGoodsShowDialog(false)
+    setGoodsRoleList([])
   }
   const activityOnSuccess = (rowKeys, rowList) => {
     if (rowList.length > 0) {
@@ -347,13 +348,17 @@ const RebateActivity: React.FC = () => {
         data={() => <RebateBasicInfo data={selectedData}></RebateBasicInfo>}
         // data={() => <ShowRefund data={selectedData} editGo={_editGo}></ShowRefund>}
       ></DEDialog>
+      {goodsShowDialog == true ? (
+        <GoodsTable
+          goodsShow={goodsShowDialog}
+          onSuccess={goodsOnSuccess}
+          goodsIdList={goodsRoleList}
+          onClose={() => setGoodsShowDialog(false)}
+        ></GoodsTable>
+      ) : (
+        ''
+      )}
 
-      <GoodsTable
-        goodsShow={goodsShowDialog}
-        onSuccess={goodsOnSuccess}
-        goodsIdList={goodsRoleList}
-        onClose={() => setGoodsShowDialog(false)}
-      ></GoodsTable>
       <ActivityTable
         goodsShow={activityShowDialog}
         onSuccess={activityOnSuccess}
