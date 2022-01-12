@@ -29,6 +29,7 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
 
   useEffect(() => {
     if (show) {
+      console.log(data,'data')
       form.setFieldsValue({
         id: data?.id,
         activityTitle: data?.activityTitle,
@@ -36,7 +37,7 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
         activitySubtitle: data?.activitySubtitle,
         activityUrl: data?.activityUrl,
         activityDetailImg: data?.activityDetailImg,
-        state: data?.state ?? '0',
+        state: String(data?.state),
         activityDate: !!data?.startDate
           ? [dayjsFormat(data?.startDate, 'YYYY-MM-DD HH:mm:ss'), dayjsFormat(data?.endDate, 'YYYY-MM-DD HH:mm:ss')]
           : null,
@@ -150,7 +151,7 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
                   }}
                 />
               </Form.Item>
-              <Form.Item label="状态" name="state">
+              <Form.Item label="状态" name="state" >
                 <Radio.Group>
                   {Object.keys(specialState)
                     .sort()
