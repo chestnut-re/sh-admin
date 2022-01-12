@@ -147,6 +147,7 @@ class ProductionData {
     const newGoodsPrices = cloneDeep(this.data.goodsPrices[this.data.goodsPrices.length - 1])
     const k = getNanoId()
     newGoodsPrices.key = k
+    delete newGoodsPrices.goodsPriceId
     this.data.goodsPrices = [...this.data.goodsPrices, newGoodsPrices]
   }
 
