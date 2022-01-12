@@ -1,5 +1,5 @@
 import { ActivitiesService } from '@/service/ActivitiesService'
-import { Form, Input, Modal, Select, DatePicker, Button, Row, Col, Radio } from 'antd'
+import { Form, Input, Modal, Select, DatePicker, Button, Row, Col, Radio, message } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
 // import dayjsFormat from 'dayjsFormat'
 import { dayjsFormat } from '@/utils/dayFormate'
@@ -110,6 +110,11 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
     })
     setGoodsRoleList(e)
   }
+  const onChangePicker = (e)=>{
+    if((new Date().getTime())>(new Date(e[1]).getTime())){
+      message.info('当前选择结束时间小于当前时间')
+    }
+  }
   return (
     <>
       <Modal title="专题配置" width={800} visible={show} onOk={_handleUpdate} onCancel={_formClose}>
@@ -141,6 +146,7 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
                 rules={[{ required: false, message: '请选择活动展示时间' }]}
               >
                 <DatePicker.RangePicker
+                onChange={onChangePicker}
                   format="YYYY-MM-DD HH:mm:ss"
                   defaultValue={[
                     dayjsFormat(data?.startDate, 'YYYY-MM-DD HH:mm:ss'),

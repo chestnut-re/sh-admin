@@ -1,6 +1,6 @@
 /*
  * @Description: 配置关联清单
- * @LastEditTime: 2022-01-12 11:12:33
+ * @LastEditTime: 2022-01-12 18:13:57
  */
 import { Table, Space, Button, Modal, Form, Row, Col, Select } from 'antd'
 import { taskService } from '@/service/marketService'
@@ -25,7 +25,6 @@ const ActivityTableModal: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess
   const [selectedRows, setSelectedRows] = useState([])
   const [data, setData] = useState([])
   useEffect(() => {
-    // setRoleList(goodsIdList)
     console.log(goodsIdList,'goodsIdList')
     setRoleList(JSON.parse(JSON.stringify(goodsIdList)))
   }, [goodsIdList])

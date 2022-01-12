@@ -1,6 +1,6 @@
 /*
  * @Description: 配置商品详情
- * @LastEditTime: 2022-01-12 11:11:25
+ * @LastEditTime: 2022-01-12 18:14:39
  */
 import { Table, Space, Button, Modal, Form, Row, Col } from 'antd'
 import { ActivitiesService } from '@/service/ActivitiesService'
@@ -22,7 +22,6 @@ const GoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess, onClos
 
   useEffect(() => {
     setRoleList(JSON.parse(JSON.stringify(goodsIdList)))
-    console.log(roleList, 'roleList')
   }, [goodsIdList])
   useEffect(() => {
     if (goodsShow) {
@@ -89,12 +88,7 @@ const GoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess, onClos
           </Row>
         </Form>
 
-        <Table
-          columns={columns}
-          rowKey='goodsId'
-          rowSelection={{ ...rowSelection }}
-          dataSource={data}
-        />
+        <Table columns={columns} rowKey="goodsId" rowSelection={{ ...rowSelection }} dataSource={data} />
       </Modal>
     </div>
   )
