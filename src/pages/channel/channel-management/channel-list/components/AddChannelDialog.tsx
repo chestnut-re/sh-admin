@@ -1,6 +1,6 @@
 /*
  * @Description: 添加渠道
- * @LastEditTime: 2021-12-31 10:22:41
+ * @LastEditTime: 2022-01-12 15:56:11
  */
 
 import { Form, Input, Modal, Cascader, Switch, message, Button } from 'antd'
@@ -90,13 +90,13 @@ const AddUserDialog: FC<Props> = ({ data, mode, channelId, structure, show = fal
     console.log()
     const dataAreas = area.find((res) => res.adcode == labels.value)
     if (!dataAreas) {
-      return <>{labels.label}</>
+      return <>{labels.label + ','}</>
     } else {
       const valueData = dataAreas.areas.map((resC) => {
         console.log(resC, 'resC')
         return resC.name
       })
-      return <>{valueData.join(',')}</>
+      return <>{valueData.join(',')+' ,'}</>
     }
   }
 
