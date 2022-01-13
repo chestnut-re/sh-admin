@@ -1,6 +1,6 @@
 /*
  * @Description: 任务清单
- * @LastEditTime: 2022-01-11 18:57:56
+ * @LastEditTime: 2022-01-13 13:51:23
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Modal, message, Select } from 'antd'
@@ -207,18 +207,23 @@ const TaskListPage: React.FC = () => {
           total: total,
         }}
       />
-      <AEBannerDialog
+      {
+        showDialog==true? <AEBannerDialog
         data={selectedData}
         mode={dialogMode}
         onSuccess={_onDialogSuccess}
         show={showDialog}
         onClose={_onDialogClose}
-      />
-      <DEDialog
-        onChange={() => setDeShowDialog(false)}
-        show={deShowDialog}
-        data={() => <TaskBasicInfo dataValue={selectedData}></TaskBasicInfo>}
-      ></DEDialog>
+      />:''
+      }
+     {
+       deShowDialog==true? <DEDialog
+       onChange={() => setDeShowDialog(false)}
+       show={deShowDialog}
+       data={() => <TaskBasicInfo dataValue={selectedData}></TaskBasicInfo>}
+     ></DEDialog>:''
+     }
+     
     </div>
   )
 }

@@ -172,6 +172,7 @@ const RebateActivity: React.FC = () => {
         res.goodsId = res.id
         return res
       })
+      console.log(goodsList,'---')
       marketService
         .rebateAuditApply({ rebateId: selectRecord, rebateName: rebateName, type: 1, goodsList: goodsList })
         .then((res) => {
