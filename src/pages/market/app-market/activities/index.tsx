@@ -7,6 +7,7 @@ import { HttpCode } from '@/constants/HttpCode'
 import RemainTime from '@/components/tableColumn/RemainTime'
 import ImageColumn from '@/components/tableColumn/ImageColumn'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
+import {status} from './utils'
 /**
  * App营销-Activity管理-List
  */
@@ -62,6 +63,7 @@ const BannerListPage: React.FC = () => {
     {
       title: '状态',
       dataIndex: 'state',
+      render: (text, record, index) => `${status[record.state]}`,
     },
     {
       title: '展示时段',
@@ -78,6 +80,7 @@ const BannerListPage: React.FC = () => {
     {
       title: '添加人',
       dataIndex: 'updateUserName',
+      render: (text: any, record: any) => `${record.createChannelName}-${record.updateUserName}`,
     },
     {
       title: '添加时间',

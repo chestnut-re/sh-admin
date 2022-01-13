@@ -36,6 +36,8 @@ const Itinerary = (props, ref) => {
   }))
 
   useEffect(() => {
+    console.log(productionStore.getCurrentPrice(productionStore.data.goodsPrices[0].key))
+    console.log(productionStore.data.goodsPrices[0])
     setActiveKey(productionStore.data.goodsPrices[0].key)
   }, [])
 
@@ -111,7 +113,9 @@ const Itinerary = (props, ref) => {
                     </Sticky>
                   )
                 }}
-                tabBarExtraContent={<Button onClick={() => productionStore.copyGood()}>复制</Button>}
+                tabBarExtraContent={
+                  dialogMode === 'single' ? <Button onClick={() => productionStore.copyGood()}>复制</Button> : <></>
+                }
               >
                 {panesData.map((item) => (
                   <Tabs.TabPane tab={item.title} key={item.key}>
@@ -166,6 +170,9 @@ const Itinerary = (props, ref) => {
                   行程+1天
                 </Button>
               </div>
+              <div></div>
+              {/* <div className="item">供应成本价: ￥{productionStore.data.goodsPrices[0].personCostPrice / 100}</div> */}
+              {/* <div className="item">市场标价: ￥{productionStore.data.goodsPrices[0].personMarkPrice / 100}</div> */}
               <div className="item">现售价 合计: ￥{productionStore.getCurrentPrice(activeKey) / 100}</div>
             </div>
           </div>

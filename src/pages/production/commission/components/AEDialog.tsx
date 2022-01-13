@@ -1,10 +1,10 @@
-import { Form, Input, Modal, InputNumber, Radio } from 'antd'
+import { Form, Input, Modal, InputNumber, Radio, Button } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
 import { HttpCode } from '@/constants/HttpCode'
 import { SubCenterSelect } from '@/components/formItem/SubCenterSelect'
 import { ProductionCommission } from '@/service/ProductionCommission'
 
-export type DialogMode = 'add' | 'edit'
+export type DialogMode = 'add' | 'edit' | 'see'
 
 interface Props {
   data: any
@@ -27,7 +27,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
     form.setFieldsValue({
       planName: data?.planName,
       saleScale: data?.saleScale,
-      channelPlanList: data?.channelPlanList.map((item, index) => {
+      channelPlanList: data?.channelPlanList?.map((item, index) => {
         item.key = `${Date.now()}-${index}`
         return item
       }),
@@ -66,7 +66,26 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
   }
 
   return (
-    <Modal title="商品分佣方案" visible={show} onOk={_handleUpdate} onCancel={_formClose}>
+    <Modal
+      title="商品分佣方案"
+      visible={show}
+      footer={
+        mode !== 'add'
+          ? [
+              <Button key="submit" type="primary" onClick={_formClose}>
+                确定
+              </Button>,
+            ]
+          : [
+              <Button key="back" onClick={_formClose}>
+                取消
+              </Button>,
+              <Button key="submit" type="primary" onClick={_handleUpdate}>
+                确定
+              </Button>,
+            ]
+      }
+    >
       <Form
         name="basic"
         // labelCol={{ span: 20 }}
@@ -113,7 +132,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
             <span>
               且需满
               {/* <Form.Item name="groupSettleDay" style={{ marginBottom: '0', display: 'inline-block' }}> */}
-              <InputNumber value={data?.saleSettleDay} addonAfter="天" style={{ width: 100 }} min={0} />
+              <InputNumber value={data?.saleSettleDay} addonAfter="天" style={{ width: 100 }} min={0} readOnly />
               {/* </Form.Item> */}
             </span>
           </Form.Item>

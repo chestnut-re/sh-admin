@@ -10,6 +10,7 @@ import { useHistory } from 'react-router-dom'
 import { ProductionService } from '@/service/ProductionService'
 import GoodsState from '@/components/tableColumn/GoodsState'
 import ChannelDialog from './components/ChannelDialog'
+import NewPrice from '@/components/tableColumn/newPrice'
 
 /**
  * 商品库 总部
@@ -71,7 +72,8 @@ const ProductionList: React.FC<any> = observer(({}) => {
     },
     {
       title: '现售价(¥)',
-      dataIndex: 'personCurrentPrice',
+      // dataIndex: 'personCurrentPrice',
+      render: (text, record, index) => <NewPrice money={record?.personCurrentPrice} />,
     },
     {
       title: '累计销量',
@@ -157,17 +159,19 @@ const ProductionList: React.FC<any> = observer(({}) => {
             </Button>
           )}
 
-          <Button
-            onClick={() => {
-              ProductionService.ban(record.id).then((res) => {
-                if (res.code === '200') {
-                  loadData(pageIndex)
-                }
-              })
-            }}
-          >
-            禁用
-          </Button>
+          {record?.state !== 0 && (
+            <Button
+              onClick={() => {
+                ProductionService.ban(record.id).then((res) => {
+                  if (res.code === '200') {
+                    loadData(pageIndex)
+                  }
+                })
+              }}
+            >
+              禁用
+            </Button>
+          )}
         </Space>
       ),
     },

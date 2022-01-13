@@ -13,6 +13,7 @@ import ActivityTable from './components/ActivityTable'
 import ModalDialog from '@/components/components/ModalDialog'
 import ShowTaskModal from './components/ShowTaskModal'
 import ShowGoodsTaskModal from './components/ShowGoodsTaskModal'
+import { formateTime } from '@/utils/timeUtils'
 const RebateActivity: React.FC = () => {
   const { RangePicker } = DatePicker
   const [form] = Form.useForm()
@@ -22,7 +23,7 @@ const RebateActivity: React.FC = () => {
   const [total, setTotal] = useState()
   const [checkState, setCheckState] = useState('')
   const [showDialog, setShowDialog] = useState(false)
-  const [selectedData, setSelectedData] = useState(null)
+  const [selectedData, setSelectedData] = useState('')
   const [dialogMode, setDialogMode] = useState<DialogMode>('add')
   const [deShowDialog, setDeShowDialog] = useState(false)
   const [goodsShowDialog, setGoodsShowDialog] = useState(false)
@@ -40,9 +41,15 @@ const RebateActivity: React.FC = () => {
 
   const loadData = (pageIndex) => {
     const params = form.getFieldsValue()
-    console.log(params)
+    const query = { ...params }
+    // const query
+    if (params.time) {
+      query.startTime = formateTime(params.time[0])
+      query.endTime = formateTime(params.time[1])
+      delete query.time
+    }
 
-    marketService.list({ current: pageIndex, size: pageSize, ...params }).then((res) => {
+    marketService.list({ current: pageIndex, size: pageSize, ...query }).then((res) => {
       setData(res.data.records)
       setTotal(res.data.total)
     })
@@ -80,7 +87,7 @@ const RebateActivity: React.FC = () => {
           onClick={() => {
             setShowType('goods')
             setShowGoodsDialog(true)
-            setModalData(JSON.stringify(record.goodsList))
+            setModalData(JSON.stringify(record.goodsList ?? []))
             console.log(showType)
           }}
         >
@@ -93,11 +100,17 @@ const RebateActivity: React.FC = () => {
       render: (text, record, index) => (
         <div
           onClick={() => {
+            const data = (record.paperList ?? []).map((res) => {
+              return {
+                releTime: res.releTime,
+                name: res.name,
+                id: res.id,
+              }
+            })
             setShowType('task')
             setShowGoodsDialog(true)
-            setModalData(JSON.stringify(record.paperList))
-
-            console.log(showType)
+            // setModalData(JSON.stringify(record.paperList ?? []))
+            setModalData(JSON.stringify(data))
           }}
         >
           {(record.paperList ?? []).length}
@@ -146,6 +159,7 @@ const RebateActivity: React.FC = () => {
     const list = (record.paperList ?? []).map((res) => {
       return res.id
     })
+
     setSelectRecord(record.id)
     setrebateName(record.name)
     setActivityShowDialog(true)
@@ -155,7 +169,8 @@ const RebateActivity: React.FC = () => {
   const goodsOnSuccess = (rowKeys, rowList) => {
     if (rowList.length > 0) {
       const goodsList = rowList.map((res) => {
-        return res.id
+        res.goodsId = res.id
+        return res
       })
       marketService
         .rebateAuditApply({ rebateId: selectRecord, rebateName: rebateName, type: 1, goodsList: goodsList })
@@ -166,11 +181,12 @@ const RebateActivity: React.FC = () => {
         })
     }
     setGoodsShowDialog(false)
+    setGoodsRoleList([])
   }
   const activityOnSuccess = (rowKeys, rowList) => {
     if (rowList.length > 0) {
       const List = rowList.map((res) => {
-        return res.id
+        return res
       })
       marketService
         .rebateAuditApply({ rebateId: selectRecord, rebateName, rebateName, type: 2, paperList: List })
@@ -181,13 +197,13 @@ const RebateActivity: React.FC = () => {
         })
     }
     setActivityShowDialog(false)
+    setActivityRoleList([])
   }
 
   /**删除 */
   const _delItem = (record) => {
     Modal.confirm({
       title: '提示',
-      // icon: <ExclamationCircleOutlined />,
       content: '确定要删除当前',
       okText: '确认',
       cancelText: '取消',
@@ -205,10 +221,10 @@ const RebateActivity: React.FC = () => {
   /**编辑 */
   const _editDialog = (record) => {
     console.log(record, 'record')
-    marketService.get(record.id).then((res) => {
-      setDeShowDialog(!deShowDialog)
-      setSelectedData(res?.data)
-    })
+    const data = { ...record }
+    data.rebateId = record.id
+    setDeShowDialog(!deShowDialog)
+    setSelectedData(JSON.stringify(data ?? []))
   }
 
   /**添加 */
@@ -231,13 +247,13 @@ const RebateActivity: React.FC = () => {
   }
 
   const _onDialogSuccess = () => {
-    setSelectedData(null)
+    setSelectedData('')
     setShowDialog(false)
     loadData(pageIndex)
   }
 
   const _onDialogClose = () => {
-    setSelectedData(null)
+    setSelectedData('')
     setShowDialog(false)
   }
 
@@ -256,22 +272,24 @@ const RebateActivity: React.FC = () => {
           <Row gutter={[10, 10]}>
             <Col span={1} className="table-from-label"></Col>
             <Col span={3}>
-              <Radio.Group
-                value={checkState}
-                onChange={(value) => {
-                  setCheckState(value.target.value)
-                }}
-              >
-                <Radio.Button value="">全部</Radio.Button>
-                <Radio.Button value="0">进行中</Radio.Button>
-                <Radio.Button value="1">已结束</Radio.Button>
-                <Radio.Button value="2">未开始</Radio.Button>
-                {/* checkState 0 待审核 1审核通过 2审核不通过 */}
-              </Radio.Group>
+              <Form.Item name="state">
+                <Radio.Group
+                  value={checkState}
+                  onChange={(value) => {
+                    setCheckState(value.target.value)
+                  }}
+                >
+                  <Radio.Button value="">全部</Radio.Button>
+                  <Radio.Button value="0">进行中</Radio.Button>
+                  <Radio.Button value="1">已结束</Radio.Button>
+                  <Radio.Button value="2">未开始</Radio.Button>
+                  {/* checkState 0 待审核 1审核通过 2审核不通过 */}
+                </Radio.Group>
+              </Form.Item>
             </Col>
             {/* <Col span={1} className="table-from-label"></Col> */}
             <Col span={3}>
-              <InputTemp name="planName" placeholder="活动ID/活动名称" />
+              <InputTemp name="rebateName" placeholder="活动ID/活动名称" />
             </Col>
             <Col span={1} className="table-from-label">
               创建时间
@@ -281,12 +299,12 @@ const RebateActivity: React.FC = () => {
                 <RangePicker showTime />
               </Form.Item>
             </Col>
-            <Col span={1} className="table-from-label">
+            {/* <Col span={1} className="table-from-label">
               状态
             </Col>
             <Col span={3}>
               <StatusRoute name="state" />
-            </Col>
+            </Col> */}
 
             <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
               <Space>
@@ -330,18 +348,25 @@ const RebateActivity: React.FC = () => {
         data={() => <RebateBasicInfo data={selectedData}></RebateBasicInfo>}
         // data={() => <ShowRefund data={selectedData} editGo={_editGo}></ShowRefund>}
       ></DEDialog>
+      {goodsShowDialog == true ? (
+        <GoodsTable
+          goodsShow={goodsShowDialog}
+          onSuccess={goodsOnSuccess}
+          goodsIdList={goodsRoleList}
+          onClose={() => setGoodsShowDialog(false)}
+        ></GoodsTable>
+      ) : (
+        ''
+      )}
 
-      <GoodsTable
-        goodsShow={goodsShowDialog}
-        onSuccess={goodsOnSuccess}
-        goodsIdList={goodsRoleList}
-        onClose={() => setGoodsShowDialog(false)}
-      ></GoodsTable>
       <ActivityTable
         goodsShow={activityShowDialog}
         onSuccess={activityOnSuccess}
         goodsIdList={activityRoleList}
-        onClose={() => setActivityShowDialog(false)}
+        onClose={() => {
+          setActivityShowDialog(false)
+          setActivityRoleList([])
+        }}
       ></ActivityTable>
       <ModalDialog
         show={showGoodsDialog}

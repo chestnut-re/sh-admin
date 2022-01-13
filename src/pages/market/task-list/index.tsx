@@ -1,9 +1,9 @@
 /*
  * @Description: 任务清单
- * @LastEditTime: 2022-01-07 18:08:26
+ * @LastEditTime: 2022-01-11 18:57:56
  */
 import React, { useState, useEffect } from 'react'
-import { Form, Col, Row, Button, Table, Space, Modal, message } from 'antd'
+import { Form, Col, Row, Button, Table, Space, Modal, message, Select } from 'antd'
 import './index.less'
 import AEBannerDialog, { DialogMode } from './components/AETaskDialog'
 import { taskService } from '@/service/marketService'
@@ -11,8 +11,16 @@ import { HttpCode } from '@/constants/HttpCode'
 import TaskBasicInfo from './components/TaskBasicInfo/TaskBasicInfo'
 import ImageColumn from '@/components/tableColumn/ImageColumn'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
+
+import { InputTemp } from '@/components/filter/formItem'
 import DEDialog from '@/components/components/Dedialog'
+const enumState = {
+  '': '全部',
+  '0': '启用',
+  '1': '禁用',
+}
 const TaskListPage: React.FC = () => {
+  const [form] = Form.useForm()
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
   const [pageSize, setPageSize] = useState(20)
@@ -26,7 +34,9 @@ const TaskListPage: React.FC = () => {
   }, [pageIndex])
 
   const loadData = (pageIndex) => {
-    taskService.list({ current: pageIndex, size: pageSize }).then((res) => {
+    const params = form.getFieldsValue()
+    console.log(params, 'params')
+    taskService.list({ current: pageIndex, size: pageSize, ...params }).then((res) => {
       setData(res.data.records)
       setTotal(res.data.total)
     })
@@ -70,6 +80,9 @@ const TaskListPage: React.FC = () => {
       ),
     },
   ]
+  const resetTable = () => {
+    form.resetFields()
+  }
   const _editState = (record) => {
     Modal.confirm({
       title: '提示',
@@ -112,11 +125,14 @@ const TaskListPage: React.FC = () => {
   }
 
   const onFinish = () => {
+    setPageIndex(1)
+    loadData(pageIndex)
+  }
+  const addModal = () => {
     setDialogMode('add')
     setSelectedData(null)
     setShowDialog(true)
   }
-
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo)
   }
@@ -133,15 +149,46 @@ const TaskListPage: React.FC = () => {
   }
 
   return (
-    <div className="channel-list">
+    <div className="">
       <div>
-        <Form name="basic" initialValues={{ remember: true }} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-          <Row gutter={[10, 0]}>
+        <Form
+          name="basic"
+          initialValues={{ keyword: '', state: '' }}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
+          form={form}
+        >
+          <Row gutter={[5, 0]} style={{ paddingLeft: '10px',paddingTop:'20px' }}>
+            <Col span={4}>
+              <InputTemp name="idOrName" placeholder="清单名称" />
+            </Col>
+            <Col span={1} className="table-from-label">
+              状态
+            </Col>
+            <Col span={4}>
+              <Form.Item name="state">
+                <Select allowClear>
+                  {Object.keys(enumState)
+                    .sort()
+                    .map((item) => {
+                      return (
+                        <Select.Option key={item} value={item}>
+                          {enumState[item]}
+                        </Select.Option>
+                      )
+                    })}
+                </Select>
+              </Form.Item>
+            </Col>
             <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
               <Space>
                 <Button type="primary" htmlType="submit">
-                  添加
+                  查询
                 </Button>
+                <Button onClick={resetTable} htmlType="button">
+                  重置
+                </Button>
+                <Button onClick={addModal}>添加</Button>
               </Space>
             </Form.Item>
           </Row>

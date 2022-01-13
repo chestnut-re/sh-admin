@@ -10,6 +10,7 @@ import CenterPutOnRequestShowSubCenter from './components/CenterPutOnRequestShow
 import DetailPageInfo from './components/DetailPageInfo'
 import PutOnInfo from './components/PutOnInfo'
 import PutOnInfoShow from './components/PutOnInfoShow'
+import PutOnInfoShowSubCenter from './components/PutOnInfoShowSubCenter'
 import ReleaseInfo from './components/ReleaseInfo'
 import ReleaseInfoShow from './components/ReleaseInfoShow'
 import TravelInfo from './components/TravelInfo'
@@ -37,6 +38,8 @@ const ProductionDetail: React.FC = () => {
 
   const type = query.get('type')
 
+  console.log('adminStore.isSubCenter', adminStore.isSubCenter)
+
   return (
     <div className="ProductionDetail__root">
       {/* 基本信息 */}
@@ -56,10 +59,10 @@ const ProductionDetail: React.FC = () => {
 
       {/* 4 分中心 上架申请 centerPublish */}
       {type === 'centerPublish' && <CenterPutOnRequest />}
-      {(type === 'release' || type === 'releaseCheck' || type === 'detailList') && adminStore.isSubCenter && (
+      {(type === 'release' || type === 'releaseCheck' || type === 'detailList') && adminStore.isSubCenter() && (
         <CenterPutOnRequestShowSubCenter />
       )}
-      {(type === 'release' || type === 'releaseCheck' || type === 'detailList') && !adminStore.isSubCenter && (
+      {(type === 'release' || type === 'releaseCheck' || type === 'detailList') && !adminStore.isSubCenter() && (
         <CenterPutOnRequestShow />
       )}
 
@@ -67,7 +70,8 @@ const ProductionDetail: React.FC = () => {
       {type === 'release' && <PutOnInfo />}
 
       {/* 查看详情页 */}
-      {type === 'detail' || (type === 'detailList' && <PutOnInfoShow />)}
+      {/* {adminStore.isSubCenter() && (type === 'detail' || type === 'detailList') && <PutOnInfoShowSubCenter />}
+      {!adminStore.isSubCenter() && (type === 'detail' || type === 'detailList') && <PutOnInfoShow />} */}
       {/* {type === 'release' && <PutOnInfoShow />} */}
     </div>
   )

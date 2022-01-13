@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import React, { useState, useEffect } from 'react'
-import { Button, Col, Form, Row, Space, Table, DatePicker, message } from 'antd'
+import { Button, Col, Form, Row, Space, Table, DatePicker, message, Modal } from 'antd'
 import { InputTemp } from '@/components/filter/formItem'
 import './index.less'
 import { ProductionDraftService } from '@/service/ProductionDraftService'
@@ -19,6 +19,8 @@ const DraftListPage: React.FC = observer(() => {
   const [pageIndex, setPageIndex] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [total, setTotal] = useState()
+  const [showModal, setShowModal] = useState(false)
+  const [delId, setDelId] = useState()
 
   useEffect(() => {
     loadData(pageIndex)
@@ -26,7 +28,7 @@ const DraftListPage: React.FC = observer(() => {
 
   const loadData = (pageIndex) => {
     const params = form.getFieldsValue()
-    const { timeRange, remain } = params
+    const { timeRange, ...remain } = params
 
     ProductionDraftService.list({
       current: pageIndex,
@@ -71,12 +73,8 @@ const DraftListPage: React.FC = observer(() => {
           </Button>
           <Button
             onClick={() => {
-              ProductionService.del(record.id).then((res) => {
-                if (res.code === '200') {
-                  message.success('删除成功')
-                  loadData(pageIndex)
-                }
-              })
+              setShowModal(true)
+              setDelId(record.id)
             }}
           >
             删除
@@ -147,6 +145,23 @@ const DraftListPage: React.FC = observer(() => {
           total: total,
         }}
       />
+      <Modal
+        visible={showModal}
+        onOk={() => {
+          ProductionService.del(delId).then((res) => {
+            if (res.code === '200') {
+              setShowModal(false)
+              message.success('删除成功')
+              loadData(pageIndex)
+            }
+          })
+        }}
+        onCancel={() => setShowModal(false)}
+        okText="确认"
+        cancelText="取消"
+      >
+        <p>是否删除此商品记录？</p>
+      </Modal>
     </div>
   )
 })

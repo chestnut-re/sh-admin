@@ -4,7 +4,7 @@ import { cloneDeep } from 'lodash'
 import { action, makeObservable, observable } from 'mobx'
 
 /**计算总价格 */
-const getPriceFromTravels = (travels: any[], priceKeyStr: string) => {
+export const getPriceFromTravels = (travels: any[], priceKeyStr: string) => {
   let sum = 0
   travels.map((item) => {
     item.travelDetails.map((travelDetail) => {
@@ -124,6 +124,16 @@ class ProductionData {
       return item
     })
     // end
+    // 重置行程信息
+    const nowDay = Date.now()
+    this.data.goodsPrices = [
+      {
+        startDate: nowDay,
+        endDate: nowDay,
+        key: getNanoId(),
+        travels: [{ whatDay: whatDay[0], key: getNanoId() }],
+      },
+    ]
     console.log(this.data)
   }
 
@@ -147,6 +157,7 @@ class ProductionData {
     const newGoodsPrices = cloneDeep(this.data.goodsPrices[this.data.goodsPrices.length - 1])
     const k = getNanoId()
     newGoodsPrices.key = k
+    delete newGoodsPrices.goodsPriceId
     this.data.goodsPrices = [...this.data.goodsPrices, newGoodsPrices]
   }
 

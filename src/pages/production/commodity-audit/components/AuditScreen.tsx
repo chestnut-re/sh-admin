@@ -72,7 +72,7 @@ const AuditScreen: React.FC<Props> = ({ type }) => {
       render: (text, record, index) => <GoodsAuditState checkState={record?.checkState} />,
     },
     {
-      title: '驳回原因',
+      title: '原因',
       align: 'center',
       dataIndex: 'checkMag',
     },

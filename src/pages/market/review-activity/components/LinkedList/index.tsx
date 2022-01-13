@@ -1,40 +1,66 @@
 /*
- * @Description: 关联q清单
- * @LastEditTime: 2022-01-10 13:34:53
+ * @Description: 关联清单
+ * @LastEditTime: 2022-01-11 16:22:28
  */
 import { Table, Space, Button, Modal, Form, Row, Col, Select } from 'antd'
-import { ActivitiesService } from '@/service/ActivitiesService'
+import { rebateService } from '@/service/marketService'
 import { InputTemp } from '@/components/filter/formItem'
 import React, { useEffect, useState } from 'react'
-
 interface Props {
-  id: any
+  data: any
 }
 
-const LinkedList: React.FC<Props> = ({ id }) => {
+const AssociatedGoods: React.FC<Props> = ({ data }) => {
   const [form] = Form.useForm()
-  const [data, setData] = useState([])
+  const [dataList, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
   const [pageSize, setPageSize] = useState(20)
   const [total, setTotal] = useState()
   useEffect(() => {
-    getGoodsDetail()
-  }, [pageIndex, id])
+    if (!!data) {
+      getGoodsDetail()
+    }
+  }, [pageIndex, data])
 
   const getGoodsDetail = async () => {
     const params = form.getFieldsValue()
-    const res = await ActivitiesService.activityGoodsPage({ ...params })
+    const res = await rebateService.rebateTaskInventoryPage({ ...params,  rebateAuditId: JSON.parse(data)?.id ,current:pageIndex,size:pageSize })
     setData(res?.data.records)
     setTotal(res.data?.total)
   }
   const columns = [
     {
-      title: '商品ID',
-      dataIndex: 'goodsId',
+      title: '清单ID',
+      dataIndex: 'id',
     },
     {
-      title: '商品名称',
+      title: '清单名称',
+      dataIndex: 'name',
+    },
+    {
+      title: '关联商品量',
       dataIndex: 'goodsName',
+      render: (text: any, record: any) => {
+        return `${record?.taskInventoryGood?.length ?? 0}`
+      },
+    },
+    {
+      title: '关联活动量',
+      dataIndex: 'goodsName',
+      render: (text: any, record: any) => {
+        return `${record?.orders?.length ?? 0}`
+      },
+    },
+    {
+      title: '状态',
+      dataIndex: 'goodsName',
+      render: (text: any, record: any) => {
+        if (record.state == 0) {
+          return `启用`
+        } else if (record.state == 1) {
+          return `禁用`
+        }
+      },
     },
   ]
 
@@ -50,15 +76,16 @@ const LinkedList: React.FC<Props> = ({ id }) => {
     setPageSize(pageSize)
   }
   const enumState = {
-    '1': 'ss',
-    '2': 'ss',
+    '': '全部',
+    '0': '启用',
+    '1': '禁用',
   }
   return (
     <div className="goodsTable__root">
-      <Form name="basic" initialValues={{ keyword: '' }} onFinish={onFinish} form={form}>
+      <Form name="basic" initialValues={{ idOrNameSate: '', state: '' }} onFinish={onFinish} form={form}>
         <Row gutter={[5, 0]} style={{ paddingLeft: '10px' }}>
           <Col span={12}>
-            <InputTemp name="keyword" placeholder="商品名称" />
+            <InputTemp name="idOrNameSate" placeholder="清单名称" />
           </Col>
           <Col span={1} className="table-from-label">
             状态
@@ -66,13 +93,15 @@ const LinkedList: React.FC<Props> = ({ id }) => {
           <Col span={3}>
             <Form.Item name="state">
               <Select allowClear>
-                {Object.keys(enumState).map((item) => {
-                  return (
-                    <Select.Option key={item} value={item}>
-                      {enumState[item]}
-                    </Select.Option>
-                  )
-                })}
+                {Object.keys(enumState)
+                  .sort()
+                  .map((item) => {
+                    return (
+                      <Select.Option key={item} value={item}>
+                        {enumState[item]}
+                      </Select.Option>
+                    )
+                  })}
               </Select>
             </Form.Item>
           </Col>
@@ -91,10 +120,10 @@ const LinkedList: React.FC<Props> = ({ id }) => {
       </Form>
 
       <Table
-        rowKey="userId"
+        rowKey="id"
         columns={columns}
         scroll={{ x: 'max-content' }}
-        dataSource={data}
+        dataSource={dataList}
         pagination={{
           onChange: onPaginationChange,
           showSizeChanger: false,
@@ -107,4 +136,4 @@ const LinkedList: React.FC<Props> = ({ id }) => {
   )
 }
 
-export default LinkedList
+export default AssociatedGoods

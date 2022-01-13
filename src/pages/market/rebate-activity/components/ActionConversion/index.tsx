@@ -1,6 +1,6 @@
 /*
  * @Description:
- * @LastEditTime: 2022-01-06 14:42:34
+ * @LastEditTime: 2022-01-11 17:48:16
  */
 import { Form, Input, Modal, InputNumber, Radio, Switch, Row, Col, Checkbox } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
@@ -16,12 +16,29 @@ const ActionConversion: FC = () => {
           </Form.Item>
         </Col>
         <Col span={7}>
-          <Form.Item name="shareTotal" label="任务目标" valuePropName="checked">
+          <Form.Item
+            name="shareTotal"
+            rules={[
+              {
+                pattern: /^[0-9]\d{0,1}$/,
+                message: '请输入0-100的整数!',
+              },
+            ]}
+            label="任务目标"
+          >
             <InputNumber addonBefore="累计分享" style={{ width: '180px' }} addonAfter="次" type="number" />
           </Form.Item>
         </Col>
         <Col span={5}>
-          <Form.Item name="shareTime" valuePropName="checked">
+          <Form.Item
+            name="shareTime"
+            rules={[
+              {
+                pattern: /^[0-9]\d{0,1}$/,
+                message: '请输入0-100的整数!',
+              },
+            ]}
+          >
             <InputNumber addonBefore="间隔" style={{ width: '180px' }} addonAfter="小时" type="number" />
           </Form.Item>
         </Col>
@@ -44,7 +61,15 @@ const ActionConversion: FC = () => {
           </Form.Item>
         </Col>
         <Col span={2}>
-          <Form.Item name="sharePointIp">
+          <Form.Item
+            name="sharePointIp"
+            rules={[
+              {
+                pattern: /^[0-9]\d{0,1}$/,
+                message: '请输入0-100的整数!',
+              },
+            ]}
+          >
             <InputNumber addonAfter="个" style={{ width: '100px' }} type="number" />
           </Form.Item>
         </Col>
@@ -66,7 +91,16 @@ const ActionConversion: FC = () => {
           </Form.Item>
         </Col>
         <Col span={9}>
-          <Form.Item name="pullTotal" label="任务目标" valuePropName="checked">
+          <Form.Item
+            name="pullTotal"
+            label="任务目标"
+            rules={[
+              {
+                pattern: /^[0-9]\d{0,1}$/,
+                message: '请输入0-100的整数!',
+              },
+            ]}
+          >
             <InputNumber addonBefore="转化" addonAfter="个" style={{ width: '170px' }} type="number" />
           </Form.Item>
         </Col>

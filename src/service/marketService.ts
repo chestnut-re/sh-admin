@@ -1,6 +1,6 @@
 /*
  * @Description:
- * @LastEditTime: 2022-01-11 11:43:35
+ * @LastEditTime: 2022-01-11 15:29:36
  */
 import axios from '@/request'
 export class marketService {
@@ -50,6 +50,7 @@ export class marketService {
   
 }
 export class rebateService {
+  
   /**
    * 列表
    */
@@ -62,7 +63,7 @@ export class rebateService {
    * 活动关联清单列表
    */
   static rebateTaskInventoryPage(data): Promise<any> {
-    return axios.get('/api/market/rebate/rebateTaskInventoryPage', {
+    return axios.get('/api/market/activity/rebateTaskInventoryPage', {
       params: data,
     })
   }
@@ -76,14 +77,18 @@ export class rebateService {
    * 返利活动审核
    */
   static rebateAudit(data): Promise<any> {
-    return axios.post(`/api/market/rebate/rebateAudit`, data)
+    return axios.post(`/api/market/activity/rebateAudit`, data)
   }
   static rebateGoodsPage(data): Promise<any> {
-    return axios.get(`/api/market/rebate/rebateGoodsPage`, {
+    return axios.get(`/api/market/activity/rebateGoodsPage`, {
       params: data,
     })
   }
-
+  static rebateAuditRecordPage(data): Promise<any> {
+    return axios.get('/api/market/activity/rebateAuditRecordPage', {
+      params: data,
+    })
+  }
 
 }
 

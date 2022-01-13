@@ -1,6 +1,6 @@
 /*
  * @Description:
- * @LastEditTime: 2021-12-30 21:07:06
+ * @LastEditTime: 2022-01-12 15:55:14
  */
 import ChannelService from '@/service/ChannelService'
 import { cityDispose } from '@/utils/tree'
@@ -52,7 +52,7 @@ const AreaSelect: React.FC<Props> = ({ defaultValue, onChange, mode, channelId }
     console.log()
     const dataAreas = area.find((res) => res.adcode == labels.value)
     if (!dataAreas) {
-      return <>{labels.label}</>
+      return <>{labels.label + ','}</>
     } else {
       const valueData = dataAreas.areas.map((resC) => {
         console.log(resC, 'resC')

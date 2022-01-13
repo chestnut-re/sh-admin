@@ -1,6 +1,5 @@
-
 import { taskService } from '@/service/marketService'
-import { Form, Input, Modal, Select, DatePicker, Button, Row, Col, Radio } from 'antd'
+import { Form, Input, Modal, Select, DatePicker, Button, Row, Col, Radio, message } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
 // import dayjsFormat from 'dayjsFormat'
 import { dayjsFormat } from '@/utils/dayFormate'
@@ -49,20 +48,23 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
           ...formData,
         }
         if (mode === 'add') {
-          postData.taskInventoryGood = formData.taskInventoryGood.map(res=>{
-            return{
-              activityId:res.activityId,
-              activityName:res.activityName,
-              goodsId:res.goodsId,
-              goodsName:res.goodsName,
-              goodsNickName:res.goodsNickName,
-              goodsNo:res.goodsNo,
-              promotionalImageUrl:res.promotionalImageUrl,
+          postData.taskInventoryGood = formData.taskInventoryGood.map((res) => {
+            return {
+              activityId: res.activityId,
+              activityName: res.activityName,
+              goodsId: res.goodsId,
+              goodsName: res.goodsName,
+              goodsNickName: res.goodsNickName,
+              goodsNo: res.goodsNo,
+              promotionalImageUrl: res.promotionalImageUrl,
             }
           })
           taskService.add(postData).then((res) => {
             if (res.code === '200' || res.code == 200) {
-              onSuccess()
+              message.success('恭喜您，添加成功')
+              setTimeout(() => {
+                onSuccess()
+              }, 1000)
             }
           })
         } else {
@@ -103,7 +105,7 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
     form.setFieldsValue({
       taskInventoryGood: e,
     })
-    console.log(e,'xxx')
+    console.log(e, 'xxx')
     setGoodsRoleList(e)
   }
   return (

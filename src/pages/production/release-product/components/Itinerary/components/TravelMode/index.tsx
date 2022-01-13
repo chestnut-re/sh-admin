@@ -1,5 +1,5 @@
 import { useStore } from '@/store/context'
-import { Radio } from 'antd'
+import { Modal, Radio } from 'antd'
 import { observer } from 'mobx-react-lite'
 import React, { useEffect } from 'react'
 
@@ -18,7 +18,15 @@ const TravelModel: React.FC = () => {
         value={productionStore.data.travelMode}
         buttonStyle="solid"
         onChange={(value) => {
-          productionStore.setTravelMode(value.target.value)
+          Modal.confirm({
+            title: '提示',
+            content: '修改出行类型后将情况行程信息。',
+            okText: '确认',
+            cancelText: '取消',
+            onOk: () => {
+              productionStore.setTravelMode(value.target.value)
+            },
+          })
         }}
       >
         <Radio.Button value={0}>固定时间</Radio.Button>

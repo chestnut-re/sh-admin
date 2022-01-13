@@ -10,6 +10,7 @@ import TemplateItem from './components/TemplateItem'
 import { TemplateType } from './template'
 import add from '@/assets/img/add.png'
 import './index.less'
+import UploadImage from '@/components/formItem/UploadImage'
 
 /**
  * 商品配置详情页
@@ -101,6 +102,10 @@ const ProductionConfigDetail: React.FC = () => {
     })
   }
 
+  const _onPreviewImgChange = (value) => {
+    productionDetailStore.setPromotionImgUrl(value)
+  }
+
   return (
     <div className="ProductionConfigDetail__root">
       <div className="template">
@@ -114,6 +119,10 @@ const ProductionConfigDetail: React.FC = () => {
         {productionDetailStore?.data?.goodsDetail && (
           <TemplateItem data={productionDetailStore?.data?.goodsDetail?.goodsDetailEnd} onEdit={_editEnd} />
         )}
+      </div>
+      <div className="preview-img">
+        商品预览图
+        <UploadImage onChange={_onPreviewImgChange} value={productionDetailStore?.data?.promotionalImageUrl} />
       </div>
       <div className="btn-one">
         <Button className="button-add" onClick={_addTemplate}>
