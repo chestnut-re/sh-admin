@@ -17,6 +17,7 @@ const CenterPutOnRequestShowSubCenter: React.FC = () => {
   const query = useQuery()
   const { productionDetailStore } = useStore()
   const [data, setData] = useState<any>({})
+  const [id, setID] = useState<string | null>()
   const [distPlan, setDistPlan] = useState<any[]>([])
 
   const layout = {
@@ -24,8 +25,9 @@ const CenterPutOnRequestShowSubCenter: React.FC = () => {
     wrapperCol: { span: 20 },
   }
   useEffect(() => {
-    console.log('subcenter CenterPutOnRequestShowSubCenter');
+    console.log('subcenter CenterPutOnRequestShowSubCenter')
     const id = query.get('channelGoodsId') ?? ''
+    setID(id)
     ProductionService.centerPutOnRequestGet(id).then((res) => {
       setData(res.data)
       const arr: any = []
@@ -57,31 +59,35 @@ const CenterPutOnRequestShowSubCenter: React.FC = () => {
   }
 
   return (
-    <div className="CenterPutOnRequestShow__root">
-      <h4>5. 上架申请信息</h4>
-      {/* <div>{JSON.stringify(data)}</div> */}
-      <div className="info">
-        <div className="one-info">
-          <div className="canal">申请渠道 {data?.channelName} </div>
-          <div>责任区域 </div>
+    <>
+      {id && (
+        <div className="CenterPutOnRequestShow__root">
+          <h4>5. 上架申请信息</h4>
+          {/* <div>{JSON.stringify(data)}</div> */}
+          <div className="info">
+            <div className="one-info">
+              <div className="canal">申请渠道 {data?.channelName} </div>
+              <div>责任区域 </div>
+            </div>
+            <div>申请人 {data?.channelPerson}</div>
+            <div>申请时间 {data?.createTime}</div>
+            <div>分佣方案 {data?.distPlanName} </div>
+            <div>
+              <Table dataSource={data?.channelPlanList} bordered>
+                <Column title="渠道名称" dataIndex="channelName" key="channelName" />
+                <Column title="直销分佣比例" dataIndex="directScale" key="directScale" />
+                <Column title="渠道等级" dataIndex="level" key="level" />
+                <ColumnGroup title="分销分佣">
+                  <Column title="渠道等级" dataIndex="lastName" key="lastName" />
+                  <Column title="分销分佣比例" dataIndex="lastName" key="lastName" />
+                </ColumnGroup>
+                <Column title="发团服务费" dataIndex="teamPrice" key="teamPrice" />
+              </Table>
+            </div>
+          </div>
         </div>
-        <div>申请人 {data?.channelPerson}</div>
-        <div>申请时间 {data?.createTime}</div>
-        <div>分佣方案 {data?.distPlanName} </div>
-        <div>
-          <Table dataSource={data?.channelPlanList} bordered>
-            <Column title="渠道名称" dataIndex="channelName" key="channelName" />
-            <Column title="直销分佣比例" dataIndex="directScale" key="directScale" />
-            <Column title="渠道等级" dataIndex="level" key="level" />
-            <ColumnGroup title="分销分佣">
-              <Column title="渠道等级" dataIndex="lastName" key="lastName" />
-              <Column title="分销分佣比例" dataIndex="lastName" key="lastName" />
-            </ColumnGroup>
-            <Column title="发团服务费" dataIndex="teamPrice" key="teamPrice" />
-          </Table>
-        </div>
-      </div>
-    </div>
+      )}
+    </>
   )
 }
 
