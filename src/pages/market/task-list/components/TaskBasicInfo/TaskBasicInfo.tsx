@@ -27,7 +27,8 @@ const TaskBasicInfo: FC<Props> = ({ dataValue }) => {
     {
       title: '序号',
       dataIndex: 'name',
-      dataIndex: 'goodsNo',
+      dataIndex: '',
+      render: (text, record, index) => `${index + 1}`,
     },
     {
       title: '商品名称',
