@@ -21,6 +21,7 @@ const TemplateDialog: FC<Props> = ({ type, show = false, onSuccess, onClose }) =
   const [templateList, setTemplateList] = useState<any[]>([])
 
   const [selectedTemplate, setSelectedTemplate] = useState<any>(null)
+  const [currentIndex, setCurrentIndex] = useState(0)
 
   useEffect(() => {
     setTemplateList(templateMap[type])
@@ -47,6 +48,7 @@ const TemplateDialog: FC<Props> = ({ type, show = false, onSuccess, onClose }) =
                 className={name}
                 src={item.templateImgUrl}
                 onClick={() => {
+                  setCurrentIndex(item.key)
                   if (item == selectedTemplate) {
                     setSelectedTemplate(null)
                   } else {
@@ -54,7 +56,7 @@ const TemplateDialog: FC<Props> = ({ type, show = false, onSuccess, onClose }) =
                   }
                 }}
               ></img>
-              <div className="mould-name">{item.name}</div>
+              <div className={currentIndex == item.key ? 'mould-name1' : 'mould-name'}> {item.name}</div>
             </div>
           )
         })}

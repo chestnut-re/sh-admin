@@ -20,7 +20,7 @@ const TravelModel: React.FC = () => {
         onChange={(value) => {
           Modal.confirm({
             title: '提示',
-            content: '修改出行类型后将情况行程信息。',
+            content: '修改出行类型后将清空行程信息。',
             okText: '确认',
             cancelText: '取消',
             onOk: () => {
