@@ -138,7 +138,7 @@ const AllocatedListPage: React.FC = () => {
           </Button>
           <Button
             onClick={() => {
-              toDetails(record)
+              toEditDetails(record)
             }}
           >
             分配
@@ -151,6 +151,14 @@ const AllocatedListPage: React.FC = () => {
   const toDetails = (record: any) => {
     history.push('/order/allocated-list/order-allocated', {
       id: record.id,
+      mode: 'see',
+    })
+  }
+
+  const toEditDetails = (record: any) => {
+    history.push('/order/allocated-list/order-allocated', {
+      id: record.id,
+      mode: 'edit',
     })
   }
 

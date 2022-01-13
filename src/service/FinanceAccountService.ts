@@ -88,4 +88,22 @@ export class WithdrawalReviewService {
   static edit(data): Promise<any> {
     return axios.post(`/api/wallet/a/cashAudit`, data)
   }
+
+  /**
+   * 渠道列表导出
+   */
+  static channelExport(data): Promise<any> {
+    return axios.get('/api/wallet/a/bizCashExport', {
+      params: data,
+    })
+  }
+
+  /**
+   * 用户列表导出
+   */
+  static userExport(data): Promise<any> {
+    return axios.get('/api/wallet/a/custCashExport', {
+      params: data,
+    })
+  }
 }

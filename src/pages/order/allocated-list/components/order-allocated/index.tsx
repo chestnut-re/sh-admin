@@ -2,24 +2,23 @@ import React, { useState, useEffect, useRef } from 'react'
 import './../../../order-list/components/order-details/OrderDetails.less'
 import '@/pages/production/release-product/index.less'
 import { useHistory } from 'react-router-dom'
-import { Table, Space, Button } from 'antd'
-import { OrderService } from '@/service/OrderService'
+import { Table, Space, Button, message } from 'antd'
+import { OrderService, AllocatedOrderService } from '@/service/OrderService'
 import { HttpCode } from '@/constants/HttpCode'
 import ServiceList from '../service-list'
 import ConfigCommission from '../config-commission'
 import StepView from './../StepView'
+import DetailsPage from '../config-commission/details'
 /**
  * 订单详情
  */
 const AllocatedDetailsPage: React.FC = () => {
-  const history = useHistory()
+  const history = useHistory<any>()
+  const _ref = useRef<any>()
   const [dataD, setDataD] = useState([])
-  const [data, setData] = useState([])
+  const [data, setData] = useState<any>([])
   const [current, setCurrent] = useState(0)
-  const [selectData, setSelectData] = useState({})
-  const [checkData, setCheckData] = useState([])
-  const baseInfoRef = useRef<any>()
-  const itineraryRef = useRef<any>()
+  const [selectData, setSelectData] = useState<any>({})
   useEffect(() => {
     loadData()
     getRelations()
@@ -85,11 +84,45 @@ const AllocatedDetailsPage: React.FC = () => {
   /**下一步 */
   const next = () => {
     if (current === 0) {
-      // baseInfoRef.current.next()
       setCurrent(1)
     } else if (current == 1) {
       setCurrent(0)
     }
+  }
+
+  const _commit = () => {
+    const data = {
+      orderId: '',
+      userId: '',
+      channelId: '',
+      list: {},
+    }
+    data.orderId = history.location.state.id
+    data.userId = selectData.userId
+    data.channelId = selectData.channelId
+    data.list = JSON.parse(JSON.stringify(_ref.current?.relationList))
+    data.list.map((item) => {
+      delete item.key
+      delete item.userId
+      item.channelScaleList = item.relation
+      delete item.relation
+      item.channelScaleList.map((item: any) => {
+        delete item.subsidy
+        delete item.supUserId
+        delete item.supUser
+        item.rebateFlag = item.haveRebate
+        delete item.haveRebate
+        item.buildFlag = item.havePresetBonus
+        delete item.havePresetBonus
+        item.buildScale = item.presetBonus
+        delete item.presetBonus
+      })
+    })
+    AllocatedOrderService.submit(data).then((res) => {
+      if (res.code === HttpCode.success) {
+        message.success('提交成功')
+      }
+    })
   }
 
   return (
@@ -149,27 +182,38 @@ const AllocatedDetailsPage: React.FC = () => {
       </div>
       <div className="details-title">订单关联人</div>
       <Table rowKey="id" columns={columnsD} scroll={{ x: 'max-content' }} dataSource={[...dataD]} />
-      <div className="ReleaseProduct__root">
-        <StepView current={current} />
-        <div className="steps-content">
-          {current == 0 && <ServiceList id={history.location.state.id} setSelectData={setSelectData} />}
-          {current == 1 && (
-            <ConfigCommission orderData={dataD} receiverData={selectData} id={history.location.state.id} />
-          )}
-          <div className="btnView">
-            <div className="item">
-              {current > 0 && (
-                <>
-                  <div className="nextBtn prev">确定提交</div>
-                </>
-              )}
-              <div onClick={() => next()} className="nextBtn">
-                {current === 1 ? '取消' : '下一步'}
+      {history.location.state == 'edit' ? (
+        <div className="ReleaseProduct__root">
+          <StepView current={current} />
+          <div className="steps-content">
+            {current == 0 && <ServiceList id={history.location.state.id} setSelectData={setSelectData} />}
+            {current == 1 && (
+              <ConfigCommission
+                orderData={dataD}
+                cRef={_ref}
+                receiverData={selectData}
+                id={history.location.state.id}
+              />
+            )}
+            <div className="btnView">
+              <div className="item">
+                {current > 0 && (
+                  <>
+                    <div className="nextBtn prev" onClick={_commit}>
+                      确定提交
+                    </div>
+                  </>
+                )}
+                <div onClick={() => next()} className="nextBtn">
+                  {current === 1 ? '取消' : '下一步'}
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <DetailsPage id={history.location.state.id} />
+      )}
     </div>
   )
 }

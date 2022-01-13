@@ -162,4 +162,18 @@ export class AllocatedOrderService {
   static service(data): Promise<any> {
     return axios.get(`/api/platform/order/getServiceUserList`, { params: data })
   }
+
+  /**
+   * 详情-提交分佣
+   */
+  static submit(data): Promise<any> {
+    return axios.post(`/api/platform/order/deployScale`, data)
+  }
+
+  /**
+   * 订单详情_获取订单佣金配置比例
+   */
+  static getScale(data): Promise<any> {
+    return axios.get(`/api/platform/order/getScaleInfo`, { params: data })
+  }
 }

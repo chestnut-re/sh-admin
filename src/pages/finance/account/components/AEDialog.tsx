@@ -30,11 +30,15 @@ const AEDialog: FC<Props> = ({ data, show = false, onSuccess, onClose }) => {
   const [tableData, setTableData] = useState([])
 
   useEffect(() => {
-    loadAllData()
+    if (data) {
+      loadAllData()
+    }
   }, [show])
 
   useEffect(() => {
-    loadTableData(pageIndex)
+    if (data) {
+      loadTableData(pageIndex)
+    }
   }, [pageIndex, show])
 
   const loadAllData = () => {
@@ -49,13 +53,16 @@ const AEDialog: FC<Props> = ({ data, show = false, onSuccess, onClose }) => {
       .then((formData) => {
         const startDate = formData.time ? dayjs(formData.time[0]).format('YYYY-MM-DD HH:mm:ss') : ''
         const endDate = formData.time ? dayjs(formData.time[1]).format('YYYY-MM-DD HH:mm:ss') : ''
-        FinanceAccountService.detailsList({ current: pageIndex, pageSize: pageSize, startDate, endDate }).then(
-          (res) => {
-            console.log(res)
-            setTableData(res.data.records)
-            setTotal(res.data.total)
-          }
-        )
+        FinanceAccountService.detailsList({
+          current: pageIndex,
+          pageSize: pageSize,
+          startDate,
+          endDate,
+          phone: data?.phone,
+        }).then((res) => {
+          setTableData(res.data.records)
+          setTotal(res.data.total)
+        })
       })
       .catch((e) => {
         console.error(e)
@@ -190,14 +197,6 @@ const AEDialog: FC<Props> = ({ data, show = false, onSuccess, onClose }) => {
                       </Form.Item>
                     </Row>
                   </Form>
-                </div>
-                <div className="sales">
-                  <span>待释放：</span>
-                  <span></span>
-                  <span>支出：</span>
-                  <span></span>
-                  <span>收入：</span>
-                  <span></span>
                 </div>
                 <Table
                   rowKey="id"

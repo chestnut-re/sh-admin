@@ -31,7 +31,6 @@ const ServiceList: React.FC<Props> = ({ id, setSelectData }) => {
 
   const loadData = (pageIndex) => {
     form.validateFields().then((query) => {
-      console.log(query, 'qqqqqqq')
       AllocatedOrderService.service({
         current: pageIndex,
         size: pageSize,

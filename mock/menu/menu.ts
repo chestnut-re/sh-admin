@@ -376,6 +376,15 @@ export default [
                   path: '/finance/withdrawal-review',
                   hide: false,
                 },
+                {
+                  name: '审核详情',
+                  id: md5('/finance/withdrawal-review'),
+                  type: 'menu',
+                  icon: '',
+                  componentPath: '/finance/withdrawal-review/details',
+                  path: '/finance/withdrawal-review/details',
+                  hide: true,
+                },
               ],
             },
             {

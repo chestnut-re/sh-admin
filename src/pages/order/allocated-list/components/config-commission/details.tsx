@@ -1,43 +1,26 @@
-import React, { useState, useEffect } from 'react'
-import { Input } from 'antd'
+import React, { useState, useEffect, forwardRef, useImperativeHandle } from 'react'
+import { Input, Form, Table } from 'antd'
 import './index.less'
 import { AllocatedOrderService } from '@/service/OrderService'
 import { HttpCode } from '@/constants/HttpCode'
 import { getNanoId } from '@/utils/nanoid'
+import { cloneDeep } from 'lodash'
 
 /**
- * 配置分佣
+ * 查看分佣
  */
 
 interface Props {
-  receiverData: any
-  orderData: any
   id: any
 }
-const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }) => {
+const DetailsPage: React.FC<Props> = ({ id }) => {
   const [data, setData] = useState<any>({})
   const [relationList, setRelationList] = useState<any[]>([])
   useEffect(() => {
-    const arr: any[] = []
-    orderData.map((item: any) => {
-      if (item.orderShip == '推荐人') {
-        arr.push({ type: 1, userId: item.id, orderId: id })
-      }
-      if (item.orderShip == '从属关系') {
-        arr.push({ type: 2, userId: item.id, orderId: id })
-      }
-      if (item.orderShip == '发团人') {
-        arr.push({ type: 4, userId: item.id, orderId: id })
-      }
-      if (item.orderShip == '买家') {
-        arr.push({ type: 5, userId: item.id, orderId: id })
-      }
-    })
-    arr.push({ type: 3, userId: receiverData.userId, orderId: id })
-    loadData(arr)
-  }, [orderData])
-  const loadData = (arr) => {
-    AllocatedOrderService.channelList(arr).then((res) => {
+    loadData()
+  }, [id])
+  const loadData = () => {
+    AllocatedOrderService.getScale({ orderId: id }).then((res) => {
       if (res.code === HttpCode.success) {
         setData(res.data)
         setRelationList(
@@ -54,9 +37,9 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
       <div className="middle">
         <div className="top">
           <span className="topOne">可配置分佣</span>
-          <span>¥{data?.allocationAmount}</span>
+          <span>{data?.allocationAmount}</span>
           <span className="topOne">剩余可配置</span>
-          <span>￥{data?.surplusAmount}</span>
+          <span>￥10</span>
         </div>
         <div className="mid">
           {relationList?.map((item: any) => {
@@ -70,16 +53,16 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
                 {item.type == 6 ? <p style={{ textAlign: 'center' }}>推荐/从属渠道</p> : null}
                 {item.type == 7 ? <p style={{ textAlign: 'center' }}>关联归属/推荐/服务渠道</p> : null}
                 <div className="guanxi">
-                  {item.buildScale ? (
-                    <p>
-                      团建奖金{item.buildScale}% ¥{data?.allocationAmount * item.buildScale}
-                    </p>
-                  ) : (
-                    ''
-                  )}
-                  {item.channelScaleList?.map((item: any, index) => {
+                  {item.relation?.map((item: any, index) => {
                     return (
                       <div className="guanxi" style={{ marginLeft: '62px' }} key={index}>
+                        {item.haveRebate ? (
+                          <p>
+                            团建奖金{item.presetBonus}% ¥{data?.allocationAmount * item.presetBonus}
+                          </p>
+                        ) : (
+                          ''
+                        )}
                         <span style={{ backgroundColor: 'darkgrey', borderRadius: '15px' }}>
                           {item.havePresetBonus ? '有团建奖' : null}
                           {item.haveRebate ? '有返利' : null}
@@ -104,15 +87,29 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
                             五级{item.channelName}/{item.userName}
                           </span>
                         ) : null}
-                        <Input readOnly className="bDer" value={item.scale} />
+                        <Input
+                          className="bDer"
+                          value={item.scale}
+                          onChange={(e) => {
+                            item['scale'] = e.target.value
+                            setRelationList(cloneDeep(relationList))
+                          }}
+                        />
                         <span>%</span>
                         <span style={{ marginLeft: '10px' }}>
                           ¥{item.scale ? data?.allocationAmount * item.scale * 0.01 : 0}
                         </span>
-                        {item.serviceScale ? (
+                        {item.haveServiceBonus ? (
                           <>
                             <span>发团服务费</span>
-                            <Input readOnly className="bDer" value={item.serviceScale} />
+                            <Input
+                              className="bDer"
+                              value={item.serviceScale}
+                              onChange={(e) => {
+                                item['serviceScale'] = e.target.value
+                                setRelationList(cloneDeep(relationList))
+                              }}
+                            />
                             <span>%</span>
                             <span style={{ marginLeft: '10px' }}>
                               ¥{item.serviceScale ? data?.allocationAmount * item.serviceScale * 0.01 : 0}
@@ -133,4 +130,4 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
     </div>
   )
 }
-export default ConfigCommission
+export default DetailsPage

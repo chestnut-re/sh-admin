@@ -5,12 +5,14 @@ import dayjs from 'dayjs'
 import { HttpCode } from '@/constants/HttpCode'
 import { WithdrawalReviewService } from '@/service/FinanceAccountService'
 import AEBannerDialog, { DialogMode } from './components/AEBannerDialog'
+import { useHistory } from 'react-router-dom'
 /**
  * 渠道提现
  */
 
 const ChannelPage: React.FC = () => {
   const [form] = Form.useForm()
+  const history = useHistory<any>()
   const { RangePicker } = DatePicker
   const { Option } = Select
   const [data, setData] = useState([])
@@ -21,7 +23,7 @@ const ChannelPage: React.FC = () => {
 
   const [showDialog, setShowDialog] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
-  const [dialogMode, setDialogMode] = useState<DialogMode>('see')
+  const [dialogMode, setDialogMode] = useState<DialogMode>('edit')
 
   useEffect(() => {
     loadData(pageIndex)
@@ -45,6 +47,39 @@ const ChannelPage: React.FC = () => {
         setData(res.records)
         setTotal(res.total)
         // }
+      })
+    })
+  }
+
+  const _export = () => {
+    form.validateFields().then((query) => {
+      const beginTime = query.time ? dayjs(query.time[0]).format('YYYY-MM-DD HH:mm:ss') : ''
+      const endTime = query.time ? dayjs(query.time[1]).format('YYYY-MM-DD HH:mm:ss') : ''
+      WithdrawalReviewService.channelExport({
+        sts: query.sts,
+        startDate: beginTime,
+        endDate: endTime,
+      }).then((res) => {
+        const content = res.data // 文件流
+        const blob = new Blob([content], { type: 'application/octet-stream' })
+        const fileName = 'filename.xls'
+        // 如果后端返回文件名
+        // const contentDisposition = res.headers['content-disposition']
+        // const fileName = decodeURI(contentDisposition.split('=')[1])
+        if ('download' in document.createElement('a')) {
+          // 非IE下载
+          const link = document.createElement('a')
+          link.download = fileName
+          link.style.display = 'none'
+          link.href = URL.createObjectURL(blob)
+          document.body.appendChild(link)
+          link.click()
+          URL.revokeObjectURL(link.href) // 释放URL 对象
+          document.body.removeChild(link)
+        } else {
+          // IE10+下载
+          navigator.msSaveBlob(blob, fileName)
+        }
       })
     })
   }
@@ -103,7 +138,7 @@ const ChannelPage: React.FC = () => {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button onClick={() => _getDialog(record)}>详情</Button>
+          <Button onClick={() => toDetails(record)}>详情</Button>
           {record?.sts == 1 ? <Button onClick={() => _editDialog(record)}>审核</Button> : null}
         </Space>
       ),
@@ -111,10 +146,10 @@ const ChannelPage: React.FC = () => {
   ]
 
   /**详情 */
-  const _getDialog = (record) => {
-    setDialogMode('see')
-    setSelectedData(record)
-    setShowDialog(true)
+  const toDetails = (record) => {
+    history.push('/finance/withdrawal-review/details', {
+      record: record,
+    })
   }
 
   /**编辑 */
@@ -197,7 +232,9 @@ const ChannelPage: React.FC = () => {
                 <Button type="primary" htmlType="submit">
                   查询
                 </Button>
-                <Button htmlType="button">导出</Button>
+                <Button htmlType="button" onClick={_export}>
+                  导出
+                </Button>
               </Space>
             </Form.Item>
           </Row>
