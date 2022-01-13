@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Tabs } from 'antd'
 import ClassManagement from './components/ClassManagement'
+import ListPage from './components'
 import './index.less'
 
 /**
@@ -13,7 +14,8 @@ const CommoditAllocationPage: React.FC = () => {
       <div className="allocation__root-tabs">
         <Tabs defaultActiveKey="1">
           <TabPane tab="分类管理" key="1">
-            <ClassManagement />
+            {/* <ClassManagement /> */}
+            <ListPage />
           </TabPane>
         </Tabs>
       </div>

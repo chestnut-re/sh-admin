@@ -121,7 +121,7 @@ export class AllocatedOrderService {
    * 列表
    */
   static list(data): Promise<any> {
-    return axios.get('/api/order/pageAllocated', {
+    return axios.get('/api/platform/order/pageAllocated', {
       params: data,
     })
   }
@@ -136,6 +136,13 @@ export class AllocatedOrderService {
   }
 
   /**
+   * 售后审核
+   */
+  static examine(data): Promise<any> {
+    return axios.post('/api/platform/order/refundAudit', data)
+  }
+
+  /**
    * 详情
    */
   static details(params): Promise<any> {
@@ -145,7 +152,14 @@ export class AllocatedOrderService {
   /**
    * 详情-归属关系/推荐/服务渠道人员列表
    */
-  static channelList(userId): Promise<any> {
-    return axios.get(`/api/users/admin/user/getSupRelationList/${userId}`)
+  static channelList(data): Promise<any> {
+    return axios.post(`/api/platform/order/getUserChannelInfo`, data)
+  }
+
+  /**
+   * 订单服务人列表
+   */
+  static service(data): Promise<any> {
+    return axios.get(`/api/platform/order/getServiceUserList`, { params: data })
   }
 }

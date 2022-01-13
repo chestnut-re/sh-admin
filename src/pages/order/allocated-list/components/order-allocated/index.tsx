@@ -16,6 +16,8 @@ const AllocatedDetailsPage: React.FC = () => {
   const [dataD, setDataD] = useState([])
   const [data, setData] = useState([])
   const [current, setCurrent] = useState(0)
+  const [selectData, setSelectData] = useState({})
+  const [checkData, setCheckData] = useState([])
   const baseInfoRef = useRef<any>()
   const itineraryRef = useRef<any>()
   useEffect(() => {
@@ -24,22 +26,19 @@ const AllocatedDetailsPage: React.FC = () => {
   }, [])
 
   const loadData = () => {
-    // OrderService.details({ orderId: history.location.state.id }).then((res) => {
-    //   if (res.code === HttpCode.success) {
-    //     setData(res.data)
-    //     setDataZ(res.data?.subOrderDtoList)
-    //     // setDataF(res.data?.distPlanOrderDTO)
-    //   }
-    // })
+    OrderService.details({ orderId: history.location.state.id }).then((res) => {
+      if (res.code === HttpCode.success) {
+        setData(res.data)
+      }
+    })
   }
 
   const getRelations = () => {
-    // OrderService.relation({ orderId: history.location.state.id }).then((res) => {
-    //   if (res.code === HttpCode.success) {
-    //     setDataM(res.data)
-    //     setDataD(res.data)
-    //   }
-    // })
+    OrderService.relation({ orderId: history.location.state.id }).then((res) => {
+      if (res.code === HttpCode.success) {
+        setDataD(res.data)
+      }
+    })
   }
   const columnsD = [
     {
@@ -48,19 +47,19 @@ const AllocatedDetailsPage: React.FC = () => {
     },
     {
       title: '姓名',
-      dataIndex: '',
+      dataIndex: 'userName',
     },
     {
       title: '关系归属',
       dataIndex: 'relationship',
     },
     {
-      title: '责任区域',
+      title: '买家常住地/渠道责任区域',
       dataIndex: 'responsibilityArea',
     },
     {
-      title: '始发地责任区域',
-      dataIndex: '',
+      title: '始发地同异',
+      dataIndex: 'areaEqualFlag',
     },
     {
       title: '手机号',
@@ -153,8 +152,10 @@ const AllocatedDetailsPage: React.FC = () => {
       <div className="ReleaseProduct__root">
         <StepView current={current} />
         <div className="steps-content">
-          {current == 0 && <ServiceList />}
-          {current == 1 && <ConfigCommission />}
+          {current == 0 && <ServiceList id={history.location.state.id} setSelectData={setSelectData} />}
+          {current == 1 && (
+            <ConfigCommission orderData={dataD} receiverData={selectData} id={history.location.state.id} />
+          )}
           <div className="btnView">
             <div className="item">
               {current > 0 && (

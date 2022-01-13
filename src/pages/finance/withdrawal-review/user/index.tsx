@@ -29,14 +29,16 @@ const UserPage: React.FC = () => {
 
   const loadData = (pageIndex) => {
     form.validateFields().then((query) => {
-      // const beginTime = query.time ? dayjs(query.time[0]).format('YYYY-MM-DD HH:mm:ss') : ''
-      // const endTime = query.time ? dayjs(query.time[1]).format('YYYY-MM-DD HH:mm:ss') : ''
+      const beginTime = query.time ? dayjs(query.time[0]).format('YYYY-MM-DD HH:mm:ss') : ''
+      const endTime = query.time ? dayjs(query.time[1]).format('YYYY-MM-DD HH:mm:ss') : ''
       WithdrawalReviewService.userList({
         current: pageIndex,
         size: pageSize,
         channelId: query.channelId,
         sts: query.sts,
         name: query.name,
+        startDate: beginTime,
+        endDate: endTime,
       }).then((res) => {
         // if (res.code === HttpCode.success) {
         setData(res.records)
@@ -184,11 +186,11 @@ const UserPage: React.FC = () => {
                 </Select>
               </Form.Item>
             </Col>
-            {/* <Col span={4}>
+            <Col span={4}>
               <Form.Item name="time">
                 <RangePicker showTime />
               </Form.Item>
-            </Col> */}
+            </Col>
             <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
               <Space>
                 <Button type="primary" htmlType="submit">

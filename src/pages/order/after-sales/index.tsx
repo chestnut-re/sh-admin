@@ -69,11 +69,11 @@ const AfterSalesListPage: React.FC = () => {
   const columns = [
     {
       title: '订单编号',
-      dataIndex: 'orderNo',
+      dataIndex: 'orderId',
     },
     {
       title: '下单时间',
-      dataIndex: 'orderTime',
+      dataIndex: 'applyTime',
     },
     {
       title: '商品名称',
@@ -81,40 +81,68 @@ const AfterSalesListPage: React.FC = () => {
     },
     {
       title: '退款金额',
-      dataIndex: 'unitPrice',
+      dataIndex: 'amount',
     },
     {
       title: '退款代币',
-      dataIndex: 'state', //无
+      dataIndex: 'tokenAmount',
     },
     {
       title: '订单状态',
-      dataIndex: 'orderCount', //无
+      dataIndex: 'orderState',
+      render: (text: any, record: any) => {
+        if (record?.orderState == '1') {
+          return `待付款`
+        } else if (record?.orderState == '2') {
+          return `已失效`
+        } else if (record?.orderState == '3') {
+          return `待确认`
+        } else if (record?.orderState == '4') {
+          return `已完成`
+        } else if (record?.orderState == '5') {
+          return `退款中`
+        } else if (record?.orderState == '6') {
+          return `退款成功`
+        } else if (record?.orderState == '7') {
+          return `退款失败`
+        }
+      },
     },
     {
       title: '申请退款时间',
-      dataIndex: 'createTime', //无
+      dataIndex: 'applyTime',
     },
     {
       title: '渠道审核状态',
-      dataIndex: 'payAmount',
+      dataIndex: '',
     },
     {
       title: '售后状态',
-      dataIndex: 'createTime',
+      dataIndex: 'refundState',
+      render: (text: any, record: any) => {
+        if (record?.refundState == '1') {
+          return `退款中`
+        } else if (record?.refundState == '2') {
+          return `商家退款成功`
+        } else if (record?.refundState == '3') {
+          return `商家退款失败`
+        } else if (record?.refundState == '4') {
+          return `到账成功`
+        }
+      },
     },
     {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
           <Button onClick={() => _editDialog(record)}>审核</Button>
-          <Button
+          {/* <Button
             onClick={() => {
               toDetails(record)
             }}
           >
             查看
-          </Button>
+          </Button> */}
         </Space>
       ),
     },

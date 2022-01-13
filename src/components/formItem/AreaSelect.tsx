@@ -7,16 +7,19 @@ import { cityDispose } from '@/utils/tree'
 import { Cascader } from 'antd'
 import React, { useEffect, useState } from 'react'
 
+export type Mode = 'order' | 'other'
+
 interface Props {
   defaultValue?: Array<any>
   channelId: any
+  mode: Mode
   onChange?: (value: string) => void
 }
 
 /**
  * 城市选择
  */
-const AreaSelect: React.FC<Props> = ({ defaultValue, onChange, channelId }) => {
+const AreaSelect: React.FC<Props> = ({ defaultValue, onChange, mode, channelId }) => {
   const [area, setArea] = useState<Array<any>>([])
   const [regions, setRegions] = useState('')
   const [value, setValue] = useState<Array<any>>([])
@@ -92,14 +95,26 @@ const AreaSelect: React.FC<Props> = ({ defaultValue, onChange, channelId }) => {
     setValue(data)
   }
   return (
-    <Cascader
-      options={area}
-      value={value}
-      onChange={casOnChange}
-      tagRender={tagRender}
-      multiple
-      fieldNames={{ label: 'name', value: 'adcode', children: 'areas' }}
-    />
+    <>
+      {mode == 'order' ? (
+        <Cascader
+          options={area}
+          value={value}
+          onChange={casOnChange}
+          tagRender={tagRender}
+          fieldNames={{ label: 'name', value: 'adcode', children: 'areas' }}
+        />
+      ) : (
+        <Cascader
+          options={area}
+          value={value}
+          onChange={casOnChange}
+          tagRender={tagRender}
+          multiple
+          fieldNames={{ label: 'name', value: 'adcode', children: 'areas' }}
+        />
+      )}
+    </>
   )
 }
 

@@ -1,27 +1,61 @@
 import React, { useState, useEffect } from 'react'
 import { Form, Table, Input, Select, Row, Col, Space, Button } from 'antd'
+import { AllocatedOrderService } from '@/service/OrderService'
+import AreaSelect, { Mode } from '@/components/formItem/AreaSelect'
+import ChannelService from '@/service/ChannelService'
+import { HttpCode } from '@/constants/HttpCode'
 
 /**
  * 选择服务方列表
  */
-const ServiceList: React.FC = () => {
+interface Props {
+  id: any
+  setSelectData: any
+}
+
+const ServiceList: React.FC<Props> = ({ id, setSelectData }) => {
   const [form] = Form.useForm()
   const { Option } = Select
-  // const [data, setData] = useState([])
+  const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [total, setTotal] = useState()
+  const [channelId, setChannelId] = useState<string>('')
+  const [channelData, setChannelData] = useState([])
+  const [mode, setMode] = useState<Mode>('order')
 
-  const data = [
-    {
-      systemUserId: '111',
-    },
-  ]
+  useEffect(() => {
+    loadData(pageIndex)
+    getChannel()
+  }, [pageIndex])
+
+  const loadData = (pageIndex) => {
+    form.validateFields().then((query) => {
+      console.log(query, 'qqqqqqq')
+      AllocatedOrderService.service({
+        current: pageIndex,
+        size: pageSize,
+        orderId: id,
+        ...query,
+      }).then((res) => {
+        setData(res.data.records)
+        setTotal(res.data.total)
+      })
+    })
+  }
+
+  const getChannel = () => {
+    ChannelService.list({ pages: 1, size: 10 }).then((res) => {
+      if (res.code === HttpCode.success) {
+        setChannelData(res.data?.records ?? [])
+      }
+    })
+  }
 
   const columns = [
     {
       title: '姓名',
-      dataIndex: 'systemUserId',
+      dataIndex: 'realName',
     },
     {
       title: '订单关联',
@@ -29,28 +63,28 @@ const ServiceList: React.FC = () => {
     },
     {
       title: '所属归属',
-      dataIndex: 'mobile',
+      dataIndex: 'belongChannel',
     },
     {
       title: '责任区域',
-      dataIndex: 'roleName',
+      dataIndex: 'address',
     },
     {
       title: '手机号',
-      dataIndex: 'createTime',
+      dataIndex: 'phone',
     },
     {
       title: '团建奖金',
-      dataIndex: 'roleName',
+      dataIndex: 'havePresetBonus',
     },
     {
       title: '当前返利',
-      dataIndex: 'createTime',
+      dataIndex: 'haveRebate',
     },
   ]
 
   const onFinish = (values: any) => {
-    // loadData(pageIndex)
+    loadData(pageIndex)
   }
 
   const onFinishFailed = (errorInfo: any) => {
@@ -58,10 +92,15 @@ const ServiceList: React.FC = () => {
   }
 
   const rowSelection = {
-    type: 'radio',
-    onSelect: (selectedRowKeys, selectedRows) => {
-      console.log(selectedRowKeys, selectedRows)
+    onChange: (selectedRowKeys, selectedRows) => {
+      setSelectData(selectedRows[0])
     },
+  }
+
+  const _onChangeAddress = (e) => {
+    form.setFieldsValue({
+      areaCode: e[1],
+    })
   }
 
   return (
@@ -83,15 +122,15 @@ const ServiceList: React.FC = () => {
             关系归属
           </Col>
           <Col span={4}>
-            <Form.Item name="roleId">
+            <Form.Item name="channelId">
               <Select style={{ width: 120 }} placeholder="请选择">
-                {/* {roleData?.map((item: any, index) => {
-                    return (
-                      <Option value={item.id} key={item.id}>
-                        {item.roleName}
-                      </Option>
-                    )
-                  })} */}
+                {channelData?.map((item: any) => {
+                  return (
+                    <Option value={item.id} key={item.id}>
+                      {item.name}
+                    </Option>
+                  )
+                })}
               </Select>
             </Form.Item>
           </Col>
@@ -99,16 +138,8 @@ const ServiceList: React.FC = () => {
             责任区域
           </Col>
           <Col span={4}>
-            <Form.Item name="roleId">
-              <Select style={{ width: 120 }} placeholder="请选择">
-                {/* {roleData?.map((item: any, index) => {
-                    return (
-                      <Option value={item.id} key={item.id}>
-                        {item.roleName}
-                      </Option>
-                    )
-                  })} */}
-              </Select>
+            <Form.Item name="areaCode">
+              <AreaSelect channelId={channelId} mode={mode} onChange={_onChangeAddress} />
             </Form.Item>
           </Col>
           <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
@@ -122,10 +153,13 @@ const ServiceList: React.FC = () => {
         </Row>
       </Form>
       <Table
-        rowKey="id"
+        rowKey="userId"
         columns={columns}
         scroll={{ x: 'max-content' }}
-        rowSelection={rowSelection}
+        rowSelection={{
+          type: 'radio',
+          ...rowSelection,
+        }}
         dataSource={[...data]}
         pagination={{
           onChange: setPageIndex,
