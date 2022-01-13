@@ -169,7 +169,7 @@ const RebateActivity: React.FC = () => {
   const goodsOnSuccess = (rowKeys, rowList) => {
     if (rowList.length > 0) {
       const goodsList = rowList.map((res) => {
-        res.goodsId = res.id
+        // res.goodsId = res.id
         return res
       })
       console.log(goodsList,'---')
