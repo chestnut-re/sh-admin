@@ -1,10 +1,11 @@
 /*
  * @Description:查看
- * @LastEditTime: 2022-01-12 18:56:32
+ * @LastEditTime: 2022-01-13 13:15:55
  */
 import React, { useState, FC, useEffect } from 'react'
 import { Drawer, Button, Descriptions, Table, Row, Col } from 'antd'
 import { marketService } from '@/service/marketService'
+import {formateTime} from '@/utils/timeUtils'
 import './index.less'
 interface props {
   data: any
@@ -74,7 +75,7 @@ const BasicInfo: FC<props> = ({ data }) => {
               {dataSource?.name}
             </Descriptions.Item>
             <Descriptions.Item span={24} label="活动时间">
-              {dataSource?.beginTime}-{dataSource?.endTime}
+              {formateTime(dataSource?.beginTime)} - {formateTime(dataSource?.endTime)}
             </Descriptions.Item>
             <Descriptions.Item span={24} label="返利比例">
               {dataSource?.scale}

@@ -309,7 +309,7 @@ export default [
                   icon: '',
                   componentPath: '/order/allocated-list/components/order-allocated',
                   path: '/order/allocated-list/order-allocated',
-                  hide: false,
+                  hide: true,
                 },
                 {
                   name: '售后管理',
@@ -327,7 +327,7 @@ export default [
                   icon: '',
                   componentPath: '/order/after-sales/components/details',
                   path: '/order/after-sales/details',
-                  hide: false,
+                  hide: true,
                 },
                 {
                   name: '配置管理',

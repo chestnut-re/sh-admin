@@ -15,7 +15,7 @@ const AllocatedListPage: React.FC = () => {
   const [form] = Form.useForm()
   const { Option } = Select
   const { RangePicker } = DatePicker
-  // const [data, setData] = useState([])
+  const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [total, setTotal] = useState()
@@ -37,7 +37,7 @@ const AllocatedListPage: React.FC = () => {
         orderEndTime: payEndTime,
         source: query.source,
       }).then((res) => {
-        // setData(res.data.records)
+        setData(res.data.records)
         setTotal(res.data.total)
       })
     })
@@ -50,12 +50,6 @@ const AllocatedListPage: React.FC = () => {
       }
     })
   }
-
-  const data = [
-    {
-      orderNo: 1,
-    },
-  ]
 
   const columns = [
     {
@@ -113,6 +107,23 @@ const AllocatedListPage: React.FC = () => {
     {
       title: '订单/售后状态',
       dataIndex: 'state',
+      render: (text: any, record: any) => {
+        if (record?.state == '1') {
+          return `待付款`
+        } else if (record?.state == '2') {
+          return `已失效`
+        } else if (record?.state == '3') {
+          return `待确认`
+        } else if (record?.state == '4') {
+          return `已完成`
+        } else if (record?.state == '5') {
+          return `退款中`
+        } else if (record?.state == '6') {
+          return `退款成功`
+        } else if (record?.state == '7') {
+          return `退款失败`
+        }
+      },
     },
     {
       title: '操作',
@@ -125,14 +136,20 @@ const AllocatedListPage: React.FC = () => {
           >
             详情
           </Button>
-          <Button>分配</Button>
+          <Button
+            onClick={() => {
+              toDetails(record)
+            }}
+          >
+            分配
+          </Button>
         </Space>
       ),
     },
   ]
 
   const toDetails = (record: any) => {
-    history.push('/order/order-list/order-details', {
+    history.push('/order/allocated-list/order-allocated', {
       id: record.id,
     })
   }
@@ -205,7 +222,6 @@ const AllocatedListPage: React.FC = () => {
         dataSource={[...data]}
         pagination={{
           onChange: setPageIndex,
-          showSizeChanger: true,
           showQuickJumper: true,
           pageSize: pageSize,
           total: total,
