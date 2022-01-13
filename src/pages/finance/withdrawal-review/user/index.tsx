@@ -68,7 +68,7 @@ const UserPage: React.FC = () => {
         startDate: beginTime,
         endDate: endTime,
       }).then((res) => {
-        const content = res.data // 文件流
+        const content = res // 文件流
         const blob = new Blob([content], { type: 'application/octet-stream' })
         // const fileName = 'filename.xls'
         // 如果后端返回文件名
