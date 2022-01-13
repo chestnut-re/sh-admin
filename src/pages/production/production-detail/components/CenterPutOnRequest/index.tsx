@@ -1,7 +1,9 @@
 import useQuery from '@/hooks/useQuery'
 import { ProductionService } from '@/service/ProductionService'
 import { useStore } from '@/store/context'
-import { Button, Form, message } from 'antd'
+import { Button, Form, message, Table } from 'antd'
+import Column from 'antd/lib/table/Column'
+import ColumnGroup from 'antd/lib/table/ColumnGroup'
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
@@ -18,7 +20,7 @@ const CenterPutOnRequest: React.FC = () => {
 
   const [form] = Form.useForm()
   const [commission, setCommission] = useState<any>({})
-
+  const [list, setList] = useState<any>([])
   const layout = {
     labelCol: { span: 4 },
     wrapperCol: { span: 20 },
@@ -26,7 +28,13 @@ const CenterPutOnRequest: React.FC = () => {
 
   const _onCommissionChange = (value) => {
     console.log('分佣方案', value)
-    setCommission(value)
+    value.channelPlanList.map((item, index) => {
+      item.saleScalePlan.map((it) => {
+        item['s' + it.level] = it.saleScale
+      })
+    })
+    setList(value?.channelPlanList)
+    setCommission(value?.channelPlanList)
   }
 
   /**提交发布 */
@@ -62,7 +70,18 @@ const CenterPutOnRequest: React.FC = () => {
           <Commission onChange={_onCommissionChange} />
         </Form.Item>
         {/* <div>{JSON.stringify(commission)}</div> */}
-
+        <div>
+          <Table dataSource={list} bordered>
+            <Column title="渠道名称" dataIndex="channelName" key="channelName" />
+            <Column title="直销分佣比例" dataIndex="directScale" key="directScale" />
+            <Column title="渠道等级" dataIndex="level" key="level" />
+            <ColumnGroup title="分销分佣">
+              <Column title="渠道等级" dataIndex="lastName" key="lastName" />
+              <Column title="分销分佣比例" dataIndex="lastName" key="lastName" />
+            </ColumnGroup>
+            <Column title="发团服务费" dataIndex="teamPrice" key="teamPrice" />
+          </Table>
+        </div>
         <Button onClick={_submit}>提交申请</Button>
       </Form>
     </div>

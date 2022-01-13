@@ -1,6 +1,6 @@
 /*
  * @Description: 添加分佣方案
- * @LastEditTime: 2022-01-13 13:59:53
+ * @LastEditTime: 2022-01-13 15:01:33
  */
 
 import { Form, Input, Modal, Cascader, message, Row, Col, InputNumber, Button, Tooltip } from 'antd'
@@ -82,7 +82,7 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
             //
             const isList = getInit(dataList, resData?.presetBonus, resData?.isGroupServiceFee)
             form.setFieldsValue({
-              teamBonus: resData?.presetBonus,
+              teamBonus: resData?.presetBonus??0,
             })
             // console.log(dataList,'dataListdataListdataListdataListdataList')
             // setChannelDistAuth(isList)
@@ -120,7 +120,7 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
           channelPlanList: resultData?.channelPlanList,
           level: structure[0].level,
           planName: resultData?.planName,
-          teamBonus: resultData?.teamBonus,
+          teamBonus: (resultData?.teamBonus),
           state: resultData?.state,
           createTime: formateTime(resultData?.createTime),
           createUserName: resultData?.createUserName,
@@ -283,7 +283,7 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
               <>
                 <Form.Item label="直销渠道">{res?.level}级渠道</Form.Item>
                 <Row key={index} gutter={23}>
-                  {res.directAuth == 1 ? (
+                  {res.directAuth == 1 ||res.directScale ? (
                     <Col span={12} style={{ textAlign: 'right' }}>
                       <Form.Item
                         labelCol={{ offset: 4 }}
@@ -309,7 +309,7 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
                     ''
                   )}
 
-                  {res.isGroupServiceFee == 1 ? (
+                  {res.isGroupServiceFee == 1||res.teamPrice ? (
                     <Col span={12} style={{ textAlign: 'right' }}>
                       <Form.Item
                         labelCol={{ offset: 4 }}
