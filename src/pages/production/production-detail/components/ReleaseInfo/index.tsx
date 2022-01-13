@@ -48,7 +48,7 @@ const ReleaseInfo: React.FC = () => {
             planName: postData.distPlanId.planName,
           }
         })
-        
+
         postData.saleScale = postData.distPlanId.saleScale
         postData.saleSettleDay = postData.distPlanId.saleSettleDay
         postData.saleSettleType = postData.distPlanId.saleSettleType
@@ -67,9 +67,8 @@ const ReleaseInfo: React.FC = () => {
         console.error(e)
       })
   }
-  
 
-  const _onCheckStateChange = (e: RadioChangeEvent)=>{
+  const _onCheckStateChange = (e: RadioChangeEvent) => {
     setCheckState(e.target.value !== 1)
   }
 
@@ -90,10 +89,10 @@ const ReleaseInfo: React.FC = () => {
           <InputNumber addonAfter="/出发日" min={0} />
         </Form.Item>
         <Form.Item label="代币抵现" name="isDeduction" rules={[{ required: true }]}>
-          <Switch checkedChildren="开启" unCheckedChildren="关闭" />
+          <Switch checkedChildren="开启" unCheckedChildren="关闭" defaultChecked />
         </Form.Item>
         <Form.Item label="是否热销" name="isHot" rules={[{ required: true }]}>
-          <Switch checkedChildren="是" unCheckedChildren="否" />
+          <Switch checkedChildren="是" unCheckedChildren="否" defaultChecked />
         </Form.Item>
         <Form.Item label='最多可抵"现售价"' name="deductionScale" rules={[{ required: true }]}>
           <InputNumber min={0} addonAfter="%" />

@@ -1,6 +1,6 @@
 /*
  * @Description:查看
- * @LastEditTime: 2022-01-11 19:03:48
+ * @LastEditTime: 2022-01-12 18:56:32
  */
 import React, { useState, FC, useEffect } from 'react'
 import { Drawer, Button, Descriptions, Table, Row, Col } from 'antd'
@@ -80,7 +80,7 @@ const BasicInfo: FC<props> = ({ data }) => {
               {dataSource?.scale}
             </Descriptions.Item>
             <Descriptions.Item span={24} label="分享文案">
-              {dataSource?.shareAmount}
+              {dataSource?.description}
             </Descriptions.Item>
             <Descriptions.Item span={24} label="返利配置">
               <Table bordered dataSource={List} columns={columns} pagination={false} />

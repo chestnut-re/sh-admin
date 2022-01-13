@@ -80,6 +80,7 @@ const BannerListPage: React.FC = () => {
     {
       title: '添加人',
       dataIndex: 'updateUserName',
+      render: (text: any, record: any) => `${record.createChannelName}-${record.updateUserName}`,
     },
     {
       title: '添加时间',

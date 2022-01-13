@@ -146,7 +146,18 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
                   </Col>
                   <Col span={10}>
                     <Form.Item name={['purchaseConfig', 'purchaseNum']} label="">
-                      <InputNumber addonBefore="限购" addonAfter="份" min={0} step={1} />
+                      <InputNumber
+                        addonBefore="限购"
+                        addonAfter="份"
+                        min={0}
+                        step={1}
+                        formatter={(value: any) => {
+                          if (value) {
+                            return Math.floor(value)
+                          }
+                          return value
+                        }}
+                      />
                     </Form.Item>
                   </Col>
                 </>
@@ -196,7 +207,17 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
                     </Col>
                     <Col span={6}>
                       <Form.Item name={['purchaseConfig', 'addNum']} label="">
-                        <InputNumber addonBefore="限购加" addonAfter="份" min={0} />
+                        <InputNumber
+                          addonBefore="限购加"
+                          addonAfter="份"
+                          min={0}
+                          formatter={(value: any) => {
+                            if (value) {
+                              return Math.floor(value)
+                            }
+                            return value
+                          }}
+                        />
                       </Form.Item>
                     </Col>
                   </>
