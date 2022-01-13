@@ -15,11 +15,11 @@ interface Props {
 }
 const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData }) => {
   const [form] = Form.useForm()
-  const [data, setData] = useState([])
+  const [data, setData] = useState<any>({})
   const [relationList, setRelationList] = useState([])
   const [num, setNum] = useState({})
   useEffect(() => {
-    const arr = []
+    const arr: any[] = []
     console.log(orderData, receiverData, '.......')
     orderData.map((item: any) => {
       if (item.orderShip == '推荐人') {
