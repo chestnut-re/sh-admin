@@ -1,6 +1,6 @@
 /*
  * @Description: 配置商品详情
- * @LastEditTime: 2022-01-07 16:09:33
+ * @LastEditTime: 2022-01-13 15:41:35
  */
 import { Table, Space, Button } from 'antd'
 import React, { useEffect, useState } from 'react'
@@ -51,7 +51,7 @@ const ActivityDetailTable: React.FC<Props> = ({ goodsIdList, onSuccess }) => {
 
   return (
     <div className="page-root">
-      <Table rowKey="id" columns={columns} dataSource={[...data]} pagination={false} />
+      <Table rowKey="goodsId" columns={columns} dataSource={[...data]} pagination={false} />
     </div>
   )
 }
