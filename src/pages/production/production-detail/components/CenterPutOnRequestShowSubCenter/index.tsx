@@ -28,6 +28,9 @@ const CenterPutOnRequestShowSubCenter: React.FC = () => {
     console.log('subcenter CenterPutOnRequestShowSubCenter')
     const id = query.get('channelGoodsId') ?? ''
     setID(id)
+    if (!id || id === 'null') {
+      return
+    }
     ProductionService.centerPutOnRequestGet(id).then((res) => {
       setData(res.data)
       const arr: any = []
@@ -60,7 +63,7 @@ const CenterPutOnRequestShowSubCenter: React.FC = () => {
 
   return (
     <>
-      {id && (
+      {id !== 'null' && (
         <div className="CenterPutOnRequestShow__root">
           <h4>5. 上架申请信息</h4>
           {/* <div>{JSON.stringify(data)}</div> */}

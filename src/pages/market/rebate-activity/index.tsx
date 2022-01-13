@@ -169,10 +169,10 @@ const RebateActivity: React.FC = () => {
   const goodsOnSuccess = (rowKeys, rowList) => {
     if (rowList.length > 0) {
       const goodsList = rowList.map((res) => {
-        res.goodsId = res.id
+        // res.goodsId = res.id
         return res
       })
-      console.log(goodsList,'---')
+      console.log(goodsList, '---')
       marketService
         .rebateAuditApply({ rebateId: selectRecord, rebateName: rebateName, type: 1, goodsList: goodsList })
         .then((res) => {
@@ -369,12 +369,16 @@ const RebateActivity: React.FC = () => {
           setActivityRoleList([])
         }}
       ></ActivityTable>
-      <ModalDialog
-        show={showGoodsDialog}
-        title={showType == 'goods' ? '关联商品管理' : '关联任务清单'}
-        data={() => <ShowGoodsTaskModal data={modalData} showType={showType}></ShowGoodsTaskModal>}
-        onChange={() => setShowGoodsDialog(false)}
-      ></ModalDialog>
+      {showGoodsDialog == true ? (
+        <ModalDialog
+          show={showGoodsDialog}
+          title={showType == 'goods' ? '关联商品管理' : '关联任务清单'}
+          data={() => <ShowGoodsTaskModal data={modalData} showType={showType}></ShowGoodsTaskModal>}
+          onChange={() => setShowGoodsDialog(false)}
+        ></ModalDialog>
+      ) : (
+        ''
+      )}
     </div>
   )
 }

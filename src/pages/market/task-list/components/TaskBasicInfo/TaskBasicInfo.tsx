@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description:查看
- * @LastEditTime: 2022-01-13 13:28:36
+ * @LastEditTime: 2022-01-13 15:51:27
  */
 import React, { useState, FC, useEffect } from 'react'
 import { Drawer, Button, Descriptions, Table, Row, Col } from 'antd'
@@ -27,15 +27,16 @@ const TaskBasicInfo: FC<Props> = ({ dataValue }) => {
     {
       title: '序号',
       dataIndex: 'name',
-      dataIndex: 'goodsNo',
+      dataIndex: '',
+      render: (text, record, index) => `${index + 1}`,
     },
     {
       title: '商品名称',
       dataIndex: 'goodsName',
     },
     {
-      title: '关联返利活动',
-      dataIndex: 'activityName',
+      title: '关联返利活动名称',
+      dataIndex: 'rebateName',
     },
   ]
 

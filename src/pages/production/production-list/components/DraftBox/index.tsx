@@ -34,8 +34,8 @@ const DraftListPage: React.FC = observer(() => {
       current: pageIndex,
       size: pageSize,
       ...remain,
-      createDateEnd: formateTime(timeRange?.[0]),
-      createDateStart: formateTime(timeRange?.[1]),
+      createDateStart: formateTime(timeRange?.[0]),
+      createDateEnd: formateTime(timeRange?.[1]),
     }).then((res) => {
       setData(res.data.records)
       setTotal(res.data.total)

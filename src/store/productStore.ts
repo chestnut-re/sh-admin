@@ -191,6 +191,7 @@ class ProductionData {
   addTravelDetail(activeKey: string, travelType: TravelType, travelDetail: any) {
     console.log(`addTravelDetail: ${activeKey}`)
     const editGoodsPrices = this.data.goodsPrices.filter((i) => i.key === activeKey)
+    console.log('e', editGoodsPrices)
     const lastDay = editGoodsPrices[0].travels[editGoodsPrices[0].travels.length - 1]
     if (!lastDay.travelDetails) {
       lastDay.travelDetails = []
