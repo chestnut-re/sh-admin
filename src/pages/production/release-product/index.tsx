@@ -55,8 +55,6 @@ const ReleaseProductPage: React.FC = () => {
         if (res.code === '200') {
           message.success('成功')
           history.goBack()
-        } else {
-          message.error(res.msg)
         }
       })
     }
@@ -79,8 +77,6 @@ const ReleaseProductPage: React.FC = () => {
           if (res.code === '200') {
             message.success('成功')
             history.goBack()
-          } else {
-            message.error(res.msg)
           }
         })
       })
@@ -92,8 +88,6 @@ const ReleaseProductPage: React.FC = () => {
         if (res.code === '200') {
           message.success('成功')
           history.goBack()
-        } else {
-          message.error(res.msg)
         }
       })
     }
