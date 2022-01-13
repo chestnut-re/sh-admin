@@ -112,7 +112,7 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
   }
   const onChangePicker = (e)=>{
     if((new Date().getTime())>(new Date(e[1]).getTime())){
-      message.info('当前选择结束时间小于当前时间')
+      message.info('结束时间不能小于当前时间/开始时间')
     }
   }
   return (
