@@ -1,6 +1,6 @@
 /*
  * @Description: 结构树处理 新 之前有些乱 不动 慢慢在这维护
- * @LastEditTime: 2022-01-14 17:22:35
+ * @LastEditTime: 2022-01-14 18:48:10
  */
 /**
  * @description:  根据id 获取父 - 子 数据
@@ -82,9 +82,40 @@ export const newMenu = (menuList: Array<any>) => {
     delete child.children
     const menuChild = newMenu(item.children)
     if (menuChild && menuChild.length > 0) {
-      child.children=menuChild
+      child.children = menuChild
     }
     pre.push(child)
     return pre
   }, [])
+}
+/**
+ * @description: 所有按钮权限处理
+ * @param {Array} oldArray
+ */
+export const newBtnMenu = (menuList: Array<any>) => {
+  const tempMenuList: any[] = []
+  const each = (menuList, list) => {
+    for (const menu of menuList) {
+      if (menu.type == '2' && menu.visible) {
+        list.push(menu)
+      }
+      if (menu.children) {
+        each(menu.children, list)
+      }
+    }
+  }
+  each(menuList, tempMenuList)
+  return tempMenuList
+}
+export const isIntoMenu = (menuList: Array<any>, id: number) => {
+  return menuList.reduce((pre, item) => {
+    if (item.id == id) {
+      pre = true
+      return pre
+    }
+    if (item.children && item.children.length > 0) {
+      isIntoMenu(item.children, id)
+    }
+    return pre
+  }, false)
 }
