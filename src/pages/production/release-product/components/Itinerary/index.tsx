@@ -36,7 +36,6 @@ const Itinerary = (props, ref) => {
   }))
 
   useEffect(() => {
-    debugger
     console.log(productionStore.data)
     setActiveKey(productionStore.data.goodsPrices[0].key)
   }, [])
