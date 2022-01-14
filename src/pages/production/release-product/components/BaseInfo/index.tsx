@@ -40,7 +40,7 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
       refundAndChangePolicy: productionStore.data.refundAndChangePolicy,
       promotionalImageUrl: productionStore.data.promotionalImageUrl,
       purchaseConfig: {
-        purchaseDay: productionStore.data.purchaseConfig?.purchaseDay,
+        purchaseDay: productionStore.data.purchaseConfig?.purchaseDay || 180,
         purchaseNum: productionStore.data.purchaseConfig?.purchaseNum,
         addType: productionStore.data.purchaseConfig?.addType,
         addNum: productionStore.data.purchaseConfig?.addNum,
@@ -48,11 +48,9 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
       },
     })
 
-    if (productionStore.data.purchaseConfig?.purchaseDay) {
-      setGoodsLimit(true)
-    }
+    setGoodsLimit(productionStore.data.isPurchase !== 0)
 
-    if (productionStore.data.purchaseConfig?.addNum) {
+    if (productionStore.data.isPurchaseAdd === 1) {
       setGoodsLimitUp(true)
     }
   }, [productionStore.data])
@@ -64,14 +62,19 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
   const next = () => {
     console.log('BaseInfo next')
     const value = form.getFieldsValue()
-    if (!goodsLimit && productionStore.data.purchaseConfig) {
-      productionStore.data.purchaseConfig.purchaseDay = null
-      productionStore.data.purchaseConfig.purchaseNum = null
+    if (!value.purchaseConfig) {
+      value.purchaseConfig = {}
     }
-    if (!goodsLimitUp && productionStore.data.purchaseConfig) {
-      productionStore.data.purchaseConfig.addType = null
-      productionStore.data.purchaseConfig.addNum = null
+    if (!goodsLimit) {
+      value.purchaseConfig.purchaseDay = 0
+      value.purchaseConfig.purchaseNum = 0
     }
+    if (!goodsLimitUp) {
+      value.purchaseConfig.addType = null
+      value.purchaseConfig.addNum = 0
+    }
+    value.isPurchase = goodsLimit ? 1 : 0
+    value.isPurchaseAdd = goodsLimitUp ? 1 : 0
     console.log(value)
     productionStore.addBaseInfo(value)
   }
