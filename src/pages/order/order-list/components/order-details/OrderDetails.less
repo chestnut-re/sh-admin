@@ -11,8 +11,10 @@
     margin-top: 20px;
     position: relative;
     margin-left: 30px;
+    display: flex;
     div {
-      display: inline-block;
+      flex: 1;
+      // display: inline-block;
       &.infor-title {
         position: absolute;
         width: 310px;
@@ -26,7 +28,7 @@
           border: 1px solid #eeeeee;
           text-align: center;
           display: block;
-          width: 140px;
+          // width: 140px;
         }
       }
     }
@@ -36,15 +38,16 @@
     }
   }
   .states-con {
+    display: flex;
     height: 100px;
     background-color: #eeeeee;
     margin: 0px 30px 7px;
     line-height: 100px;
-    position: relative;
+    // position: relative;
     .order-sta {
       display: inline-block;
       margin: 0px 10px 0 50px;
-
+      width: 100px;
       color: #666666;
     }
     .order-state {
@@ -64,17 +67,20 @@
       border-radius: 20px;
       text-align: center;
       margin-left: 10px;
+      margin-top: 35px;
     }
     .states-order,
     .states-order1,
     .states-order2,
     .states-order3 {
-      position: absolute;
-      top: 10px;
+      flex: 1;
+      // position: absolute;
+      // top: 10px;
       display: inline-block;
       margin-left: 40px;
       height: 40px;
       line-height: 40px;
+      margin-top: 10px;
       div {
         display: block;
         &:first-child {

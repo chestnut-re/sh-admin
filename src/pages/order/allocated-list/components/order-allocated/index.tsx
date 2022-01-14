@@ -134,17 +134,17 @@ const AllocatedDetailsPage: React.FC = () => {
         <div className="order-time">
           剩<span></span>
         </div>
-        <span className="order-fx">分销</span>
+        <div className="order-fx">分销</div>
         <div className="states-order">
-          <div>{data.orderNo ? data.orderNo : ''}</div>
+          <div>{data.orderNo ? data.orderNo : '无'}</div>
           <div>订单编号</div>
         </div>
         <div className="states-order1">
-          <div>{data.orderTime ? data.orderTime : ''}</div>
+          <div>{data.orderTime ? data.orderTime : '无'}</div>
           <div>下单时间</div>
         </div>
         <div className="states-order2">
-          <div>{data.payTime ? data.payTime : ''}</div>
+          <div>{data.payTime ? data.payTime : '无'}</div>
           <div>付款时间</div>
         </div>
         <div className="states-order3">
