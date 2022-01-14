@@ -31,7 +31,7 @@ class AdminData {
 
   async init() {
     // if (env == 'development') {
-      const res = await getDevMenus()
+      // const res = await getDevMenus()
     //   this.setMenu(res.data.menus)
     // } else {
       const user = JSON.parse(getCookie(USER_DETAIL) ?? '')
