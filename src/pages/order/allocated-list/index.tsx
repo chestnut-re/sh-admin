@@ -79,15 +79,21 @@ const AllocatedListPage: React.FC = () => {
     },
     {
       title: '应付款',
-      dataIndex: 'createTime', //无
+      dataIndex: 'originPrice',
+      render: (text: any, record: any) => {
+        return parseInt(record.originPrice) / 100
+      },
     },
     {
       title: '实付款',
       dataIndex: 'payAmount',
+      render: (text: any, record: any) => {
+        return parseInt(record.payAmount) / 100
+      },
     },
     {
       title: '付款方式',
-      dataIndex: 'createTime',
+      dataIndex: 'payTypeVal',
     },
     {
       title: '付款时间',
@@ -99,11 +105,11 @@ const AllocatedListPage: React.FC = () => {
     },
     {
       title: '下单途径',
-      dataIndex: 'createTime',
+      dataIndex: 'sourceVal',
     },
     {
       title: '订单类型',
-      dataIndex: 'createTime',
+      dataIndex: 'orderTypeVal',
     },
     {
       title: '订单/售后状态',

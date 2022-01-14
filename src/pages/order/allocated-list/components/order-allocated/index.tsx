@@ -167,11 +167,11 @@ const AllocatedDetailsPage: React.FC = () => {
         </div>
         <div className="infor">
           <div>成人价</div>
-          <div>{data?.personCurrentPrice}</div>
+          <div>{parseInt(data?.personCurrentPrice) / 100}</div>
         </div>
         <div className="infor">
           <div>儿童价</div>
-          <div>{data?.childCurrentPrice}</div>
+          <div>{parseInt(data?.childCurrentPrice) / 100}</div>
         </div>
         <div className="infor">
           <div>下单数量</div>
@@ -182,7 +182,7 @@ const AllocatedDetailsPage: React.FC = () => {
         </div>
         <div className="infor">
           <div>代币最多可抵</div>
-          <div>{data?.deductionPrice}</div>
+          <div>{parseInt(data?.deductionPrice) / 100}</div>
         </div>
       </div>
       <div className="details-title">订单关联人</div>
