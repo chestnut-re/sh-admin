@@ -18,6 +18,7 @@ interface Props {
 const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }) => {
   const [data, setData] = useState<any>({})
   const [relationList, setRelationList] = useState<any[]>([])
+  const [sums, setSums] = useState(0)
   useEffect(() => {
     const arr: any[] = []
     orderData.map((item: any) => {
@@ -39,10 +40,6 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
   }, [orderData])
 
   useImperativeHandle(cRef, () => ({
-    //aa即为子组件暴露给父组件的方法
-    // getTreeList: () => {
-    //   return getList()
-    // },
     relationList,
   }))
 
@@ -66,7 +63,8 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
           <span className="topOne">可配置分佣</span>
           <span>¥{data?.allocationAmount}</span>
           <span className="topOne">剩余可配置</span>
-          <span>￥{data?.surplusAmount}</span>
+          {/* <span>￥{data?.allocationAmount * (100 - sums) * 0.01}</span> */}
+          <span>￥{data?.allocationAmount}</span>
         </div>
         <div className="mid">
           {relationList?.map((item: any) => {
@@ -83,7 +81,7 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
                   {item.relation?.map((item: any, index) => {
                     return (
                       <div className="guanxi" style={{ marginLeft: '62px' }} key={index}>
-                        {item.haveRebate ? (
+                        {item.havePresetBonus ? (
                           <p>
                             团建奖金{item.presetBonus}% ¥{data?.allocationAmount * item.presetBonus}
                           </p>
@@ -120,6 +118,7 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
                           onChange={(e) => {
                             item['scale'] = e.target.value
                             setRelationList(cloneDeep(relationList))
+                            setSums(sums + item.scale)
                           }}
                         />
                         <span>%</span>
@@ -133,7 +132,7 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
                               className="bDer"
                               value={item.serviceScale}
                               onChange={(e) => {
-                                item['serviceScale'] = e.target.value
+                                item['serviceScale'] = e.target.value || 0
                                 setRelationList(cloneDeep(relationList))
                               }}
                             />

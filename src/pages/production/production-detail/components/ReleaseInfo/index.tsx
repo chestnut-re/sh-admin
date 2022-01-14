@@ -4,7 +4,7 @@ import { useStore } from '@/store/context'
 import { Button, Form, Input, InputNumber, Radio, RadioChangeEvent, Switch } from 'antd'
 import { useForm } from 'antd/es/form/Form'
 import { observer } from 'mobx-react-lite'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import Commission from './Commission'
 import './index.less'
@@ -26,6 +26,13 @@ const ReleaseInfo: React.FC = () => {
     wrapperCol: { span: 20 },
   }
 
+  useEffect(() => {
+    form.setFieldsValue({
+      isHot: false,
+      isDeduction: false,
+    })
+  }, [])
+
   const _onCommissionChange = (value) => {
     console.log('分佣方案', value)
     setCommission(value)
@@ -38,8 +45,8 @@ const ReleaseInfo: React.FC = () => {
       .then((formData) => {
         console.log(formData)
         const postData = { ...formData }
-        postData.isDeduction = postData.isDeduction ? 0 : 1
-        postData.isHot = postData.isHot ? 0 : 1
+        postData.isDeduction = postData.isDeduction ? 1 : 0
+        postData.isHot = postData.isHot ? 1 : 0
         postData.distPlan = postData.distPlanId.channelPlanList.map((item) => {
           return {
             channelId: item.id,
@@ -89,10 +96,10 @@ const ReleaseInfo: React.FC = () => {
           <InputNumber addonAfter="/出发日" min={0} />
         </Form.Item>
         <Form.Item label="代币抵现" name="isDeduction" rules={[{ required: true }]}>
-          <Switch checkedChildren="开启" unCheckedChildren="关闭" defaultChecked />
+          <Switch checkedChildren="开启" unCheckedChildren="关闭" />
         </Form.Item>
         <Form.Item label="是否热销" name="isHot" rules={[{ required: true }]}>
-          <Switch checkedChildren="是" unCheckedChildren="否" defaultChecked />
+          <Switch checkedChildren="是" unCheckedChildren="否" />
         </Form.Item>
         <Form.Item label='最多可抵"现售价"' name="deductionScale" rules={[{ required: true }]}>
           <InputNumber min={0} addonAfter="%" />
