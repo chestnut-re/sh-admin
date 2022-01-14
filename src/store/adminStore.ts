@@ -1,19 +1,20 @@
 /*
  * @Description:
- * @LastEditTime: 2022-01-14 17:23:21
+ * @LastEditTime: 2022-01-14 17:52:10
  */
 import { USER_DETAIL } from '@/constants/CookiesC'
-import { getMenus } from '@/service/menu'
+import { getMenus, getDevMenus } from '@/service/menu'
 import { UserService } from '@/service/user'
 import { isUserLogin, setJWT } from '@/utils/biz'
 import { getCookie, setCookie } from '@/utils/cookies'
 import { action, makeObservable, observable } from 'mobx'
-import {newMenu} from '@/utils/newTree'
+import { newMenu } from '@/utils/newTree'
 /**
  * 管理后台必备 Store
  * 1. 菜单
  * 2. 登录
  */
+const env = process.env.NODE_ENV
 class AdminData {
   menu: any[] = []
   userDetails: any = {}
@@ -29,12 +30,15 @@ class AdminData {
   }
 
   async init() {
-    /// init menu
-    // const res = await getMenus()
-    // this.setMenu(res.data.menus)
-    const user = JSON.parse(getCookie(USER_DETAIL) ?? '')
-    const res = await getMenus(user?.userId)
-    this.setMenu(newMenu(res.data))
+    // if (env == 'development') {
+      const res = await getDevMenus()
+    //   this.setMenu(res.data.menus)
+    // } else {
+      const user = JSON.parse(getCookie(USER_DETAIL) ?? '')
+      const res = await getMenus(user?.userId)
+      this.setMenu(newMenu(res.data))
+    // }
+
     if (!isUserLogin()) {
       // 未登录，去登录页面
       if (window.location.pathname !== '/login') {
@@ -59,7 +63,6 @@ class AdminData {
   }
 
   setMenu(_menu: any) {
-
     this.menu = _menu
   }
 
