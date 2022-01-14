@@ -55,11 +55,11 @@ const ProductionCommissionListPage: React.FC = () => {
     },
     {
       title: '现关联商品量',
-      dataIndex: 'bannerUrl',
+      dataIndex: 'goodsNumber',
     },
     {
       title: '关联分中心',
-      dataIndex: 'bannerUrl',
+      dataIndex: 'centerNumber',
     },
     {
       title: '创建时间',
@@ -119,6 +119,7 @@ const ProductionCommissionListPage: React.FC = () => {
   }
 
   const _onDialogClose = () => {
+    console.log('关闭按钮')
     setSelectedData(null)
     setShowDialog(false)
   }

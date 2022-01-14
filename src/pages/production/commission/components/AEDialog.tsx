@@ -61,6 +61,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
   }
 
   const _formClose = () => {
+    console.log('执行关闭')
     form.resetFields()
     onClose()
   }
@@ -69,6 +70,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
     <Modal
       title="商品分佣方案"
       visible={show}
+      onCancel={() => onClose()}
       footer={
         mode !== 'add'
           ? [
