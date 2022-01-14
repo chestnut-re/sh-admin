@@ -93,7 +93,7 @@ const OrderListPage: React.FC = () => {
     },
     {
       title: '应付款',
-      dataIndex: 'createTime', //无
+      dataIndex: 'originPrice', //无
     },
     {
       title: '实付款',
@@ -101,7 +101,7 @@ const OrderListPage: React.FC = () => {
     },
     {
       title: '付款方式',
-      dataIndex: 'createTime',
+      dataIndex: 'payTypeVal',
     },
     {
       title: '付款时间',
@@ -113,11 +113,11 @@ const OrderListPage: React.FC = () => {
     },
     {
       title: '下单途径',
-      dataIndex: 'createTime',
+      dataIndex: 'payTypeVal',
     },
     {
       title: '订单类型',
-      dataIndex: 'createTime',
+      dataIndex: 'orderTypeVal',
     },
     {
       title: '订单/售后状态',
