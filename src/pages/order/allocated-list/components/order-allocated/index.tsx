@@ -130,11 +130,12 @@ const AllocatedDetailsPage: React.FC = () => {
     <div className="details__root">
       <div className="states-con">
         <span className="order-sta">订单状态</span>
-        <span className="order-state">{data.state ? data.state : ''}</span>
+        <span className="order-state">{data?.stateVal}</span>
         <div className="order-time">
           剩<span></span>
         </div>
-        <div className="order-fx">分销</div>
+        {data.orderTypeVal ? <div className="order-fx">{data?.orderTypeVal}</div> : ''}
+
         <div className="states-order">
           <div>{data.orderNo ? data.orderNo : '无'}</div>
           <div>订单编号</div>
@@ -148,7 +149,7 @@ const AllocatedDetailsPage: React.FC = () => {
           <div>付款时间</div>
         </div>
         <div className="states-order3">
-          <div>APP 浏览</div>
+          <div>{data.sourceVal ? data.sourceVal : '无'}</div>
           <div>下单途径</div>
         </div>
       </div>
@@ -159,26 +160,26 @@ const AllocatedDetailsPage: React.FC = () => {
         </div>
         <div className="infor infor-spe">
           <div>始发地</div>
-          <div>青岛</div>
+          <div>{data?.departureCity}</div>
         </div>
         <div className="infor">
           <div>成人价</div>
-          <div>{data.goodsPrice ? data.goodsPrice : 0}</div>
+          <div>{data?.personCurrentPrice}</div>
         </div>
         <div className="infor">
           <div>儿童价</div>
-          <div>¥878</div>
+          <div>{data?.childCurrentPrice}</div>
         </div>
         <div className="infor">
           <div>下单数量</div>
           <div>
-            <span>{data.orderCount ? data.orderCount : 0}</span>
+            <span>{data?.orderCount}</span>
             {/* <span>成人×4 儿童×1</span> */}
           </div>
         </div>
         <div className="infor">
           <div>代币最多可抵</div>
-          <div>{data.deductionPrice ? data.deductionPrice : 0}</div>
+          <div>{data?.deductionPrice}</div>
         </div>
       </div>
       <div className="details-title">订单关联人</div>
