@@ -36,6 +36,7 @@ const AllocatedListPage: React.FC = () => {
         orderBeginTime: payBeginTime,
         orderEndTime: payEndTime,
         source: query.source,
+        orderNoLike: query.orderNoLike,
       }).then((res) => {
         setData(res.data.records)
         setTotal(res.data.total)
@@ -192,7 +193,7 @@ const AllocatedListPage: React.FC = () => {
         >
           <Row gutter={[5, 0]} style={{ paddingLeft: '40px' }}>
             <Col span={4}>
-              <Form.Item name="name">
+              <Form.Item name="orderNoLike">
                 <Input />
               </Form.Item>
             </Col>
