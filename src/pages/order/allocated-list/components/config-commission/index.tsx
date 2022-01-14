@@ -39,6 +39,17 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
     loadData(arr)
   }, [orderData])
 
+  useEffect(() => {
+    setSums(0)
+    relationList?.map((item) => {
+      item?.relation.map((item: any) => {
+        setSums(sums + parseInt(item.scale))
+      })
+    })
+    console.log(sums, 'sssss')
+    console.log(relationList, 'rrr')
+  }, [relationList])
+
   useImperativeHandle(cRef, () => ({
     relationList,
   }))
@@ -63,8 +74,7 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
           <span className="topOne">可配置分佣</span>
           <span>¥{data?.allocationAmount}</span>
           <span className="topOne">剩余可配置</span>
-          {/* <span>￥{data?.allocationAmount * (100 - sums) * 0.01}</span> */}
-          <span>￥{data?.allocationAmount}</span>
+          <span>￥{data?.allocationAmount * (100 - sums) * 0.01 || 0} </span>
         </div>
         <div className="mid">
           {relationList?.map((item: any) => {
@@ -78,16 +88,16 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
                 {item.type == 6 ? <p style={{ textAlign: 'center' }}>推荐/从属渠道</p> : null}
                 {item.type == 7 ? <p style={{ textAlign: 'center' }}>关联归属/推荐/服务渠道</p> : null}
                 <div className="guanxi">
+                  {item.buildScale ? (
+                    <p>
+                      团建奖金{item.buildScale}% ¥{data?.allocationAmount * item.buildScale}
+                    </p>
+                  ) : (
+                    ''
+                  )}
                   {item.relation?.map((item: any, index) => {
                     return (
                       <div className="guanxi" style={{ marginLeft: '62px' }} key={index}>
-                        {item.havePresetBonus ? (
-                          <p>
-                            团建奖金{item.presetBonus}% ¥{data?.allocationAmount * item.presetBonus}
-                          </p>
-                        ) : (
-                          ''
-                        )}
                         <span style={{ backgroundColor: 'darkgrey', borderRadius: '15px' }}>
                           {item.havePresetBonus ? '有团建奖' : null}
                           {item.haveRebate ? '有返利' : null}
@@ -118,12 +128,11 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
                           onChange={(e) => {
                             item['scale'] = e.target.value
                             setRelationList(cloneDeep(relationList))
-                            setSums(sums + item.scale)
                           }}
                         />
                         <span>%</span>
                         <span style={{ marginLeft: '10px' }}>
-                          ¥{item.scale ? data?.allocationAmount * item.scale * 0.01 : 0}
+                          ¥{item.scale ? (data?.allocationAmount * item.scale * 0.01).toFixed(0) : 0}
                         </span>
                         {item.serviceScale ? (
                           <>

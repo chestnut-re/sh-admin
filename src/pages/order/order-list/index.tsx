@@ -27,7 +27,7 @@ const OrderListPage: React.FC = () => {
   const options = [
     { label: '全部', value: '全部', innerWidth: '40px' },
     { label: '待付款(34)', value: '待付款(34)' },
-    { label: '待确认(302)', value: '待确认(302)' },
+    { label: '待核销(302)', value: '待核销(302)' },
     { label: '已完成', value: '已完成' },
     { label: '已失效', value: '已失效' },
   ]
@@ -175,7 +175,7 @@ const OrderListPage: React.FC = () => {
         </span>
       </div>
       <div className="order-tabs">
-        <Radio.Group
+        {/* <Radio.Group
           options={options}
           onChange={(e) => {
             setTabValue(e.target.value)
@@ -183,7 +183,7 @@ const OrderListPage: React.FC = () => {
           value={tabValue}
           optionType="button"
           buttonStyle="solid"
-        />
+        /> */}
       </div>
       <div className="order-form">
         <Form
@@ -282,7 +282,6 @@ const OrderListPage: React.FC = () => {
         dataSource={[...data]}
         pagination={{
           onChange: setPageIndex,
-          showSizeChanger: true,
           showQuickJumper: true,
           pageSize: pageSize,
           total: total,
