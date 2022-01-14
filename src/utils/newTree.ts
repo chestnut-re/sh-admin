@@ -1,6 +1,6 @@
 /*
  * @Description: 结构树处理 新 之前有些乱 不动 慢慢在这维护
- * @LastEditTime: 2022-01-04 15:57:30
+ * @LastEditTime: 2022-01-14 17:22:35
  */
 /**
  * @description:  根据id 获取父 - 子 数据
@@ -69,5 +69,22 @@ export const isInclude = (arrayList: Array<any>, id = '') => {
   }
   each(arrayList, id)
   return isIncludeType
+}
 
+/**
+ * @description:  路由处理
+ * @param {Array} oldArray
+ */
+export const newMenu = (menuList: Array<any>) => {
+  return menuList.reduce((pre, item) => {
+    if (item.type == '2' || !item.path || !item.componentPath) return pre
+    const child = { ...item }
+    delete child.children
+    const menuChild = newMenu(item.children)
+    if (menuChild && menuChild.length > 0) {
+      child.children=menuChild
+    }
+    pre.push(child)
+    return pre
+  }, [])
 }
