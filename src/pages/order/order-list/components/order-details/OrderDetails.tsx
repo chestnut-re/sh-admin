@@ -44,11 +44,11 @@ const OrderDetailsPage: React.FC = () => {
     },
     {
       title: '昵称',
-      dataIndex: '',
+      dataIndex: 'orderUserName',
     },
     {
       title: '常住地',
-      dataIndex: '',
+      dataIndex: 'departureCity',
     },
   ]
   const columnsD = [
@@ -58,19 +58,19 @@ const OrderDetailsPage: React.FC = () => {
     },
     {
       title: '姓名',
-      dataIndex: '',
+      dataIndex: 'userName',
     },
     {
       title: '关系归属',
       dataIndex: 'relationship',
     },
     {
-      title: '责任区域',
+      title: '买家常住地/渠道责任区域',
       dataIndex: 'responsibilityArea',
     },
     {
-      title: '始发地责任区域',
-      dataIndex: '',
+      title: '始发地同异',
+      dataIndex: 'areaEqualFlag',
     },
     {
       title: '手机号',
@@ -219,8 +219,8 @@ const OrderDetailsPage: React.FC = () => {
       <Table rowKey="id" columns={columnsD} scroll={{ x: 'max-content' }} dataSource={[...dataD]} />
       <div className="details-title">子订单信息</div>
       <Table rowKey="id" columns={columnsZ} scroll={{ x: 'max-content' }} dataSource={[...dataZ]} />
-      <div className="details-title">分佣方案</div>
-      <Table rowKey="id" columns={columnsF} scroll={{ x: 'max-content' }} dataSource={[...dataF]} />
+      {/* <div className="details-title">分佣方案</div>
+      <Table rowKey="id" columns={columnsF} scroll={{ x: 'max-content' }} dataSource={[...dataF]} /> */}
       <div className="details-title">支付详情</div>
       <div className="bottom">
         <table className="tableStyle" cellSpacing="0" cellPadding="0">
