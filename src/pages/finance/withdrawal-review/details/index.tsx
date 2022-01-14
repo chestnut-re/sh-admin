@@ -16,7 +16,7 @@ const ReviewDetails: React.FC = () => {
     console.log(data)
   }, [data])
   return (
-    <div className="details__root">
+    <div className="review__root">
       <div className="details-header">
         <span className="header-title">审核详情</span>
       </div>
