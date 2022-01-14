@@ -126,7 +126,7 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
                           className="bDer"
                           value={item.scale}
                           onChange={(e) => {
-                            item['scale'] = e.target.value
+                            item['scale'] = e.target.value || 0
                             setRelationList(cloneDeep(relationList))
                           }}
                         />

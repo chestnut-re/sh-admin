@@ -117,6 +117,9 @@ const AllocatedDetailsPage: React.FC = () => {
         delete item.havePresetBonus
         item.buildScale = item.presetBonus
         delete item.presetBonus
+        if (!item.scale) {
+          item['scale'] = 0
+        }
       })
     })
     AllocatedOrderService.submit(data).then((res) => {
