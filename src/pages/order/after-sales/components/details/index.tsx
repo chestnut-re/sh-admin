@@ -13,7 +13,7 @@ const OrderDetailsPage: React.FC = () => {
   const [dataD, setDataD] = useState([])
   const [dataZ, setDataZ] = useState([])
   const [dataF, setDataF] = useState([])
-  const [data, setData] = useState([])
+  const [data, setData] = useState<any>([])
   useEffect(() => {
     loadData()
     getRelations()

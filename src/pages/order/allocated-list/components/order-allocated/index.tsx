@@ -127,7 +127,7 @@ const AllocatedDetailsPage: React.FC = () => {
   }
 
   return (
-    <div className="details__root">
+    <div className="detail__root">
       <div className="states-con">
         <span className="order-sta">订单状态</span>
         <span className="order-state">{data?.stateVal}</span>
