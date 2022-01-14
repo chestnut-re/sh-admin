@@ -63,15 +63,8 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
           <span className="topOne">可配置分佣</span>
           <span>¥{data?.allocationAmount}</span>
           <span className="topOne">剩余可配置</span>
-          <span>
-            ￥
-            {relationList?.map((item) => {
-              item.relation.map((item) => {
-                setSums(sums + item.scale)
-                return data?.allocationAmount * (100 - sums)
-              })
-            })}
-          </span>
+          {/* <span>￥{data?.allocationAmount * (100 - sums) * 0.01}</span> */}
+          <span>￥{data?.allocationAmount}</span>
         </div>
         <div className="mid">
           {relationList?.map((item: any) => {
@@ -125,6 +118,7 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
                           onChange={(e) => {
                             item['scale'] = e.target.value
                             setRelationList(cloneDeep(relationList))
+                            setSums(sums + item.scale)
                           }}
                         />
                         <span>%</span>
