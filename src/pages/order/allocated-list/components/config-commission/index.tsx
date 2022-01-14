@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useImperativeHandle } from 'react'
 import { Input } from 'antd'
 import './index.less'
 import { AllocatedOrderService } from '@/service/OrderService'
@@ -37,6 +37,15 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
     arr.push({ type: 3, userId: receiverData.userId, orderId: id })
     loadData(arr)
   }, [orderData])
+
+  useImperativeHandle(cRef, () => ({
+    //aa即为子组件暴露给父组件的方法
+    // getTreeList: () => {
+    //   return getList()
+    // },
+    relationList,
+  }))
+
   const loadData = (arr) => {
     AllocatedOrderService.channelList(arr).then((res) => {
       if (res.code === HttpCode.success) {

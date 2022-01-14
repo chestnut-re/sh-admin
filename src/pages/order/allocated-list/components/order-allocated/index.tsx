@@ -91,6 +91,7 @@ const AllocatedDetailsPage: React.FC = () => {
   }
 
   const _commit = () => {
+    console.log(_ref.current?.relationList, '.....')
     const data = {
       orderId: '',
       userId: '',
