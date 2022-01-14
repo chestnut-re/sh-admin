@@ -53,16 +53,16 @@ const DetailsPage: React.FC<Props> = ({ id }) => {
                 {item.type == 6 ? <p style={{ textAlign: 'center' }}>推荐/从属渠道</p> : null}
                 {item.type == 7 ? <p style={{ textAlign: 'center' }}>关联归属/推荐/服务渠道</p> : null}
                 <div className="guanxi">
-                  {item.relation?.map((item: any, index) => {
+                  {item.buildScale ? (
+                    <p>
+                      团建奖金{item.buildScale}% ¥{data?.allocationAmount * item.buildScale}
+                    </p>
+                  ) : (
+                    ''
+                  )}
+                  {item.channelScaleList?.map((item: any, index) => {
                     return (
                       <div className="guanxi" style={{ marginLeft: '62px' }} key={index}>
-                        {item.haveRebate ? (
-                          <p>
-                            团建奖金{item.presetBonus}% ¥{data?.allocationAmount * item.presetBonus}
-                          </p>
-                        ) : (
-                          ''
-                        )}
                         <span style={{ backgroundColor: 'darkgrey', borderRadius: '15px' }}>
                           {item.havePresetBonus ? '有团建奖' : null}
                           {item.haveRebate ? '有返利' : null}
@@ -87,14 +87,8 @@ const DetailsPage: React.FC<Props> = ({ id }) => {
                             五级{item.channelName}/{item.userName}
                           </span>
                         ) : null}
-                        <Input
-                          className="bDer"
-                          value={item.scale}
-                          onChange={(e) => {
-                            item['scale'] = e.target.value
-                            setRelationList(cloneDeep(relationList))
-                          }}
-                        />
+
+                        <Input readOnly className="bDer" value={item.scale} />
                         <span>%</span>
                         <span style={{ marginLeft: '10px' }}>
                           ¥{item.scale ? data?.allocationAmount * item.scale * 0.01 : 0}
@@ -102,14 +96,7 @@ const DetailsPage: React.FC<Props> = ({ id }) => {
                         {item.haveServiceBonus ? (
                           <>
                             <span>发团服务费</span>
-                            <Input
-                              className="bDer"
-                              value={item.serviceScale}
-                              onChange={(e) => {
-                                item['serviceScale'] = e.target.value
-                                setRelationList(cloneDeep(relationList))
-                              }}
-                            />
+                            <Input readOnly className="bDer" value={item.serviceScale} />
                             <span>%</span>
                             <span style={{ marginLeft: '10px' }}>
                               ¥{item.serviceScale ? data?.allocationAmount * item.serviceScale * 0.01 : 0}

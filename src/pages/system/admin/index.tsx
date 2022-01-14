@@ -132,6 +132,7 @@ const AdminListPage: React.FC = () => {
   const _onDialogClose = () => {
     setSelectedData(null)
     setShowDialog(false)
+    loadData(pageIndex)
   }
   const _addAdmin = () => {
     setDialogMode('add')
