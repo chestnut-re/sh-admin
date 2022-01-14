@@ -1,6 +1,6 @@
 /*
  * @Description:
- * @LastEditTime: 2022-01-14 17:52:10
+ * @LastEditTime: 2022-01-14 18:02:01
  */
 import { USER_DETAIL } from '@/constants/CookiesC'
 import { getMenus, getDevMenus } from '@/service/menu'
@@ -31,12 +31,12 @@ class AdminData {
 
   async init() {
     // if (env == 'development') {
-      // const res = await getDevMenus()
-    //   this.setMenu(res.data.menus)
+      const res = await getDevMenus()
+      this.setMenu(res.data.menus)
     // } else {
-      const user = JSON.parse(getCookie(USER_DETAIL) ?? '')
-      const res = await getMenus(user?.userId)
-      this.setMenu(newMenu(res.data))
+      // const user = JSON.parse(getCookie(USER_DETAIL) ?? '')
+      // const res = await getMenus(user?.userId)
+      // this.setMenu(newMenu(res.data))
     // }
 
     if (!isUserLogin()) {
