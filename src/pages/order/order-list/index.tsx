@@ -12,7 +12,7 @@ import dayjs from 'dayjs'
  * 订单列表
  */
 const OrderListPage: React.FC = () => {
-  const history = useHistory()
+  const history = useHistory<any>()
   const [form] = Form.useForm()
   const { Option } = Select
   const { RangePicker } = DatePicker
@@ -160,15 +160,19 @@ const OrderListPage: React.FC = () => {
     loadData(1)
   }
 
+  const _toDetails = () => {
+    history.push('/order/allocated-list', {})
+  }
+
   return (
     <div className="order__root">
       <div className="order-header">
         <span className="header-title">订单列表</span>
-        {/* <span className="header-btn">
+        <span className="header-btn">
           <span>46</span>
           &nbsp;笔待分配订单&nbsp;&nbsp;
-          <span>去分配</span>
-        </span> */}
+          <span onClick={_toDetails}>去分配</span>
+        </span>
       </div>
       <div className="order-tabs">
         <Radio.Group
