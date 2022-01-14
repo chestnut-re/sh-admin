@@ -65,7 +65,7 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
           <span className="topOne">剩余可配置</span>
           <span>
             ￥
-            {relationList.map((item) => {
+            {relationList?.map((item) => {
               item.relation.map((item) => {
                 setSums(sums + item.scale)
                 return data?.allocationAmount * (100 - sums)
