@@ -9,28 +9,28 @@ export const getPriceFromTravels = (travels: any[], priceKeyStr: string) => {
   travels.map((item) => {
     item.travelDetails.map((travelDetail) => {
       if (travelDetail.travelGoods.airTicket) {
-        sum += travelDetail.travelGoods.airTicket[priceKeyStr]
+        sum += travelDetail.travelGoods.airTicket[priceKeyStr] * 100
       }
       if (travelDetail.travelGoods.bus) {
-        sum += travelDetail.travelGoods.bus[priceKeyStr]
+        sum += travelDetail.travelGoods.bus[priceKeyStr] * 100
       }
       if (travelDetail.travelGoods.hotel) {
-        sum += travelDetail.travelGoods.hotel[priceKeyStr]
+        sum += travelDetail.travelGoods.hotel[priceKeyStr] * 100
       }
       if (travelDetail.travelGoods.restaurant) {
-        sum += travelDetail.travelGoods.restaurant[priceKeyStr]
+        sum += travelDetail.travelGoods.restaurant[priceKeyStr] * 100
       }
       if (travelDetail.travelGoods.scenicSpot) {
-        sum += travelDetail.travelGoods.scenicSpot[priceKeyStr]
+        sum += travelDetail.travelGoods.scenicSpot[priceKeyStr] * 100
       }
       if (travelDetail.travelGoods.train) {
-        sum += travelDetail.travelGoods.train[priceKeyStr]
+        sum += travelDetail.travelGoods.train[priceKeyStr] * 100
       }
       return travelDetail
     })
     return item
   })
-  return sum
+  return sum / 100
 }
 
 /**
@@ -235,7 +235,9 @@ class ProductionData {
 
   /**获取商品现售价*/
   getCurrentPrice(activeKey: string | undefined) {
+    console.log('现售价K值', activeKey)
     const editGoodsPrices = this.data.goodsPrices.filter((i) => i.key === activeKey)
+    console.log('获取', editGoodsPrices)
     return editGoodsPrices[0]?.personCurrentPrice || 0
   }
 
