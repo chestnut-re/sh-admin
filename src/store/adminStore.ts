@@ -1,6 +1,6 @@
 /*
  * @Description:
- * @LastEditTime: 2022-01-14 18:50:19
+ * @LastEditTime: 2022-01-15 13:05:52
  */
 import { USER_DETAIL } from '@/constants/CookiesC'
 import { getMenus, getDevMenus } from '@/service/menu'
@@ -33,15 +33,15 @@ class AdminData {
   }
 
   async init() {
-    if (env != 'development') {
+    // if (env != 'development') {
       const res = await getDevMenus()
       this.setMenu(res.data.menus)
-    } else {
-      const user = JSON.parse(getCookie(USER_DETAIL) ?? '')
-      const res = await getMenus(user?.userId)
-      this.setMenu(newMenu(res.data))
-      this.setBtn(newBtnMenu(res.data))
-    }
+    // } else {
+    //   const user = JSON.parse(getCookie(USER_DETAIL) ?? '')
+    //   const res = await getMenus(user?.userId)
+    //   this.setMenu(newMenu(res.data))
+    //   this.setBtn(newBtnMenu(res.data))
+    // }
     if (!isUserLogin()) {
       // 未登录，去登录页面
       if (window.location.pathname !== '/login') {
