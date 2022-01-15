@@ -31,8 +31,7 @@ const RebateActivity: React.FC = () => {
   const [selectRecord, setSelectRecord] = useState<string>('')
   const [rebateName, setrebateName] = useState('')
   const [activityShowDialog, setActivityShowDialog] = useState(false)
-  const [activityRoleList, setActivityRole
-    List] = useState<Array<any>>([])
+  const [activityRoleList, setActivityRoleList] = useState<Array<any>>([])
   const [showGoodsDialog, setShowGoodsDialog] = useState(false)
   const [modalData, setModalData] = useState('')
   const [showType, setShowType] = useState('')
