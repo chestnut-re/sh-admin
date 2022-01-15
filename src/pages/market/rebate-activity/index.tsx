@@ -31,7 +31,8 @@ const RebateActivity: React.FC = () => {
   const [selectRecord, setSelectRecord] = useState<string>('')
   const [rebateName, setrebateName] = useState('')
   const [activityShowDialog, setActivityShowDialog] = useState(false)
-  const [activityRoleList, setActivityRoleList] = useState<Array<any>>([])
+  const [activityRoleList, setActivityRole
+    List] = useState<Array<any>>([])
   const [showGoodsDialog, setShowGoodsDialog] = useState(false)
   const [modalData, setModalData] = useState('')
   const [showType, setShowType] = useState('')
@@ -247,10 +248,29 @@ const RebateActivity: React.FC = () => {
     loadData(1)
   }
 
-  const _onDialogSuccess = () => {
+  const _onDialogSuccess = (res) => {
+    const record = res
     setSelectedData('')
     setShowDialog(false)
     loadData(pageIndex)
+    Modal.confirm({
+      title: '提交成功',
+      content: '需完成配置关联商品，任务清单后，才能进入上线审核流程',
+      okText: '配置关联商品',
+      cancelText: '配置任务清单',
+      onOk: () => {
+        setSelectRecord(record.id)
+        setrebateName(record.name)
+        setGoodsShowDialog(true)
+        setGoodsRoleList([])
+      },
+      onCancel: () => {
+        setSelectRecord(record.id)
+        setrebateName(record.name)
+        setActivityShowDialog(true)
+        setActivityRoleList([])
+      },
+    })
   }
 
   const _onDialogClose = () => {

@@ -7,7 +7,7 @@ import { cityDispose } from '@/utils/tree'
 import AEDialog from './component/AEDialog'
 import ChannelListTree from '@/components/components/ChannelListTree'
 import { DialogMode, createChannel } from '@/utils/enum'
-
+import {AuthEle} from '@/components/Common/AuthEle'
 /*
  * 人员管理
  */
@@ -136,6 +136,7 @@ const PersonnelManagement: React.FC = () => {
             编辑
           </Button> */}
           {/* <Button type="default">查看</Button> */}
+          <AuthEle id={72}>
           <Popconfirm
             title="确定删除吗"
             onConfirm={() => {
@@ -148,6 +149,7 @@ const PersonnelManagement: React.FC = () => {
           >
             <Button danger>删除</Button>
           </Popconfirm>
+          </AuthEle>
         </Space>
       ),
     },
@@ -238,6 +240,7 @@ const PersonnelManagement: React.FC = () => {
                     <Button htmlType="button" onClick={resetTable}>
                       重置
                     </Button>
+                    <AuthEle id={70}>
                     <Button
                       type="primary"
                       onClick={() => {
@@ -246,6 +249,7 @@ const PersonnelManagement: React.FC = () => {
                     >
                       添加人员
                     </Button>
+                    </AuthEle>
                   </Space>
                 </Form.Item>
               </Row>

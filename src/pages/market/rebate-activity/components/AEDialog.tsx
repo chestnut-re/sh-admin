@@ -1,6 +1,6 @@
 /*
  * @Description:
- * @LastEditTime: 2022-01-15 14:50:44
+ * @LastEditTime: 2022-01-15 15:26:36
  */
 import { Form, Input, Modal, InputNumber, Radio, Switch, Row, Col, Checkbox, DatePicker } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
@@ -14,7 +14,7 @@ interface Props {
   data: any
   mode: DialogMode
   show: boolean
-  onSuccess: () => void
+  onSuccess: (e) => void
   onClose: () => void
 }
 const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) => {
@@ -60,13 +60,13 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
           console.log(postData, 'postData')
           marketService.add({ ...postData }).then((res) => {
             if (res.code === HttpCode.success) {
-              onSuccess()
+              onSuccess(res.data)
             }
           })
         } else {
           marketService.edit({ ...formData, id: data.id }).then((res) => {
             if (res.code === HttpCode.success) {
-              onSuccess()
+              onSuccess(res.data)
             }
           })
         }

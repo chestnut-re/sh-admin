@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道列表
- * @LastEditTime: 2022-01-07 18:08:01
+ * @LastEditTime: 2022-01-15 15:03:34
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space,Modal,message } from 'antd'
@@ -12,6 +12,7 @@ import ChannelListTree from '../components/ChannelListTree'
 import ChannelService from '@/service/ChannelService'
 import { cityDispose } from '@/utils/tree'
 // import { enumState } from '@/utils/enum'
+import {AuthEle} from '@/components/Common/AuthEle'
 import './index.less'
 const ChannelPage: React.FC = () => {
   const [form] = Form.useForm()
@@ -94,9 +95,15 @@ const ChannelPage: React.FC = () => {
       title: '操作',
       render: (_text: any, record: any) => (
         <Space size="middle">
+             <AuthEle id={61}>
           <Button onClick={() => showAddDialog(record, 'see')}>查看</Button>
+          </AuthEle>
+          <AuthEle id={63}>
           <Button onClick={() => showAddDialog(record, 'edit')}>编辑</Button>
+          </AuthEle>
+          <AuthEle id={64}>
           <Button onClick={() => _delItem(record)} danger>删除</Button>
+          </AuthEle>
         </Space>
       ),
     },
@@ -214,9 +221,11 @@ const ChannelPage: React.FC = () => {
                       <Button htmlType="button" onClick={onReset}>
                         清除
                       </Button>
+                      <AuthEle id={62}>
                       <Button type="primary" onClick={showAddDialog}>
                         创建渠道
                       </Button>
+                      </AuthEle>
                     </Space>
                   </Form.Item>
                 </Col>

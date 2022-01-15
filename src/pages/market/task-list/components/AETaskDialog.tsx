@@ -89,16 +89,22 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
   }
 
   const editGoods = () => {
+
     setGoodsShowDialog(true)
+    
   }
   const goodsOnClose = () => {
     setGoodsShowDialog(false)
   }
   const goodsOnSuccess = (e, Row) => {
-    form.setFieldsValue({
-      taskInventoryGood: Row,
-    })
-    setGoodsRoleList(Row)
+    if(Row&&Row.length>0){
+      form.setFieldsValue({
+        taskInventoryGood: Row,
+      })
+  
+      setGoodsRoleList(Row)
+    }
+  
     setGoodsShowDialog(false)
   }
   const DetailTableSuccess = (e) => {
@@ -158,7 +164,7 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
       <ActivityGoodsTable
         goodsShow={goodsShowDialog}
         onSuccess={goodsOnSuccess}
-        goodsIdList={goodsRoleList}
+        goodsIdList={goodsRoleList.map(res=>res.goodsId)}
         // data={goodsData}
         onClose={goodsOnClose}
       ></ActivityGoodsTable>

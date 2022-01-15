@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道分佣列表
- * @LastEditTime: 2022-01-07 18:08:14
+ * @LastEditTime: 2022-01-15 15:06:31
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select,Modal,message } from 'antd'
@@ -12,6 +12,7 @@ import ChannelListTree from '../components/ChannelListTree'
 import ChannelService from '@/service/ChannelService'
 import { cityDispose, getMaxFloor, getTwoTier, getLastTwoTier } from '@/utils/tree'
 import { enumState } from '@/utils/enum'
+import {AuthEle} from '@/components/Common/AuthEle'
 import './index.less'
 const CommissionSchemePage: React.FC = () => {
   const [form] = Form.useForm()
@@ -89,10 +90,16 @@ const CommissionSchemePage: React.FC = () => {
       title: '操作',
       render: (_text: any, record: any) => (
         <Space size="middle">
+            <AuthEle id={65}>
           <Button onClick={() => showAddDialog(record, 'see')}>查看</Button>
+          </AuthEle>
+          <AuthEle id={67}>
           <Button onClick={() => showAddDialog(record, 'edit')}>编辑</Button>
+          </AuthEle>
           {/* <Button>删除</Button> */}
+          <AuthEle id={68}>
           <Button onClick={() => _delItem(record)} danger>删除</Button>
+          </AuthEle>
         </Space>
       ),
     },
@@ -202,15 +209,18 @@ const CommissionSchemePage: React.FC = () => {
                 <Col span={5}>
                   <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
                     <Space>
+                      
                       <Button type="primary" htmlType="submit">
                         查询
                       </Button>
                       <Button htmlType="button" onClick={onReset}>
                         清除
                       </Button>
+                      <AuthEle id={66}>
                       <Button type="primary" onClick={showAddDialog}>
                         创建分佣方案
                       </Button>
+                      </AuthEle>
                     </Space>
                   </Form.Item>
                 </Col>
