@@ -371,6 +371,9 @@ const RebateActivity: React.FC = () => {
       {goodsShowDialog == true ? (
         <GoodsTable
           goodsShow={goodsShowDialog}
+          query={{
+            type:1
+          }}
           onSuccess={goodsOnSuccess}
           goodsIdList={goodsRoleList}
           onClose={() => setGoodsShowDialog(false)}
