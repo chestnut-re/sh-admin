@@ -131,11 +131,11 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
           autoComplete="off"
           form={form}
         >
-          <Form.Item label="清单名称" name="name" rules={[{ required: false, message: '请输入活动标题' }]}>
+          <Form.Item label="清单名称" name="name" rules={[{ required: true, message: '请输入活动标题' }]}>
             <Input />
           </Form.Item>
 
-          <Form.Item label="活动关联商品" name="taskInventoryGood">
+          <Form.Item label="活动关联商品" name="taskInventoryGood" rules={[{ required: true, message: '请输入活动标题' }]}>
             <Button type="primary" onClick={editGoods}>
               配置商品
             </Button>
@@ -146,7 +146,7 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
             )}
           </Form.Item>
 
-          <Form.Item label="匹配权重" name="mathFlag">
+          <Form.Item label="匹配权重" name="mathFlag" rules={[{ required: true, message: '请输入活动标题' }]}>
             <Radio.Group>
               <Radio.Button key={1} value={1}>
                 随机匹配

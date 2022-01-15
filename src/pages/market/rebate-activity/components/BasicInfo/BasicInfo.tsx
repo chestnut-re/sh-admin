@@ -1,6 +1,6 @@
 /*
  * @Description:查看
- * @LastEditTime: 2022-01-13 13:15:55
+ * @LastEditTime: 2022-01-15 16:51:31
  */
 import React, { useState, FC, useEffect } from 'react'
 import { Drawer, Button, Descriptions, Table, Row, Col } from 'antd'
@@ -90,7 +90,9 @@ const BasicInfo: FC<props> = ({ data }) => {
         </Col>
         <Col span={7} className="basic-r">
           <Descriptions>
-            {/* <Descriptions.Item span={24} label="创建渠道"></Descriptions.Item> */}
+            <Descriptions.Item span={24} label="创建渠道">
+              {dataSource?.createChannelName}
+            </Descriptions.Item>
             <Descriptions.Item span={24} label="创建人">
               {dataSource?.createUserName}
             </Descriptions.Item>
