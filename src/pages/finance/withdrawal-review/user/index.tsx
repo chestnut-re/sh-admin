@@ -44,8 +44,8 @@ const UserPage: React.FC = () => {
         endDate: endTime,
       }).then((res) => {
         // if (res.code === HttpCode.success) {
-        setData(res.records)
-        setTotal(res.total)
+        setData(res.data.records)
+        setTotal(res.data.total)
         // }
       })
     })

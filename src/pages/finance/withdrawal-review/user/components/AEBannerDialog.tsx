@@ -75,6 +75,7 @@ const AEBannerDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClos
             remark: formData?.remark,
             sts: formData?.sts,
             id: data?.id,
+            type: 2,
           }).then((res) => {
             // if (res.code === HttpCode.success) {
             onSuccess()

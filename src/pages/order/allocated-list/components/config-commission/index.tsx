@@ -19,6 +19,7 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
   const [data, setData] = useState<any>({})
   const [relationList, setRelationList] = useState<any[]>([])
   const [sums, setSums] = useState(0)
+  const [temp, setTemp] = useState<any>([])
   useEffect(() => {
     const arr: any[] = []
     orderData.map((item: any) => {
@@ -49,8 +50,6 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
         setSums(sums + parseInt(item.scale))
       })
     })
-    console.log(sums, 'sssss')
-    console.log(relationList, 'rrr')
   }, [relationList])
 
   useImperativeHandle(cRef, () => ({
@@ -67,6 +66,12 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
             return i
           })
         )
+        // setTemp([])
+        // relationList.map((item) => {
+        //   item.relation.map((item) => {
+        //     setTemp([...temp, item])
+        //   })
+        // })
       }
     })
   }
@@ -102,6 +107,11 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
                     return (
                       <div className="guanxi" style={{ marginLeft: '62px' }} key={index}>
                         <span style={{ backgroundColor: 'darkgrey', borderRadius: '15px' }}>
+                          {orderData.map((i) => {
+                            if (i.id == item.userId) {
+                              return i.orderShip
+                            }
+                          })}
                           {item.havePresetBonus ? '有团建奖' : null}
                           {item.haveRebate ? '有返利' : null}
                         </span>
