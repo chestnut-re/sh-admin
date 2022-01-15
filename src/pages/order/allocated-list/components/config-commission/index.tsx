@@ -28,6 +28,9 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
       if (item.orderShip == '从属关系') {
         arr.push({ type: 2, userId: item.id, orderId: id })
       }
+      if (item.orderShip == '接单人') {
+        arr.push({ type: 3, userId: item.id, orderId: id })
+      }
       if (item.orderShip == '发团人') {
         arr.push({ type: 4, userId: item.id, orderId: id })
       }

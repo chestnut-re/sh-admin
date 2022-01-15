@@ -145,16 +145,38 @@ const OrderDetailsPage: React.FC = () => {
   ]
   const columnsF = [
     {
-      title: '渠道名称',
+      title: '商品分佣',
       dataIndex: 'channelName',
     },
     {
-      title: '分佣比例(%)',
+      title: '渠道关系',
       dataIndex: 'distScale',
     },
     {
-      title: '分佣金额(¥)',
+      title: '渠道分佣',
       dataIndex: 'distPrice',
+      children: [
+        {
+          title: '二级',
+          dataIndex: 'building',
+        },
+        {
+          title: '三级',
+          dataIndex: 'number',
+        },
+        {
+          title: '四级',
+          dataIndex: 'number',
+        },
+        {
+          title: '五级',
+          dataIndex: 'number',
+        },
+        {
+          title: '发团服务费',
+          dataIndex: 'number',
+        },
+      ],
     },
   ]
   return (
@@ -217,10 +239,11 @@ const OrderDetailsPage: React.FC = () => {
       <Table rowKey="id" columns={columnsM} scroll={{ x: 'max-content' }} dataSource={[...dataM]} />
       <div className="details-title">订单关联人</div>
       <Table rowKey="id" columns={columnsD} scroll={{ x: 'max-content' }} dataSource={[...dataD]} />
+      <div className="details-title">分佣方案</div>
+      <Table rowKey="id" columns={columnsF} scroll={{ x: 'max-content' }} dataSource={[...dataF]} />
       <div className="details-title">子订单信息</div>
       <Table rowKey="id" columns={columnsZ} scroll={{ x: 'max-content' }} dataSource={[...dataZ]} />
-      {/* <div className="details-title">分佣方案</div>
-      <Table rowKey="id" columns={columnsF} scroll={{ x: 'max-content' }} dataSource={[...dataF]} /> */}
+
       <div className="details-title">支付详情</div>
       <div className="bottom">
         <table className="tableStyle" cellSpacing="0" cellPadding="0">
@@ -247,8 +270,8 @@ const OrderDetailsPage: React.FC = () => {
           </tr>
         </table>
       </div>
-      <div className="details-title">营销活动</div>
-      <div className="bottom">
+      {/* <div className="details-title">营销活动</div> */}
+      {/* <div className="bottom">
         <table className="tableStyle" cellSpacing="0" cellPadding="0">
           <tr>
             <td>营销活动名称</td>
@@ -267,7 +290,7 @@ const OrderDetailsPage: React.FC = () => {
             <td>55</td>
           </tr>
         </table>
-      </div>
+      </div> */}
     </div>
   )
 }
