@@ -281,9 +281,9 @@ const RebateActivity: React.FC = () => {
                   }}
                 >
                   <Radio.Button value="">全部</Radio.Button>
-                  <Radio.Button value="0">进行中</Radio.Button>
-                  <Radio.Button value="1">已结束</Radio.Button>
-                  <Radio.Button value="2">未开始</Radio.Button>
+                  <Radio.Button value="1">进行中</Radio.Button>
+                  <Radio.Button value="2">已结束</Radio.Button>
+                  <Radio.Button value="3">未开始</Radio.Button>
                   {/* checkState 0 待审核 1审核通过 2审核不通过 */}
                 </Radio.Group>
               </Form.Item>
