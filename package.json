@@ -69,6 +69,7 @@
     "@babel/polyfill": "^7.12.1",
     "@loadable/component": "^5.15.0",
     "@types/lodash": "^4.14.178",
+    "ahooks": "^3.1.5",
     "antd": "^4.16.6",
     "axios": "^0.21.1",
     "dayjs": "^1.10.7",

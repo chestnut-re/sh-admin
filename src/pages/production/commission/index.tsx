@@ -1,7 +1,3 @@
-/*
- * @Description:返利活动
- * @LastEditTime: 2022-01-05 13:51:08
- */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space } from 'antd'
 import './index.less'
@@ -10,25 +6,36 @@ import AEDialog, { DialogMode } from './components/AEDialog'
 import { InputTemp, StatusRoute } from '@/components/filter/formItem'
 import { ProductionCommission } from '@/service/ProductionCommission'
 import TimeColumn from '@/components/tableColumn/TimeColumn'
+import { useSetState } from 'ahooks'
+import { TableState } from '@/types/commonState'
+
+/**
+ * 商品分佣方案
+ */
 const ProductionCommissionListPage: React.FC = () => {
   const [form] = Form.useForm()
-  const [data, setData] = useState([])
-  const [pageIndex, setPageIndex] = useState(1)
-  const [pageSize, setPageSize] = useState(10)
-  const [total, setTotal] = useState()
+  const [tableState, setTableState] = useSetState<TableState>({
+    pageIndex: 1,
+    pageSize: 10,
+    total: 0,
+    data: [],
+  })
+
   const [showDialog, setShowDialog] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
   const [dialogMode, setDialogMode] = useState<DialogMode>('add')
 
   useEffect(() => {
-    loadData(pageIndex)
-  }, [pageIndex])
+    loadData(tableState.pageIndex)
+  }, [tableState.pageIndex])
 
   const loadData = (pageIndex) => {
     const params = form.getFieldsValue()
-    ProductionCommission.list({ current: pageIndex, size: pageSize, ...params }).then((res) => {
-      setData(res.data.records)
-      setTotal(res.data.total)
+    ProductionCommission.list({ current: pageIndex, size: tableState.pageSize, ...params }).then((res) => {
+      setTableState({
+        data: res.data.records,
+        total: res.data.total,
+      })
     })
   }
 
@@ -81,7 +88,7 @@ const ProductionCommissionListPage: React.FC = () => {
   const _delItem = (record) => {
     ProductionCommission.del({ id: record.id }).then((res) => {
       if (res.code === HttpCode.success) {
-        loadData(pageIndex)
+        loadData(tableState.pageIndex)
       }
     })
   }
@@ -101,32 +108,33 @@ const ProductionCommissionListPage: React.FC = () => {
 
   /**筛选 */
   const onFinish = () => {
-    setPageIndex(1)
+    setTableState({ pageIndex: 1 })
     loadData(1)
   }
 
   /**重置 */
   const resetTable = () => {
     form.resetFields()
-    setPageIndex(1)
+    setTableState({ pageIndex: 1 })
     loadData(1)
   }
 
   const _onDialogSuccess = () => {
     setSelectedData(null)
     setShowDialog(false)
-    loadData(pageIndex)
+    loadData(tableState.pageIndex)
   }
 
   const _onDialogClose = () => {
-    console.log('关闭按钮')
     setSelectedData(null)
     setShowDialog(false)
   }
 
   const onPaginationChange = (page: number, pageSize: number) => {
-    setPageIndex(page)
-    setPageSize(pageSize)
+    setTableState({
+      pageSize: pageSize,
+      pageIndex: page,
+    })
   }
 
   return (
@@ -166,13 +174,13 @@ const ProductionCommissionListPage: React.FC = () => {
         rowKey="id"
         columns={columns}
         scroll={{ x: 'max-content' }}
-        dataSource={[...data]}
+        dataSource={tableState.data}
         pagination={{
           onChange: onPaginationChange,
           showSizeChanger: true,
           showQuickJumper: true,
-          pageSize: pageSize,
-          total: total,
+          pageSize: tableState.pageSize,
+          total: tableState.total,
         }}
       />
       <AEDialog
