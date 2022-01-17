@@ -78,6 +78,21 @@ const UnReleaseProductionListPage: React.FC<any> = observer(({}) => {
       render: (text, record, index) => <TimeColumn time={record?.updateTime} />,
     },
     {
+      title: '发布状态',
+      dataIndex: 'checkState',
+      render: (text, record, index) => (
+        <span>
+          {record?.checkState == -1
+            ? '未审核'
+            : record?.checkState == 0
+            ? '待审核'
+            : record?.checkState == 1
+            ? '通过'
+            : '不通过'}
+        </span>
+      ),
+    },
+    {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
@@ -88,14 +103,16 @@ const UnReleaseProductionListPage: React.FC<any> = observer(({}) => {
           >
             查看
           </Button>
-          <Button
-            onClick={() => {
-              console.log(record)
-              history.push(`/production/release-product?id=${record.id}`)
-            }}
-          >
-            编辑
-          </Button>
+          {!(record?.checkState == 0) && (
+            <Button
+              onClick={() => {
+                console.log(record)
+                history.push(`/production/release-product?id=${record.id}`)
+              }}
+            >
+              编辑
+            </Button>
+          )}
           <Button
             onClick={() => {
               console.log(record)

@@ -68,6 +68,7 @@ const ProductionConfigDetail: React.FC = () => {
   }
 
   const _onDialogSuccess = () => {
+    console.log('提交', productionDetailStore.data.goodsDetail)
     setSelectedData(null)
     setShowDialog(false)
   }

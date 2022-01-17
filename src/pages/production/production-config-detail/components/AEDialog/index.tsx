@@ -38,12 +38,16 @@ const AEDialog: FC<Props> = ({ data, type, show = false, onSuccess, onClose }) =
     form
       .validateFields()
       .then((formData) => {
-        console.log(formData)
-        if(!selectedTemplate){
+        console.log('确定', formData)
+        if (!selectedTemplate) {
           message.error('请选择模版')
           return
         }
-        const template = { pageTemplateKey: selectedTemplate.key, pageTemplate: selectedTemplate.name }
+        const template = {
+          pageTemplateKey: selectedTemplate.key,
+          pageTemplate: selectedTemplate.name,
+          templateImgUrl: selectedTemplate.templateImgUrl,
+        }
         if (type === 'center') {
           productionDetailStore.saveTemplate({ ...data, ...formData, ...template })
         } else if (type === 'end') {
@@ -64,6 +68,7 @@ const AEDialog: FC<Props> = ({ data, type, show = false, onSuccess, onClose }) =
   }
 
   const _onDialogSuccess = (template) => {
+    console.log('选中', template)
     setSelectedTemplate(template)
     setShowTemplateDialog(false)
   }
