@@ -1,6 +1,6 @@
 /*
  * @Description: 添加角色
- * @LastEditTime: 2022-01-12 13:57:33
+ * @LastEditTime: 2022-01-17 14:06:21
  */
 
 import { Form, Input, Modal, Cascader, Switch, message } from 'antd'
@@ -29,7 +29,7 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
   const [roleList, setRoleList] = useState([])
   const [bType, setBType] = useState(false)
   const [adminType, setAdminType] = useState(false)
-  const [stateCheckout,setCheckout] = useState(false)
+  const [stateCheckout, setCheckout] = useState(false)
   useEffect(() => {
     if (show) {
       if (!!data?.id == true) {
@@ -125,12 +125,18 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
     setBType(e)
   }
   return (
-    <Modal title={mode == 'add' ? '创建角色' : '角色详情'} width={700} visible={show} onOk={_handleUpdate} onCancel={_formClose}>
+    <Modal
+      title={mode == 'add' ? '创建角色' : '角色详情'}
+      width={700}
+      visible={show}
+      onOk={_handleUpdate}
+      onCancel={_formClose}
+    >
       <Form
         name="basic"
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 16 }}
-        initialValues={{ remember: true }}
+        initialValues={{ state: true }}
         onFinish={(values: any) => {
           console.log(values)
         }}
@@ -161,9 +167,9 @@ const AddUserDialog: FC<Props> = ({ data, mode, structure, show = false, onSucce
           <Input />
         </Form.Item>
 
-        {/* <Form.Item label="角色状态" name="state">
+        <Form.Item label="角色状态" name="state" style={{visibility:'hidden'}}>
           <Switch checked={stateCheckout} onChange={setCheckout}  /> 
-        </Form.Item> */}
+        </Form.Item>
 
         <TableMenu
           adminType={adminType}
