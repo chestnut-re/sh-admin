@@ -6,6 +6,8 @@ import { WithdrawalReviewService } from '@/service/FinanceAccountService'
 import AEBannerDialog, { DialogMode } from './components/AEBannerDialog'
 import { useHistory } from 'react-router-dom'
 import dayjs from 'dayjs'
+import { getCookie } from '@/utils/cookies'
+import { getNanoId } from '@/utils/nanoid'
 /**
  * 用户提现
  */
@@ -18,7 +20,6 @@ const UserPage: React.FC = () => {
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
   const [pageSize, setPageSize] = useState(10)
-  const [channelData, setChannelData] = useState([])
   const [total, setTotal] = useState()
 
   const [showDialog, setShowDialog] = useState(false)
@@ -27,7 +28,6 @@ const UserPage: React.FC = () => {
 
   useEffect(() => {
     loadData(pageIndex)
-    getChannel()
   }, [pageIndex])
 
   const loadData = (pageIndex) => {
@@ -37,25 +37,21 @@ const UserPage: React.FC = () => {
       WithdrawalReviewService.userList({
         current: pageIndex,
         size: pageSize,
-        channelId: query.channelId,
-        sts: query.sts,
+        sts: query?.sts,
         name: query.name,
         startDate: beginTime,
         endDate: endTime,
       }).then((res) => {
-        // if (res.code === HttpCode.success) {
-        setData(res.data.records)
-        setTotal(res.data.total)
-        // }
+        if (res.code === HttpCode.success) {
+          setData(
+            res.data?.records.map((i) => {
+              i.key = getNanoId()
+              return i
+            })
+          )
+          setTotal(res.data.total)
+        }
       })
-    })
-  }
-
-  const getChannel = () => {
-    ChannelService.list({ pages: 1, size: 10 }).then((res) => {
-      if (res.code === HttpCode.success) {
-        setChannelData(res.data?.records ?? [])
-      }
     })
   }
 
@@ -63,32 +59,43 @@ const UserPage: React.FC = () => {
     form.validateFields().then((query) => {
       const beginTime = query.time ? dayjs(query.time[0]).format('YYYY-MM-DD HH:mm:ss') : ''
       const endTime = query.time ? dayjs(query.time[1]).format('YYYY-MM-DD HH:mm:ss') : ''
-      WithdrawalReviewService.userExport({
-        sts: query.sts,
-        startDate: beginTime,
-        endDate: endTime,
-      }).then((res) => {
-        const content = res // 文件流
-        const blob = new Blob([content], { type: 'application/octet-stream' })
-        // const fileName = 'filename.xls'
-        // 如果后端返回文件名
-        const contentDisposition = res.headers['content-disposition']
-        const fileName = decodeURI(contentDisposition.split('=')[1])
-        if ('download' in document.createElement('a')) {
-          // 非IE下载
-          const link = document.createElement('a')
-          link.download = fileName
-          link.style.display = 'none'
-          link.href = URL.createObjectURL(blob)
-          document.body.appendChild(link)
-          link.click()
-          URL.revokeObjectURL(link.href) // 释放URL 对象
-          document.body.removeChild(link)
-        } else {
-          // IE10+下载
-          navigator.msSaveBlob(blob, fileName)
-        }
-      })
+      const url =
+        '/api/wallet/a/custCashExport?Authorization=' +
+        getCookie('auth') +
+        '&sts=' +
+        query?.sts +
+        '&startDate=' +
+        beginTime +
+        '&endDate=' +
+        endTime
+      // window.location.href = url
+      window.open(url)
+      // WithdrawalReviewService.userExport({
+      //   sts: query.sts,
+      //   startDate: beginTime,
+      //   endDate: endTime,
+      // }).then((res) => {
+      //   const content = res // 文件流
+      //   const blob = new Blob([content], { type: 'application/octet-stream' })
+      //   // const fileName = 'filename.xls'
+      //   // 如果后端返回文件名
+      //   const contentDisposition = res.headers['content-disposition']
+      //   const fileName = decodeURI(contentDisposition.split('=')[1])
+      //   if ('download' in document.createElement('a')) {
+      //     // 非IE下载
+      //     const link = document.createElement('a')
+      //     link.download = fileName
+      //     link.style.display = 'none'
+      //     link.href = URL.createObjectURL(blob)
+      //     document.body.appendChild(link)
+      //     link.click()
+      //     URL.revokeObjectURL(link.href) // 释放URL 对象
+      //     document.body.removeChild(link)
+      //   } else {
+      //     // IE10+下载
+      //     navigator.msSaveBlob(blob, fileName)
+      //   }
+      // })
     })
   }
 
@@ -97,17 +104,14 @@ const UserPage: React.FC = () => {
       title: '编号',
       dataIndex: 'id',
     },
-    {
-      title: '所属渠道',
-      dataIndex: 'channelNm',
-    },
+
     {
       title: '姓名',
       dataIndex: 'name',
     },
     {
-      title: '账号',
-      dataIndex: 'account',
+      title: '从属关系',
+      dataIndex: 'affiliation',
     },
     {
       title: '提现金额',
@@ -206,22 +210,6 @@ const UserPage: React.FC = () => {
                 </Select>
               </Form.Item>
             </Col>
-            <Col span={2} className="table-from-label">
-              渠道
-            </Col>
-            <Col span={4}>
-              <Form.Item name="channelId">
-                <Select style={{ width: 120 }}>
-                  {channelData?.map((item: any) => {
-                    return (
-                      <Option value={item.id} key={item.id}>
-                        {item.name}
-                      </Option>
-                    )
-                  })}
-                </Select>
-              </Form.Item>
-            </Col>
             <Col span={4}>
               <Form.Item name="time">
                 <RangePicker showTime />
@@ -241,7 +229,7 @@ const UserPage: React.FC = () => {
         </Form>
       </div>
       <Table
-        rowKey="id"
+        rowKey="key"
         columns={columns}
         scroll={{ x: 'max-content' }}
         dataSource={[...data]}

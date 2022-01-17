@@ -31,7 +31,7 @@ const AccountPage: React.FC = () => {
     const params = form.getFieldsValue()
 
     FinanceAccountService.list({ current: pageIndex, size: pageSize, ...params }).then((res) => {
-      setData(res.records)
+      setData(res.data.records)
       setTotal(res.data.total)
     })
   }
@@ -123,59 +123,59 @@ const AccountPage: React.FC = () => {
         <span>账户中心</span>
       </div>
       <div className="sales-tabs">
-        <Tabs defaultActiveKey="1">
-          <TabPane tab="账户管理" key="1">
-            <div>
-              <Form name="basic" initialValues={{ remember: true }} onFinish={onFinish} form={form}>
-                <Row gutter={[10, 0]}>
-                  <Col span={1} className="table-from-label"></Col>
-                  <Col span={1} className="table-from-label">
-                    渠道
-                  </Col>
-                  <Col span={3}>
-                    <Form.Item name="channelId">
-                      <Select style={{ width: 120 }}>
-                        {channel?.map((item: any) => {
-                          return (
-                            <Option value={item.id} key={item.id}>
-                              {item.name}
-                            </Option>
-                          )
-                        })}
-                      </Select>
-                    </Form.Item>
-                  </Col>
-                  <Col span={5}>
-                    <InputTemp name="name" placeholder="请输入人员名称" />
-                  </Col>
-                  <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
-                    <Space>
-                      <Button type="primary" htmlType="submit">
-                        查询
-                      </Button>
-                      <Button type="primary" onClick={resetTable}>
-                        重置
-                      </Button>
-                    </Space>
-                  </Form.Item>
-                </Row>
-              </Form>
-            </div>
-            <Table
-              rowKey="id"
-              columns={columns}
-              scroll={{ x: 'max-content' }}
-              dataSource={[...data]}
-              pagination={{
-                onChange: onPaginationChange,
-                showSizeChanger: true,
-                showQuickJumper: true,
-                pageSize: pageSize,
-                total: total,
-              }}
-            />
-          </TabPane>
-        </Tabs>
+        {/* <Tabs defaultActiveKey="1">
+          <TabPane tab="账户管理" key="1"> */}
+        <div>
+          <Form name="basic" initialValues={{ remember: true }} onFinish={onFinish} form={form}>
+            <Row gutter={[10, 0]}>
+              <Col span={1} className="table-from-label"></Col>
+              <Col span={1} className="table-from-label">
+                渠道
+              </Col>
+              <Col span={3}>
+                <Form.Item name="channelId">
+                  <Select style={{ width: 120 }}>
+                    {channel?.map((item: any) => {
+                      return (
+                        <Option value={item.id} key={item.id}>
+                          {item.name}
+                        </Option>
+                      )
+                    })}
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col span={5}>
+                <InputTemp name="name" placeholder="请输入人员名称" />
+              </Col>
+              <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
+                <Space>
+                  <Button type="primary" htmlType="submit">
+                    查询
+                  </Button>
+                  <Button type="primary" onClick={resetTable}>
+                    重置
+                  </Button>
+                </Space>
+              </Form.Item>
+            </Row>
+          </Form>
+        </div>
+        <Table
+          rowKey="id"
+          columns={columns}
+          scroll={{ x: 'max-content' }}
+          dataSource={[...data]}
+          pagination={{
+            onChange: onPaginationChange,
+            showSizeChanger: true,
+            showQuickJumper: true,
+            pageSize: pageSize,
+            total: total,
+          }}
+        />
+        {/* </TabPane>
+        </Tabs> */}
       </div>
       <AEDialog
         data={selectedData}
