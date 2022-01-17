@@ -1,6 +1,6 @@
 /*
  * @Description:
- * @LastEditTime: 2022-01-15 15:26:36
+ * @LastEditTime: 2022-01-17 15:57:44
  */
 import { Form, Input, Modal, InputNumber, Radio, Switch, Row, Col, Checkbox, DatePicker } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
@@ -47,22 +47,23 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
     form
       .validateFields()
       .then((formData) => {
+        console.log(formData,'formData')
         const postData = { ...formData }
         console.log(postData)
         if (mode === 'add') {
-          postData.isSharePoint = Number(Boolean(formData.isSharePoint))
-          postData.isShareSuccess = Number(Boolean(formData.isShareSuccess))
+          postData.isSharePoint = Number(formData.isSharePoint)
+          postData.isShareSuccess = Number(formData.isShareSuccess)
           postData.isShareRebate = Number(formData.isShareRebate)
           postData.isPullRebate = Number(formData.isPullRebate)
           delete postData.time
           postData.beginTime = new Date(formData.time[0]).getTime()
           postData.endTime = new Date(formData.time[1]).getTime()
           console.log(postData, 'postData')
-          marketService.add({ ...postData }).then((res) => {
-            if (res.code === HttpCode.success) {
-              onSuccess(res.data)
-            }
-          })
+          // marketService.add({ ...postData }).then((res) => {
+          //   if (res.code === HttpCode.success) {
+          //     onSuccess(res.data)
+          //   }
+          // })
         } else {
           marketService.edit({ ...formData, id: data.id }).then((res) => {
             if (res.code === HttpCode.success) {
