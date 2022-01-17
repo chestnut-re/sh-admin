@@ -1,6 +1,6 @@
 /*
  * @Description: 结构树处理 新 之前有些乱 不动 慢慢在这维护
- * @LastEditTime: 2022-01-14 18:48:10
+ * @LastEditTime: 2022-01-17 18:53:03
  */
 /**
  * @description:  根据id 获取父 - 子 数据
@@ -118,4 +118,23 @@ export const isIntoMenu = (menuList: Array<any>, id: number) => {
     }
     return pre
   }, false)
+}
+
+export const newGetMenu = (menuList: Array<any>) => {
+  const tempMenuList: any[] = []
+  const each = (menuList, list, parentId) => {
+    for (const menu of menuList) {
+      const menuL = { ...menu }
+      menuL.pid = parentId
+      delete menuL.children
+      menuL.pid = parentId
+      list.push(menuL)
+      if (menu.children) {
+      
+        each(menu.children, list, menu.id)
+      }
+    }
+  }
+  each(menuList, tempMenuList, 0)
+  return tempMenuList
 }

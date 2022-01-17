@@ -1,6 +1,7 @@
+
 /*
  * @Description:
- * @LastEditTime: 2022-01-17 15:18:34
+ * @LastEditTime: 2022-01-17 18:54:35
  */
 import { USER_DETAIL } from '@/constants/CookiesC'
 import { getMenus, getDevMenus } from '@/service/menu'
@@ -8,7 +9,7 @@ import { UserService } from '@/service/user'
 import { isUserLogin, setJWT } from '@/utils/biz'
 import { getCookie, setCookie } from '@/utils/cookies'
 import { action, makeObservable, observable } from 'mobx'
-import { newMenu, newBtnMenu } from '@/utils/newTree'
+import { newMenu, newBtnMenu,newGetMenu } from '@/utils/newTree'
 /**
  * 管理后台必备 Store
  * 1. 菜单
@@ -35,6 +36,7 @@ class AdminData {
   async init() {
     // if (env != 'development') {
     const res = await getDevMenus()
+    console.log(JSON.stringify(newGetMenu(res.data.menus)))
     this.setMenu(res.data.menus)
     // } else {
     // const user = JSON.parse(getCookie(USER_DETAIL) ?? '')
