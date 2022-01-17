@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react'
 import './../../../order-list/components/order-details/OrderDetails.less'
 import '@/pages/production/release-product/index.less'
 import { useHistory } from 'react-router-dom'
-import { Table, Space, Button, message } from 'antd'
+import { Table, Space, Button, message, Modal } from 'antd'
+import { CheckCircleOutlined } from '@ant-design/icons'
 import { OrderService, AllocatedOrderService } from '@/service/OrderService'
 import { HttpCode } from '@/constants/HttpCode'
 import ServiceList from '../service-list'
@@ -19,6 +20,7 @@ const AllocatedDetailsPage: React.FC = () => {
   const [data, setData] = useState<any>([])
   const [current, setCurrent] = useState(0)
   const [selectData, setSelectData] = useState<any>({})
+  const [show, setShow] = useState<any>(false)
   useEffect(() => {
     loadData()
     getRelations()
@@ -91,7 +93,6 @@ const AllocatedDetailsPage: React.FC = () => {
   }
 
   const _commit = () => {
-    console.log(_ref.current?.relationList, '.....')
     const data = {
       orderId: '',
       userId: '',
@@ -124,9 +125,17 @@ const AllocatedDetailsPage: React.FC = () => {
     })
     AllocatedOrderService.submit(data).then((res) => {
       if (res.code === HttpCode.success) {
-        message.success('提交成功')
+        setShow(true)
       }
     })
+  }
+
+  const toList = () => {
+    history.push('/order/order-list')
+  }
+
+  const toAllocated = () => {
+    history.push('/order/allocated-list')
   }
 
   return (
@@ -219,6 +228,23 @@ const AllocatedDetailsPage: React.FC = () => {
       ) : (
         <DetailsPage id={history.location.state.id} />
       )}
+      <Modal centered visible={show} footer={false} onCancel={() => setShow(false)}>
+        <div style={{ textAlign: 'center' }}>
+          <p>
+            <CheckCircleOutlined style={{ fontSize: 36 }} />
+          </p>
+          <h3>订单分配成功</h3>
+          <p>
+            可以在订单中心/<a onClick={toList}>订单列表</a>页查看订单情况
+          </p>
+          <Space size="large">
+            <Button type="primary" onClick={toAllocated}>
+              返回待分配列表
+            </Button>
+            <Button onClick={toList}>查看订单列表</Button>
+          </Space>
+        </div>
+      </Modal>
     </div>
   )
 }

@@ -1,12 +1,9 @@
 import { FileService } from '@/service/FileService'
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
-import { Form, FormInstance, Upload } from 'antd'
+import { message, Upload } from 'antd'
 import React, { useEffect, useState } from 'react'
 
 interface UploadImageProps {
-  // label: string
-  // name: string
-  // form: FormInstance<any>
   value?: string
   onChange?: (value: string) => void
 }
@@ -17,6 +14,7 @@ interface UploadImageProps {
 const UploadImage: React.FC<UploadImageProps> = ({ onChange, value }) => {
   const [loading, setLoading] = useState(false)
   const [imgObj, setImgObj] = useState<any>({})
+  const [fullUrl, setFullUrl] = useState<string>()
 
   useEffect(() => {
     setImgObj({ imageUrl: value })
@@ -26,8 +24,9 @@ const UploadImage: React.FC<UploadImageProps> = ({ onChange, value }) => {
     setLoading(true)
     FileService.uploadImg(info.file).then((res) => {
       setLoading(false)
-      setImgObj({ ...res.data, imageUrl: `${res.data.ossServerUrl}${res.data.fileUrl}` })
-      onChange?.(`${res.data.ossServerUrl}${res.data.fileUrl}`)
+      setImgObj({ ...res.data, imageUrl: `${res.data.privateUrl}` })
+      onChange?.(`${res.data.fileUrl}`)
+      setFullUrl(res.data.privateUrl)
     })
   }
 
@@ -37,12 +36,12 @@ const UploadImage: React.FC<UploadImageProps> = ({ onChange, value }) => {
     // if (!isJpgOrPng) {
     //   message.error('You can only upload JPG/PNG file!')
     // }
-    // const isLt2M = file.size / 1024 / 1024 < 2
-    // if (!isLt2M) {
-    //   message.error('Image must smaller than 2MB!')
-    // }
+    const isLt2M = file.size / 1024 / 1024 < 5
+    if (!isLt2M) {
+      message.error('图片不能大于5M')
+    }
     // return isJpgOrPng && isLt2M
-    return true
+    return isLt2M
   }
 
   const uploadButton = (
@@ -51,6 +50,13 @@ const UploadImage: React.FC<UploadImageProps> = ({ onChange, value }) => {
       <div style={{ marginTop: 8 }}>上传图片</div>
     </div>
   )
+
+  let imgUrl
+  if (imgObj.imageUrl && imgObj.imageUrl.startsWith('http')) {
+    imgUrl = imgObj.imageUrl
+  } else {
+    imgUrl = fullUrl
+  }
 
   return (
     <Upload
@@ -61,7 +67,7 @@ const UploadImage: React.FC<UploadImageProps> = ({ onChange, value }) => {
       beforeUpload={beforeUpload}
       customRequest={customRequest}
     >
-      {imgObj.imageUrl ? <img src={imgObj.imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+      {imgUrl ? <img src={imgUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
     </Upload>
   )
 
