@@ -1,6 +1,6 @@
 /*
  * @Description:查看
- * @LastEditTime: 2022-01-15 16:51:31
+ * @LastEditTime: 2022-01-17 16:04:06
  */
 import React, { useState, FC, useEffect } from 'react'
 import { Drawer, Button, Descriptions, Table, Row, Col } from 'antd'
@@ -32,6 +32,7 @@ const BasicInfo: FC<props> = ({ data }) => {
             condition: `${res?.data?.isShareSuccess == 1 ? '分享成功' : ''}
   ${res?.data?.isSharePoint == '1' ? `触达独立IP${res?.data?.sharePointIp}个` : ''}`,
             rebateAmount: `每次均分`,
+            id:1
           })
         }
         if (res?.data.isPullRebate == 1) {
@@ -40,6 +41,7 @@ const BasicInfo: FC<props> = ({ data }) => {
             target: `${res?.data.pullTotal}个`,
             condition: type[res?.data.pullType],
             rebateAmount: `每次均分`,
+            id:2
           })
         }
         setList(list)
@@ -84,7 +86,7 @@ const BasicInfo: FC<props> = ({ data }) => {
               {dataSource?.description}
             </Descriptions.Item>
             <Descriptions.Item span={24} label="返利配置">
-              <Table bordered dataSource={List} columns={columns} pagination={false} />
+              <Table bordered rowKey="id" dataSource={List} columns={columns} pagination={false} />
             </Descriptions.Item>
           </Descriptions>
         </Col>
