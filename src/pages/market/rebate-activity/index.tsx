@@ -261,7 +261,7 @@ const RebateActivity: React.FC = () => {
         setSelectRecord(record.id)
         setrebateName(record.name)
         setActivityShowDialog(true)
-        setActivityRoleList(list)
+        setActivityRoleList([])
       },
       onCancel: () => {
         setSelectRecord(record.id)
