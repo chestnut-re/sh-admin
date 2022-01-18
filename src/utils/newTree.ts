@@ -1,6 +1,6 @@
 /*
  * @Description: 结构树处理 新 之前有些乱 不动 慢慢在这维护
- * @LastEditTime: 2022-01-17 18:53:03
+ * @LastEditTime: 2022-01-18 11:43:52
  */
 /**
  * @description:  根据id 获取父 - 子 数据
@@ -120,21 +120,16 @@ export const isIntoMenu = (menuList: Array<any>, id: number) => {
   }, false)
 }
 
-export const newGetMenu = (menuList: Array<any>) => {
-  const tempMenuList: any[] = []
-  const each = (menuList, list, parentId) => {
-    for (const menu of menuList) {
-      const menuL = { ...menu }
-      menuL.pid = parentId
-      delete menuL.children
-      menuL.pid = parentId
-      list.push(menuL)
-      if (menu.children) {
-      
-        each(menu.children, list, menu.id)
-      }
+export const newGetMenu = (menuList: Array<any>, parentId = 0) => {
+  return menuList.reduce((pre, item) => {
+    const child = { ...item }
+    delete child.children
+    child.pid = parentId
+    if (item.children && item.children.length > 0) {
+      const menuChild = newGetMenu(item.children, item.id)
+      pre.splice(0, 0, ...menuChild)
     }
-  }
-  each(menuList, tempMenuList, 0)
-  return tempMenuList
+    pre.push(child)
+    return pre
+  }, [])
 }

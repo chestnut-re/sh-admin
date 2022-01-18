@@ -19,6 +19,8 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
   const [goodsLimit, setGoodsLimit] = useState(true)
   const [goodsLimitUp, setGoodsLimitUp] = useState(false)
 
+  const [refundAndChangePolicyContent, setRefundAndChangePolicyContent] = useState('')
+
   useEffect(() => {
     if (!goodsLimit) {
       setGoodsLimitUp(false)
@@ -47,6 +49,7 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
         finishNum: productionStore.data.purchaseConfig?.finishNum,
       },
     })
+    setRefundAndChangePolicyContent(productionStore.data.refundAndChangePolicyContent)
 
     setGoodsLimit(productionStore.data.isPurchase !== 0)
 
@@ -76,12 +79,17 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
     value.isPurchase = goodsLimit ? 1 : 0
     value.isPurchaseAdd = goodsLimitUp ? 1 : 0
     console.log(value)
+    value.refundAndChangePolicyContent = refundAndChangePolicyContent
     productionStore.addBaseInfo(value)
   }
 
   const layout = {
     labelCol: { span: 6 },
     wrapperCol: { span: 18 },
+  }
+
+  const onChangePolicyContent = (content) => {
+    setRefundAndChangePolicyContent(content)
   }
 
   return (
@@ -230,7 +238,7 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
           )}
 
           <Form.Item name="refundAndChangePolicy" label="退改政策">
-            <Policy />
+            <Policy onChangeContent={onChangePolicyContent} />
           </Form.Item>
         </Col>
         {/* <Col span={8}>
