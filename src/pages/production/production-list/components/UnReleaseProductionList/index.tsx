@@ -7,6 +7,7 @@ import { ProductionListService } from '@/service/ProductionListService'
 import TimeColumn from '@/components/tableColumn/TimeColumn'
 import TravelModeColumn from '@/components/tableColumn/TravelModeColumn'
 import { useHistory } from 'react-router-dom'
+import NewPrice from '@/components/tableColumn/NewPrice'
 
 /**
  * 商品库 待发布
@@ -67,7 +68,7 @@ const UnReleaseProductionListPage: React.FC<any> = observer(({}) => {
     },
     {
       title: '现售价(¥)',
-      dataIndex: 'personCurrentPrice',
+      render: (text, record, index) => <NewPrice money={record?.personCurrentPrice} />,
     },
     {
       title: '创建渠道',
