@@ -70,32 +70,6 @@ const UserPage: React.FC = () => {
         endTime
       // window.location.href = url
       window.open(url)
-      // WithdrawalReviewService.userExport({
-      //   sts: query.sts,
-      //   startDate: beginTime,
-      //   endDate: endTime,
-      // }).then((res) => {
-      //   const content = res // 文件流
-      //   const blob = new Blob([content], { type: 'application/octet-stream' })
-      //   // const fileName = 'filename.xls'
-      //   // 如果后端返回文件名
-      //   const contentDisposition = res.headers['content-disposition']
-      //   const fileName = decodeURI(contentDisposition.split('=')[1])
-      //   if ('download' in document.createElement('a')) {
-      //     // 非IE下载
-      //     const link = document.createElement('a')
-      //     link.download = fileName
-      //     link.style.display = 'none'
-      //     link.href = URL.createObjectURL(blob)
-      //     document.body.appendChild(link)
-      //     link.click()
-      //     URL.revokeObjectURL(link.href) // 释放URL 对象
-      //     document.body.removeChild(link)
-      //   } else {
-      //     // IE10+下载
-      //     navigator.msSaveBlob(blob, fileName)
-      //   }
-      // })
     })
   }
 
@@ -116,6 +90,9 @@ const UserPage: React.FC = () => {
     {
       title: '提现金额',
       dataIndex: 'amount',
+      render: (text: any, record: any) => {
+        return record.amount / 100
+      },
     },
     {
       title: '申请时间',
