@@ -29,6 +29,7 @@ const TemplateDialog: FC<Props> = ({ type, show = false, onSuccess, onClose }) =
 
   /**提交数据 */
   const _handleUpdate = async () => {
+    console.log('提交到外层', selectedTemplate)
     onSuccess(selectedTemplate)
   }
 

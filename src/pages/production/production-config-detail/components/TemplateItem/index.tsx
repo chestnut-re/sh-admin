@@ -43,7 +43,7 @@ const TemplateItem: React.FC<Props> = ({ data, onDel, onEdit }) => {
       // onMouseOver={mouseOver}
       // onMouseOut={mouseOut}
     >
-      <img className="bg" src={data.backgroundImage} />
+      <img className="bg" src={data.templateImgUrl} />
       {!showBox && (
         <div className="btn-div">
           <div className="btn-num">

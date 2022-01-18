@@ -28,7 +28,7 @@ const TravelInfo: React.FC = () => {
         <Tabs onChange={callback} type="card">
           {productionDetailStore.data?.goodsPrices?.map((item, index) => {
             return (
-              <TabPane tab={`${item.startDate} · ¥${item.personCostPrice / 100}`} key={index}>
+              <TabPane tab={`${item.startDate} · ¥${item.personCurrentPrice / 100}`} key={index}>
                 <div className="all-day">
                   <div className="math-box">
                     <Row className="math">

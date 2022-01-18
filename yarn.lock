@@ -1616,6 +1616,24 @@
   "resolved" "https://registry.npmjs.org/acorn/-/acorn-8.6.0.tgz"
   "version" "8.6.0"
 
+"ahooks-v3-count@^1.0.0":
+  "integrity" "sha512-V7uUvAwnimu6eh/PED4mCDjE7tokeZQLKlxg9lCTMPhN+NjsSbtdacByVlR1oluXQzD3MOw55wylDmQo4+S9ZQ=="
+  "resolved" "https://registry.npmjs.org/ahooks-v3-count/-/ahooks-v3-count-1.0.0.tgz"
+  "version" "1.0.0"
+
+"ahooks@^3.1.5":
+  "integrity" "sha512-BQbKJ8sNrr8gJlOA4YY9zNeMqcHXLI6AGpiyzLJW2mJfjeuHIiWZsyDnbyyNCm9M/RRETlYTzgqT7brj5DBnyg=="
+  "resolved" "https://registry.npmjs.org/ahooks/-/ahooks-3.1.5.tgz"
+  "version" "3.1.5"
+  dependencies:
+    "ahooks-v3-count" "^1.0.0"
+    "dayjs" "^1.9.1"
+    "intersection-observer" "^0.12.0"
+    "js-cookie" "^3.0.0"
+    "lodash" "^4.17.21"
+    "resize-observer-polyfill" "^1.5.1"
+    "screenfull" "^5.0.0"
+
 "ajv-errors@^1.0.0":
   "integrity" "sha512-DCRfO/4nQ+89p/RK43i8Ezd41EqdGIU4ld7nGF8OQ14oc/we5rEntLCUa7+jrn3nn83BosfwZA0wb4pon2o8iQ=="
   "resolved" "https://registry.npmjs.org/ajv-errors/-/ajv-errors-1.0.1.tgz"
@@ -2643,7 +2661,7 @@
   "resolved" "https://registry.npmjs.org/date-fns/-/date-fns-2.26.0.tgz"
   "version" "2.26.0"
 
-"dayjs@*", "dayjs@^1.10.7", "dayjs@1.x":
+"dayjs@*", "dayjs@^1.10.7", "dayjs@^1.9.1", "dayjs@1.x":
   "integrity" "sha512-P6twpd70BcPK34K26uJ1KT3wlhpuOAPoMwJzpsIWUxHZ7wpmbdZL/hQqBDfz7hGurYSa5PhzdhDHtt319hL3ig=="
   "resolved" "https://registry.npmjs.org/dayjs/-/dayjs-1.10.7.tgz"
   "version" "1.10.7"
@@ -3995,6 +4013,11 @@
   "resolved" "https://registry.npmjs.org/interpret/-/interpret-2.2.0.tgz"
   "version" "2.2.0"
 
+"intersection-observer@^0.12.0":
+  "integrity" "sha512-2Vkz8z46Dv401zTWudDGwO7KiGHNDkMv417T5ItcNYfmvHR/1qCTVBO9vwH8zZmQ0WkA/1ARwpysR9bsnop4NQ=="
+  "resolved" "https://registry.npmjs.org/intersection-observer/-/intersection-observer-0.12.0.tgz"
+  "version" "0.12.0"
+
 "ip-regex@^2.1.0":
   "integrity" "sha1-+ni/XS5pE8kRzp+BnuUUa7bYROk="
   "resolved" "https://registry.npmjs.org/ip-regex/-/ip-regex-2.1.0.tgz"
@@ -4325,7 +4348,7 @@
     "merge-stream" "^2.0.0"
     "supports-color" "^8.0.0"
 
-"js-cookie@^3.0.1":
+"js-cookie@^3.0.0", "js-cookie@^3.0.1":
   "integrity" "sha512-+0rgsUXZu4ncpPxRL+lNEptWMOWl9etvPHc/koSRp6MPwpRYAhmk0dUG00J4bxVV3r9uUzfo24wW0knS07SKSw=="
   "resolved" "https://registry.npmjs.org/js-cookie/-/js-cookie-3.0.1.tgz"
   "version" "3.0.1"
@@ -6180,7 +6203,7 @@
     "prop-types" "^15.5.8"
     "raf" "^3.3.0"
 
-"react@*", "react@^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0", "react@^16.8.0 || ^17", "react@^17.0.2", "react@>= 16.9.0", "react@>=0.14.0", "react@>=15", "react@>=16.0.0", "react@>=16.3.0", "react@>=16.9.0", "react@17.0.2":
+"react@*", "react@^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0", "react@^16.8.0 || ^17", "react@^16.8.6 || ^17.0", "react@^17.0.2", "react@>= 16.9.0", "react@>=0.14.0", "react@>=15", "react@>=16.0.0", "react@>=16.3.0", "react@>=16.9.0", "react@17.0.2":
   "integrity" "sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA=="
   "resolved" "https://registry.npmjs.org/react/-/react-17.0.2.tgz"
   "version" "17.0.2"
@@ -6518,6 +6541,11 @@
     "@types/json-schema" "^7.0.8"
     "ajv" "^6.12.5"
     "ajv-keywords" "^3.5.2"
+
+"screenfull@^5.0.0":
+  "integrity" "sha512-9BakfsO2aUQN2K9Fdbj87RJIEZ82Q9IGim7FqM5OsebfoFC6ZHXgDq/KvniuLTPdeM8wY2o6Dj3WQ7KeQCj3cA=="
+  "resolved" "https://registry.npmjs.org/screenfull/-/screenfull-5.2.0.tgz"
+  "version" "5.2.0"
 
 "scroll-into-view-if-needed@^2.2.25":
   "integrity" "sha512-8LuxJSuFVc92+0AdNv4QOxRL4Abeo1DgLnGNkn1XlaujPH/3cCFz3QI60r2VNu4obJJROzgnIUw5TKQkZvZI1w=="
