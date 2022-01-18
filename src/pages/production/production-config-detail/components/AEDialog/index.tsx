@@ -1,4 +1,4 @@
-import { Form, Modal, Col, Row, Button, message } from 'antd'
+import { Form, Modal, Col, Row, Button, message, Space } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
 import UploadImage from '@/components/formItem/UploadImage'
 import { observer } from 'mobx-react-lite'
@@ -78,19 +78,25 @@ const AEDialog: FC<Props> = ({ data, type, show = false, onSuccess, onClose }) =
     setShowTemplateDialog(false)
   }
 
+  const imgSpan = 5
+
+  const imgSpanLayout = {
+    labelCol: { span: 8 },
+    wrapperCol: { span: 14 },
+  }
+
   return (
     <Modal title={data?.pageTemplate} visible={show} onOk={_handleUpdate} onCancel={_formClose} width={1000}>
-      <Row>
-        <Col span={12}></Col>
-        <Col span={12}>
-          <Form
-            name="basic"
-            initialValues={{ remember: true }}
-            autoComplete="off"
-            form={form}
-            labelCol={{ span: 6 }}
-            wrapperCol={{ span: 16 }}
-          >
+      <Form
+        name="basic"
+        initialValues={{ remember: true }}
+        autoComplete="off"
+        form={form}
+        labelCol={{ span: 6 }}
+        wrapperCol={{ span: 16 }}
+      >
+        <Row>
+          <Col span={8}>
             <Button
               onClick={() => {
                 setShowTemplateDialog(true)
@@ -99,27 +105,41 @@ const AEDialog: FC<Props> = ({ data, type, show = false, onSuccess, onClose }) =
               选择模版
             </Button>
             {selectedTemplate?.name}
-            <Form.Item label="商品名称" name="detailTitleImage" rules={[{ required: false }]}>
+          </Col>
+        </Row>
+        <Row>
+          <Col span={imgSpan}>
+            <Form.Item label="商品名称" name="detailTitleImage" rules={[{ required: false }]} {...imgSpanLayout}>
               <UploadImage />
             </Form.Item>
-            <Form.Item label="商品简介" name="detailDescImage" rules={[{ required: false }]}>
+          </Col>
+          <Col span={imgSpan}>
+            <Form.Item label="商品简介" name="detailDescImage" rules={[{ required: false }]} {...imgSpanLayout}>
               <UploadImage />
             </Form.Item>
-            <Form.Item label="类型标签" name="goodsTypeTagImage" rules={[{ required: false }]}>
+          </Col>
+          <Col span={imgSpan}>
+            <Form.Item label="类型标签" name="goodsTypeTagImage" rules={[{ required: false }]} {...imgSpanLayout}>
               <UploadImage />
             </Form.Item>
-            <Form.Item label="价格图" name="priceImage" rules={[{ required: false }]}>
+          </Col>
+          <Col span={imgSpan}>
+            <Form.Item label="价格图" name="priceImage" rules={[{ required: false }]} {...imgSpanLayout}>
               <UploadImage />
             </Form.Item>
-            <Form.Item label="背景图片" name="backgroundImage" rules={[{ required: false }]}>
+          </Col>
+          <Col span={imgSpan}>
+            <Form.Item label="背景图片" name="backgroundImage" rules={[{ required: false }]} {...imgSpanLayout}>
               <UploadImage />
             </Form.Item>
-            <Form.Item label="下单按钮" name="submitOrderImage" rules={[{ required: false }]}>
+          </Col>
+          <Col span={imgSpan}>
+            <Form.Item label="下单按钮" name="submitOrderImage" rules={[{ required: false }]} {...imgSpanLayout}>
               <UploadImage />
             </Form.Item>
-          </Form>
-        </Col>
-      </Row>
+          </Col>
+        </Row>
+      </Form>
 
       <TemplateDialog show={showTemplateDialog} type={type} onClose={_onDialogClose} onSuccess={_onDialogSuccess} />
     </Modal>
