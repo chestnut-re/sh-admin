@@ -6,13 +6,14 @@ import { ConfigManagementService } from '@/service/OrderService'
 interface Props {
   value?: any
   onChange?: (value: any) => void
+  onChangeContent: (value: string) => void
 }
 
 /**
  * 退改政策
  */
-const Policy: React.FC<Props> = ({ value, onChange }) => {
-  const [datas, setData] = useState([])
+const Policy: React.FC<Props> = ({ value, onChange, onChangeContent }) => {
+  const [datas, setData] = useState<any[]>([])
   const [fetching, setFetching] = useState(false)
 
   useEffect(() => {
@@ -32,9 +33,20 @@ const Policy: React.FC<Props> = ({ value, onChange }) => {
     return debounce(loadOptions, 1000)
   }, [])
 
-  const goodsTypeHandleChange = (value) => {
-    console.log('goodsTypeHandleChange', value)
+  const goodsTypeHandleChange = (value, option) => {
+    console.log('goodsTypeHandleChange', value, option)
     onChange?.(value)
+    console.log('onChangeContent');
+    if (!value) {
+      onChangeContent('')
+      return
+    }
+    const id = value.split('-')[0]
+    const d = datas.find((res) => res.id === id)
+    console.log('d', d);
+    if (d) {
+      onChangeContent(d.policyContent)
+    }
   }
 
   return (
