@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Tabs, Select } from 'antd'
 import './index.less'
-import AEDialog, { DialogMode } from './components/AEDialog'
-import { InputTemp, StatusRoute } from '@/components/filter/formItem'
+import { InputTemp } from '@/components/filter/formItem'
 import { FinanceAccountService } from '@/service/FinanceAccountService'
 import ChannelService from '@/service/ChannelService'
+import { useHistory } from 'react-router-dom'
 
 /**
  * 财务中心-账户中心
@@ -12,14 +12,12 @@ import ChannelService from '@/service/ChannelService'
 const AccountPage: React.FC = () => {
   const [form] = Form.useForm()
   const { Option } = Select
+  const history = useHistory<any>()
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [total, setTotal] = useState()
   const { TabPane } = Tabs
-  const [showDialog, setShowDialog] = useState(false)
-  const [selectedData, setSelectedData] = useState(null)
-  const [dialogMode, setDialogMode] = useState<DialogMode>('add')
   const [channel, setChannel] = useState([])
 
   useEffect(() => {
@@ -83,9 +81,9 @@ const AccountPage: React.FC = () => {
 
   /**编辑 */
   const _editDialog = (record) => {
-    setDialogMode('edit')
-    setSelectedData(record)
-    setShowDialog(true)
+    history.push('/finance/account/details', {
+      record: record,
+    })
   }
 
   /**筛选 */
@@ -99,17 +97,6 @@ const AccountPage: React.FC = () => {
     form.resetFields()
     setPageIndex(1)
     loadData(1)
-  }
-
-  const _onDialogSuccess = () => {
-    setSelectedData(null)
-    setShowDialog(false)
-    loadData(pageIndex)
-  }
-
-  const _onDialogClose = () => {
-    setSelectedData(null)
-    setShowDialog(false)
   }
 
   const onPaginationChange = (page: number, pageSize: number) => {
@@ -177,13 +164,6 @@ const AccountPage: React.FC = () => {
         {/* </TabPane>
         </Tabs> */}
       </div>
-      <AEDialog
-        data={selectedData}
-        mode={dialogMode}
-        onSuccess={_onDialogSuccess}
-        show={showDialog}
-        onClose={_onDialogClose}
-      />
     </div>
   )
 }

@@ -67,6 +67,7 @@ class ProductionData {
       addTravelDetail: action,
       setDepartureCity: action,
       setGoodsPricesTime: action,
+      updateData: action,
     })
   }
 
@@ -260,6 +261,11 @@ class ProductionData {
     }
 
     this.data.goodsPrices = [...this.data.goodsPrices]
+  }
+
+  updateData(obj) {
+    console.log('updateData', obj);
+    this.data = { ...this.data, ...obj }
   }
 
   /**保存到草稿箱子 */

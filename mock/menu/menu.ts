@@ -359,6 +359,15 @@ export default [
                   visible: false,
                 },
                 {
+                  name: '账户明细',
+                  id: md5('/finance/account'),
+                  type: 'menu',
+                  icon: '',
+                  componentPath: '/finance/account/components/details',
+                  path: '/finance/account/details',
+                  hide: true,
+                },
+                {
                   name: '财务管理',
                   id: md5('/finance/financial-management'),
                   type: 'menu',

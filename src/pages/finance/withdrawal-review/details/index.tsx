@@ -66,11 +66,11 @@ const ReviewDetails: React.FC = () => {
         <div className="right">
           <div>
             <span>审核人</span>
-            <span>11</span>
+            <span>{data?.auditor}</span>
           </div>
           <div>
             <span>审核时间</span>
-            <span>2021-10-31 19:39:09</span>
+            <span>{data?.handleTime}</span>
           </div>
         </div>
       </div>
