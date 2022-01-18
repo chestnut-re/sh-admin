@@ -35,6 +35,7 @@ const RebateActivity: React.FC = () => {
   const [showGoodsDialog, setShowGoodsDialog] = useState(false)
   const [modalData, setModalData] = useState('')
   const [showType, setShowType] = useState('')
+  const [goodsAlreadyData,setGoodsAlreadyData] =useState([])
   useEffect(() => {
     loadData(pageIndex)
   }, [pageIndex])
@@ -150,9 +151,17 @@ const RebateActivity: React.FC = () => {
     const list = (record.goodsList ?? []).map((res) => {
       return res.goodsId
     })
+    const data = (record.goodsList ?? []).map((res) => {
+      return {
+        goodsId:res.goodsId,
+        goodsName:res.goodsName,
+        promotionalImageUrl:res.promotionalImageUrl
+      }
+    })
     setSelectRecord(record.id)
     setrebateName(record.name)
     setGoodsShowDialog(true)
+    setGoodsAlreadyData(data)
     setGoodsRoleList(list)
   }
   const _editActivityDialog = (record) => {
@@ -374,6 +383,7 @@ const RebateActivity: React.FC = () => {
           query={{
             type:1
           }}
+          goodsAlreadyData={goodsAlreadyData}
           onSuccess={goodsOnSuccess}
           goodsIdList={goodsRoleList}
           onClose={() => setGoodsShowDialog(false)}

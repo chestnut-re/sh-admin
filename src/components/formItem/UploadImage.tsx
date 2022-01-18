@@ -67,7 +67,11 @@ const UploadImage: React.FC<UploadImageProps> = ({ onChange, value }) => {
       beforeUpload={beforeUpload}
       customRequest={customRequest}
     >
-      {imgUrl ? <img src={imgUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+      {imgUrl ? (
+        <img src={imgUrl} alt="avatar" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+      ) : (
+        uploadButton
+      )}
     </Upload>
   )
 

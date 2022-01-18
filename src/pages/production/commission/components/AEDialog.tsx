@@ -3,8 +3,7 @@ import React, { FC, useEffect, useState } from 'react'
 import { HttpCode } from '@/constants/HttpCode'
 import { SubCenterSelect } from '@/components/formItem/SubCenterSelect'
 import { ProductionCommission } from '@/service/ProductionCommission'
-
-export type DialogMode = 'add' | 'edit' | 'see'
+import { DialogMode } from '@/utils/enum'
 
 interface Props {
   data: any
