@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space } from 'antd'
 import './index.less'
 import { HttpCode } from '@/constants/HttpCode'
-import AEDialog, { DialogMode } from './components/AEDialog'
+import AEDialog from './components/AEDialog'
 import { InputTemp, StatusRoute } from '@/components/filter/formItem'
 import { ProductionCommission } from '@/service/ProductionCommission'
 import TimeColumn from '@/components/tableColumn/TimeColumn'
 import { useSetState } from 'ahooks'
-import { TableState } from '@/types/commonState'
+import { DialogState, TableState } from '@/types/commonState'
 
 /**
  * 商品分佣方案
@@ -21,9 +21,11 @@ const ProductionCommissionListPage: React.FC = () => {
     data: [],
   })
 
-  const [showDialog, setShowDialog] = useState(false)
-  const [selectedData, setSelectedData] = useState(null)
-  const [dialogMode, setDialogMode] = useState<DialogMode>('add')
+  const [dialogState, setDialogState] = useSetState<DialogState>({
+    showDialog: false,
+    selectedData: null,
+    dialogMode: 'add',
+  })
 
   useEffect(() => {
     loadData(tableState.pageIndex)
@@ -95,15 +97,20 @@ const ProductionCommissionListPage: React.FC = () => {
 
   /**编辑 */
   const _editDialog = (record) => {
-    setDialogMode('edit')
-    setSelectedData(record)
-    setShowDialog(true)
+    setDialogState({
+      dialogMode: 'edit',
+      selectedData: record,
+      showDialog: true,
+    })
   }
 
   /**添加 */
   const showAdd = () => {
-    setShowDialog(true)
-    setDialogMode('add')
+    setDialogState({
+      selectedData: null,
+      dialogMode: 'add',
+      showDialog: true,
+    })
   }
 
   /**筛选 */
@@ -120,14 +127,18 @@ const ProductionCommissionListPage: React.FC = () => {
   }
 
   const _onDialogSuccess = () => {
-    setSelectedData(null)
-    setShowDialog(false)
+    setDialogState({
+      selectedData: null,
+      showDialog: false,
+    })
     loadData(tableState.pageIndex)
   }
 
   const _onDialogClose = () => {
-    setSelectedData(null)
-    setShowDialog(false)
+    setDialogState({
+      selectedData: null,
+      showDialog: false,
+    })
   }
 
   const onPaginationChange = (page: number, pageSize: number) => {
@@ -184,10 +195,10 @@ const ProductionCommissionListPage: React.FC = () => {
         }}
       />
       <AEDialog
-        data={selectedData}
-        mode={dialogMode}
+        data={dialogState.selectedData}
+        mode={dialogState.dialogMode}
         onSuccess={_onDialogSuccess}
-        show={showDialog}
+        show={dialogState.showDialog}
         onClose={_onDialogClose}
       />
     </div>

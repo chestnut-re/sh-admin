@@ -19,7 +19,7 @@ interface Props {
 const AEVersionDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) => {
   const [form] = Form.useForm()
   const [title, setTitle] = useState('添加版本记录')
-  const [versionData, setVersionData] = useState({})
+  const [versionData, setVersionData] = useState<any>({})
   useEffect(() => {
     if (data?.id) {
       getVersion()
@@ -34,6 +34,7 @@ const AEVersionDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClo
   useEffect(() => {
     form.setFieldsValue({
       clientVersionNo: versionData?.clientVersionNo,
+      clientType: versionData?.clientType,
       fileUrl: versionData?.fileUrl,
       versionContent: versionData?.versionContent,
       remark: versionData?.remark,
@@ -83,22 +84,32 @@ const AEVersionDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClo
         name="basic"
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 16 }}
-        initialValues={{ remember: true }}
+        initialValues={{ clientType: 1 }}
         onFinish={(values: any) => {}}
         onFinishFailed={(errorInfo: any) => {}}
         autoComplete="off"
         form={form}
       >
-        <Form.Item label="版本号" name="clientVersionNo" rules={[{ message: '请输入图片相对路径' }]}>
+        <Form.Item label="版本号" name="clientVersionNo">
           <Input placeholder="(必填)" />
         </Form.Item>
-        <Form.Item label="下载链接" name="fileUrl" rules={[{ message: '请输入标题' }]}>
+        <Form.Item label="客户端类型" name="clientType">
+          <Select defaultValue={1}>
+            <Select.Option value={1}>H5</Select.Option>
+            <Select.Option value={2}>小程序</Select.Option>
+            <Select.Option value={3}>ios手机</Select.Option>
+            <Select.Option value={4}>ios_pad</Select.Option>
+            <Select.Option value={5}>安卓手机</Select.Option>
+            <Select.Option value={6}>安卓pad</Select.Option>
+          </Select>
+        </Form.Item>
+        <Form.Item label="下载链接" name="fileUrl">
           <Input />
         </Form.Item>
-        <Form.Item label="更新内容" name="versionContent" rules={[{ message: '请输入跳转地址' }]}>
+        <Form.Item label="更新内容" name="versionContent">
           <Input placeholder="(必填)" />
         </Form.Item>
-        <Form.Item label="备注" name="remark" rules={[{ message: '请输入排序号' }]}>
+        <Form.Item label="备注" name="remark">
           <Input />
         </Form.Item>
         <Form.Item label="是否强制更新" name="mandatoryUpdate" rules={[{ required: true }]}>

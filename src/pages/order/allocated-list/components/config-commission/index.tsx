@@ -45,9 +45,14 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
 
   useEffect(() => {
     setSums(0)
+    console.log(sums, 'sssss1')
     relationList?.map((item) => {
       item?.relation.map((item: any) => {
-        setSums(sums + parseInt(item.scale))
+        if (item.scale) {
+          setSums(sums + parseInt(item.scale))
+          console.log(parseInt(item.scale), 'ppppp')
+          console.log(sums, 'sssss2')
+        }
       })
     })
   }, [relationList])
@@ -80,16 +85,16 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
       <div className="middle">
         <div className="top">
           <span className="topOne">可配置分佣</span>
-          <span>¥{data?.allocationAmount}</span>
+          <span>¥{data?.allocationAmount / 100}</span>
           <span className="topOne">剩余可配置</span>
-          <span>￥{data?.allocationAmount * (100 - sums) * 0.01 || 0} </span>
+          <span>￥{(data?.allocationAmount * (100 - sums)) / 10000} </span>
         </div>
         <div className="mid">
           {relationList?.map((item: any) => {
             return (
               <div className="midRight" key={item.key}>
-                {item.type == 1 ? <p style={{ textAlign: 'center' }}>关联归属渠道</p> : null}
-                {item.type == 2 ? <p style={{ textAlign: 'center' }}>推荐渠道</p> : null}
+                {item.type == 1 ? <p style={{ textAlign: 'center' }}>推荐渠道</p> : null}
+                {item.type == 2 ? <p style={{ textAlign: 'center' }}>关联归属渠道</p> : null}
                 {item.type == 3 ? <p style={{ textAlign: 'center' }}>服务渠道</p> : null}
                 {item.type == 4 ? <p style={{ textAlign: 'center' }}>从属/服务渠道</p> : null}
                 {item.type == 5 ? <p style={{ textAlign: 'center' }}>推荐/服务渠道</p> : null}
@@ -98,7 +103,7 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
                 <div className="guanxi">
                   {item.buildScale ? (
                     <p>
-                      团建奖金{item.buildScale}% ¥{data?.allocationAmount * item.buildScale}
+                      团建奖金{item.buildScale}% ¥{(data?.allocationAmount / 10000) * item.buildScale}
                     </p>
                   ) : (
                     ''
@@ -139,13 +144,13 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
                           className="bDer"
                           value={item.scale}
                           onChange={(e) => {
-                            item['scale'] = e.target.value || 0
+                            item['scale'] = e.target.value
                             setRelationList(cloneDeep(relationList))
                           }}
                         />
                         <span>%</span>
                         <span style={{ marginLeft: '10px' }}>
-                          ¥{item.scale ? (data?.allocationAmount * item.scale * 0.01).toFixed(0) : 0}
+                          ¥{item.scale ? (data?.allocationAmount / 10000) * item.scale : 0}
                         </span>
                         {item.serviceScale ? (
                           <>
@@ -154,14 +159,14 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
                               className="bDer"
                               value={item.serviceScale}
                               onChange={(e) => {
-                                item['serviceScale'] = e.target.value || 0
+                                item['serviceScale'] = e.target.value
                                 setRelationList(cloneDeep(relationList))
                               }}
                             />
 
                             <span>%</span>
                             <span style={{ marginLeft: '10px' }}>
-                              ¥{item.serviceScale ? data?.allocationAmount * item.serviceScale * 0.01 : 0}
+                              ¥{item.serviceScale ? (data?.allocationAmount / 10000) * item.serviceScale : 0}
                             </span>
                           </>
                         ) : (

@@ -45,8 +45,8 @@ const DetailsPage: React.FC<Props> = ({ id }) => {
           {relationList?.map((item: any) => {
             return (
               <div className="midRight" key={item.key}>
-                {item.type == 1 ? <p style={{ textAlign: 'center' }}>关联归属渠道</p> : null}
-                {item.type == 2 ? <p style={{ textAlign: 'center' }}>推荐渠道</p> : null}
+                {item.type == 1 ? <p style={{ textAlign: 'center' }}>推荐渠道</p> : null}
+                {item.type == 2 ? <p style={{ textAlign: 'center' }}>关联归属渠道</p> : null}
                 {item.type == 3 ? <p style={{ textAlign: 'center' }}>服务渠道</p> : null}
                 {item.type == 4 ? <p style={{ textAlign: 'center' }}>从属/服务渠道</p> : null}
                 {item.type == 5 ? <p style={{ textAlign: 'center' }}>推荐/服务渠道</p> : null}

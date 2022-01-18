@@ -90,19 +90,29 @@ const AEVersionDialog: FC<Props> = ({ data, mode, show = true, onSuccess, onClos
         autoComplete="off"
         form={form}
       >
-        <Form.Item label="版本号" name="clientVersionNo" rules={[{ message: '请输入图片相对路径' }]}>
+        <Form.Item label="版本号" name="clientVersionNo">
           <Input placeholder="(必填)" />
         </Form.Item>
-        <Form.Item label="下载链接" name="fileUrl" rules={[{ message: '请输入标题' }]}>
+        <Form.Item label="客户端类型" name="clientType">
+          <Select defaultValue={1}>
+            <Select.Option value={1}>H5</Select.Option>
+            <Select.Option value={2}>小程序</Select.Option>
+            <Select.Option value={3}>ios手机</Select.Option>
+            <Select.Option value={4}>ios_pad</Select.Option>
+            <Select.Option value={5}>安卓手机</Select.Option>
+            <Select.Option value={6}>安卓pad</Select.Option>
+          </Select>
+        </Form.Item>
+        <Form.Item label="下载链接" name="fileUrl">
           <Input />
         </Form.Item>
-        <Form.Item label="更新内容" name="versionContent" rules={[{ message: '请输入跳转地址' }]}>
+        <Form.Item label="更新内容" name="versionContent">
           <Input placeholder="(必填)" />
         </Form.Item>
-        <Form.Item label="备注" name="remark" rules={[{ message: '请输入排序号' }]}>
+        <Form.Item label="备注" name="remark">
           <Input />
         </Form.Item>
-        <Form.Item label="是否强制更新" name="mandatoryUpdate" rules={[{ required: true }]}>
+        <Form.Item label="是否强制更新" name="mandatoryUpdate">
           <Radio.Group defaultValue={0}>
             <Radio value={1}>是</Radio>
             <Radio value={0}>否</Radio>
