@@ -113,7 +113,7 @@ const OrderListPage: React.FC = () => {
     },
     {
       title: '下单途径',
-      dataIndex: 'payTypeVal',
+      dataIndex: 'sourceVal',
     },
     {
       title: '订单类型',

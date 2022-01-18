@@ -71,11 +71,11 @@ const AllocatedListPage: React.FC = () => {
     },
     {
       title: '营销活动',
-      dataIndex: 'state', //无
+      dataIndex: 'state',
     },
     {
       title: '下单数量',
-      dataIndex: 'orderCount', //无
+      dataIndex: 'orderCount',
     },
     {
       title: '应付款',

@@ -45,13 +45,13 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
 
   useEffect(() => {
     setSums(0)
-    console.log(sums, 'sssss1')
     relationList?.map((item) => {
       item?.relation.map((item: any) => {
         if (item.scale) {
           setSums(sums + parseInt(item.scale))
-          console.log(parseInt(item.scale), 'ppppp')
-          console.log(sums, 'sssss2')
+          if (item.scale.length == 2) {
+            // setSums(sums - parseInt(item.scale.substr(0, 1)))
+          }
         }
       })
     })
@@ -71,12 +71,6 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
             return i
           })
         )
-        // setTemp([])
-        // relationList.map((item) => {
-        //   item.relation.map((item) => {
-        //     setTemp([...temp, item])
-        //   })
-        // })
       }
     })
   }
