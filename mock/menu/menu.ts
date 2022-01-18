@@ -26,7 +26,7 @@ export default [
               icon: '',
               componentPath: '/production',
               path: '/production',
-              visible: false,
+              hide: false,
               children: [
                 {
                   name: '商品列表',
@@ -35,7 +35,7 @@ export default [
                   icon: '',
                   componentPath: '/production/production-list',
                   path: '/production/production-list',
-                  visible: false,
+                  hide: false,
                 },
                 {
                   name: '发布商品',
@@ -44,7 +44,7 @@ export default [
                   icon: '',
                   componentPath: '/production/release-product',
                   path: '/production/release-product',
-                  visible: true,
+                  hide: true,
                 },
                 {
                   name: '商品详情',
@@ -53,7 +53,7 @@ export default [
                   icon: '',
                   componentPath: '/production/production-detail',
                   path: '/production/production-detail',
-                  visible: true,
+                  hide: true,
                 },
                 {
                   name: '商品配置详情',
@@ -62,7 +62,7 @@ export default [
                   icon: '',
                   componentPath: '/production/production-config-detail',
                   path: '/production/production-config-detail',
-                  visible: true,
+                  hide: true,
                 },
                 {
                   name: '商品审核',
@@ -71,7 +71,7 @@ export default [
                   icon: '',
                   componentPath: '/production/commodity-audit',
                   path: '/production/commodity-audit',
-                  visible: false,
+                  hide: false,
                 },
                 {
                   name: '商品配置',
@@ -80,7 +80,7 @@ export default [
                   icon: '',
                   componentPath: '/production/commodity-allocation',
                   path: '/production/commodity-allocation',
-                  visible: false,
+                  hide: false,
                 },
                 {
                   name: '商品分佣方案',
@@ -89,7 +89,7 @@ export default [
                   icon: '',
                   componentPath: '/production/commission',
                   path: '/production/commission',
-                  visible: false,
+                  hide: false,
                 },
               ],
             },
@@ -100,7 +100,7 @@ export default [
               icon: '',
               componentPath: 'market',
               path: '/market',
-              visible: false,
+              hide: false,
               children: [
                 {
                   name: 'App活动',
@@ -109,7 +109,7 @@ export default [
                   icon: '',
                   componentPath: '/market/app-market',
                   path: '/market/app-market',
-                  // visible: false,
+                  // hide: false,
                   // children: [
                   //   {
                   //     name: '轮播图管理',
@@ -117,7 +117,7 @@ export default [
                   //     type: 'menu',
                   //     componentPath: '/market/app-market/banner',
                   //     path: '/market/app-market/banner',
-                  //     visible: false,
+                  //     hide: false,
                   //   },
                   //   {
                   //     name: '活动管理',
@@ -125,7 +125,7 @@ export default [
                   //     type: 'menu',
                   //     componentPath: '/market/app-market/activities',
                   //     path: '/market/app-market/activities',
-                  //     visible: false,
+                  //     hide: false,
                   //   },
                   // ],
                 },
@@ -136,7 +136,7 @@ export default [
                   icon: '',
                   componentPath: '/market/message',
                   path: '/market/message',
-                  visible: false,
+                  hide: false,
                   children: [
                     {
                       name: '消息管理',
@@ -145,7 +145,7 @@ export default [
                       icon: '',
                       componentPath: '/market/message/message-management',
                       path: '/market/message/message-management',
-                      visible: false,
+                      hide: false,
                     },
                     {
                       name: '消息推送模版',
@@ -154,7 +154,7 @@ export default [
                       icon: '',
                       componentPath: '/market/message/push-template',
                       path: '/market/message/push-template',
-                      visible: false,
+                      hide: false,
                     },
                   ],
                 },
@@ -188,7 +188,7 @@ export default [
               icon: '',
               componentPath: 'channel',
               path: '/channel',
-              visible: false,
+              hide: false,
               children: [
                 {
                   name: '渠道库',
@@ -197,7 +197,7 @@ export default [
                   icon: '',
                   componentPath: '/channel',
                   path: '/channel-management',
-                  visible: false,
+                  hide: false,
                   children: [
                     {
                       name: '渠道列表',
@@ -206,7 +206,7 @@ export default [
                       icon: '',
                       componentPath: '/channel/channel-management/channel-list',
                       path: '/channel/channel-management/channel-list',
-                      visible: false,
+                      hide: false,
                     },
                     // {
                     //   name: '创建渠道',
@@ -222,7 +222,7 @@ export default [
                       icon: '',
                       componentPath: '/channel/channel-management/authority-management',
                       path: '/channel/channel-management/authority-management',
-                      visible: false,
+                      hide: false,
                     },
                     {
                       name: '渠道分佣方案',
@@ -231,7 +231,7 @@ export default [
                       icon: '',
                       componentPath: '/channel/channel-management/commission-scheme',
                       path: '/channel/channel-management/commission-scheme',
-                      visible: false,
+                      hide: false,
                     },
                   ],
                 },
@@ -242,7 +242,7 @@ export default [
                   icon: '',
                   componentPath: '/channel/personnel',
                   path: '/channel/personnel',
-                  visible: false,
+                  hide: false,
                 },
               ],
             },
@@ -253,7 +253,7 @@ export default [
               icon: '',
               componentPath: '/user',
               path: '/user',
-              visible: false,
+              hide: false,
               children: [
                 {
                   name: '用户列表',
@@ -262,7 +262,7 @@ export default [
                   icon: '',
                   componentPath: '/user/list',
                   path: '/user/list',
-                  visible: false,
+                  hide: false,
                 },
               ],
             },
@@ -273,7 +273,7 @@ export default [
               icon: '',
               componentPath: '/order',
               path: '/order',
-              visible: false,
+              hide: false,
               children: [
                 {
                   name: '订单列表',
@@ -282,7 +282,7 @@ export default [
                   icon: '',
                   componentPath: '/order/order-list',
                   path: '/order/order-list',
-                  visible: false,
+                  hide: false,
                 },
                 {
                   name: '订单详情',
@@ -291,7 +291,7 @@ export default [
                   icon: '',
                   componentPath: '/order/order-list/components/order-details/OrderDetails',
                   path: '/order/order-list/order-details',
-                  visible: true,
+                  hide: true,
                 },
                 {
                   name: '待分配列表',
@@ -300,7 +300,7 @@ export default [
                   icon: '',
                   componentPath: '/order/allocated-list',
                   path: '/order/allocated-list',
-                  visible: false,
+                  hide: false,
                 },
                 {
                   name: '订单分配',
@@ -309,7 +309,7 @@ export default [
                   icon: '',
                   componentPath: '/order/allocated-list/components/order-allocated',
                   path: '/order/allocated-list/order-allocated',
-                  visible: true,
+                  hide: true,
                 },
                 {
                   name: '售后管理',
@@ -318,7 +318,7 @@ export default [
                   icon: '',
                   componentPath: '/order/after-sales',
                   path: '/order/after-sales',
-                  visible: false,
+                  hide: false,
                 },
                 {
                   name: '退款详情',
@@ -327,7 +327,7 @@ export default [
                   icon: '',
                   componentPath: '/order/after-sales/components/details',
                   path: '/order/after-sales/details',
-                  visible: true,
+                  hide: true,
                 },
                 {
                   name: '配置管理',
@@ -336,7 +336,7 @@ export default [
                   icon: '',
                   componentPath: '/order/config-management',
                   path: '/order/config-management',
-                  visible: false,
+                  hide: false,
                 },
               ],
             },
@@ -347,7 +347,7 @@ export default [
               icon: '',
               componentPath: '/finance',
               path: '/finance',
-              visible: false,
+              hide: false,
               children: [
                 {
                   name: '账户中心',
@@ -356,16 +356,7 @@ export default [
                   icon: '',
                   componentPath: '/finance/account',
                   path: '/finance/account',
-                  visible: false,
-                },
-                {
-                  name: '账户明细',
-                  id: md5('/finance/account'),
-                  type: 'menu',
-                  icon: '',
-                  componentPath: '/finance/account/components/details',
-                  path: '/finance/account/details',
-                  hide: true,
+                  hide: false,
                 },
                 {
                   name: '财务管理',
@@ -374,7 +365,7 @@ export default [
                   icon: '',
                   componentPath: '/finance/financial-management',
                   path: '/finance/financial-management',
-                  visible: false,
+                  hide: false,
                 },
                 {
                   name: '提现审核',
@@ -383,7 +374,7 @@ export default [
                   icon: '',
                   componentPath: '/finance/withdrawal-review',
                   path: '/finance/withdrawal-review',
-                  visible: false,
+                  hide: false,
                 },
                 {
                   name: '审核详情',
@@ -392,7 +383,7 @@ export default [
                   icon: '',
                   componentPath: '/finance/withdrawal-review/details',
                   path: '/finance/withdrawal-review/details',
-                  visible: true,
+                  hide: true,
                 },
               ],
             },
@@ -403,7 +394,7 @@ export default [
               icon: '',
               componentPath: 'contacts',
               path: '/contacts',
-              visible: false,
+              hide: false,
               children: [
                 {
                   name: '客服中心',
@@ -420,7 +411,7 @@ export default [
                 //   icon: '',
                 //   componentPath: '/contacts/chat',
                 //   path: '/contacts/chat',
-                //   visible: false,
+                //   hide: false,
                 // }
               ],
             },
@@ -438,7 +429,7 @@ export default [
               icon: '',
               componentPath: 'basic',
               path: '/basic',
-              visible: false,
+              hide: false,
               children: [
                 {
                   name: '意见反馈',
@@ -455,7 +446,7 @@ export default [
                   icon: '',
                   componentPath: '/basic/role-based',
                   path: '/basic/role-based ',
-                  visible: false,
+                  hide: false,
                 },
                 {
                   name: '管理员账号',
@@ -464,7 +455,7 @@ export default [
                   icon: '',
                   componentPath: '/system/admin',
                   path: '/system/admin',
-                  visible: false,
+                  hide: false,
                 },
               ],
             },
@@ -475,7 +466,7 @@ export default [
               icon: '',
               componentPath: 'system',
               path: '/system',
-              visible: false,
+              hide: false,
               children: [
                 {
                   name: '版本管理',
@@ -484,7 +475,7 @@ export default [
                   icon: '',
                   componentPath: '/system/version',
                   path: '/system/version',
-                  visible: false,
+                  hide: false,
                   children: [
                     // {
                     //   name: 'B端版本管理',
@@ -506,7 +497,7 @@ export default [
                     //   type: 'menu',
                     //   componentPath: '/system/version/pay',
                     //   path: '/system/version/pay',
-                    //   visible: false,
+                    //   hide: false,
                     //   children: [
                     //     {
                     //       name: '支付模块',
@@ -514,7 +505,7 @@ export default [
                     //       type: 'menu',
                     //       componentPath: '/system/version/pay/payment',
                     //       path: '/system/version/pay/payment',
-                    //       visible: false,
+                    //       hide: false,
                     //     },
                     //     {
                     //       name: '支付宝',
@@ -522,7 +513,7 @@ export default [
                     //       type: 'menu',
                     //       componentPath: '/system/version/pay/aLiPay',
                     //       path: '/system/version/pay/aLiPay',
-                    //       visible: false,
+                    //       hide: false,
                     //     },
                     //     {
                     //       name: '微信',
@@ -530,7 +521,7 @@ export default [
                     //       type: 'menu',
                     //       componentPath: '/system/version/pay/weChat',
                     //       path: '/system/version/pay/weChat',
-                    //       visible: false,
+                    //       hide: false,
                     //     },
                     //   ],
                     // },
@@ -544,7 +535,7 @@ export default [
                   icon: '',
                   componentPath: '/system/payment-configuration',
                   path: '/system/payment-configuration',
-                  visible: false,
+                  hide: false,
                 },
               ],
             },
