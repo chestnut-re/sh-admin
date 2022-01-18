@@ -1,6 +1,6 @@
 /*
  * @Description: 配置商品详情
- * @LastEditTime: 2022-01-15 17:34:41
+ * @LastEditTime: 2022-01-18 15:24:39
  */
 import { Table, Space, Button, Modal, Form, Row, Col } from 'antd'
 import { ActivitiesService } from '@/service/ActivitiesService'
@@ -12,10 +12,11 @@ interface Props {
   goodsShow: boolean
   goodsIdList: any
   query?:any
+  goodsAlreadyData?:any
   onSuccess: (any: any, e?: any) => void
   onClose: () => void
 }
-const GoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess, onClose ,query}) => {
+const GoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList,goodsAlreadyData, onSuccess, onClose ,query}) => {
   const [form] = Form.useForm()
   const [roleList, setRoleList] = useState('')
   const [selectedRows, setSelectedRows] = useState([])
@@ -33,7 +34,7 @@ const GoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess, onClos
   const getGoodsDetail = async () => {
     const params = form.getFieldsValue()
     const res = await ActivitiesService.activityGoodsPage({ ...params,...query })
-    setData(res?.data)
+    setData([...res?.data,...goodsAlreadyData])
   }
   const columns = [
     {
