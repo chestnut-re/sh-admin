@@ -8,7 +8,7 @@ import { HttpCode } from '@/constants/HttpCode'
  * 订单详情
  */
 const OrderDetailsPage: React.FC = () => {
-  const history = useHistory()
+  const history = useHistory<any>()
   const [dataM, setDataM] = useState([])
   const [dataD, setDataD] = useState([])
   const [dataZ, setDataZ] = useState([])
@@ -104,14 +104,23 @@ const OrderDetailsPage: React.FC = () => {
     {
       title: '单价',
       dataIndex: 'originPrice',
+      render: (text: any, record: any) => {
+        return (parseInt(record.originPrice) / 1000).toFixed(2)
+      },
     },
     {
       title: '使用代币',
       dataIndex: 'tokenAmount',
+      render: (text: any, record: any) => {
+        return (parseInt(record.tokenAmount) / 1000).toFixed(2)
+      },
     },
     {
       title: '实付款',
       dataIndex: 'payAmount',
+      render: (text: any, record: any) => {
+        return (parseInt(record.payAmount) / 1000).toFixed(2)
+      },
     },
     {
       title: '出行确认码',
@@ -217,11 +226,11 @@ const OrderDetailsPage: React.FC = () => {
         </div>
         <div className="infor">
           <div>成人价</div>
-          <div>{data?.personCurrentPrice}</div>
+          <div>{(parseInt(data?.personCurrentPrice) / 1000).toFixed(2)}</div>
         </div>
         <div className="infor">
           <div>儿童价</div>
-          <div>{data?.childCurrentPrice}</div>
+          <div>{(parseInt(data?.childCurrentPrice) / 1000).toFixed(2)}</div>
         </div>
         <div className="infor">
           <div>下单数量</div>
@@ -232,7 +241,7 @@ const OrderDetailsPage: React.FC = () => {
         </div>
         <div className="infor">
           <div>代币最多可抵</div>
-          <div>{data?.deductionPrice}</div>
+          <div>{(parseInt(data?.deductionPrice) / 1000).toFixed(2)}</div>
         </div>
       </div>
       <div className="details-title">买家信息</div>
@@ -264,9 +273,9 @@ const OrderDetailsPage: React.FC = () => {
             <td>代币折扣</td>
           </tr>
           <tr>
-            <td>{data.payAmount ? data.payAmount : ''}</td>
-            <td>{data.originPrice ? data.originPrice : ''}</td>
-            <td>{data.tokenAmount ? data.tokenAmount : ''}</td>
+            <td>{data.payAmount ? (parseInt(data?.payAmount) / 1000).toFixed(2) : 0}</td>
+            <td>{data.originPrice ? (parseInt(data?.originPrice) / 1000).toFixed(2) : 0}</td>
+            <td>{data.tokenAmount ? (parseInt(data?.tokenAmount) / 1000).toFixed(2) : 0}</td>
           </tr>
         </table>
       </div>

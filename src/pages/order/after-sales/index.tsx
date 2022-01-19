@@ -89,24 +89,7 @@ const AfterSalesListPage: React.FC = () => {
     },
     {
       title: '订单状态',
-      dataIndex: 'orderState',
-      render: (text: any, record: any) => {
-        if (record?.orderState == '1') {
-          return `待付款`
-        } else if (record?.orderState == '2') {
-          return `已失效`
-        } else if (record?.orderState == '3') {
-          return `待确认`
-        } else if (record?.orderState == '4') {
-          return `已完成`
-        } else if (record?.orderState == '5') {
-          return `退款中`
-        } else if (record?.orderState == '6') {
-          return `退款成功`
-        } else if (record?.orderState == '7') {
-          return `退款失败`
-        }
-      },
+      dataIndex: 'orderStateVal',
     },
     {
       title: '申请退款时间',
