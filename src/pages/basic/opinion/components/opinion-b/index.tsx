@@ -75,6 +75,13 @@ const OpinionCPage: React.FC = () => {
     {
       title: '文字描述',
       dataIndex: 'feedbackDescription',
+      onCell: () => {
+        return {
+          style: {
+            maxWidth: 400,
+          },
+        }
+      },
     },
     {
       title: '反馈时间',
