@@ -5,6 +5,7 @@ import { InputTemp } from '@/components/filter/formItem'
 import { FinanceAccountService } from '@/service/FinanceAccountService'
 import ChannelService from '@/service/ChannelService'
 import { useHistory } from 'react-router-dom'
+import { getNanoId } from '@/utils/nanoid'
 
 /**
  * 财务中心-账户中心
@@ -29,7 +30,12 @@ const AccountPage: React.FC = () => {
     const params = form.getFieldsValue()
 
     FinanceAccountService.list({ current: pageIndex, size: pageSize, ...params }).then((res) => {
-      setData(res.data.records)
+      setData(
+        res.data?.records.map((i) => {
+          i.key = getNanoId()
+          return i
+        })
+      )
       setTotal(res.data.total)
     })
   }
@@ -149,7 +155,7 @@ const AccountPage: React.FC = () => {
           </Form>
         </div>
         <Table
-          rowKey="id"
+          rowKey="key"
           columns={columns}
           scroll={{ x: 'max-content' }}
           dataSource={[...data]}
