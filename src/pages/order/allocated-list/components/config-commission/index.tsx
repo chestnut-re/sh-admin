@@ -108,9 +108,10 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
                         <span style={{ backgroundColor: 'darkgrey', borderRadius: '15px' }}>
                           {orderData.map((i) => {
                             if (i.id == item.userId) {
-                              return i.orderShip
+                              return <span>{i.orderShip}&nbsp;&nbsp;</span>
                             }
                           })}
+                          {receiverData.userId == item.userId ? '接单人' : ''}
                           {item.havePresetBonus ? '有团建奖' : null}
                           {item.haveRebate ? '有返利' : null}
                         </span>

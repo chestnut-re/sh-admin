@@ -90,7 +90,7 @@ const SurveyPage: React.FC = () => {
     console.log('Failed:', errorInfo)
   }
   return (
-    <div className="list__root">
+    <div className="survey__root">
       <div className="list-form">
         <Form name="basic" onFinish={onFinish} onFinishFailed={onFinishFailed} form={form}>
           <Row gutter={[5, 0]}>
