@@ -39,6 +39,10 @@ const VersionCPage: React.FC = () => {
       dataIndex: 'clientVersionNo',
     },
     {
+      title: '客户端类型',
+      dataIndex: 'clientType',
+    },
+    {
       title: '下载链接',
       dataIndex: 'fileUrl',
     },
