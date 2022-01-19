@@ -109,7 +109,7 @@ const ChannelPage: React.FC = () => {
       title: '提现金额',
       dataIndex: 'amount',
       render: (text: any, record: any) => {
-        return record.amount / 100
+        return record.amount / 1000
       },
     },
     {
