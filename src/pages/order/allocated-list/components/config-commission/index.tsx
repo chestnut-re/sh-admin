@@ -59,7 +59,7 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
 
   useEffect(() => {
     if (sums > 100) {
-      message.error('分佣配置比例不能超过100%')
+      message.error('分佣比例不可超过100%,请重新调整分佣比例')
     }
   }, [sums])
 
