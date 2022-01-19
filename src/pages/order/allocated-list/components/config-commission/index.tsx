@@ -46,6 +46,9 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
   useEffect(() => {
     setSums(0)
     relationList?.map((item) => {
+      if (item.buildScale) {
+        setSums((prevState) => prevState + parseInt(item.buildScale))
+      }
       item?.relation.map((item: any) => {
         if (item.scale) {
           setSums((prevState) => prevState + parseInt(item.scale))
@@ -78,7 +81,7 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
           <span className="topOne">可配置分佣</span>
           <span>¥{data?.allocationAmount / 1000}</span>
           <span className="topOne">剩余可配置</span>
-          <span>￥{(data?.allocationAmount / 100000) * (100 - sums)} </span>
+          <span>￥{((data?.allocationAmount / 100000) * (100 - sums)).toFixed(2)} </span>
         </div>
         <div className="mid">
           {relationList?.map((item: any) => {
@@ -94,7 +97,7 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
                 <div className="guanxi">
                   {item.buildScale ? (
                     <p>
-                      团建奖金{item.buildScale}% ¥{(data?.allocationAmount / 100000) * item.buildScale}
+                      团建奖金{item.buildScale}% ¥{((data?.allocationAmount / 100000) * item.buildScale).toFixed(2)}
                     </p>
                   ) : (
                     ''
@@ -141,7 +144,7 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
                         />
                         <span>%</span>
                         <span style={{ marginLeft: '10px' }}>
-                          ¥{item.scale ? (data?.allocationAmount / 100000) * item.scale : 0}
+                          ¥{item.scale ? ((data?.allocationAmount / 100000) * item.scale).toFixed(2) : 0}
                         </span>
                         {item.serviceScale ? (
                           <>
@@ -157,7 +160,10 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
 
                             <span>%</span>
                             <span style={{ marginLeft: '10px' }}>
-                              ¥{item.serviceScale ? (data?.allocationAmount / 100000) * item.serviceScale : 0}
+                              ¥
+                              {item.serviceScale
+                                ? ((data?.allocationAmount / 100000) * item.serviceScale).toFixed(2)
+                                : 0}
                             </span>
                           </>
                         ) : (
