@@ -244,7 +244,7 @@ const AllocatedDetailsPage: React.FC = () => {
       ) : (
         <DetailsPage id={history.location.state.id} />
       )}
-      <Modal centered visible={show} footer={false} onCancel={() => setShow(false)}>
+      <Modal centered visible={show} footer={false} onCancel={() => setShow(false)} maskClosable={false}>
         <div style={{ textAlign: 'center' }}>
           <p>
             <CheckCircleOutlined style={{ fontSize: 36 }} />

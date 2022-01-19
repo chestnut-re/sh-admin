@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useImperativeHandle } from 'react'
-import { Input } from 'antd'
+import { Input, message } from 'antd'
 import './index.less'
 import { AllocatedOrderService } from '@/service/OrderService'
 import { HttpCode } from '@/constants/HttpCode'
@@ -56,6 +56,12 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
       })
     })
   }, [relationList])
+
+  useEffect(() => {
+    if (sums > 100) {
+      message.error('分佣配置比例不能超过100%')
+    }
+  }, [sums])
 
   useImperativeHandle(cRef, () => ({
     relationList,
