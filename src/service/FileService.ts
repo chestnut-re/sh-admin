@@ -14,4 +14,15 @@ export class FileService {
     formData.append('file', file, file.name)
     return axios.post('/api/third/oss/uploadFile', formData)
   }
+
+  /**
+   * 获取图片可访问地址
+   */
+  static getFileDownloadUrl(saveUrl: string): Promise<AxiosResponse<any>> {
+    return axios.get('/api//third/oss/getFileDownloadUrl', {
+      params: {
+        saveUrl,
+      },
+    })
+  }
 }
