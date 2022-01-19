@@ -26,26 +26,26 @@ const BaseInfo: React.FC = () => {
           <div id="policy">退改政策: {productionDetailStore.data?.refundAndChangePolicy}</div>
           <div className="purchase">
             限购配置：
-            <div>增加限购数量: {productionDetailStore.data?.purchaseConfig.addNum}</div>
+            <div>增加限购数量: {productionDetailStore.data?.purchaseConfig?.addNum}</div>
             <div>
               任务类型:{' '}
-              {productionDetailStore.data?.purchaseConfig.addType == 1
+              {productionDetailStore.data?.purchaseConfig?.addType == 1
                 ? '下单付款'
-                : productionDetailStore.data?.purchaseConfig.addType == 2
+                : productionDetailStore.data?.purchaseConfig?.addType == 2
                 ? '订单核销'
                 : ''}
             </div>
             <div>
               儿童是否占用名额:{' '}
-              {productionDetailStore.data?.purchaseConfig.childOccupation == 0
+              {productionDetailStore.data?.purchaseConfig?.childOccupation == 0
                 ? '否'
-                : productionDetailStore.data?.purchaseConfig.childOccupation == 1
+                : productionDetailStore.data?.purchaseConfig?.childOccupation == 1
                 ? '是'
                 : ''}
             </div>
-            <div>任务完成次数: {productionDetailStore.data?.purchaseConfig.finishNum}</div>
-            <div>限购天数: {productionDetailStore.data?.purchaseConfig.purchaseDay}</div>
-            <div>限购数量: {productionDetailStore.data?.purchaseConfig.purchaseNum}</div>
+            <div>任务完成次数: {productionDetailStore.data?.purchaseConfig?.finishNum}</div>
+            <div>限购天数: {productionDetailStore.data?.purchaseConfig?.purchaseDay}</div>
+            <div>限购数量: {productionDetailStore.data?.purchaseConfig?.purchaseNum}</div>
           </div>
         </Col>
         <Col className="right" span={6}>
