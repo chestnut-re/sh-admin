@@ -152,7 +152,7 @@ const UserPage: React.FC = () => {
             </Col>
           </Row>
 
-          <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
+          <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
             <Space>
               <Button type="primary" htmlType="submit">
                 查询

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道列表
- * @LastEditTime: 2022-01-15 15:03:34
+ * @LastEditTime: 2022-01-20 10:55:22
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space,Modal,message } from 'antd'
@@ -213,7 +213,7 @@ const ChannelPage: React.FC = () => {
                   </Form.Item>
                 </Col> */}
                 <Col span={6}>
-                  <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
+                  <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
                     <Space>
                       <Button type="primary" htmlType="submit">
                         查询

@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom'
 import BaseInfo from './components/BaseInfo'
 import CenterPutOnRequest from './components/CenterPutOnRequest'
 import CenterPutOnRequestShow from './components/CenterPutOnRequestShow'
+import CenterPutOnRequestShowAudit from './components/CenterPutOnRequestShowAudit'
 import CenterPutOnRequestShowSubCenter from './components/CenterPutOnRequestShowSubCenter'
 import DetailPageInfo from './components/DetailPageInfo'
 import PutOnInfo from './components/PutOnInfo'
@@ -62,9 +63,9 @@ const ProductionDetail: React.FC = () => {
       {(type === 'release' || type === 'releaseCheck' || type === 'detailList') && adminStore.isSubCenter() && (
         <CenterPutOnRequestShowSubCenter />
       )}
-      {(type === 'release' || type === 'releaseCheck' || type === 'detailList') && !adminStore.isSubCenter() && (
-        <CenterPutOnRequestShow />
-      )}
+      {(type === 'releaseCheck' || type === 'detailList') && !adminStore.isSubCenter() && <CenterPutOnRequestShow />}
+      {/* 总中心审核分中心的上架信息 */}
+      {type === 'release' && <CenterPutOnRequestShowAudit />}
 
       {/* 上架审核  */}
       {type === 'release' && <PutOnInfo />}

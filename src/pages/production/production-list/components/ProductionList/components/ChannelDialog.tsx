@@ -126,7 +126,7 @@ const ChannelDialog: FC<Props> = ({ id, goodsName, show = false, onSuccess, onCl
               <InputTemp name="keyword" placeholder="请输入渠道名称" />
             </Col>
 
-            <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
+            <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
               <Space>
                 <Button type="primary" htmlType="submit">
                   查询

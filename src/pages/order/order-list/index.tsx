@@ -271,7 +271,7 @@ const OrderListPage: React.FC = () => {
             <Col span={2}>
               <OrderState name="state" />
             </Col>
-            <Form.Item wrapperCol={{ offset: 4, span: 0 }}>
+            <Form.Item wrapperCol={{ offset: 4, span: 12 }}>
               <Space>
                 <Button type="primary" htmlType="submit">
                   查询

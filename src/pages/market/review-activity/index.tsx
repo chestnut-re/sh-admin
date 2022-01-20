@@ -150,7 +150,7 @@ const ReviewActivity: React.FC = () => {
             <Col span={3}>
               <InputTemp name="idOrName" placeholder="清单ID/清单名称" />
             </Col>
-            <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
+            <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
               <Space>
                 <Button type="primary" htmlType="submit">
                   查询

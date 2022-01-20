@@ -78,7 +78,7 @@ const ActivityGoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess
             <Col span={12}>
               <InputTemp name="keyword" placeholder="商品名称" />
             </Col>
-            <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
+            <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
               <Space>
                 <Button type="primary" htmlType="submit">
                   查询

@@ -187,7 +187,7 @@ const AEDialog: FC<Props> = ({ data, show = false, onSuccess, onClose }) => {
                           <RangePicker showTime />
                         </Form.Item>
                       </Col>
-                      <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
+                      <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
                         <Space>
                           <Button type="primary" htmlType="submit">
                             查询

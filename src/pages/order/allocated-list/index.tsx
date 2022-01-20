@@ -203,7 +203,7 @@ const AllocatedListPage: React.FC = () => {
             <Col span={2}>
               <OrderRoute name="source" />
             </Col>
-            <Form.Item wrapperCol={{ offset: 4, span: 0 }}>
+            <Form.Item wrapperCol={{ offset: 4, span: 12 }}>
               <Space>
                 <Button type="primary" htmlType="submit">
                   查询

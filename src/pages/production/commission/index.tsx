@@ -165,7 +165,7 @@ const ProductionCommissionListPage: React.FC = () => {
               <StatusRoute name="state" />
             </Col>
 
-            <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
+            <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
               <Space>
                 <Button type="primary" onClick={showAdd}>
                   添加

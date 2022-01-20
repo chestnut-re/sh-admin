@@ -164,7 +164,7 @@ const BannerListPage: React.FC = () => {
             <Col span={3}>
               <InputTemp name="keyword" />
             </Col> */}
-            <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
+            <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
               <Space>
                 <Button type="primary" htmlType="submit">
                   查询

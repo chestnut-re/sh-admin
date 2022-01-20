@@ -3,7 +3,6 @@
   // height: calc(~'100vh - 64px');
   // max-height: calc(~'100vh - 64px');
   // overflow: scroll;
-
   .AdminContent {
     height: calc(~'100vh - 64px');
     overflow: scroll;
@@ -12,31 +11,34 @@
   .nav-header {
     display: flex;
     flex-direction: row;
-
+    justify-content: space-between;
     .nav-menu {
       flex: 1;
     }
 
     .logo {
-      color: #fff;
-      width: 150px;
-      height: 31px;
+      // width: 150px;
+      // height: 31px;
+      font-size: 20px;
     }
-
-    .user {
-      color: #fff;
-      width: 120px;
-      height: 31px;
+    .menu {
+      flex:1;
+      text-align: right;
+      font-size: 14px;
+      .user {
+        display: inline-block;
+        width: 120px;
+        height: 31px;
+      }
+      .logout {
+        display: inline-block;
+        cursor: pointer;
+      }
+      .name {
+        display: inline-block;
+        margin-right: 40px;
+      }
     }
-
-    .name{
-      color: #fff;
-      margin-right: 80px;
-    }
-
-    .logout {
-      color: #fff;
-      cursor: pointer;
-    }
+  
   }
 }
