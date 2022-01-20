@@ -123,22 +123,22 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
                         </span>
                         {item.level == 2 ? (
                           <span>
-                            分中心{item.channelName}/{item.userName}
+                            分中心&nbsp;&nbsp;{item.channelName}/{item.userName}
                           </span>
                         ) : null}
                         {item.level == 3 ? (
                           <span>
-                            三级{item.channelName}/{item.userName}
+                            三级&nbsp;&nbsp;{item.channelName}/{item.userName}
                           </span>
                         ) : null}
                         {item.level == 4 ? (
                           <span>
-                            四级{item.channelName}/{item.userName}
+                            四级&nbsp;&nbsp;{item.channelName}/{item.userName}
                           </span>
                         ) : null}
                         {item.level == 5 ? (
                           <span>
-                            五级{item.channelName}/{item.userName}
+                            五级&nbsp;&nbsp;{item.channelName}/{item.userName}
                           </span>
                         ) : null}
                         <Input

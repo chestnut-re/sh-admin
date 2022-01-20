@@ -4,15 +4,19 @@ import { useStore } from '@/store/context'
 import { Button, Form, Input, InputNumber, message, Radio, RadioChangeEvent, Switch } from 'antd'
 import { useForm } from 'antd/es/form/Form'
 import { observer } from 'mobx-react-lite'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import Commission from './Commission'
 import './index.less'
 
+interface Props {
+  presetBonus: number | undefined
+}
+
 /**
  * 上架信息 审核
  */
-const PutOnInfo: React.FC = () => {
+const PutOnInfo: React.FC<Props> = ({ presetBonus }) => {
   const history = useHistory()
   const query = useQuery()
   const { productionDetailStore } = useStore()
@@ -20,6 +24,14 @@ const PutOnInfo: React.FC = () => {
   const [form] = Form.useForm()
   const [commission, setCommission] = useState<any>({})
   const [checkState, setCheckState] = useState<boolean>(false)
+
+  useEffect(() => {
+    if (presetBonus) {
+      form.setFieldsValue({
+        presetBonus: presetBonus,
+      })
+    }
+  }, [presetBonus])
 
   const layout = {
     labelCol: { span: 4 },
@@ -72,7 +84,7 @@ const PutOnInfo: React.FC = () => {
           <Input />
         </Form.Item>
         <Form.Item label="团建奖金" name="presetBonus" rules={[{ required: false }]}>
-          <InputNumber min={0} />
+          <InputNumber min={0} defaultValue={presetBonus} readOnly />
         </Form.Item>
         {/* <div>{JSON.stringify(commission)}</div> */}
 
