@@ -1,7 +1,7 @@
 import useQuery from '@/hooks/useQuery'
 import { ProductionService } from '@/service/ProductionService'
 import { useStore } from '@/store/context'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import BaseInfo from './components/BaseInfo'
 import CenterPutOnRequest from './components/CenterPutOnRequest'
@@ -23,6 +23,8 @@ import './index.less'
 const ProductionDetail: React.FC = () => {
   const query = useQuery()
   const { adminStore, productionDetailStore } = useStore()
+  const [presetBonus, setPresetBonus] = useState<any>()
+
   const history = useHistory()
 
   useEffect(() => {
@@ -40,6 +42,10 @@ const ProductionDetail: React.FC = () => {
   const type = query.get('type')
 
   console.log('adminStore.isSubCenter', adminStore.isSubCenter)
+
+  const _onCenterPutOnRequestShowAuditData = (data: any) => {
+    setPresetBonus(data.presetBonus)
+  }
 
   return (
     <div className="ProductionDetail__root">
@@ -65,10 +71,10 @@ const ProductionDetail: React.FC = () => {
       )}
       {(type === 'releaseCheck' || type === 'detailList') && !adminStore.isSubCenter() && <CenterPutOnRequestShow />}
       {/* 总中心审核分中心的上架信息 */}
-      {type === 'release' && <CenterPutOnRequestShowAudit />}
+      {type === 'release' && <CenterPutOnRequestShowAudit onChange={_onCenterPutOnRequestShowAuditData} />}
 
       {/* 上架审核  */}
-      {type === 'release' && <PutOnInfo />}
+      {type === 'release' && <PutOnInfo presetBonus={presetBonus} />}
 
       {/* 查看详情页 */}
       {/* {adminStore.isSubCenter() && (type === 'detail' || type === 'detailList') && <PutOnInfoShowSubCenter />}
