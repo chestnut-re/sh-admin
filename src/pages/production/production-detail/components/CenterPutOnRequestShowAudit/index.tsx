@@ -1,9 +1,7 @@
 import useQuery from '@/hooks/useQuery'
 import { ProductionService } from '@/service/ProductionService'
-import { useStore } from '@/store/context'
 import { observer } from 'mobx-react-lite'
 import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
 import { Table, Tag, Space } from 'antd'
 import './index.less'
 import Item from 'antd/lib/list/Item'
@@ -14,9 +12,7 @@ const { Column, ColumnGroup } = Table
  * 总中心视角，审核上架申请
  */
 const CenterPutOnRequestShowAudit: React.FC = () => {
-  const history = useHistory()
   const query = useQuery()
-  const { productionDetailStore } = useStore()
   const [data, setData] = useState<any>({})
   const [distPlan, setDistPlan] = useState<any[]>([])
 

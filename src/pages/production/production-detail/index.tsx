@@ -65,7 +65,7 @@ const ProductionDetail: React.FC = () => {
       )}
       {(type === 'releaseCheck' || type === 'detailList') && !adminStore.isSubCenter() && <CenterPutOnRequestShow />}
       {/* 总中心审核分中心的上架信息 */}
-      {type === 'release' && !adminStore.isSubCenter() && <CenterPutOnRequestShowAudit />}
+      {type === 'release' && <CenterPutOnRequestShowAudit />}
 
       {/* 上架审核  */}
       {type === 'release' && <PutOnInfo />}

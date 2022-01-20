@@ -4,7 +4,7 @@ import { useStore } from '@/store/context'
 import { observer } from 'mobx-react-lite'
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Table, Tag, Space } from 'antd'
+import { Table, Tag, Space, Button } from 'antd'
 import './index.less'
 import Item from 'antd/lib/list/Item'
 const { Column, ColumnGroup } = Table
@@ -17,7 +17,7 @@ const CenterPutOnRequestShow: React.FC = () => {
   const history = useHistory()
   const query = useQuery()
   const { productionDetailStore } = useStore()
-  const [data, setData] = useState<any>({})
+  const [data, setData] = useState<any[]>([])
   const [distPlan, setDistPlan] = useState<any[]>([])
 
   useEffect(() => {
@@ -68,9 +68,8 @@ const CenterPutOnRequestShow: React.FC = () => {
       {/* <div>{JSON.stringify(data)}</div> */}
       <div className="info">
         <div className="one-info">
-          <div className="canal">上架渠道 {distPlan?.length} </div>
+          <div className="canal">上架渠道 {data?.length} </div>
         </div>
-        <div>分佣方案 {data.distPlanId}</div>
         <div>
           <Table dataSource={distPlan} bordered>
             <Column title="上架渠道（等级）" dataIndex="channelLeave" key="channelLeave" />
@@ -85,6 +84,10 @@ const CenterPutOnRequestShow: React.FC = () => {
             <Column title="发团服务费" dataIndex="serviceCharge" key="serviceCharge" />
             <Column title="合计分佣" dataIndex="distScale" key="distScale" />
           </Table>
+        </div>
+
+        <div>
+          <Button>查看上架审核记录</Button>
         </div>
       </div>
     </div>
