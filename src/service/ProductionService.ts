@@ -120,12 +120,23 @@ export class ProductionService {
   }
 
   /**
-   * 总部查看 分中心上架审核信息
+   * 总部查看 分中心上架审核信息，所有
    */
   static channelGoodsListByGoodsId(goodsId): Promise<any> {
     return axios.get(`/api/operation/channelShop/channelGoodsListByGoodsId`, {
       params: {
         goodsId,
+      },
+    })
+  }
+
+  /**
+   * 总部查看 分中心上架审核信息，审核模式
+   */
+  static channelGoodsListByGoodsIdAudit(channelGoodsId): Promise<any> {
+    return axios.get(`/api/operation/channelShop/putawayInfo`, {
+      params: {
+        channelGoodsId,
       },
     })
   }

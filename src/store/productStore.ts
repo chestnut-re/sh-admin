@@ -9,28 +9,28 @@ export const getPriceFromTravels = (travels: any[], priceKeyStr: string) => {
   travels.map((item) => {
     item.travelDetails.map((travelDetail) => {
       if (travelDetail.travelGoods.airTicket) {
-        sum += travelDetail.travelGoods.airTicket[priceKeyStr] * 100
+        sum += travelDetail.travelGoods.airTicket[priceKeyStr] * 1000
       }
       if (travelDetail.travelGoods.bus) {
-        sum += travelDetail.travelGoods.bus[priceKeyStr] * 100
+        sum += travelDetail.travelGoods.bus[priceKeyStr] * 1000
       }
       if (travelDetail.travelGoods.hotel) {
-        sum += travelDetail.travelGoods.hotel[priceKeyStr] * 100
+        sum += travelDetail.travelGoods.hotel[priceKeyStr] * 1000
       }
       if (travelDetail.travelGoods.restaurant) {
-        sum += travelDetail.travelGoods.restaurant[priceKeyStr] * 100
+        sum += travelDetail.travelGoods.restaurant[priceKeyStr] * 1000
       }
       if (travelDetail.travelGoods.scenicSpot) {
-        sum += travelDetail.travelGoods.scenicSpot[priceKeyStr] * 100
+        sum += travelDetail.travelGoods.scenicSpot[priceKeyStr] * 1000
       }
       if (travelDetail.travelGoods.train) {
-        sum += travelDetail.travelGoods.train[priceKeyStr] * 100
+        sum += travelDetail.travelGoods.train[priceKeyStr] * 1000
       }
       return travelDetail
     })
     return item
   })
-  return sum / 100
+  return sum / 1000
 }
 
 /**
@@ -211,12 +211,12 @@ class ProductionData {
 
   updateGoods(goodsPrice) {
     //更新商品价格
-    goodsPrice.childCostPrice = getPriceFromTravels(goodsPrice.travels, 'childCostPrice') * 100
-    goodsPrice.childCurrentPrice = getPriceFromTravels(goodsPrice.travels, 'childCurrentPrice') * 100
-    goodsPrice.childMarkPrice = getPriceFromTravels(goodsPrice.travels, 'childMarkPrice') * 100
-    goodsPrice.personCostPrice = getPriceFromTravels(goodsPrice.travels, 'personCostPrice') * 100
-    goodsPrice.personCurrentPrice = getPriceFromTravels(goodsPrice.travels, 'personCurrentPrice') * 100
-    goodsPrice.personMarkPrice = getPriceFromTravels(goodsPrice.travels, 'personMarkPrice') * 100
+    goodsPrice.childCostPrice = getPriceFromTravels(goodsPrice.travels, 'childCostPrice') * 1000
+    goodsPrice.childCurrentPrice = getPriceFromTravels(goodsPrice.travels, 'childCurrentPrice') * 1000
+    goodsPrice.childMarkPrice = getPriceFromTravels(goodsPrice.travels, 'childMarkPrice') * 1000
+    goodsPrice.personCostPrice = getPriceFromTravels(goodsPrice.travels, 'personCostPrice') * 1000
+    goodsPrice.personCurrentPrice = getPriceFromTravels(goodsPrice.travels, 'personCurrentPrice') * 1000
+    goodsPrice.personMarkPrice = getPriceFromTravels(goodsPrice.travels, 'personMarkPrice') * 1000
     // end
     // 更新商品天数
     goodsPrice.days = goodsPrice.travels.length

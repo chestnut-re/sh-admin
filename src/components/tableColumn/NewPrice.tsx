@@ -1,4 +1,3 @@
-import dayjs from 'dayjs'
 import React from 'react'
 
 interface Props {
@@ -12,7 +11,7 @@ const NewPrice: React.FC<Props> = ({ money }) => {
   if (!money) {
     return <></>
   }
-  return <>{Number(money) / 100}</>
+  return <>{Number(money) / 1000}</>
 }
 
 export default NewPrice
