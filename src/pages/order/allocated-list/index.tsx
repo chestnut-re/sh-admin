@@ -20,6 +20,8 @@ const AllocatedListPage: React.FC = () => {
   const [pageSize, setPageSize] = useState(10)
   const [total, setTotal] = useState()
   const [channelData, setChannelData] = useState([])
+  const [dates, setDates] = useState<any>([])
+  const [hackValue, setHackValue] = useState<any>()
 
   useEffect(() => {
     loadData(pageIndex)
@@ -170,6 +172,24 @@ const AllocatedListPage: React.FC = () => {
     loadData(1)
   }
 
+  const disabledDate = (current) => {
+    if (!dates || dates.length === 0) {
+      return false
+    }
+    const tooLate = dates[0] && current.diff(dates[0], 'years') > 1
+    const tooEarly = dates[1] && dates[1].diff(current, 'years') > 1
+    return tooEarly || tooLate
+  }
+
+  const onOpenChange = (open) => {
+    if (open) {
+      setHackValue([])
+      setDates([])
+    } else {
+      setHackValue(undefined)
+    }
+  }
+
   return (
     <div className="allocated__root">
       <div className="allocated-header">
@@ -194,7 +214,12 @@ const AllocatedListPage: React.FC = () => {
             </Col>
             <Col span={6}>
               <Form.Item name="time">
-                <RangePicker showTime />
+                <RangePicker
+                  showTime
+                  disabledDate={disabledDate}
+                  onCalendarChange={(val) => setDates(val)}
+                  onOpenChange={onOpenChange}
+                />
               </Form.Item>
             </Col>
             <Col span={2} className="table-from-label">
