@@ -5,6 +5,7 @@ import { observer } from 'mobx-react-lite'
 import { useStore } from '@/store/context'
 import TemplateDialog from '../TemplateDialog'
 import { getTemplate, TemplateType } from '../../template'
+import { getNanoId } from '@/utils/nanoid'
 
 interface Props {
   type: TemplateType
@@ -24,13 +25,38 @@ const AEDialog: FC<Props> = ({ data, type, show = false, onSuccess, onClose }) =
   const [showTemplateDialog, setShowTemplateDialog] = useState<boolean>(false)
   const [selectedTemplate, setSelectedTemplate] = useState<any>(null)
 
+  const [contentImgs, setContentImgs] = useState<any[]>([
+    {
+      key: getNanoId(),
+      value: '',
+    },
+  ])
+
   useEffect(() => {
     console.log('data', data)
+    if (!data) return
     form.resetFields()
     form.setFieldsValue({
       ...data,
     })
     setSelectedTemplate(getTemplate(data?.pageTemplateKey))
+
+    if (type === 'center' && data.contentImages) {
+      setContentImgs([
+        ...data.contentImages.map((i) => {
+          return {
+            key: getNanoId(),
+            value: i,
+          }
+        }),
+        [
+          {
+            key: getNanoId(),
+            value: '',
+          },
+        ],
+      ])
+    }
   }, [show, data])
 
   /**提交数据 */
@@ -48,7 +74,13 @@ const AEDialog: FC<Props> = ({ data, type, show = false, onSuccess, onClose }) =
           pageTemplate: selectedTemplate.name,
           templateImgUrl: selectedTemplate.templateImgUrl,
         }
+
         if (type === 'center') {
+          template['contentImages'] = contentImgs
+            .map((i) => {
+              return i.value
+            })
+            .filter((i) => !!i)
           productionDetailStore.saveTemplate({ ...data, ...formData, ...template })
         } else if (type === 'end') {
           productionDetailStore.saveTemplateEnd({ ...data, ...formData, ...template })
@@ -84,6 +116,32 @@ const AEDialog: FC<Props> = ({ data, type, show = false, onSuccess, onClose }) =
     labelCol: { span: 8 },
     wrapperCol: { span: 14 },
   }
+
+  const _addContentImg = (key, value) => {
+    if (value) {
+      const oldImg = contentImgs.find((i) => i.key === key)
+      if (oldImg) {
+        console.log('edit', key)
+        // edit
+        oldImg.value = value
+        setContentImgs([
+          ...contentImgs,
+          ...[
+            {
+              key: getNanoId(),
+              value: '',
+            },
+          ],
+        ])
+      }
+    } else {
+      console.log('del', key)
+      // del
+      setContentImgs(contentImgs.filter((i) => i.key === key))
+    }
+  }
+
+  console.log(contentImgs)
 
   return (
     <Modal title={data?.pageTemplate} visible={show} onOk={_handleUpdate} onCancel={_formClose} width={1000}>
@@ -140,6 +198,24 @@ const AEDialog: FC<Props> = ({ data, type, show = false, onSuccess, onClose }) =
           </Col>
         </Row>
       </Form>
+      {type === 'center' && (
+        <Row>
+          <Col>内容图:</Col>
+          {contentImgs &&
+            contentImgs.map((item) => {
+              return (
+                <Col key={item.key}>
+                  <UploadImage
+                    value={item.value}
+                    onChange={(value) => {
+                      _addContentImg(item.key, value)
+                    }}
+                  />
+                </Col>
+              )
+            })}
+        </Row>
+      )}
 
       <TemplateDialog show={showTemplateDialog} type={type} onClose={_onDialogClose} onSuccess={_onDialogSuccess} />
     </Modal>

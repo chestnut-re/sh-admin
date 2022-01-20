@@ -16,16 +16,32 @@ import DetailsPage from '../config-commission/details'
 const AllocatedDetailsPage: React.FC = () => {
   const history = useHistory<any>()
   const _ref = useRef<any>()
-  const [dataD, setDataD] = useState([])
+  const [dataD, setDataD] = useState<any>([])
   const [data, setData] = useState<any>([])
   const [current, setCurrent] = useState(0)
   const [selectData, setSelectData] = useState<any>({})
   const [show, setShow] = useState<any>(false)
+  const [addData, setAddData] = useState<any>([])
   useEffect(() => {
     loadData()
     getRelations()
   }, [])
 
+  useEffect(() => {
+    const arr = JSON.parse(JSON.stringify(selectData))
+    if (arr != []) {
+      arr.userName = arr.realName
+      arr.orderShip = '接单人'
+      arr.relationship = arr.belongChannel
+      arr.phoneNumber = arr.phone
+      arr.rebateFlag = arr.haveRebate
+    }
+    setAddData([...dataD, arr])
+  }, [selectData])
+
+  useEffect(() => {
+    setAddData([...dataD])
+  }, [dataD])
   const loadData = () => {
     OrderService.details({ orderId: history.location.state.id }).then((res) => {
       if (res.code === HttpCode.success) {
@@ -176,11 +192,11 @@ const AllocatedDetailsPage: React.FC = () => {
         </div>
         <div className="infor">
           <div>成人价</div>
-          <div>{parseInt(data?.personCurrentPrice) / 100}</div>
+          <div>{(parseInt(data?.personCurrentPrice) / 1000).toFixed(2)}</div>
         </div>
         <div className="infor">
           <div>儿童价</div>
-          <div>{parseInt(data?.childCurrentPrice) / 100}</div>
+          <div>{(parseInt(data?.childCurrentPrice) / 1000).toFixed(2)}</div>
         </div>
         <div className="infor">
           <div>下单数量</div>
@@ -191,11 +207,11 @@ const AllocatedDetailsPage: React.FC = () => {
         </div>
         <div className="infor">
           <div>代币最多可抵</div>
-          <div>{parseInt(data?.deductionPrice) / 100}</div>
+          <div>{(parseInt(data?.deductionPrice) / 1000).toFixed(2)}</div>
         </div>
       </div>
       <div className="details-title">订单关联人</div>
-      <Table rowKey="id" columns={columnsD} scroll={{ x: 'max-content' }} dataSource={[...dataD]} />
+      <Table rowKey="id" columns={columnsD} scroll={{ x: 'max-content' }} dataSource={[...addData]} />
       {history.location.state.mode == 'edit' ? (
         <div className="ReleaseProduct__root">
           <StepView current={current} />
@@ -228,7 +244,7 @@ const AllocatedDetailsPage: React.FC = () => {
       ) : (
         <DetailsPage id={history.location.state.id} />
       )}
-      <Modal centered visible={show} footer={false} onCancel={() => setShow(false)}>
+      <Modal centered visible={show} footer={false} onCancel={() => setShow(false)} maskClosable={false}>
         <div style={{ textAlign: 'center' }}>
           <p>
             <CheckCircleOutlined style={{ fontSize: 36 }} />

@@ -8,6 +8,7 @@ import TimeColumn from '@/components/tableColumn/TimeColumn'
 import TravelModeColumn from '@/components/tableColumn/TravelModeColumn'
 import { useHistory } from 'react-router-dom'
 import { ProductionService } from '@/service/ProductionService'
+import NewPrice from '@/components/tableColumn/NewPrice'
 
 /**
  * 商品库 分中心
@@ -66,7 +67,7 @@ const ProductionListCenter: React.FC<any> = observer(({}) => {
     },
     {
       title: '现售价(¥)',
-      dataIndex: 'personCurrentPrice',
+      render: (text, record, index) => <NewPrice money={record?.personCurrentPrice} />,
     },
     {
       title: '累计销量',

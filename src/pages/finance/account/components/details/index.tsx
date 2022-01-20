@@ -1,109 +1,41 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import './index.less'
-import { Descriptions, Tabs, Row, Col, Form, Table, DatePicker, Select, Button, Space } from 'antd'
+import { Tabs, Row, Col } from 'antd'
 import { FinanceAccountService } from '@/service/FinanceAccountService'
-import dayjs from 'dayjs'
+import { HttpCode } from '@/constants/HttpCode'
+import TabOnePage from './TabOne'
+import TabTwoPage from './TabTwo'
+import TabThreePage from './TabThree'
 
 /**
  * 查看明细
  */
 const AccountDetails: React.FC = () => {
-  const [form] = Form.useForm()
   const history = useHistory<any>()
   const [data, setData] = useState<any>({})
   const { TabPane } = Tabs
-  const { RangePicker } = DatePicker
-  const { Option } = Select
-  const [pageIndex, setPageIndex] = useState(1)
-  const [pageSize, setPageSize] = useState(10)
-  const [total, setTotal] = useState()
-  const [tableData, setTableData] = useState([])
   useEffect(() => {
-    setData(history.location.state.record)
+    if (history.location.state.record) {
+      loadAllData()
+    }
   }, [history.location.state.record])
-  useEffect(() => {
-    console.log(data)
-  }, [data])
-
-  // useEffect(() => {
-  //   if (data) {
-  //     loadAllData()
-  //   }
-  // }, [show])
-
-  // useEffect(() => {
-  //   if (data) {
-  //     loadTableData(pageIndex)
-  //   }
-  // }, [pageIndex, show])
 
   const loadAllData = () => {
-    FinanceAccountService.details({ phone: data?.phone }).then((res) => {
-      console.log(res)
+    FinanceAccountService.details({ phone: history.location.state.record?.phone }).then((res) => {
+      if (res.code === HttpCode.success) {
+        setData(res.data)
+      }
     })
   }
 
-  const loadTableData = (pageIndex) => {
-    form
-      .validateFields()
-      .then((formData) => {
-        const startDate = formData.time ? dayjs(formData.time[0]).format('YYYY-MM-DD HH:mm:ss') : ''
-        const endDate = formData.time ? dayjs(formData.time[1]).format('YYYY-MM-DD HH:mm:ss') : ''
-        FinanceAccountService.detailsList({
-          current: pageIndex,
-          pageSize: pageSize,
-          startDate,
-          endDate,
-          phone: data?.phone,
-        }).then((res) => {
-          setTableData(res.data.records)
-          setTotal(res.data.total)
-        })
-      })
-      .catch((e) => {
-        console.error(e)
-      })
-  }
-
-  const columns = [
-    {
-      title: '序号',
-      render: (text, record, index) => `${index + 1}`,
-    },
-    {
-      title: '订单编号',
-      dataIndex: 'orderNo',
-    },
-    {
-      title: '分佣类型',
-      dataIndex: 'commissionTypeName',
-    },
-    {
-      title: '账户变化',
-      dataIndex: 'amount',
-    },
-    {
-      title: '时间',
-      dataIndex: 'billDate',
-    },
-  ]
-
-  const onFinish = (values: any) => {
-    // loadData(pageIndex)
-    console.log(values)
-  }
-
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo)
-  }
   return (
     <div className="account-details__root">
       <div className="details-header">
-        <span className="header-title">账户明细</span>
+        <span className="header-title">账户中心/账户明细</span>
       </div>
       <div className="content">
-        <Descriptions column={1} labelStyle={{ color: '#999' }}>
+        {/* <Descriptions column={1} labelStyle={{ color: '#999' }}>
           <Descriptions.Item label="归属渠道">Zhou Maomao</Descriptions.Item>
           <Descriptions.Item label="姓名">1810000000</Descriptions.Item>
           <Descriptions.Item label="账号">Hangzhou, Zhejiang</Descriptions.Item>
@@ -115,11 +47,53 @@ const AccountDetails: React.FC = () => {
           <Descriptions.Item label="提现中">1</Descriptions.Item>
           <Descriptions.Item label="可提现">1</Descriptions.Item>
           <Descriptions.Item label="运营资金">1</Descriptions.Item>
-        </Descriptions>
+        </Descriptions> */}
+        <Row gutter={[0, 24]}>
+          <Col className="gutter-row" span={4}>
+            归属渠道：{history.location.state.record?.channelName}
+          </Col>
+          <Col className="gutter-row" span={4}>
+            姓名：{history.location.state.record?.realName}
+          </Col>
+          <Col className="gutter-row" span={4}>
+            账号：{history.location.state.record?.phone}
+          </Col>
+        </Row>
+        <Row gutter={[0, 24]}>
+          <Col className="gutter-row" span={6}>
+            除了运营资金，包含待释放跟提现中
+          </Col>
+        </Row>
+        <Row gutter={[0, 24]}>
+          <Col className="gutter-row" span={4}>
+            账户余额：{data?.total}
+          </Col>
+          <Col className="gutter-row" span={4}>
+            待释放：{data?.frozen}
+          </Col>
+          <Col className="gutter-row" span={4}>
+            提现中：{data?.cashing}
+          </Col>
+          <Col className="gutter-row" span={4}>
+            可提现：{data?.cashed}
+          </Col>
+        </Row>
+        <Row gutter={[0, 24]}>
+          <Col className="gutter-row" span={4}>
+            运营资金：{data?.fundsTotal}
+          </Col>
+          <Col className="gutter-row" span={4}>
+            待释放：{data?.fundsFrozen}
+          </Col>
+          <Col className="gutter-row" span={4}>
+            可用：{data?.available}
+          </Col>
+        </Row>
       </div>
       <div className="sales-tabs">
         <Tabs defaultActiveKey="1">
           <TabPane tab="佣金" key="1">
+<<<<<<< HEAD
             <div className="list__root">
               <div className="list-form">
                 <Form
@@ -181,9 +155,16 @@ const AccountDetails: React.FC = () => {
                 }}
               />
             </div>
+=======
+            <TabOnePage data={history.location.state.record} />
           </TabPane>
-          <TabPane tab="提现" key="2"></TabPane>
-          <TabPane tab="运营资金" key="3"></TabPane>
+          <TabPane tab="提现" key="2">
+            <TabTwoPage data={history.location.state.record} />
+          </TabPane>
+          <TabPane tab="运营资金" key="3">
+            <TabThreePage data={history.location.state.record} />
+>>>>>>> f072da961fdd8503ae30382ceca8f3b66ca387ad
+          </TabPane>
         </Tabs>
       </div>
     </div>

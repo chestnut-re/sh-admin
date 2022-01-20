@@ -68,27 +68,30 @@ const AllocatedListPage: React.FC = () => {
     {
       title: '单价',
       dataIndex: 'unitPrice',
+      render: (text: any, record: any) => {
+        return (parseInt(record.unitPrice) / 1000).toFixed(2)
+      },
     },
     {
       title: '营销活动',
-      dataIndex: 'state', //无
+      dataIndex: 'state',
     },
     {
       title: '下单数量',
-      dataIndex: 'orderCount', //无
+      dataIndex: 'orderCount',
     },
     {
       title: '应付款',
       dataIndex: 'originPrice',
       render: (text: any, record: any) => {
-        return parseInt(record.originPrice) / 100
+        return (parseInt(record.originPrice) / 1000).toFixed(2)
       },
     },
     {
       title: '实付款',
       dataIndex: 'payAmount',
       render: (text: any, record: any) => {
-        return parseInt(record.payAmount) / 100
+        return (parseInt(record.payAmount) / 1000).toFixed(2)
       },
     },
     {
@@ -113,24 +116,7 @@ const AllocatedListPage: React.FC = () => {
     },
     {
       title: '订单/售后状态',
-      dataIndex: 'state',
-      render: (text: any, record: any) => {
-        if (record?.state == '1') {
-          return `待付款`
-        } else if (record?.state == '2') {
-          return `已失效`
-        } else if (record?.state == '3') {
-          return `待确认`
-        } else if (record?.state == '4') {
-          return `已完成`
-        } else if (record?.state == '5') {
-          return `退款中`
-        } else if (record?.state == '6') {
-          return `退款成功`
-        } else if (record?.state == '7') {
-          return `退款失败`
-        }
-      },
+      dataIndex: 'stateVal',
     },
     {
       title: '操作',

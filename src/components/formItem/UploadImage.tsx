@@ -17,6 +17,11 @@ const UploadImage: React.FC<UploadImageProps> = ({ onChange, value }) => {
   const [fullUrl, setFullUrl] = useState<string>()
 
   useEffect(() => {
+    if (value && !value?.startsWith('https')) {
+      FileService.getFileDownloadUrl(value).then((res) => {
+        setFullUrl(res.data)
+      })
+    }
     setImgObj({ imageUrl: value })
   }, [value])
 
@@ -36,9 +41,9 @@ const UploadImage: React.FC<UploadImageProps> = ({ onChange, value }) => {
     // if (!isJpgOrPng) {
     //   message.error('You can only upload JPG/PNG file!')
     // }
-    const isLt2M = file.size / 1024 / 1024 < 5
+    const isLt2M = file.size / 1024 / 1024 < 1
     if (!isLt2M) {
-      message.error('图片不能大于5M')
+      message.error('图片不能大于1M')
     }
     // return isJpgOrPng && isLt2M
     return isLt2M

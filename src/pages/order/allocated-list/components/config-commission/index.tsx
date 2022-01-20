@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useImperativeHandle } from 'react'
-import { Input } from 'antd'
+import { Input, message } from 'antd'
 import './index.less'
 import { AllocatedOrderService } from '@/service/OrderService'
 import { HttpCode } from '@/constants/HttpCode'
@@ -45,17 +45,23 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
 
   useEffect(() => {
     setSums(0)
-    console.log(sums, 'sssss1')
     relationList?.map((item) => {
+      if (item.buildScale) {
+        setSums((prevState) => prevState + parseInt(item.buildScale))
+      }
       item?.relation.map((item: any) => {
         if (item.scale) {
-          setSums(sums + parseInt(item.scale))
-          console.log(parseInt(item.scale), 'ppppp')
-          console.log(sums, 'sssss2')
+          setSums((prevState) => prevState + parseInt(item.scale))
         }
       })
     })
   }, [relationList])
+
+  useEffect(() => {
+    if (sums > 100) {
+      message.error('分佣比例不可超过100%,请重新调整分佣比例')
+    }
+  }, [sums])
 
   useImperativeHandle(cRef, () => ({
     relationList,
@@ -71,12 +77,6 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
             return i
           })
         )
-        // setTemp([])
-        // relationList.map((item) => {
-        //   item.relation.map((item) => {
-        //     setTemp([...temp, item])
-        //   })
-        // })
       }
     })
   }
@@ -85,9 +85,9 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
       <div className="middle">
         <div className="top">
           <span className="topOne">可配置分佣</span>
-          <span>¥{data?.allocationAmount / 100}</span>
+          <span>¥{data?.allocationAmount / 1000}</span>
           <span className="topOne">剩余可配置</span>
-          <span>￥{(data?.allocationAmount * (100 - sums)) / 10000} </span>
+          <span>￥{((data?.allocationAmount / 100000) * (100 - sums)).toFixed(2)} </span>
         </div>
         <div className="mid">
           {relationList?.map((item: any) => {
@@ -103,7 +103,7 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
                 <div className="guanxi">
                   {item.buildScale ? (
                     <p>
-                      团建奖金{item.buildScale}% ¥{(data?.allocationAmount / 10000) * item.buildScale}
+                      团建奖金{item.buildScale}% ¥{((data?.allocationAmount / 100000) * item.buildScale).toFixed(2)}
                     </p>
                   ) : (
                     ''
@@ -114,9 +114,10 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
                         <span style={{ backgroundColor: 'darkgrey', borderRadius: '15px' }}>
                           {orderData.map((i) => {
                             if (i.id == item.userId) {
-                              return i.orderShip
+                              return <span>{i.orderShip}&nbsp;&nbsp;</span>
                             }
                           })}
+                          {receiverData.userId == item.userId ? '接单人' : ''}
                           {item.havePresetBonus ? '有团建奖' : null}
                           {item.haveRebate ? '有返利' : null}
                         </span>
@@ -150,7 +151,7 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
                         />
                         <span>%</span>
                         <span style={{ marginLeft: '10px' }}>
-                          ¥{item.scale ? (data?.allocationAmount / 10000) * item.scale : 0}
+                          ¥{item.scale ? ((data?.allocationAmount / 100000) * item.scale).toFixed(2) : 0}
                         </span>
                         {item.serviceScale ? (
                           <>
@@ -166,7 +167,10 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
 
                             <span>%</span>
                             <span style={{ marginLeft: '10px' }}>
-                              ¥{item.serviceScale ? (data?.allocationAmount / 10000) * item.serviceScale : 0}
+                              ¥
+                              {item.serviceScale
+                                ? ((data?.allocationAmount / 100000) * item.serviceScale).toFixed(2)
+                                : 0}
                             </span>
                           </>
                         ) : (

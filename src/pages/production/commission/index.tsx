@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space } from 'antd'
 import './index.less'
 import { HttpCode } from '@/constants/HttpCode'
