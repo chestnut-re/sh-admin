@@ -1,5 +1,5 @@
 /*
- * @Description: 
+ * @Description:
  * @LastEditTime: 2022-01-20 10:28:10
  */
 import { Layout, ConfigProvider } from 'antd'
@@ -22,14 +22,14 @@ function AdminLayout(): JSX.Element {
       <Layout className="AdminLayout">
         <Header className="nav-header">
           <div className="logo">山海云途管理中心</div>
-       <div className="menu">
-       <div className="name">
-            {adminStore.isSubCenter() ? '分中心账号: ' : '集团账号: '} {adminStore.userDetails.nickName}
+          <div className="menu">
+            <div className="name">
+              {adminStore.isSubCenter() ? '分中心账号: ' : '集团账号: '} {adminStore.userDetails.nickName}
+            </div>
+            <div className="logout" onClick={_logout}>
+              退出
+            </div>
           </div>
-          <div className="logout" onClick={_logout}>
-            退出
-          </div>
-       </div>
         </Header>
         <Content>
           <Layout>
