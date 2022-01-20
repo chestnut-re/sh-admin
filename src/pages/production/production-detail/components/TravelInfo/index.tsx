@@ -225,13 +225,13 @@ const TravelInfo: React.FC = () => {
                                 合计
                               </Col>
                               <Col className="math-value" span={2}>
-                                ¥{item.personCostPrice / 100}
+                                ¥{item.personCostPrice / 1000}
                               </Col>
                               <Col className="math-value" span={2}>
-                                ¥{item.personMarkPrice / 100}
+                                ¥{item.personMarkPrice / 1000}
                               </Col>
                               <Col className="math-value" span={1}>
-                                ¥{item.personCurrentPrice / 100}
+                                ¥{item.personCurrentPrice / 1000}
                               </Col>
                             </Row>
                           </Col>

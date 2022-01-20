@@ -173,7 +173,7 @@ const Itinerary = (props, ref) => {
               <div></div>
               {/* <div className="item">供应成本价: ￥{productionStore.data.goodsPrices[0].personCostPrice / 100}</div> */}
               {/* <div className="item">市场标价: ￥{productionStore.data.goodsPrices[0].personMarkPrice / 100}</div> */}
-              <div className="item">现售价 合计: ￥{productionStore.getCurrentPrice(activeKey) / 100}</div>
+              <div className="item">现售价 合计: ￥{productionStore.getCurrentPrice(activeKey) / 1000}</div>
             </div>
           </div>
         </Row>
