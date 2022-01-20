@@ -1,6 +1,6 @@
 /*
  * @Description: 配置商品详情
- * @LastEditTime: 2022-01-18 15:24:39
+ * @LastEditTime: 2022-01-20 15:50:21
  */
 import { Table, Space, Button, Modal, Form, Row, Col } from 'antd'
 import { ActivitiesService } from '@/service/ActivitiesService'
@@ -34,7 +34,7 @@ const GoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList,goodsAlreadyData, 
   const getGoodsDetail = async () => {
     const params = form.getFieldsValue()
     const res = await ActivitiesService.activityGoodsPage({ ...params,...query })
-    setData([...res?.data,...goodsAlreadyData])
+    setData([...res?.data,...goodsAlreadyData??[]])
   }
   const columns = [
     {

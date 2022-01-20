@@ -10,7 +10,7 @@ import { useHistory } from 'react-router-dom'
 import { ProductionService } from '@/service/ProductionService'
 import GoodsState from '@/components/tableColumn/GoodsState'
 import ChannelDialog from './components/ChannelDialog'
-import NewPrice from '@/components/tableColumn/newPrice'
+import NewPrice from '@/components/tableColumn/NewPrice'
 
 /**
  * 商品库 总部
@@ -233,7 +233,7 @@ const ProductionList: React.FC<any> = observer(({}) => {
               <ProductionState name="state" />
             </Col>
 
-            <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
+            <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
               <Space>
                 <Button type="primary" htmlType="submit">
                   查询
