@@ -93,69 +93,6 @@ const AccountDetails: React.FC = () => {
       <div className="sales-tabs">
         <Tabs defaultActiveKey="1">
           <TabPane tab="佣金" key="1">
-<<<<<<< HEAD
-            <div className="list__root">
-              <div className="list-form">
-                <Form
-                  name="basic"
-                  initialValues={{ channelId: 0 }}
-                  onFinish={onFinish}
-                  onFinishFailed={onFinishFailed}
-                  form={form}
-                >
-                  <Row gutter={[5, 0]}>
-                    <Col span={2} className="table-from-label">
-                      收支状态
-                    </Col>
-                    <Col span={4}>
-                      <Form.Item name="channelId">
-                        <Select style={{ width: 120 }}>
-                          <Option value="0" key="0">
-                            全部
-                          </Option>
-                          <Option value="1" key="1">
-                            收入
-                          </Option>
-                          <Option value="2" key="2">
-                            支出
-                          </Option>
-                        </Select>
-                      </Form.Item>
-                    </Col>
-                    <Col span={2} className="table-from-label">
-                      时间筛选
-                    </Col>
-                    <Col span={4}>
-                      <Form.Item name="time">
-                        <RangePicker showTime />
-                      </Form.Item>
-                    </Col>
-                    <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
-                      <Space>
-                        <Button type="primary" htmlType="submit">
-                          查询
-                        </Button>
-                        <Button htmlType="submit">重置</Button>
-                      </Space>
-                    </Form.Item>
-                  </Row>
-                </Form>
-              </div>
-              <Table
-                rowKey="id"
-                columns={columns}
-                scroll={{ x: 'max-content' }}
-                dataSource={[...tableData]}
-                pagination={{
-                  onChange: setPageIndex,
-                  showSizeChanger: true,
-                  showQuickJumper: true,
-                  pageSize: pageSize,
-                  total: total,
-                }}
-              />
-            </div>
-=======
             <TabOnePage data={history.location.state.record} />
           </TabPane>
           <TabPane tab="提现" key="2">
@@ -163,7 +100,6 @@ const AccountDetails: React.FC = () => {
           </TabPane>
           <TabPane tab="运营资金" key="3">
             <TabThreePage data={history.location.state.record} />
->>>>>>> f072da961fdd8503ae30382ceca8f3b66ca387ad
           </TabPane>
         </Tabs>
       </div>
