@@ -28,12 +28,13 @@ const CenterPutOnRequestShow: React.FC = () => {
       setData(res.data)
       const arr: any = []
       treeToList(arr, res.data)
-      setDistPlan(res.data?.channelPlanList)
+      // setDistPlan(res.data?.channelPlanList)
     })
   }, [])
 
   const treeToList = (arr, tree) => {
     console.log(tree)
+    // debugger
     tree ??
       tree.map((item, index) => {
         console.log('?', item)
