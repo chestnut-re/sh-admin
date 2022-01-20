@@ -7,11 +7,15 @@ import './index.less'
 import Item from 'antd/lib/list/Item'
 const { Column, ColumnGroup } = Table
 
+interface Props {
+  onChange: (data: any) => void
+}
+
 /**
  * 分中心上架申请 展示
  * 总中心视角，审核上架申请
  */
-const CenterPutOnRequestShowAudit: React.FC = () => {
+const CenterPutOnRequestShowAudit: React.FC<Props> = ({ onChange }) => {
   const query = useQuery()
   const [data, setData] = useState<any>({})
   const [distPlan, setDistPlan] = useState<any[]>([])
@@ -21,6 +25,7 @@ const CenterPutOnRequestShowAudit: React.FC = () => {
     const channelGoodsId = query.get('channelGoodsId') ?? ''
     ProductionService.channelGoodsListByGoodsIdAudit(channelGoodsId).then((res) => {
       setData(res.data)
+      onChange(res.data)
     })
   }, [])
 

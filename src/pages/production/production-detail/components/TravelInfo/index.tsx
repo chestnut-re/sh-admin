@@ -1,5 +1,4 @@
 import { useStore } from '@/store/context'
-import { getPriceFromTravels } from '@/store/productStore'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { Tabs, Col, Row } from 'antd'
@@ -92,13 +91,13 @@ const TravelInfo: React.FC = () => {
                                         {e.travelGoods.airTicket.remark}
                                       </Col>
                                       <Col span={2} className="money">
-                                        ¥{e.travelGoods.airTicket.personCostPrice}
+                                        ¥{e.travelGoods.airTicket.personCostPrice / 1000}
                                       </Col>
                                       <Col span={2} className="money">
-                                        ¥{e.travelGoods.airTicket.personMarkPrice}
+                                        ¥{e.travelGoods.airTicket.personMarkPrice / 1000}
                                       </Col>
                                       <Col span={1} className="money">
-                                        ¥{e.travelGoods.airTicket.personCurrentPrice}
+                                        ¥{e.travelGoods.airTicket.personCurrentPrice / 1000}
                                       </Col>
                                     </Row>
                                   )}
@@ -111,13 +110,13 @@ const TravelInfo: React.FC = () => {
                                         {e.travelGoods.hotel.remark}
                                       </Col>
                                       <Col span={2} className="money">
-                                        ¥{e.travelGoods.hotel.personCostPrice}
+                                        ¥{e.travelGoods.hotel.personCostPrice / 1000}
                                       </Col>
                                       <Col span={2} className="money">
-                                        ¥{e.travelGoods.hotel.personMarkPrice}
+                                        ¥{e.travelGoods.hotel.personMarkPrice / 1000}
                                       </Col>
                                       <Col span={1} className="money">
-                                        ¥{e.travelGoods.hotel.personCurrentPrice}
+                                        ¥{e.travelGoods.hotel.personCurrentPrice / 1000}
                                       </Col>
                                     </Row>
                                   )}
@@ -131,13 +130,13 @@ const TravelInfo: React.FC = () => {
                                         {e.travelGoods.restaurant.remark}
                                       </Col>
                                       <Col span={2} className="money">
-                                        ¥{e.travelGoods.restaurant.personCostPrice}
+                                        ¥{e.travelGoods.restaurant.personCostPrice / 1000}
                                       </Col>
                                       <Col span={2} className="money">
-                                        ¥{e.travelGoods.restaurant.personMarkPrice}
+                                        ¥{e.travelGoods.restaurant.personMarkPrice / 1000}
                                       </Col>
                                       <Col span={1} className="money">
-                                        ¥{e.travelGoods.restaurant.personCurrentPrice}
+                                        ¥{e.travelGoods.restaurant.personCurrentPrice / 1000}
                                       </Col>
                                     </Row>
                                   )}
@@ -152,13 +151,13 @@ const TravelInfo: React.FC = () => {
                                         {e.travelGoods.scenicSpot.remark}
                                       </Col>
                                       <Col span={2} className="money">
-                                        ¥{e.travelGoods.scenicSpot.personCostPrice}
+                                        ¥{e.travelGoods.scenicSpot.personCostPrice / 1000}
                                       </Col>
                                       <Col span={2} className="money">
-                                        ¥{e.travelGoods.scenicSpot.personMarkPrice}
+                                        ¥{e.travelGoods.scenicSpot.personMarkPrice / 1000}
                                       </Col>
                                       <Col span={1} className="money">
-                                        ¥{e.travelGoods.scenicSpot.personCurrentPrice}
+                                        ¥{e.travelGoods.scenicSpot.personCurrentPrice / 1000}
                                       </Col>
                                     </Row>
                                   )}
@@ -173,13 +172,13 @@ const TravelInfo: React.FC = () => {
                                         {e.travelGoods.bus.remark}
                                       </Col>
                                       <Col span={2} className="money">
-                                        ¥{e.travelGoods.bus.personCostPrice}
+                                        ¥{e.travelGoods.bus.personCostPrice / 1000}
                                       </Col>
                                       <Col span={2} className="money">
-                                        ¥{e.travelGoods.bus.personMarkPrice}
+                                        ¥{e.travelGoods.bus.personMarkPrice / 1000}
                                       </Col>
                                       <Col span={1} className="money">
-                                        ¥{e.travelGoods.bus.personCurrentPrice}
+                                        ¥{e.travelGoods.bus.personCurrentPrice / 1000}
                                       </Col>
                                     </Row>
                                   )}
@@ -194,13 +193,13 @@ const TravelInfo: React.FC = () => {
                                         {e.travelGoods.train.remark}
                                       </Col>
                                       <Col span={2} className="money">
-                                        ¥{e.travelGoods.train.personCostPrice}
+                                        ¥{e.travelGoods.train.personCostPrice / 1000}
                                       </Col>
                                       <Col span={2} className="money">
-                                        ¥{e.travelGoods.train.personMarkPrice}
+                                        ¥{e.travelGoods.train.personMarkPrice / 1000}
                                       </Col>
                                       <Col span={1} className="money">
-                                        ¥{e.travelGoods.train.personCurrentPrice}
+                                        ¥{e.travelGoods.train.personCurrentPrice / 1000}
                                       </Col>
                                     </Row>
                                   )}

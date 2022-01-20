@@ -9,28 +9,70 @@ export const getPriceFromTravels = (travels: any[], priceKeyStr: string) => {
   travels.map((item) => {
     item.travelDetails.map((travelDetail) => {
       if (travelDetail.travelGoods.airTicket) {
-        sum += travelDetail.travelGoods.airTicket[priceKeyStr] * 1000
+        sum += travelDetail.travelGoods.airTicket[priceKeyStr]
       }
       if (travelDetail.travelGoods.bus) {
-        sum += travelDetail.travelGoods.bus[priceKeyStr] * 1000
+        sum += travelDetail.travelGoods.bus[priceKeyStr]
       }
       if (travelDetail.travelGoods.hotel) {
-        sum += travelDetail.travelGoods.hotel[priceKeyStr] * 1000
+        sum += travelDetail.travelGoods.hotel[priceKeyStr]
       }
       if (travelDetail.travelGoods.restaurant) {
-        sum += travelDetail.travelGoods.restaurant[priceKeyStr] * 1000
+        sum += travelDetail.travelGoods.restaurant[priceKeyStr]
       }
       if (travelDetail.travelGoods.scenicSpot) {
-        sum += travelDetail.travelGoods.scenicSpot[priceKeyStr] * 1000
+        sum += travelDetail.travelGoods.scenicSpot[priceKeyStr]
       }
       if (travelDetail.travelGoods.train) {
-        sum += travelDetail.travelGoods.train[priceKeyStr] * 1000
+        sum += travelDetail.travelGoods.train[priceKeyStr]
       }
       return travelDetail
     })
     return item
   })
-  return sum / 1000
+  return sum
+}
+
+export const toYuan = (tD, priceKeyStr: string) => {
+  if (tD.travelGoods.airTicket) {
+    tD.travelGoods.airTicket[priceKeyStr] = tD.travelGoods.airTicket[priceKeyStr] / 1000
+  }
+  if (tD.travelGoods.bus) {
+    tD.travelGoods.bus[priceKeyStr] = tD.travelGoods.bus[priceKeyStr] / 1000
+  }
+  if (tD.travelGoods.hotel) {
+    tD.travelGoods.hotel[priceKeyStr] = tD.travelGoods.hotel[priceKeyStr] / 1000
+  }
+  if (tD.travelGoods.restaurant) {
+    tD.travelGoods.restaurant[priceKeyStr] = tD.travelGoods.restaurant[priceKeyStr] / 1000
+  }
+  if (tD.travelGoods.scenicSpot) {
+    tD.travelGoods.scenicSpot[priceKeyStr] = tD.travelGoods.scenicSpot[priceKeyStr] / 1000
+  }
+  if (tD.travelGoods.train) {
+    tD.travelGoods.train[priceKeyStr] = tD.travelGoods.train[priceKeyStr] / 1000
+  }
+}
+
+export const toLi = (tD, priceKeyStr: string) => {
+  if (tD.travelGoods.airTicket) {
+    tD.travelGoods.airTicket[priceKeyStr] = tD.travelGoods.airTicket[priceKeyStr] * 1000
+  }
+  if (tD.travelGoods.bus) {
+    tD.travelGoods.bus[priceKeyStr] = tD.travelGoods.bus[priceKeyStr] * 1000
+  }
+  if (tD.travelGoods.hotel) {
+    tD.travelGoods.hotel[priceKeyStr] = tD.travelGoods.hotel[priceKeyStr] * 1000
+  }
+  if (tD.travelGoods.restaurant) {
+    tD.travelGoods.restaurant[priceKeyStr] = tD.travelGoods.restaurant[priceKeyStr] * 1000
+  }
+  if (tD.travelGoods.scenicSpot) {
+    tD.travelGoods.scenicSpot[priceKeyStr] = tD.travelGoods.scenicSpot[priceKeyStr] * 1000
+  }
+  if (tD.travelGoods.train) {
+    tD.travelGoods.train[priceKeyStr] = tD.travelGoods.train[priceKeyStr] * 1000
+  }
 }
 
 /**
@@ -78,10 +120,38 @@ class ProductionData {
       }
       this.data.goodsPrices = this.data.goodsPrices.map((i) => {
         i.key = getNanoId()
+
+        // 价格数据变元
+        if (i.childCostPrice && i.childCostPrice !== 0) {
+          i.childCostPrice = i.childCostPrice / 1000
+        }
+        if (i.childCurrentPrice && i.childCurrentPrice !== 0) {
+          i.childCurrentPrice = i.childCurrentPrice / 1000
+        }
+        if (i.childMarkPrice && i.childMarkPrice !== 0) {
+          i.childMarkPrice = i.childMarkPrice / 1000
+        }
+        if (i.personCostPrice && i.personCostPrice !== 0) {
+          i.personCostPrice = i.personCostPrice / 1000
+        }
+        if (i.personCurrentPrice && i.personCurrentPrice !== 0) {
+          i.personCurrentPrice = i.personCurrentPrice / 1000
+        }
+        if (i.personMarkPrice && i.personMarkPrice !== 0) {
+          i.personMarkPrice = i.personMarkPrice / 1000
+        }
+
         i.travels = i.travels?.map((t) => {
           t.key = getNanoId()
           t.travelDetails = t.travelDetails?.map((tD) => {
             tD.key = getNanoId()
+            // 价格数据变元
+            toYuan(tD, 'childCostPrice')
+            toYuan(tD, 'childCurrentPrice')
+            toYuan(tD, 'childMarkPrice')
+            toYuan(tD, 'personCostPrice')
+            toYuan(tD, 'personCurrentPrice')
+            toYuan(tD, 'personMarkPrice')
             return tD
           })
           return t
@@ -211,12 +281,12 @@ class ProductionData {
 
   updateGoods(goodsPrice) {
     //更新商品价格
-    goodsPrice.childCostPrice = getPriceFromTravels(goodsPrice.travels, 'childCostPrice') * 1000
-    goodsPrice.childCurrentPrice = getPriceFromTravels(goodsPrice.travels, 'childCurrentPrice') * 1000
-    goodsPrice.childMarkPrice = getPriceFromTravels(goodsPrice.travels, 'childMarkPrice') * 1000
-    goodsPrice.personCostPrice = getPriceFromTravels(goodsPrice.travels, 'personCostPrice') * 1000
-    goodsPrice.personCurrentPrice = getPriceFromTravels(goodsPrice.travels, 'personCurrentPrice') * 1000
-    goodsPrice.personMarkPrice = getPriceFromTravels(goodsPrice.travels, 'personMarkPrice') * 1000
+    goodsPrice.childCostPrice = getPriceFromTravels(goodsPrice.travels, 'childCostPrice')
+    goodsPrice.childCurrentPrice = getPriceFromTravels(goodsPrice.travels, 'childCurrentPrice')
+    goodsPrice.childMarkPrice = getPriceFromTravels(goodsPrice.travels, 'childMarkPrice')
+    goodsPrice.personCostPrice = getPriceFromTravels(goodsPrice.travels, 'personCostPrice')
+    goodsPrice.personCurrentPrice = getPriceFromTravels(goodsPrice.travels, 'personCurrentPrice')
+    goodsPrice.personMarkPrice = getPriceFromTravels(goodsPrice.travels, 'personMarkPrice')
     // end
     // 更新商品天数
     goodsPrice.days = goodsPrice.travels.length
@@ -264,14 +334,53 @@ class ProductionData {
   }
 
   updateData(obj) {
-    console.log('updateData', obj);
+    console.log('updateData', obj)
     this.data = { ...this.data, ...obj }
   }
 
   /**保存到草稿箱子 */
-  saveDraft() {
-    const postData = JSON.stringify(this.data)
-    console.log(JSON.parse(postData))
+  getSaveData() {
+    const postData = JSON.parse(JSON.stringify(this.data))
+    postData.goodsPrices = postData.goodsPrices.map((i) => {
+      i.key = getNanoId()
+      // 价格数据变厘
+      if (i.childCostPrice && i.childCostPrice !== 0) {
+        i.childCostPrice = i.childCostPrice * 1000
+      }
+      if (i.childCurrentPrice && i.childCurrentPrice !== 0) {
+        i.childCurrentPrice = i.childCurrentPrice * 1000
+      }
+      if (i.childMarkPrice && i.childMarkPrice !== 0) {
+        i.childMarkPrice = i.childMarkPrice * 1000
+      }
+      if (i.personCostPrice && i.personCostPrice !== 0) {
+        i.personCostPrice = i.personCostPrice * 1000
+      }
+      if (i.personCurrentPrice && i.personCurrentPrice !== 0) {
+        i.personCurrentPrice = i.personCurrentPrice * 1000
+      }
+      if (i.personMarkPrice && i.personMarkPrice !== 0) {
+        i.personMarkPrice = i.personMarkPrice * 1000
+      }
+
+      i.travels = i.travels?.map((t) => {
+        t.key = getNanoId()
+        t.travelDetails = t.travelDetails?.map((tD) => {
+          tD.key = getNanoId()
+          // 价格数据变元
+          toLi(tD, 'childCostPrice')
+          toLi(tD, 'childCurrentPrice')
+          toLi(tD, 'childMarkPrice')
+          toLi(tD, 'personCostPrice')
+          toLi(tD, 'personCurrentPrice')
+          toLi(tD, 'personMarkPrice')
+          return tD
+        })
+        return t
+      })
+      return i
+    })
+    return postData
   }
 
   /**清除数据，退出页面时候调用 */

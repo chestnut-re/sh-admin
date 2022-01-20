@@ -48,7 +48,7 @@ const ReleaseProductPage: React.FC = () => {
         setCurrent(current + 1)
       })
     } else if (current == 1) {
-      const postData = { ...productionStore.data }
+      const postData = productionStore.getSaveData()
       postData.inDraftBox = 0 // 非草稿箱，待发布
       ProductionService.save(postData).then((res) => {
         console.log(res)
@@ -71,7 +71,7 @@ const ReleaseProductPage: React.FC = () => {
     if (current === 0) {
       baseInfoRef.current.validate().then((res) => {
         baseInfoRef.current.next()
-        const postData = { ...productionStore.data }
+        const postData = productionStore.getSaveData()
         postData.inDraftBox = 1 // 草稿箱
         ProductionService.save(postData).then((res) => {
           if (res.code === '200') {
@@ -82,7 +82,7 @@ const ReleaseProductPage: React.FC = () => {
       })
       return
     } else {
-      const postData = { ...productionStore.data }
+      const postData = productionStore.getSaveData()
       postData.inDraftBox = 1 // 草稿箱
       ProductionService.save(postData).then((res) => {
         if (res.code === '200') {
