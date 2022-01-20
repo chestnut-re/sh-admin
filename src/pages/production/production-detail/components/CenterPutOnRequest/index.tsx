@@ -47,6 +47,7 @@ const CenterPutOnRequest: React.FC = () => {
         const savePlan = postData.distPlanId
         postData.channelPlanList = savePlan?.channelPlanList
         postData.distPlanId = savePlan.id
+        postData.presetBonus = savePlan.presetBonus
         postData.goodsId = query.get('id')
 
         console.log(postData)
