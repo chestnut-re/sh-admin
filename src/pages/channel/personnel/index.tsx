@@ -232,7 +232,7 @@ const PersonnelManagement: React.FC = () => {
                   {/* name type */}
                   <AccountType name="accountType" />
                 </Col>
-                <Form.Item wrapperCol={{ offset: 4, span: 0 }}>
+                <Form.Item wrapperCol={{ offset: 4, span: 12 }}>
                   <Space size={16}>
                     <Button type="primary" htmlType="submit">
                       查询

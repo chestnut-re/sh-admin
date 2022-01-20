@@ -147,7 +147,7 @@ const BannerListPage: React.FC = () => {
       <div>
         <Form name="basic" initialValues={{ remember: true }} onFinish={onFinish} onFinishFailed={onFinishFailed}>
           <Row gutter={[10, 0]}>
-            <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
+            <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
               <Space>
                 <Button type="primary" htmlType="submit">
                   添加

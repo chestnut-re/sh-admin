@@ -119,7 +119,7 @@ const VersionBPage: React.FC = () => {
           form={form}
         >
           <Row gutter={[10, 0]}>
-            <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
+            <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
               <Space>
                 <Button type="primary" onClick={_addVersion}>
                   添加版本记录

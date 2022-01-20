@@ -135,7 +135,7 @@ const AccountPage: React.FC = () => {
               <Col span={5}>
                 <InputTemp name="name" placeholder="请输入人员名称" />
               </Col>
-              <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
+              <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
                 <Space>
                   <Button type="primary" htmlType="submit">
                     查询

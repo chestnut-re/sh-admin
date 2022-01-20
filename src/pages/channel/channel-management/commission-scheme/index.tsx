@@ -207,7 +207,7 @@ const CommissionSchemePage: React.FC = () => {
                   </Form.Item>
                 </Col> */}
                 <Col span={5}>
-                  <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
+                  <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
                     <Space>
                       
                       <Button type="primary" htmlType="submit">

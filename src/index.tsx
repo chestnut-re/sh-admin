@@ -1,8 +1,8 @@
+
 import React, { Suspense, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import 'normalize.css'
-import 'antd/dist/antd.css'
 import './assets/css/base.css'
 import './assets/css/admin.less'
 import { adminStore, Provider } from '@/store/context'

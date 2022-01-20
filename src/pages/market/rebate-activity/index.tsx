@@ -35,7 +35,7 @@ const RebateActivity: React.FC = () => {
   const [showGoodsDialog, setShowGoodsDialog] = useState(false)
   const [modalData, setModalData] = useState('')
   const [showType, setShowType] = useState('')
-  const [goodsAlreadyData,setGoodsAlreadyData] =useState([])
+  const [goodsAlreadyData, setGoodsAlreadyData] = useState([])
   useEffect(() => {
     loadData(pageIndex)
   }, [pageIndex])
@@ -153,9 +153,9 @@ const RebateActivity: React.FC = () => {
     })
     const data = (record.goodsList ?? []).map((res) => {
       return {
-        goodsId:res.goodsId,
-        goodsName:res.goodsName,
-        promotionalImageUrl:res.promotionalImageUrl
+        goodsId: res.goodsId,
+        goodsName: res.goodsName,
+        promotionalImageUrl: res.promotionalImageUrl,
       }
     })
     setSelectRecord(record.id)
@@ -186,6 +186,14 @@ const RebateActivity: React.FC = () => {
         .rebateAuditApply({ rebateId: selectRecord, rebateName: rebateName, type: 1, goodsList: goodsList })
         .then((res) => {
           if (res.code === HttpCode.success) {
+            message.success('关联商品提交成功')
+            //   Modal.confirm({
+            //   title: '提交成功',
+            //   // icon: <ExclamationCircleOutlined />,
+            //   content: '提交完成，',
+            //   okText: '确认',
+            //   cancelText: '取消',
+            // })
             loadData(pageIndex)
           }
         })
@@ -202,6 +210,14 @@ const RebateActivity: React.FC = () => {
         .rebateAuditApply({ rebateId: selectRecord, rebateName, rebateName, type: 2, paperList: List })
         .then((res) => {
           if (res.code === HttpCode.success) {
+            message.success('关联任务清单提交成功')
+            // Modal.confirm({
+            //   title: '提交成功',
+            //   // icon: <ExclamationCircleOutlined />,
+            //   content: '需完成哦诶值任务清单后，才能进入上线审核流程',
+            //   okText: '确认',
+            //   cancelText: '取消',
+            // })
             loadData(pageIndex)
           }
         })
@@ -335,7 +351,7 @@ const RebateActivity: React.FC = () => {
               <StatusRoute name="state" />
             </Col> */}
 
-            <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
+            <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
               <Space>
                 <Button type="primary" onClick={showAdd}>
                   添加
@@ -381,7 +397,7 @@ const RebateActivity: React.FC = () => {
         <GoodsTable
           goodsShow={goodsShowDialog}
           query={{
-            type:1
+            type: 1,
           }}
           goodsAlreadyData={goodsAlreadyData}
           onSuccess={goodsOnSuccess}

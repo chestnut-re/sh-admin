@@ -4,7 +4,7 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const copyWebpackPlugin = require('copy-webpack-plugin')
-const AntdDayjsWebpackPlugin =require('antd-dayjs-webpack-plugin');
+const AntdDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin')
 const imageInlineSizeLimit = parseInt(process.env.IMAGE_INLINE_SIZE_LIMIT || '10000')
 
 module.exports = function (webpackEnv) {
@@ -116,6 +116,11 @@ module.exports = function (webpackEnv) {
                 },
                 {
                   loader: 'less-loader',
+                  options: {
+                    lessOptions: {
+                      javascriptEnabled: true,
+                    },
+                  },
                 },
               ],
             },
@@ -162,7 +167,7 @@ module.exports = function (webpackEnv) {
           },
         ],
       }),
-      new AntdDayjsWebpackPlugin()
+      new AntdDayjsWebpackPlugin(),
     ],
   }
 }

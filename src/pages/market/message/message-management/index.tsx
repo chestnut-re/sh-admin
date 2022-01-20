@@ -155,7 +155,7 @@ const MessageListPage: React.FC = () => {
                 <RangePicker showTime />
               </Form.Item>
             </Col>
-            <Form.Item wrapperCol={{ offset: 4, span: 0 }}>
+            <Form.Item wrapperCol={{ offset: 4, span: 12 }}>
               <Space>
                 <Button type="primary" htmlType="submit">
                   查询
