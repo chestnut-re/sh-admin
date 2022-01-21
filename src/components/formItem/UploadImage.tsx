@@ -41,9 +41,9 @@ const UploadImage: React.FC<UploadImageProps> = ({ onChange, value }) => {
     // if (!isJpgOrPng) {
     //   message.error('You can only upload JPG/PNG file!')
     // }
-    const isLt2M = file.size / 1024 / 1024 < 1
+    const isLt2M = file.size / 1024 / 1024 < 3
     if (!isLt2M) {
-      message.error('图片不能大于1M')
+      message.error('图片不能大于3M')
     }
     // return isJpgOrPng && isLt2M
     return isLt2M
