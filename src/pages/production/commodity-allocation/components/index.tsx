@@ -1,7 +1,5 @@
-import { Space, Table, Tag, Form, Row, Col, Button, DatePicker, Input, Image, Select } from 'antd'
+import { Space, Table, Button, Modal, message } from 'antd'
 import React, { useEffect, useState } from 'react'
-import ChannelService from '@/service/ChannelService'
-import dayjs from 'dayjs'
 import { HttpCode } from '@/constants/HttpCode'
 import AEBannerDialog, { DialogMode } from './components/AEBannerDialog'
 import { AllocationService } from '@/service/AllocationService'
@@ -14,11 +12,11 @@ const ListPage: React.FC = () => {
   const [pageIndex, setPageIndex] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [total, setTotal] = useState()
-
   const [showDialog, setShowDialog] = useState(false)
-  const [selectedData, setSelectedData] = useState(null)
+  const [selectedData, setSelectedData] = useState<any>([])
   const [dialogMode, setDialogMode] = useState<DialogMode>('add')
   const [checkStrictly, setCheckStrictly] = React.useState(false)
+  const [isModalVisible, setIsModalVisible] = useState(false)
 
   useEffect(() => {
     getList(pageIndex)
@@ -52,7 +50,7 @@ const ListPage: React.FC = () => {
       render: (text: any, record: any) => (
         <Space size="middle">
           <Button onClick={() => _editDialog(record)}>编辑</Button>
-          <Button>删除</Button>
+          <Button onClick={() => onDelete(record)}>删除</Button>
         </Space>
       ),
     },
@@ -99,6 +97,28 @@ const ListPage: React.FC = () => {
   const _add = () => {
     setShowDialog(true)
   }
+
+  const onDelete = (record) => {
+    setIsModalVisible(true)
+    setSelectedData(record)
+  }
+
+  const handleCancel = () => {
+    setIsModalVisible(false)
+  }
+
+  //删除
+  const handleOk = () => {
+    AllocationService.edit([
+      { id: selectedData.id, operationType: 3, parentId: selectedData.parentId, sortName: selectedData.sortName },
+    ]).then((res) => {
+      if (res.code === HttpCode.success) {
+        message.success('删除成功')
+        setIsModalVisible(false)
+        getList(pageIndex)
+      }
+    })
+  }
   return (
     <div className="page-root">
       <div style={{ textAlign: 'right', marginBottom: '20px' }}>
@@ -110,7 +130,7 @@ const ListPage: React.FC = () => {
         rowKey="id"
         columns={columns}
         scroll={{ x: 'max-content' }}
-        rowSelection={{ ...rowSelection, checkStrictly }}
+        // rowSelection={{ ...rowSelection, checkStrictly }}
         dataSource={[...data]}
         pagination={{
           onChange: setPageIndex,
@@ -126,6 +146,16 @@ const ListPage: React.FC = () => {
         show={showDialog}
         onClose={_onDialogClose}
       />
+      <Modal
+        title="提示"
+        visible={isModalVisible}
+        okText="确认删除"
+        cancelText="取消"
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <span>是否确认删除?</span>
+      </Modal>
     </div>
   )
 }

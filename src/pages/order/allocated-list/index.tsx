@@ -71,12 +71,16 @@ const AllocatedListPage: React.FC = () => {
       title: '单价',
       dataIndex: 'unitPrice',
       render: (text: any, record: any) => {
-        return (parseInt(record.unitPrice) / 1000).toFixed(2)
+        if (parseInt(record.unitPrice)) {
+          return (parseInt(record.unitPrice) / 1000).toFixed(2)
+        } else {
+          return ''
+        }
       },
     },
     {
       title: '营销活动',
-      dataIndex: 'state',
+      dataIndex: 'activityTypeVal',
     },
     {
       title: '下单数量',
@@ -176,8 +180,8 @@ const AllocatedListPage: React.FC = () => {
     if (!dates || dates.length === 0) {
       return false
     }
-    const tooLate = dates[0] && current.diff(dates[0], 'years') > 1
-    const tooEarly = dates[1] && dates[1].diff(current, 'years') > 1
+    const tooLate = dates[0] && current.diff(dates[0], 'years') > 0
+    const tooEarly = dates[1] && dates[1].diff(current, 'years') > 0
     return tooEarly || tooLate
   }
 

@@ -149,37 +149,42 @@ const AuditScreen: React.FC<Props> = ({ type }) => {
   return (
     <div className="page-root">
       <div>
-        <Radio.Group
-          value={checkState}
-          onChange={(value) => {
-            setCheckState(value.target.value)
-          }}
-        >
-          <Radio.Button value="">全部</Radio.Button>
-          <Radio.Button value="0">待审核</Radio.Button>
-          <Radio.Button value="1">通过</Radio.Button>
-          <Radio.Button value="2">驳回</Radio.Button>
-          {/* checkState 0 待审核 1审核通过 2审核不通过 */}
-        </Radio.Group>
-
-        <Form name="basic" initialValues={{ remember: true }} onFinish={onFinish} form={form}>
-          <Row gutter={[10, 0]}>
-            <Col span={2} className="table-from-label">
-              商品名称
-            </Col>
-            <Col span={4}>
-              <InputTemp name="keyword" />
-            </Col>
-            <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
-              <Space>
-                <Button type="primary" htmlType="submit">
-                  查询
-                </Button>
-                <Button onClick={resetTable}>重置</Button>
-              </Space>
-            </Form.Item>
-          </Row>
-        </Form>
+        <Row>
+          <Col span={7}>
+            <Radio.Group
+              value={checkState}
+              onChange={(value) => {
+                setCheckState(value.target.value)
+              }}
+            >
+              <Radio.Button value="">全部</Radio.Button>
+              <Radio.Button value="0">待审核</Radio.Button>
+              <Radio.Button value="1">通过</Radio.Button>
+              <Radio.Button value="2">驳回</Radio.Button>
+              {/* checkState 0 待审核 1审核通过 2审核不通过 */}
+            </Radio.Group>
+          </Col>
+          <Col span={17}>
+            <Form name="basic" initialValues={{ remember: true }} onFinish={onFinish} form={form}>
+              <Row gutter={[10, 0]}>
+                <Col span={4} className="table-from-label">
+                  商品名称
+                </Col>
+                <Col span={8}>
+                  <InputTemp name="keyword" />
+                </Col>
+                <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
+                  <Space>
+                    <Button type="primary" htmlType="submit">
+                      查询
+                    </Button>
+                    <Button onClick={resetTable}>重置</Button>
+                  </Space>
+                </Form.Item>
+              </Row>
+            </Form>
+          </Col>
+        </Row>
       </div>
       <Table
         rowKey="goodsId"

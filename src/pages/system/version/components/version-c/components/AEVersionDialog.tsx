@@ -34,6 +34,7 @@ const AEVersionDialog: FC<Props> = ({ data, mode, show = true, onSuccess, onClos
   useEffect(() => {
     form.setFieldsValue({
       clientVersionNo: versionData?.clientVersionNo,
+      minorVersionNo: versionData?.minorVersionNo,
       fileUrl: versionData?.fileUrl,
       versionContent: versionData?.versionContent,
       remark: versionData?.remark,
@@ -93,8 +94,11 @@ const AEVersionDialog: FC<Props> = ({ data, mode, show = true, onSuccess, onClos
         <Form.Item label="版本号" name="clientVersionNo">
           <Input placeholder="(必填)" />
         </Form.Item>
+        <Form.Item label="版本Code" name="minorVersionNo">
+          <Input />
+        </Form.Item>
         <Form.Item label="客户端类型" name="clientType">
-          <Select defaultValue={1}>
+          <Select>
             <Select.Option value={1}>H5</Select.Option>
             <Select.Option value={2}>小程序</Select.Option>
             <Select.Option value={3}>ios手机</Select.Option>
@@ -113,7 +117,7 @@ const AEVersionDialog: FC<Props> = ({ data, mode, show = true, onSuccess, onClos
           <Input />
         </Form.Item>
         <Form.Item label="是否强制更新" name="mandatoryUpdate">
-          <Radio.Group defaultValue={0}>
+          <Radio.Group>
             <Radio value={1}>是</Radio>
             <Radio value={0}>否</Radio>
           </Radio.Group>

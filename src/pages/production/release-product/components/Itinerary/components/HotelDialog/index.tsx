@@ -75,7 +75,7 @@ const HotelDialog: React.FC<Props> = ({ visible, onCancel, activeKey }) => {
             </Form.Item>
             <PriceItem />
             <Form.Item {...layout} name={'remark'} label="其他备注">
-              <Input.TextArea placeholder="可填写：酒店距景区" />
+              <Input.TextArea placeholder="可填写: 酒店距景区" />
             </Form.Item>
           </Col>
           <Col span={12}>

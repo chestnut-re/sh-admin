@@ -21,7 +21,7 @@ interface Props {
 const AEBannerDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) => {
   const [form] = Form.useForm()
   const { Option } = Select
-  const [parentList, setParentList] = useState([])
+  const [parentList, setParentList] = useState<any>([])
   const [parent, setParent] = useState('0')
   const [addClassName, setAddClassName] = useState('')
   useEffect(() => {
@@ -43,19 +43,24 @@ const AEBannerDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClos
     form
       .validateFields()
       .then((formData) => {
+        console.log(formData)
         if (mode === 'add') {
-          AllocationService.edit([{ operationType: 1, sortName: formData.sortName, parentId: parent }]).then((res) => {
-            if (res.code === HttpCode.success) {
-              onSuccess()
+          AllocationService.edit([{ operationType: 1, sortName: formData.sortName, parentId: formData.parentId }]).then(
+            (res) => {
+              if (res.code === HttpCode.success) {
+                onSuccess()
+              }
             }
-          })
+          )
         } else {
           //edit
-          AllocationService.edit([{ operationType: 2, sortName: formData.sortName, parentId: parent }]).then((res) => {
-            if (res.code === HttpCode.success) {
-              onSuccess()
+          AllocationService.edit([{ operationType: 2, sortName: formData.sortName, parentId: formData.parentId }]).then(
+            (res) => {
+              if (res.code === HttpCode.success) {
+                onSuccess()
+              }
             }
-          })
+          )
         }
       })
       .catch((e) => {
@@ -88,7 +93,7 @@ const AEBannerDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClos
         <Form.Item label="分类名称" name="sortName">
           <Input />
         </Form.Item>
-        <Form.Item label="上级分类" name="name">
+        <Form.Item label="上级分类" name="parentId">
           <Select>
             {parentList?.map((item: any) => {
               return (

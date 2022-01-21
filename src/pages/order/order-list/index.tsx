@@ -83,12 +83,16 @@ const OrderListPage: React.FC = () => {
       title: '单价',
       dataIndex: 'unitPrice',
       render: (text: any, record: any) => {
-        return (parseInt(record.unitPrice) / 1000).toFixed(2)
+        if (parseInt(record.unitPrice)) {
+          return (parseInt(record.unitPrice) / 1000).toFixed(2)
+        } else {
+          return ''
+        }
       },
     },
     {
       title: '营销活动',
-      dataIndex: 'state',
+      dataIndex: 'activityTypeVal',
     },
     {
       title: '下单数量',
@@ -177,11 +181,11 @@ const OrderListPage: React.FC = () => {
     <div className="order__root">
       <div className="order-header">
         <span className="header-title">订单列表</span>
-        <span className="header-btn">
+        {/* <span className="header-btn">
           <span>46</span>
           &nbsp;笔待分配订单&nbsp;&nbsp;
           <span onClick={_toDetails}>去分配</span>
-        </span>
+        </span> */}
       </div>
       <div className="order-tabs">
         {/* <Radio.Group
