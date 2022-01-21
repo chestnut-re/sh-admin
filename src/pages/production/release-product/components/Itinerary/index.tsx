@@ -37,7 +37,7 @@ const Itinerary = (props, ref) => {
 
   useEffect(() => {
     setActiveKey(productionStore.data.goodsPrices[0].key)
-  }, [])
+  }, [productionStore.data.travelMode])
 
   const next = () => {
     console.log('Itinerary next')
