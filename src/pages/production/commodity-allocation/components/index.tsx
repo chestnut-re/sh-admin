@@ -24,7 +24,7 @@ const ListPage: React.FC = () => {
 
   const getList = (pageIndex) => {
     AllocationService.list({ sortName: '' }).then((res) => {
-      setData(res.data)
+      setData(res?.data ?? [])
     })
   }
 
