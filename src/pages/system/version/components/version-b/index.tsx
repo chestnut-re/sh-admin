@@ -38,6 +38,10 @@ const VersionBPage: React.FC = () => {
       dataIndex: 'clientVersionNo',
     },
     {
+      title: '版本Code',
+      dataIndex: 'minorVersionNo',
+    },
+    {
       title: '客户端类型',
       dataIndex: 'clientType',
       render: (text: any, record: any) => {
