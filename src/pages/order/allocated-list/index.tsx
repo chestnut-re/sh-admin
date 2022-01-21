@@ -71,7 +71,11 @@ const AllocatedListPage: React.FC = () => {
       title: '单价',
       dataIndex: 'unitPrice',
       render: (text: any, record: any) => {
-        return (parseInt(record.unitPrice) / 1000).toFixed(2)
+        if (parseInt(record.unitPrice)) {
+          return (parseInt(record.unitPrice) / 1000).toFixed(2)
+        } else {
+          return ''
+        }
       },
     },
     {
