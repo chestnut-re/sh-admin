@@ -316,7 +316,7 @@ const RebateActivity: React.FC = () => {
         <Form name="basic" initialValues={{ remember: true }} onFinish={onFinish} form={form}>
           <Row gutter={[10, 10]}>
             <Col span={1} className="table-from-label"></Col>
-            <Col span={3}>
+            <Col lg={10} xl={7} xxl={5} span={4}>
               <Form.Item name="state">
                 <Radio.Group
                   value={checkState}
@@ -336,7 +336,7 @@ const RebateActivity: React.FC = () => {
             <Col span={3}>
               <InputTemp name="rebateName" placeholder="活动ID/活动名称" />
             </Col>
-            <Col span={1} className="table-from-label">
+            <Col lg={4} xl={2} xxl={2} span={2} className="table-from-label">
               创建时间
             </Col>
             <Col span={3}>

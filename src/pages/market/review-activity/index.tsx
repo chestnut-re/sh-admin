@@ -1,6 +1,6 @@
 /*
  * @Description: 活动审核
- * @LastEditTime: 2022-01-11 16:19:53
+ * @LastEditTime: 2022-01-21 15:05:32
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Radio } from 'antd'
@@ -130,7 +130,7 @@ const ReviewActivity: React.FC = () => {
         <Form name="basic" initialValues={{ auditResult: undefined }} onFinish={onFinish} form={form}>
           <Row gutter={[10, 10]}>
             <Col span={1} className="table-from-label"></Col>
-            <Col span={3}>
+            <Col lg={10} xl={7} xxl={5} span={4}>
               <Form.Item label="" name="auditResult">
                 <Radio.Group
                   value={checkState}
