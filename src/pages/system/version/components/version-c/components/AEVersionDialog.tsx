@@ -34,6 +34,7 @@ const AEVersionDialog: FC<Props> = ({ data, mode, show = true, onSuccess, onClos
   useEffect(() => {
     form.setFieldsValue({
       clientVersionNo: versionData?.clientVersionNo,
+      minorVersionNo: versionData?.minorVersionNo,
       fileUrl: versionData?.fileUrl,
       versionContent: versionData?.versionContent,
       remark: versionData?.remark,
@@ -92,6 +93,9 @@ const AEVersionDialog: FC<Props> = ({ data, mode, show = true, onSuccess, onClos
       >
         <Form.Item label="版本号" name="clientVersionNo">
           <Input placeholder="(必填)" />
+        </Form.Item>
+        <Form.Item label="版本Code" name="minorVersionNo">
+          <Input />
         </Form.Item>
         <Form.Item label="客户端类型" name="clientType">
           <Select defaultValue={1}>
