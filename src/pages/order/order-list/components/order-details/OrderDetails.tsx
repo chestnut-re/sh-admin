@@ -235,8 +235,12 @@ const OrderDetailsPage: React.FC = () => {
         <div className="infor">
           <div>下单数量</div>
           <div>
-            <span>{data?.orderCount}</span>
-            {/* <span>成人×4 儿童×1</span> */}
+            <span style={{ display: 'inline-block', height: '20px', lineHeight: '20px' }}>
+              <span style={{ fontSize: 20 }}>{parseInt(data?.adultNum) + parseInt(data?.childNum)}</span>
+              <span>
+                &nbsp;成人×{data?.adultNum}儿童×{data?.childNum}
+              </span>
+            </span>
           </div>
         </div>
         <div className="infor">
@@ -244,8 +248,8 @@ const OrderDetailsPage: React.FC = () => {
           <div>{(parseInt(data?.deductionPrice) / 1000).toFixed(2)}</div>
         </div>
       </div>
-      <div className="details-title">买家信息</div>
-      <Table rowKey="id" columns={columnsM} scroll={{ x: 'max-content' }} dataSource={[...dataM]} />
+      {/* <div className="details-title">买家信息</div>
+      <Table rowKey="id" columns={columnsM} scroll={{ x: 'max-content' }} dataSource={[...dataM]} /> */}
       <div className="details-title">订单关联人</div>
       <Table rowKey="id" columns={columnsD} scroll={{ x: 'max-content' }} dataSource={[...dataD]} />
       <div className="details-title">分佣方案</div>

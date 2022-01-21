@@ -159,9 +159,9 @@ const AllocatedDetailsPage: React.FC = () => {
       <div className="states-con">
         <span className="order-sta">订单状态</span>
         <span className="order-state">{data?.stateVal}</span>
-        <div className="order-time">
+        {/* <div className="order-time">
           剩<span></span>
-        </div>
+        </div> */}
         {data.orderTypeVal ? <div className="order-fx">{data?.orderTypeVal}</div> : ''}
 
         <div className="states-order">
@@ -201,8 +201,12 @@ const AllocatedDetailsPage: React.FC = () => {
         <div className="infor">
           <div>下单数量</div>
           <div>
-            <span>{data?.orderCount}</span>
-            {/* <span>成人×4 儿童×1</span> */}
+            <span style={{ display: 'inline-block', height: '20px', lineHeight: '20px' }}>
+              <span style={{ fontSize: 20 }}>{parseInt(data?.adultNum) + parseInt(data?.childNum)}</span>
+              <span>
+                &nbsp;成人×{data?.adultNum}儿童×{data?.childNum}
+              </span>
+            </span>
           </div>
         </div>
         <div className="infor">
