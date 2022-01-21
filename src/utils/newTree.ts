@@ -19,7 +19,7 @@ export const shellArray = (arr: any[], id: string, areas = 'areas', adcode = 'ad
       const item = nowArr[i]
 
       if (item[adcode] == id) {
-        temp.unshift(item)
+        temp?.unshift(item)
         callback(arr, item[pid])
         break
       } else {

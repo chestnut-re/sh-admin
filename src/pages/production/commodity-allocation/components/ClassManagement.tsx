@@ -13,14 +13,14 @@ const ClassManagement: React.FC = () => {
   const { Option } = Select
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [addClassName, setAddClassName] = useState('')
-  const [parentList, setParentList] = useState([])
+  const [parentList, setParentList] = useState<any[]>([])
   const [parent, setParent] = useState('0')
 
   const handleOk = () => {
     AllocationService.edit([{ operationType: 1, sortName: addClassName, parentId: parent }]).then((res) => {
       if (res.code === HttpCode.success) {
         setIsModalVisible(false)
-        _ref.current?.getTreeList()
+        // _ref.current?.getTreeList()
       }
     })
   }
@@ -32,7 +32,10 @@ const ClassManagement: React.FC = () => {
   const getParentList = () => {
     AllocationService.list({ sortName: '', parentId: 0 }).then((res: any) => {
       const parentData = { id: 0, sortName: '无' }
-      setParentList([...res.data, parentData])
+      // if (!res.data || !parentData) {
+      //   return
+      // }
+      // setParentList([...res.data, parentData])
     })
   }
 

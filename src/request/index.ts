@@ -83,7 +83,7 @@ instance.interceptors.response.use(
   (error) => {
     const { response } = error
     // console.log('response', response)
-    message.error(`服务器错误: ${response.status}`)
+    message.error(`服务器错误: ${response?.status ?? ''}`)
     return Promise.reject(response)
   }
 )

@@ -153,10 +153,3 @@ export const releaseRecord = (data): Promise<any> => {
   })
 }
 
-/**
- * 标签列表
- */
-
-export const sortList = (data): Promise<any> => {
-  return axios.post('/api/operation/goods/sortManagement/query', data)
-}
