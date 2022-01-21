@@ -45,13 +45,13 @@ const VersionBPage: React.FC = () => {
           return 'H5'
         } else if (record?.clientType == '2') {
           return '小程序'
-        } else if (record?.clientType == '2') {
+        } else if (record?.clientType == '3') {
           return 'ios手机'
-        } else if (record?.clientType == '2') {
+        } else if (record?.clientType == '4') {
           return 'ios_pad'
-        } else if (record?.clientType == '2') {
+        } else if (record?.clientType == '5') {
           return '安卓手机'
-        } else if (record?.clientType == '2') {
+        } else if (record?.clientType == '6') {
           return '安卓pad'
         }
       },
