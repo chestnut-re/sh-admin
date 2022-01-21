@@ -76,7 +76,7 @@ const AllocatedListPage: React.FC = () => {
     },
     {
       title: '营销活动',
-      dataIndex: 'state',
+      dataIndex: 'activityTypeVal',
     },
     {
       title: '下单数量',

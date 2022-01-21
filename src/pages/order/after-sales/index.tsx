@@ -241,7 +241,7 @@ const AfterSalesListPage: React.FC = () => {
                 </Select>
               </Form.Item>
             </Col>
-            <Form.Item wrapperCol={{ offset: 0, span: 0 }}>
+            <Form.Item wrapperCol={{ offset: 0, span: 4 }}>
               <Space>
                 <Button type="primary" htmlType="submit">
                   查询
