@@ -33,7 +33,7 @@ const AdminListPage: React.FC = () => {
   const loadData = (pageIndex) => {
     form.validateFields().then((query) => {
       AdminService.list({ current: pageIndex, pageSize: pageSize, ...query }).then((res) => {
-        setData(res.data.records)
+        setData(res.data?.records ?? [])
         setTotal(res.data.total)
       })
     })
@@ -41,7 +41,7 @@ const AdminListPage: React.FC = () => {
 
   const loadRoleData = () => {
     getRoles({ state: 0 }).then((res) => {
-      setRoleData(res.data)
+      setRoleData(res.data ?? [])
     })
   }
 

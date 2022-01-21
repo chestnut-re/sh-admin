@@ -4,7 +4,7 @@
  * @LastEditTime: 2022-01-20 10:55:22
  */
 import React, { useState, useEffect } from 'react'
-import { Form, Col, Row, Button, Table, Space,Modal,message } from 'antd'
+import { Form, Col, Row, Button, Table, Space, Modal, message } from 'antd'
 import { InputTemp } from '@/components/filter/formItem'
 import AddChannelDialog, { DialogMode } from './components/AddChannelDialog'
 import { analysisName } from '@/utils/newTree'
@@ -12,7 +12,7 @@ import ChannelListTree from '../components/ChannelListTree'
 import ChannelService from '@/service/ChannelService'
 import { cityDispose } from '@/utils/tree'
 // import { enumState } from '@/utils/enum'
-import {AuthEle} from '@/components/Common/AuthEle'
+import { AuthEle } from '@/components/Common/AuthEle'
 import './index.less'
 const ChannelPage: React.FC = () => {
   const [form] = Form.useForm()
@@ -95,14 +95,16 @@ const ChannelPage: React.FC = () => {
       title: '操作',
       render: (_text: any, record: any) => (
         <Space size="middle">
-             <AuthEle id={61}>
-          <Button onClick={() => showAddDialog(record, 'see')}>查看</Button>
+          <AuthEle id={61}>
+            <Button onClick={() => showAddDialog(record, 'see')}>查看</Button>
           </AuthEle>
           <AuthEle id={63}>
-          <Button onClick={() => showAddDialog(record, 'edit')}>编辑</Button>
+            <Button onClick={() => showAddDialog(record, 'edit')}>编辑</Button>
           </AuthEle>
           <AuthEle id={64}>
-          <Button onClick={() => _delItem(record)} danger>删除</Button>
+            <Button onClick={() => _delItem(record)} danger>
+              删除
+            </Button>
           </AuthEle>
         </Space>
       ),
@@ -122,7 +124,7 @@ const ChannelPage: React.FC = () => {
           if (res.code == 200) {
             loadData()
             message.success('删除成功')
-          } 
+          }
         })
       },
     })
@@ -222,9 +224,9 @@ const ChannelPage: React.FC = () => {
                         清除
                       </Button>
                       <AuthEle id={62}>
-                      <Button type="primary" onClick={showAddDialog}>
-                        创建渠道
-                      </Button>
+                        <Button type="primary" onClick={showAddDialog}>
+                          创建渠道
+                        </Button>
                       </AuthEle>
                     </Space>
                   </Form.Item>
