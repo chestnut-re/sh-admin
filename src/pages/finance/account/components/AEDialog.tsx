@@ -60,8 +60,8 @@ const AEDialog: FC<Props> = ({ data, show = false, onSuccess, onClose }) => {
           endDate,
           phone: data?.phone,
         }).then((res) => {
-          setTableData(res.data.records)
-          setTotal(res.data.total)
+          setTableData(res.data?.records ?? [])
+          setTotal(res.data?.total)
         })
       })
       .catch((e) => {
