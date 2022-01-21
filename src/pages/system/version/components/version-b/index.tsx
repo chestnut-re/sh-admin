@@ -22,7 +22,7 @@ const VersionBPage: React.FC = () => {
   }, [pageIndex])
 
   const loadData = (pageIndex) => {
-    VersionService.list({ searchCount: pageIndex, size: pageSize, platform: 1 }).then((res) => {
+    VersionService.list({ current: pageIndex, size: pageSize, platform: 1 }).then((res) => {
       setData(res.data.records)
       setTotal(res.data.total)
     })
@@ -40,6 +40,21 @@ const VersionBPage: React.FC = () => {
     {
       title: '客户端类型',
       dataIndex: 'clientType',
+      render: (text: any, record: any) => {
+        if (record?.clientType == '1') {
+          return 'H5'
+        } else if (record?.clientType == '2') {
+          return '小程序'
+        } else if (record?.clientType == '2') {
+          return 'ios手机'
+        } else if (record?.clientType == '2') {
+          return 'ios_pad'
+        } else if (record?.clientType == '2') {
+          return '安卓手机'
+        } else if (record?.clientType == '2') {
+          return '安卓pad'
+        }
+      },
     },
     {
       title: '下载链接',

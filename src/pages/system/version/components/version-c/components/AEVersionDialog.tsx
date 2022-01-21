@@ -19,7 +19,7 @@ interface Props {
 const AEVersionDialog: FC<Props> = ({ data, mode, show = true, onSuccess, onClose }) => {
   const [form] = Form.useForm()
   const [title, setTitle] = useState('添加版本记录')
-  const [versionData, setVersionData] = useState({})
+  const [versionData, setVersionData] = useState<any>({})
   useEffect(() => {
     if (data?.id) {
       getVersion()
@@ -36,6 +36,7 @@ const AEVersionDialog: FC<Props> = ({ data, mode, show = true, onSuccess, onClos
       clientVersionNo: versionData?.clientVersionNo,
       minorVersionNo: versionData?.minorVersionNo,
       fileUrl: versionData?.fileUrl,
+      clientType: versionData?.clientType,
       versionContent: versionData?.versionContent,
       remark: versionData?.remark,
       mandatoryUpdate: versionData?.mandatoryUpdate,
