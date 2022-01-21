@@ -176,8 +176,8 @@ const AllocatedListPage: React.FC = () => {
     if (!dates || dates.length === 0) {
       return false
     }
-    const tooLate = dates[0] && current.diff(dates[0], 'years') > 1
-    const tooEarly = dates[1] && dates[1].diff(current, 'years') > 1
+    const tooLate = dates[0] && current.diff(dates[0], 'years') > 0
+    const tooEarly = dates[1] && dates[1].diff(current, 'years') > 0
     return tooEarly || tooLate
   }
 
