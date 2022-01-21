@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 
 interface UploadImageProps {
   value?: string
-  onChange?: (value: string) => void
+  onChange?: (value: string | undefined) => void
 }
 
 /**
@@ -41,9 +41,9 @@ const UploadImage: React.FC<UploadImageProps> = ({ onChange, value }) => {
     // if (!isJpgOrPng) {
     //   message.error('You can only upload JPG/PNG file!')
     // }
-    const isLt2M = file.size / 1024 / 1024 < 1
+    const isLt2M = file.size / 1024 / 1024 < 3
     if (!isLt2M) {
-      message.error('图片不能大于1M')
+      message.error('图片不能大于3M')
     }
     // return isJpgOrPng && isLt2M
     return isLt2M
@@ -55,6 +55,19 @@ const UploadImage: React.FC<UploadImageProps> = ({ onChange, value }) => {
       <div style={{ marginTop: 8 }}>上传图片</div>
     </div>
   )
+
+  // const delButton = (
+  //   <div
+  //     style={{ width: '30px', height: '30px', position: 'absolute', right: 0, top: 0 }}
+  //     onClick={(e) => {
+  //       console.log('删除')
+  //       e.preventDefault()
+  //       onChange?.(undefined)
+  //     }}
+  //   >
+  //     <div style={{ marginTop: 8 }}>删除</div>
+  //   </div>
+  // )
 
   let imgUrl
   if (imgObj.imageUrl && imgObj.imageUrl.startsWith('http')) {
@@ -68,12 +81,16 @@ const UploadImage: React.FC<UploadImageProps> = ({ onChange, value }) => {
       name="avatar"
       listType="picture-card"
       className="avatar-uploader"
+      style={{}}
       showUploadList={false}
       beforeUpload={beforeUpload}
       customRequest={customRequest}
     >
       {imgUrl ? (
-        <img src={imgUrl} alt="avatar" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+        <>
+          <img src={imgUrl} alt="avatar" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+          {/* {delButton} */}
+        </>
       ) : (
         uploadButton
       )}

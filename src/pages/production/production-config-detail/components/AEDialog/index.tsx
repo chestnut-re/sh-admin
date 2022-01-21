@@ -34,6 +34,16 @@ const AEDialog: FC<Props> = ({ data, type, show = false, onSuccess, onClose }) =
 
   useEffect(() => {
     console.log('data', data)
+    if (!show) {
+      // 清除内容图
+      console.log('清除内容图')
+      setContentImgs([
+        {
+          key: getNanoId(),
+          value: '',
+        },
+      ])
+    }
     if (!data) return
     form.resetFields()
     form.setFieldsValue({
