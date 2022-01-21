@@ -204,7 +204,7 @@ const AllocatedDetailsPage: React.FC = () => {
             <span style={{ display: 'inline-block', height: '20px', lineHeight: '20px' }}>
               <span style={{ fontSize: 20 }}>{parseInt(data?.adultNum) + parseInt(data?.childNum)}</span>
               <span>
-                &nbsp;成人×{data?.adultNum}儿童×{data?.childNum}
+                &nbsp;成人×{data?.adultNum}&nbsp;儿童×{data?.childNum}
               </span>
             </span>
           </div>
