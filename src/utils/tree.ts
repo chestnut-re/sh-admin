@@ -38,7 +38,7 @@ export const shellArrayDuo = (arr: any[], id: string, areas = 'areas', adcode = 
       const item = nowArr[i]
 
       if (item[adcode] == id) {
-        temp.unshift(item)
+        temp?.unshift(item)
         callback(arr, item[pid])
         break
       } else {

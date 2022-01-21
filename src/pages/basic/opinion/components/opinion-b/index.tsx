@@ -30,8 +30,8 @@ const OpinionCPage: React.FC = () => {
         beginTime,
         endTime,
       }).then((res) => {
-        setData(res.data.records)
-        setTotal(res.data.total)
+        setData(res.data?.records ?? [])
+        setTotal(res.data?.total)
       })
     })
   }

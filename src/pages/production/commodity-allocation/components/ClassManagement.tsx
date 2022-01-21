@@ -13,7 +13,7 @@ const ClassManagement: React.FC = () => {
   const { Option } = Select
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [addClassName, setAddClassName] = useState('')
-  const [parentList, setParentList] = useState([])
+  const [parentList, setParentList] = useState<any[]>([])
   const [parent, setParent] = useState('0')
 
   const handleOk = () => {

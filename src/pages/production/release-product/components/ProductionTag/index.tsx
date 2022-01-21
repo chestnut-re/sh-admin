@@ -24,7 +24,7 @@ const ProductionTag: React.FC<Props> = ({value, onChange}) => {
     setProductType([])
     ProductionService.tagList({ sortName: value }).then((res) => {
       setFetching(false)
-      setProductType(res.data)
+      setProductType(res.data ?? [])
     })
   }
 

@@ -32,7 +32,7 @@ const BannerListPage: React.FC = () => {
   const loadData = (pageIndex) => {
     BannerService.list({ current: pageIndex, size: pageSize }).then((res) => {
       console.log(res)
-      setData(res.data.records)
+      setData(res.data?.records ?? [])
       setTotal(res.data.total)
     })
   }

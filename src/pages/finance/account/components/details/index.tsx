@@ -24,7 +24,7 @@ const AccountDetails: React.FC = () => {
   const loadAllData = () => {
     FinanceAccountService.details({ phone: history.location.state.record?.phone }).then((res) => {
       if (res.code === HttpCode.success) {
-        setData(res.data)
+        setData(res.data ?? {})
       }
     })
   }

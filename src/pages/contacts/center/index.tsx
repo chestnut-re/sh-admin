@@ -67,8 +67,8 @@ const ContactsCenter: React.FC = () => {
       }
     }
     ContactsCenterApi.list(bodyData).then((res) => {
-      setData(res.data.records)
-      setTotal(res.data.total)
+      setData(res.data?.records ?? [])
+      setTotal(res.data?.total)
     })
   }
 
