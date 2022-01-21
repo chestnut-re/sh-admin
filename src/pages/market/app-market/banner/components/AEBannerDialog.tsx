@@ -5,7 +5,6 @@ import { HttpCode } from '@/constants/HttpCode'
 import dayjs from 'dayjs'
 import moment from 'moment'
 import UploadImage from '@/components/formItem/UploadImage'
-import { formateTime } from '@/utils/timeUtils'
 import locale from 'antd/lib/date-picker/locale/zh_CN'
 import 'moment/locale/zh-cn'
 moment.locale('zh-cn')

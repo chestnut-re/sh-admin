@@ -22,7 +22,7 @@ const BannerListPage: React.FC = () => {
   const [visible, setVisible] = useState(false)
 
   const [showDialog, setShowDialog] = useState(false)
-  const [selectedData, setSelectedData] = useState(null)
+  const [selectedData, setSelectedData] = useState<any>()
   const [dialogMode, setDialogMode] = useState<DialogMode>('add')
 
   useEffect(() => {
@@ -111,6 +111,7 @@ const BannerListPage: React.FC = () => {
 
   /**删除 */
   const _delItem = () => {
+    if (!selectedData) return
     BannerService.del({ id: selectedData.id }).then((res) => {
       if (res.code === HttpCode.success) {
         loadData(pageIndex)
