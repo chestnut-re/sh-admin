@@ -6,7 +6,6 @@ import { AllocationService } from '@/service/AllocationService'
 /**
  * 分类管理
  */
-
 const ListPage: React.FC = () => {
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
@@ -23,7 +22,7 @@ const ListPage: React.FC = () => {
   }, [pageIndex])
 
   const getList = (pageIndex) => {
-    AllocationService.list({ sortName: '' }).then((res) => {
+    AllocationService.list({ sortName: '', parentId: 0 }).then((res) => {
       setData(res?.data ?? [])
     })
   }
