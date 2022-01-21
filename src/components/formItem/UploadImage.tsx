@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 
 interface UploadImageProps {
   value?: string
-  onChange?: (value: string) => void
+  onChange?: (value: string | undefined) => void
 }
 
 /**
@@ -56,6 +56,19 @@ const UploadImage: React.FC<UploadImageProps> = ({ onChange, value }) => {
     </div>
   )
 
+  // const delButton = (
+  //   <div
+  //     style={{ width: '30px', height: '30px', position: 'absolute', right: 0, top: 0 }}
+  //     onClick={(e) => {
+  //       console.log('删除')
+  //       e.preventDefault()
+  //       onChange?.(undefined)
+  //     }}
+  //   >
+  //     <div style={{ marginTop: 8 }}>删除</div>
+  //   </div>
+  // )
+
   let imgUrl
   if (imgObj.imageUrl && imgObj.imageUrl.startsWith('http')) {
     imgUrl = imgObj.imageUrl
@@ -68,12 +81,16 @@ const UploadImage: React.FC<UploadImageProps> = ({ onChange, value }) => {
       name="avatar"
       listType="picture-card"
       className="avatar-uploader"
+      style={{}}
       showUploadList={false}
       beforeUpload={beforeUpload}
       customRequest={customRequest}
     >
       {imgUrl ? (
-        <img src={imgUrl} alt="avatar" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+        <>
+          <img src={imgUrl} alt="avatar" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+          {/* {delButton} */}
+        </>
       ) : (
         uploadButton
       )}
