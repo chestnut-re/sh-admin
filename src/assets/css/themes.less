@@ -1,32 +1,45 @@
-
-
-
 @primary-color: #5e7ce0;
 @default-color: #e9edfa;
 @text-color: #5e7ce0;
-
+@white: #000000;
+@black: #ffffff;
 // @success-color: red; // 成功色
 // @warning-color: red; // 警告色
 // @error-color: red; // 错误色
 @font-size-base: 14px; // 主字号
-@heading-color: #575D6C; // 标题色
+@heading-color: #575d6c; // 标题色
 @text-color: #252b3a; // 主文本色
 
-// @highlight-color: @red-5;
+@item-hover-bg: fade(@white, 8%);
+
+// Layer background
+@popover-background: #1f1f1f;
+@popover-customize-border-color: #3a3a3a;
+@body-background: @black;
+@component-background: #141414;
+
+@text-color: fade(@white, 85%);
+@text-color-secondary: fade(@white, 45%);
+@text-color-inverse: @white;
+@icon-color-hover: fade(@white, 75%);
+@heading-color: fade(@white, 85%);
+// Input
+// ---
+@input-bg: transparent;
+@input-placeholder-color: fade(@white, 30%);
+@input-icon-color: fade(@white, 30%);
+@input-number-handler-active-bg: @item-hover-bg;
+@input-icon-hover-color: fade(@white, 85%);
 @normal-color: #d9d9d9;
-@white: #000000;
-@black: #ffffff;
-
-
 // // Layout
-@layout-body-background: #FFFFFF;
-@layout-header-background: #526ECC;
+@layout-body-background: #ffffff;
+@layout-header-background: #526ecc;
 @layout-header-height: 82px;
 @layout-header-padding: 0 20px;
-@layout-header-color: #FFFFFF;
+@layout-header-color: #ffffff;
 // @layout-footer-padding: 24px 50px;
 // @layout-footer-background: @layout-body-background;
-@layout-sider-background: #FFFFFF;
+@layout-sider-background: #ffffff;
 // @layout-trigger-height: 48px;
 // @layout-trigger-background: #FFFFFF;
 // @layout-trigger-color: #575D6C;
@@ -40,24 +53,28 @@
 
 // @menu-dark-color: @text-color-secondary-dark;
 // @menu-dark-danger-color: @error-color;
-@menu-dark-bg: #FFFFFF;
+@menu-dark-bg: #ffffff;
 @menu-dark-arrow-color: #333333;
 @menu-dark-inline-submenu-bg: #ffffff;
-@menu-dark-highlight-color:@primary-color;
+@menu-dark-highlight-color: @primary-color;
 @menu-dark-item-active-bg: @default-color;
 // @menu-dark-item-active-danger-bg: @error-color;
 // @menu-dark-selected-item-icon-color: @white;
 // @menu-dark-selected-item-text-color: @white;
 // @menu-dark-item-hover-bg: transparent;
 
-
 // Table
 // --
-@table-header-bg: #BBCCFE;
+@table-header-bg: #bbccfe;
 @table-body-sort-bg: fade(@white, 1%);
-@table-row-hover-bg: #E9EDFA;
+@table-row-hover-bg: #e9edfa;
 @table-header-cell-split-color: fade(@white, 8%);
 @table-header-sort-bg: #262626;
 @table-header-filter-active-bg: #434343;
 @table-header-sort-active-bg: #303030;
 @table-fixed-header-sort-active-bg: #222;
+// Layer background
+@popover-background: #ffffff;
+@popover-customize-border-color: #3a3a3a;
+@body-background: @black;
+@component-background: #ffffff;

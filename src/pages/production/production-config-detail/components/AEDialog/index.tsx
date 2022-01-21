@@ -57,6 +57,15 @@ const AEDialog: FC<Props> = ({ data, type, show = false, onSuccess, onClose }) =
         ],
       ])
     }
+    if (!show) {
+      // 清除内容图
+      setContentImgs([
+        {
+          key: getNanoId(),
+          value: '',
+        },
+      ])
+    }
   }, [show, data])
 
   /**提交数据 */

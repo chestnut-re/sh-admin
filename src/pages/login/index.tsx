@@ -1,11 +1,12 @@
 /*
- * @Description: 
- * @LastEditTime: 2022-01-20 11:08:43
+ * @Description:
+ * @LastEditTime: 2022-01-21 14:25:16
  */
 import { useStore } from '@/store/context'
 import { getJWT } from '@/utils/biz'
 import { Button, Col, Form, Input, Row } from 'antd'
 import { observer } from 'mobx-react-lite'
+import logo from '@/assets/img/logo.png'
 import React, { useEffect } from 'react'
 import './index.less'
 
@@ -41,34 +42,37 @@ const LoginPage: React.FC = () => {
   return (
     <div className="LoginPage__root">
       <Row className="content">
-        <Col span={8}></Col>
-        <Col span={8}>
+        {/* <Col span={8}></Col> */}
+        <Col span={24}>
           <Form
             name="basic"
+            className="login"
             labelCol={{ span: 6 }}
-            wrapperCol={{ span: 12 }}
+            wrapperCol={{ span: 24 }}
             initialValues={{ remember: true }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             autoComplete="off"
             form={form}
           >
-            <Form.Item label="账号" name="username" rules={[{ required: true, message: '请输入账号' }]}>
-              <Input />
+            <img className="loginImg" src={logo} alt="" />
+            <div className="name">山海管理后台</div>
+            <Form.Item label="" className="username" name="username" rules={[{ required: true, message: '用户名输入错误' }]}>
+              <Input placeholder="请输入用户名" />
             </Form.Item>
-
-            <Form.Item label="密码" name="password" rules={[{ required: true, message: '请输入密码' }]}>
-              <Input.Password />
+            <div className="mb16"></div>
+            <Form.Item label="" className="password" name="password" rules={[{ required: true, message: '密码输入错误' }]}>
+              <Input.Password placeholder="请输入密码" />
             </Form.Item>
-
-            <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
-              <Button type="primary" htmlType="submit">
+            <div className="mb16"></div>
+            <Form.Item wrapperCol={{ span: 24 }}>
+              <Button type="primary" className="btn" htmlType="submit">
                 登录
               </Button>
             </Form.Item>
           </Form>
         </Col>
-        <Col span={8}></Col>
+        {/* <Col span={8}></Col> */}
       </Row>
     </div>
   )
