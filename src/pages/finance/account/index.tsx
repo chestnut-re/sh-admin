@@ -130,8 +130,8 @@ const AccountPage: React.FC = () => {
                   <Select style={{ width: 120 }}>
                     {channel?.map((item: any) => {
                       return (
-                        <Option value={item.id} key={item.id}>
-                          {item.name}
+                        <Option value={item?.id} key={item?.id}>
+                          {item?.name}
                         </Option>
                       )
                     })}
