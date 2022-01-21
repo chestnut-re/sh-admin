@@ -35,8 +35,8 @@ const ProductionCommissionListPage: React.FC = () => {
     const params = form.getFieldsValue()
     ProductionCommission.list({ current: pageIndex, size: tableState.pageSize, ...params }).then((res) => {
       setTableState({
-        data: res.data.records,
-        total: res.data.total,
+        data: res.data?.records,
+        total: res.data?.total,
       })
     })
   }
