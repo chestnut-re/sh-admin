@@ -1,3 +1,7 @@
+/*
+ * @Description: 
+ * @LastEditTime: 2022-01-21 18:50:14
+ */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
@@ -69,6 +73,17 @@ const webpackProdConfig = {
       deleteOriginalAssets: false, //是否删除源文件,删除的话不会有js文件，都是gz文件
     }),
   ],
+  devServer: {
+    host: '0.0.0.0',
+    // contentBase: path.join(__dirname, '../build'),
+    // compress: true,
+    port: 5002,
+    hot: true,
+    historyApiFallback: true, // router history 模式下需要
+    proxy: {
+      '/api': { target: 'https://prodapi.mountainseas.cn/', secure: false, changeOrigin: true },
+    },
+  },
 }
 
 const baseConfig = webpackConfigBase('production')
