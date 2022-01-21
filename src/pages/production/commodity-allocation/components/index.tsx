@@ -22,7 +22,7 @@ const ListPage: React.FC = () => {
   }, [pageIndex])
 
   const getList = (pageIndex) => {
-    AllocationService.list({ sortName: '', parentId: 0 }).then((res) => {
+    AllocationService.list({ sortName: '' }).then((res) => {
       setData(res?.data ?? [])
     })
   }
