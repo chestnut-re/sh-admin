@@ -46,7 +46,7 @@ const ChannelPage: React.FC = () => {
         endDate: endTime,
       }).then((res) => {
         if (res.code === HttpCode.success) {
-          setTotal(res.data.total)
+          setTotal(res.data?.total)
           setData(
             res.data?.records.map((i) => {
               i.key = getNanoId()
@@ -212,8 +212,8 @@ const ChannelPage: React.FC = () => {
                 <Select style={{ width: 120 }}>
                   {channelData?.map((item: any) => {
                     return (
-                      <Option value={item.id} key={item.id}>
-                        {item.name}
+                      <Option value={item?.id} key={item?.id}>
+                        {item?.name}
                       </Option>
                     )
                   })}
