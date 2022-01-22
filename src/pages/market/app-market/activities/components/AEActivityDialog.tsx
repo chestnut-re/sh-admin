@@ -28,8 +28,11 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
   const [goodsRoleList, setGoodsRoleList] = useState<Array<any>>([])
 
   useEffect(() => {
+    if (!show) {
+      form.resetFields()
+    }
     if (show) {
-      console.log(data,'data')
+      console.log(data, 'data')
       form.setFieldsValue({
         id: data?.id,
         activityTitle: data?.activityTitle,
@@ -110,8 +113,8 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
     })
     setGoodsRoleList(e)
   }
-  const onChangePicker = (e)=>{
-    if((new Date().getTime())>(new Date(e[1]).getTime())){
+  const onChangePicker = (e) => {
+    if (new Date().getTime() > new Date(e[1]).getTime()) {
       message.info('结束时间不能小于当前时间/开始时间')
     }
   }
@@ -146,7 +149,7 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
                 rules={[{ required: false, message: '请选择活动展示时间' }]}
               >
                 <DatePicker.RangePicker
-                onChange={onChangePicker}
+                  onChange={onChangePicker}
                   format="YYYY-MM-DD HH:mm:ss"
                   defaultValue={[
                     dayjsFormat(data?.startDate, 'YYYY-MM-DD HH:mm:ss'),
@@ -157,7 +160,7 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
                   }}
                 />
               </Form.Item>
-              <Form.Item label="状态" name="state" >
+              <Form.Item label="状态" name="state">
                 <Radio.Group>
                   {Object.keys(specialState)
                     .sort()

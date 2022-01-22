@@ -28,6 +28,9 @@ const AEBannerDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClos
   const { RangePicker } = DatePicker
 
   useEffect(() => {
+    if (!show) {
+      form.resetFields()
+    }
     form.setFieldsValue({
       bannerImg: data?.bannerImg,
       title: data?.title,
@@ -40,8 +43,8 @@ const AEBannerDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClos
 
   /**提交数据 */
   const _handleUpdate = async () => {
-    console.log(form.getFieldsValue());
-    
+    console.log(form.getFieldsValue())
+
     form
       .validateFields()
       .then((formData) => {
@@ -69,6 +72,7 @@ const AEBannerDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClos
   }
 
   const _formClose = () => {
+    console.log('_formClose')
     form.resetFields()
     onClose()
   }

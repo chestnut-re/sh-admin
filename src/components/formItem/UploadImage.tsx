@@ -14,9 +14,14 @@ interface UploadImageProps {
 const UploadImage: React.FC<UploadImageProps> = ({ onChange, value }) => {
   const [loading, setLoading] = useState(false)
   const [imgObj, setImgObj] = useState<any>({})
-  const [fullUrl, setFullUrl] = useState<string>()
+  const [fullUrl, setFullUrl] = useState<string | undefined>()
 
   useEffect(() => {
+    if (!value) {
+      setImgObj({})
+      setFullUrl(undefined)
+    }
+
     if (value && !value?.startsWith('https')) {
       FileService.getFileDownloadUrl(value).then((res) => {
         setFullUrl(res.data)
