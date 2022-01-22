@@ -40,6 +40,8 @@ const AEBannerDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClos
 
   /**提交数据 */
   const _handleUpdate = async () => {
+    console.log(form.getFieldsValue());
+    
     form
       .validateFields()
       .then((formData) => {

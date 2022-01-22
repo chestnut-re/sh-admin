@@ -145,9 +145,8 @@ const AEDialog: FC<Props> = ({ data, type, show = false, onSuccess, onClose }) =
         ])
       }
     } else {
-      console.log('del', key)
       // del
-      setContentImgs(contentImgs.filter((i) => i.key === key))
+      setContentImgs(contentImgs.filter((i) => i.key !== key))
     }
   }
 

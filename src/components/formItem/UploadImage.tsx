@@ -1,5 +1,5 @@
 import { FileService } from '@/service/FileService'
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
+import { DeleteOutlined, LoadingOutlined, PlusOutlined } from '@ant-design/icons'
 import { message, Upload } from 'antd'
 import React, { useEffect, useState } from 'react'
 
@@ -56,18 +56,20 @@ const UploadImage: React.FC<UploadImageProps> = ({ onChange, value }) => {
     </div>
   )
 
-  // const delButton = (
-  //   <div
-  //     style={{ width: '30px', height: '30px', position: 'absolute', right: 0, top: 0 }}
-  //     onClick={(e) => {
-  //       console.log('删除')
-  //       e.preventDefault()
-  //       onChange?.(undefined)
-  //     }}
-  //   >
-  //     <div style={{ marginTop: 8 }}>删除</div>
-  //   </div>
-  // )
+  const delButton = (
+    <div
+      style={{ width: '30px', height: '30px', position: 'absolute', right: 0, top: 0 }}
+      onClick={(e) => {
+        console.log('删除')
+        e.preventDefault()
+        setImgObj({})
+        setFullUrl(undefined)
+        onChange?.(undefined)
+      }}
+    >
+      <DeleteOutlined style={{ color: 'white', padding: '8px 8px' }} />
+    </div>
+  )
 
   let imgUrl
   if (imgObj.imageUrl && imgObj.imageUrl.startsWith('http')) {
@@ -77,24 +79,26 @@ const UploadImage: React.FC<UploadImageProps> = ({ onChange, value }) => {
   }
 
   return (
-    <Upload
-      name="avatar"
-      listType="picture-card"
-      className="avatar-uploader"
-      style={{}}
-      showUploadList={false}
-      beforeUpload={beforeUpload}
-      customRequest={customRequest}
-    >
+    <>
       {imgUrl ? (
-        <>
+        <div className="ant-upload ant-upload-select ant-upload-select-picture-card" style={{ position: 'relative' }}>
           <img src={imgUrl} alt="avatar" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-          {/* {delButton} */}
-        </>
+          {delButton}
+        </div>
       ) : (
-        uploadButton
+        <Upload
+          name="avatar"
+          listType="picture-card"
+          className="avatar-uploader"
+          style={{}}
+          showUploadList={false}
+          beforeUpload={beforeUpload}
+          customRequest={customRequest}
+        >
+          {uploadButton}
+        </Upload>
       )}
-    </Upload>
+    </>
   )
 
   // return (
