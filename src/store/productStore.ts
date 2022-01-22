@@ -271,7 +271,7 @@ class ProductionData {
     if (travelType !== 0) {
       travelGoods[travelTypeKey[travelType]] = { ...travelDetail }
     }
-    const newTravelDetail = { key: getNanoId(), travelType: travelType, travelGoods: travelGoods }
+    const newTravelDetail = { key: getNanoId(), travelType: travelType, travelGoods: travelGoods, travelTime: '12:00' }
     lastDay.travelDetails.push(newTravelDetail)
 
     this.updateGoods(editGoodsPrices[0])
