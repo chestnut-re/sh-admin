@@ -70,7 +70,6 @@ instance.interceptors.response.use(
         res.data.code === '010012'
       ) {
         // 登录态失效
-        message.error('用户被踢出')
         setTimeout(() => {
           userLoginOut()
         }, 2000)
