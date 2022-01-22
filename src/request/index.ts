@@ -70,12 +70,14 @@ instance.interceptors.response.use(
         res.data.code === '010012'
       ) {
         // 登录态失效
-        userLoginOut()
+        message.error('用户被踢出')
+        setTimeout(() => {
+          userLoginOut()
+        }, 2000)
         return
       }
       return Promise.resolve(res.data)
     } else {
-      
       return Promise.reject(res.data)
     }
   },
