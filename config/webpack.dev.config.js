@@ -24,8 +24,8 @@ const webpackConfigDev = {
     hot: true,
     historyApiFallback: true, // router history 模式下需要
     proxy: {
-      // '/api': { target: 'https://devapi.mountainseas.cn/', secure: false, changeOrigin: true },
-      '/api': { target: 'https://prodapi.mountainseas.cn/', secure: false, changeOrigin: true },
+      '/api': { target: 'https://devapi.mountainseas.cn/', secure: false, changeOrigin: true },
+      // '/api': { target: 'https://prodapi.mountainseas.cn/', secure: false, changeOrigin: true },
       // '/api': { target: 'https://testapi.mountainseas.cn/', secure: false, changeOrigin: true },
       // '/api': { target: 'https://devapi.mountainseas.cn/', secure: false, changeOrigin: true },
       // '/api': { target: 'http://testapi.mountainseas.cn/', secure: false, changeOrigin: true },
