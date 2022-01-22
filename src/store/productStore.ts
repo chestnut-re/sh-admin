@@ -7,7 +7,7 @@ import { action, makeObservable, observable } from 'mobx'
 export const getPriceFromTravels = (travels: any[], priceKeyStr: string) => {
   let sum = 0
   travels.map((item) => {
-    item.travelDetails.map((travelDetail) => {
+    item.travelDetails?.map((travelDetail) => {
       if (travelDetail.travelGoods.airTicket) {
         sum += travelDetail.travelGoods.airTicket[priceKeyStr]
       }
