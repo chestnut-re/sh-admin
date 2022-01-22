@@ -28,9 +28,6 @@ const AEBannerDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClos
   const { RangePicker } = DatePicker
 
   useEffect(() => {
-    if (!show) {
-      form.resetFields()
-    }
     form.setFieldsValue({
       bannerImg: data?.bannerImg,
       title: data?.title,
@@ -78,7 +75,7 @@ const AEBannerDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClos
   }
 
   return (
-    <Modal title="轮播图配置" visible={show} onOk={_handleUpdate} onCancel={_formClose}>
+    <Modal title="轮播图配置" visible={show} onOk={_handleUpdate} onCancel={_formClose} afterClose={_formClose}>
       <Form
         name="basic"
         labelCol={{ span: 6 }}

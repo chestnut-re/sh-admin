@@ -94,7 +94,15 @@ const AEBannerDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClos
   }
 
   return (
-    <Modal title="提现审核" visible={show} onOk={_handleUpdate} onCancel={_formClose} okText="确认" cancelText="取消">
+    <Modal
+      title="提现审核"
+      visible={show}
+      onOk={_handleUpdate}
+      onCancel={_formClose}
+      okText="确认"
+      cancelText="取消"
+      afterClose={_formClose}
+    >
       <Form
         name="basic"
         labelCol={{ span: 6 }}

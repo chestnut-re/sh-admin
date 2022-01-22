@@ -120,7 +120,14 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
   }
   return (
     <>
-      <Modal title="专题配置" width={800} visible={show} onOk={_handleUpdate} onCancel={_formClose}>
+      <Modal
+        title="专题配置"
+        width={800}
+        visible={show}
+        onOk={_handleUpdate}
+        onCancel={_formClose}
+        afterClose={_formClose}
+      >
         <Form
           name="basic"
           labelCol={{ span: 6 }}
