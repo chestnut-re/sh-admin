@@ -7,7 +7,7 @@ import { cityDispose } from '@/utils/tree'
 import AEDialog from './component/AEDialog'
 import ChannelListTree from '@/components/components/ChannelListTree'
 import { DialogMode, createChannel } from '@/utils/enum'
-import {AuthEle} from '@/components/Common/AuthEle'
+import { AuthEle } from '@/components/Common/AuthEle'
 /*
  * 人员管理
  */
@@ -39,7 +39,7 @@ const PersonnelManagement: React.FC = () => {
     console.log(params)
     let newChannelId = channelId
     if (!newChannelId) {
-      newChannelId = structure[0].level==1? structure[0].children[0].id:structure[0].id// 设置默认选中 channelId
+      newChannelId = structure[0].level == 1 ? structure[0].children[0].id : structure[0].id // 设置默认选中 channelId
     }
     PersonService.list({ current: pageIndex, pageSize: pageSize, ...params, channelId: newChannelId }).then((res) => {
       setData(res.data?.records)
@@ -137,18 +137,18 @@ const PersonnelManagement: React.FC = () => {
           </Button> */}
           {/* <Button type="default">查看</Button> */}
           <AuthEle id={72}>
-          <Popconfirm
-            title="确定删除吗"
-            onConfirm={() => {
-              del({ userId: record.userId }).then(() => {
-                loadData(pageIndex)
-              })
-            }}
-            okText="确定"
-            cancelText="取消"
-          >
-            <Button danger>删除</Button>
-          </Popconfirm>
+            <Popconfirm
+              title="确定删除吗"
+              onConfirm={() => {
+                del({ userId: record.userId }).then(() => {
+                  loadData(pageIndex)
+                })
+              }}
+              okText="确定"
+              cancelText="取消"
+            >
+              <Button danger>删除</Button>
+            </Popconfirm>
           </AuthEle>
         </Space>
       ),
@@ -205,7 +205,7 @@ const PersonnelManagement: React.FC = () => {
           {structure.length > 0 ? (
             <ChannelListTree
               structure={structure}
-              defaultSelectedKeys={structure[0].level==1? structure[0].children[0].id:structure[0].id}
+              defaultSelectedKeys={structure[0].level == 1 ? structure[0].children[0].id : structure[0].id}
               onSelectStructure={_onSelectStructure}
             />
           ) : (
@@ -234,21 +234,19 @@ const PersonnelManagement: React.FC = () => {
                 </Col>
                 <Form.Item wrapperCol={{ offset: 4, span: 12 }}>
                   <Space size={16}>
-                    <Button type="primary" htmlType="submit">
-                      查询
-                    </Button>
+                    <Button htmlType="submit">查询</Button>
                     <Button htmlType="button" onClick={resetTable}>
                       重置
                     </Button>
                     <AuthEle id={70}>
-                    <Button
-                      type="primary"
-                      onClick={() => {
-                        showAdd()
-                      }}
-                    >
-                      添加人员
-                    </Button>
+                      <Button
+                        type="primary"
+                        onClick={() => {
+                          showAdd()
+                        }}
+                      >
+                        添加人员
+                      </Button>
                     </AuthEle>
                   </Space>
                 </Form.Item>

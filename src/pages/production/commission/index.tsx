@@ -170,9 +170,7 @@ const ProductionCommissionListPage: React.FC = () => {
                 <Button type="primary" onClick={showAdd}>
                   添加
                 </Button>
-                <Button type="primary" htmlType="submit">
-                  查询
-                </Button>
+                <Button htmlType="submit">查询</Button>
                 <Button type="primary" onClick={resetTable}>
                   重置
                 </Button>

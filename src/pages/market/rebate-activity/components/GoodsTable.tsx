@@ -11,12 +11,12 @@ import React, { useEffect, useState } from 'react'
 interface Props {
   goodsShow: boolean
   goodsIdList: any
-  query?:any
-  goodsAlreadyData?:any
+  query?: any
+  goodsAlreadyData?: any
   onSuccess: (any: any, e?: any) => void
   onClose: () => void
 }
-const GoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList,goodsAlreadyData, onSuccess, onClose ,query}) => {
+const GoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList, goodsAlreadyData, onSuccess, onClose, query }) => {
   const [form] = Form.useForm()
   const [roleList, setRoleList] = useState('')
   const [selectedRows, setSelectedRows] = useState([])
@@ -33,8 +33,8 @@ const GoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList,goodsAlreadyData, 
   }, [goodsShow])
   const getGoodsDetail = async () => {
     const params = form.getFieldsValue()
-    const res = await ActivitiesService.activityGoodsPage({ ...params,...query })
-    setData([...res?.data,...goodsAlreadyData??[]])
+    const res = await ActivitiesService.activityGoodsPage({ ...params, ...query })
+    setData([...res?.data, ...(goodsAlreadyData ?? [])])
   }
   const columns = [
     {
@@ -79,9 +79,7 @@ const GoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList,goodsAlreadyData, 
             </Col>
             <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
               <Space>
-                <Button type="primary" htmlType="submit">
-                  查询
-                </Button>
+                <Button htmlType="submit">查询</Button>
                 <Button onClick={resetTable} htmlType="button">
                   重置
                 </Button>

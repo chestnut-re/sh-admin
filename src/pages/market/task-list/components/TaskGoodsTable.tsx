@@ -11,7 +11,7 @@ import React, { useEffect, useState } from 'react'
 interface Props {
   goodsShow: boolean
   goodsIdList: any
-  onSuccess: (any:any,e:any) => void
+  onSuccess: (any: any, e: any) => void
   onClose: () => void
 }
 const ActivityGoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess, onClose }) => {
@@ -48,7 +48,7 @@ const ActivityGoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess
     },
   ]
   const _handleUpdate = () => {
-    onSuccess(roleList,selectedRows)
+    onSuccess(roleList, selectedRows)
   }
   const _formClose = () => {
     onClose()
@@ -80,9 +80,7 @@ const ActivityGoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess
             </Col>
             <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
               <Space>
-                <Button type="primary" htmlType="submit">
-                  查询
-                </Button>
+                <Button htmlType="submit">查询</Button>
                 <Button onClick={resetTable} htmlType="button">
                   重置
                 </Button>

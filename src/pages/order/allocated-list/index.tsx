@@ -234,9 +234,7 @@ const AllocatedListPage: React.FC = () => {
             </Col>
             <Form.Item wrapperCol={{ offset: 4, span: 12 }}>
               <Space>
-                <Button type="primary" htmlType="submit">
-                  查询
-                </Button>
+                <Button htmlType="submit">查询</Button>
                 <Button htmlType="button" onClick={resetTable}>
                   重置
                 </Button>

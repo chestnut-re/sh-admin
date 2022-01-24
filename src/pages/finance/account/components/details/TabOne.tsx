@@ -116,9 +116,7 @@ const TabOnePage: React.FC<Props> = ({ data }) => {
             </Col>
             <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
               <Space>
-                <Button type="primary" htmlType="submit">
-                  查询
-                </Button>
+                <Button htmlType="submit">查询</Button>
                 <Button htmlType="submit">重置</Button>
               </Space>
             </Form.Item>

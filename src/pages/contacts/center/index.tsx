@@ -1,4 +1,4 @@
-import { Space, Table, Popconfirm, Form, Row, Col,Tag, Button, DatePicker, Divider, Input, message } from 'antd'
+import { Space, Table, Popconfirm, Form, Row, Col, Tag, Button, DatePicker, Divider, Input, message } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { ContactsCenterApi } from '@/service/ContactsCenter'
 import dayjs from 'dayjs'
@@ -54,16 +54,16 @@ const ContactsCenter: React.FC = () => {
       current: pageIndex,
       pageSize: PAGE_SIZE,
       keyword: form.getFieldValue('keyword'),
-      createTimeStart:"",
-      createTimeEnd:""
+      createTimeStart: '',
+      createTimeEnd: '',
     }
     const Times = form.getFieldValue('time')
     if (Times) {
       const [Start, End] = Times
       bodyData = {
         ...bodyData,
-        createTimeStart: dayjs(Start).unix()* 1000,
-        createTimeEnd: dayjs(End).unix()* 1000,
+        createTimeStart: dayjs(Start).unix() * 1000,
+        createTimeEnd: dayjs(End).unix() * 1000,
       }
     }
     ContactsCenterApi.list(bodyData).then((res) => {
@@ -134,11 +134,7 @@ const ContactsCenter: React.FC = () => {
     {
       title: '状态',
       dataIndex: 'state',
-      render: (text, record) => (
-        <Tag color={record.state?'green':'volcano'}>
-              {record.state?'启用':'禁用'}
-            </Tag>
-      ),
+      render: (text, record) => <Tag color={record.state ? 'green' : 'volcano'}>{record.state ? '启用' : '禁用'}</Tag>,
     },
     {
       title: '操作',
@@ -178,9 +174,7 @@ const ContactsCenter: React.FC = () => {
             </Form.Item>
             <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
               <Space>
-                <Button type="primary" htmlType="submit">
-                  查询
-                </Button>
+                <Button htmlType="submit">查询</Button>
               </Space>
             </Form.Item>
           </Form>
@@ -207,7 +201,7 @@ const ContactsCenter: React.FC = () => {
           showQuickJumper: true,
           pageSize: PAGE_SIZE,
           total: total,
-          current:pageIndex
+          current: pageIndex,
         }}
       />
       <AEDialog

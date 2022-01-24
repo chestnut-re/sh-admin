@@ -1,5 +1,12 @@
 /* eslint-disable react/display-name */
-import { InputTemp, SelectTemp, TimePickerTemp, DatePickerTemp, RangePickerTemp, LowAndHighTemp } from '@/components/filter/formItem'
+import {
+  InputTemp,
+  SelectTemp,
+  TimePickerTemp,
+  DatePickerTemp,
+  RangePickerTemp,
+  LowAndHighTemp,
+} from '@/components/filter/formItem'
 import { delUser, userList } from '@/service/user'
 import { Button, Col, Form, Row, Space, Table } from 'antd'
 import React, { useEffect, useState } from 'react'
@@ -154,9 +161,7 @@ const UserPage: React.FC = () => {
 
           <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
             <Space>
-              <Button type="primary" htmlType="submit">
-                查询
-              </Button>
+              <Button htmlType="submit">查询</Button>
               <Button htmlType="button" onClick={onReset}>
                 清除
               </Button>

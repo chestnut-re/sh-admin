@@ -180,9 +180,7 @@ const RolePage: React.FC = () => {
                 <Col span={5}>
                   <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
                     <Space>
-                      <Button type="primary" htmlType="submit">
-                        查询
-                      </Button>
+                      <Button htmlType="submit">查询</Button>
                       <Button htmlType="button" onClick={onReset}>
                         清除
                       </Button>

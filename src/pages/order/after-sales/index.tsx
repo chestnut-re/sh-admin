@@ -243,9 +243,7 @@ const AfterSalesListPage: React.FC = () => {
             </Col>
             <Form.Item wrapperCol={{ offset: 0, span: 4 }}>
               <Space>
-                <Button type="primary" htmlType="submit">
-                  查询
-                </Button>
+                <Button htmlType="submit">查询</Button>
                 <Button htmlType="button" onClick={resetTable}>
                   重置
                 </Button>
