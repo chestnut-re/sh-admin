@@ -195,13 +195,16 @@ const BannerListPage: React.FC = () => {
           total: total,
         }}
       />
-      <AEBannerDialog
-        data={selectedData}
-        mode={dialogMode}
-        onSuccess={_onDialogSuccess}
-        show={showDialog}
-        onClose={_onDialogClose}
-      />
+      {showDialog && (
+        <AEBannerDialog
+          data={selectedData}
+          mode={dialogMode}
+          onSuccess={_onDialogSuccess}
+          show={showDialog}
+          onClose={_onDialogClose}
+        />
+      )}
+
       <Modal title="提示" visible={visible} okText="确认删除" cancelText="取消" onOk={_delItem} onCancel={handleCancel}>
         <span>是否确认删除?</span>
       </Modal>

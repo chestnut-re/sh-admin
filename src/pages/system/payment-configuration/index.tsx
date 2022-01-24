@@ -105,13 +105,15 @@ const PaymentConfigurationPage: React.FC = () => {
           total: total,
         }}
       />
-      <AEPaymentDialog
-        data={selectedData}
-        mode={dialogMode}
-        onSuccess={_onDialogSuccess}
-        show={showDialog}
-        onClose={_onDialogClose}
-      />
+      {showDialog && (
+        <AEPaymentDialog
+          data={selectedData}
+          mode={dialogMode}
+          onSuccess={_onDialogSuccess}
+          show={showDialog}
+          onClose={_onDialogClose}
+        />
+      )}
     </div>
   )
 }
