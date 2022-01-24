@@ -63,22 +63,24 @@ const DraftListPage: React.FC = observer(() => {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button
+          <span
+            className="operation"
             onClick={() => {
               console.log(record)
               history.push(`/production/release-product?id=${record.id}`)
             }}
           >
             编辑
-          </Button>
-          <Button
+          </span>
+          <span
+            className="operation"
             onClick={() => {
               setShowModal(true)
               setDelId(record.id)
             }}
           >
             删除
-          </Button>
+          </span>
         </Space>
       ),
     },
@@ -121,9 +123,7 @@ const DraftListPage: React.FC = observer(() => {
             </Col>
             <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
               <Space>
-                <Button type="primary" htmlType="submit">
-                  查询
-                </Button>
+                <Button htmlType="submit">查询</Button>
                 <Button onClick={resetTable} htmlType="button">
                   重置
                 </Button>

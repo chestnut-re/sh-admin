@@ -89,8 +89,12 @@ const RolePage: React.FC = () => {
       render: (_text: any, record: any) => (
         <Space size="middle">
           {/* <Button >查看</Button> */}
-          <Button onClick={() => showAddDialog(record, false)}>编辑</Button>
-          <Button onClick={() => _delete(record)}>删除</Button>
+          <span className="operation" onClick={() => showAddDialog(record, false)}>
+            编辑
+          </span>
+          <span className="operation" onClick={() => _delete(record)}>
+            删除
+          </span>
         </Space>
       ),
     },
@@ -180,9 +184,7 @@ const RolePage: React.FC = () => {
                 <Col span={5}>
                   <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
                     <Space>
-                      <Button type="primary" htmlType="submit">
-                        查询
-                      </Button>
+                      <Button htmlType="submit">查询</Button>
                       <Button htmlType="button" onClick={onReset}>
                         清除
                       </Button>

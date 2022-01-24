@@ -79,7 +79,9 @@ const ProductionCommissionListPage: React.FC = () => {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button onClick={() => _editDialog(record)}>查看详情</Button>
+          <span className="operation" onClick={() => _editDialog(record)}>
+            查看详情
+          </span>
           {/* <Button onClick={() => _delItem(record)}>删除</Button> */}
         </Space>
       ),
@@ -170,9 +172,7 @@ const ProductionCommissionListPage: React.FC = () => {
                 <Button type="primary" onClick={showAdd}>
                   添加
                 </Button>
-                <Button type="primary" htmlType="submit">
-                  查询
-                </Button>
+                <Button htmlType="submit">查询</Button>
                 <Button type="primary" onClick={resetTable}>
                   重置
                 </Button>

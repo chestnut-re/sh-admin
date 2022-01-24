@@ -58,8 +58,10 @@ const PaymentConfigurationPage: React.FC = () => {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button onClick={() => _editDialog(record)}>编辑</Button>
-          <Button>删除</Button>
+          <span className="operation" onClick={() => _editDialog(record)}>
+            编辑
+          </span>
+          <span className="operation">删除</span>
         </Space>
       ),
     },

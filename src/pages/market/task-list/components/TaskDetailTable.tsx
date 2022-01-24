@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react'
 import { ActivitiesService } from '@/service/ActivitiesService'
 interface Props {
   goodsIdList: any
-  onSuccess: (any:any) => void
+  onSuccess: (any: any) => void
 }
 const ActivityDetailTable: React.FC<Props> = ({ goodsIdList, onSuccess }) => {
   const [data, setData] = useState([])
@@ -26,7 +26,7 @@ const ActivityDetailTable: React.FC<Props> = ({ goodsIdList, onSuccess }) => {
   //   setData(goodsList)
   // }
   const _delItem = (record, index) => {
-   data.splice(index, 1)
+    data.splice(index, 1)
     // console.log(data,'goodsIdLists.splice(index, 1)')
     onSuccess(data)
   }
@@ -43,7 +43,9 @@ const ActivityDetailTable: React.FC<Props> = ({ goodsIdList, onSuccess }) => {
       title: '操作',
       render: (text: any, record: any, index) => (
         <Space size="middle">
-          <Button onClick={() => _delItem(record, index)}>移除</Button>
+          <span className="operation" onClick={() => _delItem(record, index)}>
+            移除
+          </span>
         </Space>
       ),
     },

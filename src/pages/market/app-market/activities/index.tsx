@@ -7,7 +7,7 @@ import { HttpCode } from '@/constants/HttpCode'
 import RemainTime from '@/components/tableColumn/RemainTime'
 import ImageColumn from '@/components/tableColumn/ImageColumn'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
-import {status} from './utils'
+import { status } from './utils'
 /**
  * App营销-Activity管理-List
  */
@@ -90,8 +90,12 @@ const BannerListPage: React.FC = () => {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button onClick={() => _editDialog(record)}>编辑</Button>
-          <Button onClick={() => _delItem(record)}>删除</Button>
+          <span className="operation" onClick={() => _editDialog(record)}>
+            编辑
+          </span>
+          <span className="operation" onClick={() => _delItem(record)}>
+            删除
+          </span>
         </Space>
       ),
     },

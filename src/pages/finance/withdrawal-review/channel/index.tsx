@@ -137,8 +137,14 @@ const ChannelPage: React.FC = () => {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button onClick={() => toDetails(record)}>详情</Button>
-          {record?.sts == 1 ? <Button onClick={() => _editDialog(record)}>审核</Button> : null}
+          <span className="operation" onClick={() => toDetails(record)}>
+            详情
+          </span>
+          {record?.sts == 1 ? (
+            <span className="operation" onClick={() => _editDialog(record)}>
+              审核
+            </span>
+          ) : null}
         </Space>
       ),
     },
@@ -227,9 +233,7 @@ const ChannelPage: React.FC = () => {
             </Col>
             <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
               <Space>
-                <Button type="primary" htmlType="submit">
-                  查询
-                </Button>
+                <Button htmlType="submit">查询</Button>
                 <Button htmlType="button" onClick={_export}>
                   导出
                 </Button>

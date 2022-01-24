@@ -141,6 +141,7 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
                             五级&nbsp;&nbsp;{item.channelName}/{item.userName}
                           </span>
                         ) : null}
+                        {item.level == null ? <span>{item.userName}</span> : null}
                         <Input
                           className="bDer"
                           value={item.scale}

@@ -70,14 +70,17 @@ const AdminListPage: React.FC = () => {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button onClick={() => _editDialog(record)}>编辑</Button>
-          <Button
+          <span onClick={() => _editDialog(record)} className="operation">
+            编辑
+          </span>
+          <span
             onClick={() => {
               _delete(record)
             }}
+            className="operation"
           >
             删除
-          </Button>
+          </span>
         </Space>
       ),
     },
@@ -178,9 +181,7 @@ const AdminListPage: React.FC = () => {
             </Col>
             <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
               <Space>
-                <Button type="primary" htmlType="submit">
-                  查询
-                </Button>
+                <Button htmlType="submit">查询</Button>
                 <Button htmlType="button" onClick={resetTable}>
                   重置
                 </Button>

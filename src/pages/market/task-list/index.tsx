@@ -66,16 +66,21 @@ const TaskListPage: React.FC = () => {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button
+          <span
+            className="operation"
             onClick={() => {
               setDeShowDialog(!deShowDialog)
               setSelectedData(record)
             }}
           >
             查看
-          </Button>
-          <Button onClick={() => _editState(record)}>{record.state != 0 ? '启用' : '禁用'}</Button>
-          <Button onClick={() => _delItem(record)}>删除</Button>
+          </span>
+          <span className="operation" onClick={() => _editState(record)}>
+            {record.state != 0 ? '启用' : '禁用'}
+          </span>
+          <span className="operation" onClick={() => _delItem(record)}>
+            删除
+          </span>
         </Space>
       ),
     },
@@ -158,7 +163,7 @@ const TaskListPage: React.FC = () => {
           onFinishFailed={onFinishFailed}
           form={form}
         >
-          <Row gutter={[5, 0]} style={{ paddingLeft: '10px',paddingTop:'20px' }}>
+          <Row gutter={[5, 0]} style={{ paddingLeft: '10px', paddingTop: '20px' }}>
             <Col span={4}>
               <InputTemp name="idOrName" placeholder="清单名称" />
             </Col>
@@ -182,9 +187,7 @@ const TaskListPage: React.FC = () => {
             </Col>
             <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
               <Space>
-                <Button type="primary" htmlType="submit">
-                  查询
-                </Button>
+                <Button htmlType="submit">查询</Button>
                 <Button onClick={resetTable} htmlType="button">
                   重置
                 </Button>
@@ -207,23 +210,26 @@ const TaskListPage: React.FC = () => {
           total: total,
         }}
       />
-      {
-        showDialog==true? <AEBannerDialog
-        data={selectedData}
-        mode={dialogMode}
-        onSuccess={_onDialogSuccess}
-        show={showDialog}
-        onClose={_onDialogClose}
-      />:''
-      }
-     {
-       deShowDialog==true? <DEDialog
-       onChange={() => setDeShowDialog(false)}
-       show={deShowDialog}
-       data={() => <TaskBasicInfo dataValue={selectedData}></TaskBasicInfo>}
-     ></DEDialog>:''
-     }
-     
+      {showDialog == true ? (
+        <AEBannerDialog
+          data={selectedData}
+          mode={dialogMode}
+          onSuccess={_onDialogSuccess}
+          show={showDialog}
+          onClose={_onDialogClose}
+        />
+      ) : (
+        ''
+      )}
+      {deShowDialog == true ? (
+        <DEDialog
+          onChange={() => setDeShowDialog(false)}
+          show={deShowDialog}
+          data={() => <TaskBasicInfo dataValue={selectedData}></TaskBasicInfo>}
+        ></DEDialog>
+      ) : (
+        ''
+      )}
     </div>
   )
 }

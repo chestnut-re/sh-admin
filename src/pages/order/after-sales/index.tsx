@@ -118,7 +118,9 @@ const AfterSalesListPage: React.FC = () => {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button onClick={() => _editDialog(record)}>审核</Button>
+          <span className="operation" onClick={() => _editDialog(record)}>
+            审核
+          </span>
           {/* <Button
             onClick={() => {
               toDetails(record)
@@ -243,9 +245,7 @@ const AfterSalesListPage: React.FC = () => {
             </Col>
             <Form.Item wrapperCol={{ offset: 0, span: 4 }}>
               <Space>
-                <Button type="primary" htmlType="submit">
-                  查询
-                </Button>
+                <Button htmlType="submit">查询</Button>
                 <Button htmlType="button" onClick={resetTable}>
                   重置
                 </Button>

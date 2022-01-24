@@ -82,7 +82,8 @@ const ReviewActivity: React.FC = () => {
       render: (text: any, record: any) => (
         <Space size="middle">
           {record.auditResult == 0 ? (
-            <Button
+            <span
+              className="operation"
               onClick={() => {
                 setDeShowDialog(true)
                 setActRecord(JSON.stringify(record))
@@ -90,9 +91,10 @@ const ReviewActivity: React.FC = () => {
               }}
             >
               审核
-            </Button>
+            </span>
           ) : (
-            <Button
+            <span
+              className="operation"
               onClick={() => {
                 setDeShowDialog(true)
                 setActRecord(JSON.stringify(record))
@@ -100,7 +102,7 @@ const ReviewActivity: React.FC = () => {
               }}
             >
               查看
-            </Button>
+            </span>
           )}
         </Space>
       ),
@@ -152,9 +154,7 @@ const ReviewActivity: React.FC = () => {
             </Col>
             <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
               <Space>
-                <Button type="primary" htmlType="submit">
-                  查询
-                </Button>
+                <Button htmlType="submit">查询</Button>
                 <Button type="primary" onClick={resetTable}>
                   重置
                 </Button>

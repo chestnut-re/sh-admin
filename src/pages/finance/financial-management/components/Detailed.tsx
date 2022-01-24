@@ -211,9 +211,7 @@ const DetailedPage: React.FC = () => {
             </Col>
             <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
               <Space>
-                <Button type="primary" htmlType="submit">
-                  查询
-                </Button>
+                <Button htmlType="submit">查询</Button>
                 <Button htmlType="button">重置</Button>
                 <Button htmlType="button">导出</Button>
               </Space>

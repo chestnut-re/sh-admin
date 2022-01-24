@@ -97,7 +97,8 @@ const ProductionListCenter: React.FC<any> = observer(({}) => {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button
+          <span
+            className="operation"
             onClick={() => {
               history.push(
                 `/production/production-detail?channelGoodsId=${record.channelGoodsId}&id=${record.id}&type=detailList`
@@ -105,18 +106,20 @@ const ProductionListCenter: React.FC<any> = observer(({}) => {
             }}
           >
             查看
-          </Button>
+          </span>
           {record?.channelGoodsState !== 2 && (
-            <Button
+            <span
+              className="operation"
               onClick={() => {
                 history.push(`/production/production-detail?id=${record.id}&type=centerPublish`)
               }}
             >
               上架
-            </Button>
+            </span>
           )}
           {record?.channelGoodsState === 2 && (
-            <Button
+            <span
+              className="operation"
               onClick={() => {
                 ProductionService.soldOutByChannel({ goodsId: record.id }).then((res) => {
                   if (res.code === '200') {
@@ -129,7 +132,7 @@ const ProductionListCenter: React.FC<any> = observer(({}) => {
               }}
             >
               下架
-            </Button>
+            </span>
           )}
         </Space>
       ),
@@ -183,9 +186,7 @@ const ProductionListCenter: React.FC<any> = observer(({}) => {
 
             <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
               <Space>
-                <Button type="primary" htmlType="submit">
-                  查询
-                </Button>
+                <Button htmlType="submit">查询</Button>
                 <Button onClick={resetTable} htmlType="button">
                   重置
                 </Button>

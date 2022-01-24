@@ -96,15 +96,19 @@ const ChannelPage: React.FC = () => {
       render: (_text: any, record: any) => (
         <Space size="middle">
           <AuthEle id={61}>
-            <Button onClick={() => showAddDialog(record, 'see')}>查看</Button>
+            <span className="operation" onClick={() => showAddDialog(record, 'see')}>
+              查看
+            </span>
           </AuthEle>
           <AuthEle id={63}>
-            <Button onClick={() => showAddDialog(record, 'edit')}>编辑</Button>
+            <span className="operation" onClick={() => showAddDialog(record, 'edit')}>
+              编辑
+            </span>
           </AuthEle>
           <AuthEle id={64}>
-            <Button onClick={() => _delItem(record)} danger>
+            <span className="operation" onClick={() => _delItem(record)}>
               删除
-            </Button>
+            </span>
           </AuthEle>
         </Space>
       ),
@@ -217,9 +221,7 @@ const ChannelPage: React.FC = () => {
                 <Col span={6}>
                   <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
                     <Space>
-                      <Button type="primary" htmlType="submit">
-                        查询
-                      </Button>
+                      <Button htmlType="submit">查询</Button>
                       <Button htmlType="button" onClick={onReset}>
                         清除
                       </Button>

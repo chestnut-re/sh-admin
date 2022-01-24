@@ -24,7 +24,12 @@ const AssociatedGoods: React.FC<Props> = ({ data }) => {
 
   const getGoodsDetail = async () => {
     const params = form.getFieldsValue()
-    const res = await rebateService.rebateTaskInventoryPage({ ...params,  rebateAuditId: JSON.parse(data)?.id ,current:pageIndex,size:pageSize })
+    const res = await rebateService.rebateTaskInventoryPage({
+      ...params,
+      rebateAuditId: JSON.parse(data)?.id,
+      current: pageIndex,
+      size: pageSize,
+    })
     setData(res?.data.records)
     setTotal(res.data?.total)
   }
@@ -108,9 +113,7 @@ const AssociatedGoods: React.FC<Props> = ({ data }) => {
 
           <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
             <Space>
-              <Button type="primary" htmlType="submit">
-                查询
-              </Button>
+              <Button htmlType="submit">查询</Button>
               <Button onClick={resetTable} htmlType="button">
                 重置
               </Button>

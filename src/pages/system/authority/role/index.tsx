@@ -49,8 +49,8 @@ const RolePage: React.FC = () => {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button>编辑</Button>
-          <Button danger>删除</Button>
+          <span className="operation">编辑</span>
+          <span className="operation">删除</span>
         </Space>
       ),
     },

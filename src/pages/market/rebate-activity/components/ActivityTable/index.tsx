@@ -25,7 +25,7 @@ const ActivityTableModal: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess
   const [selectedRows, setSelectedRows] = useState([])
   const [data, setData] = useState([])
   useEffect(() => {
-    console.log(goodsIdList,'goodsIdList')
+    console.log(goodsIdList, 'goodsIdList')
     setRoleList(JSON.parse(JSON.stringify(goodsIdList)))
   }, [goodsIdList])
   useEffect(() => {
@@ -90,7 +90,7 @@ const ActivityTableModal: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess
   return (
     <div className="goodsTable__root">
       <Modal title="配置关联清单" width={700} visible={goodsShow} onOk={_handleUpdate} onCancel={_formClose}>
-        <Form name="basic" initialValues={{ keyword: '',state:'' }} onFinish={onFinish} form={form}>
+        <Form name="basic" initialValues={{ keyword: '', state: '' }} onFinish={onFinish} form={form}>
           <Row gutter={[5, 0]} style={{ paddingLeft: '10px' }}>
             <Col span={5}>
               <InputTemp name="idOrName" placeholder="清单名称" />
@@ -115,9 +115,7 @@ const ActivityTableModal: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess
             </Col>
             <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
               <Space>
-                <Button type="primary" htmlType="submit">
-                  查询
-                </Button>
+                <Button htmlType="submit">查询</Button>
                 <Button onClick={resetTable} htmlType="button">
                   重置
                 </Button>
@@ -126,12 +124,7 @@ const ActivityTableModal: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess
           </Row>
         </Form>
 
-        <Table
-          columns={columns}
-          rowKey='id'
-          rowSelection={{ ...rowSelection }}
-          dataSource={data}
-        />
+        <Table columns={columns} rowKey="id" rowSelection={{ ...rowSelection }} dataSource={data} />
       </Modal>
     </div>
   )

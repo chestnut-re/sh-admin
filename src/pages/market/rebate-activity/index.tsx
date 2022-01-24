@@ -1,6 +1,6 @@
 /*
  * @Description: 
- * @LastEditTime: 2022-01-24 17:42:48
+ * @LastEditTime: 2022-01-24 17:44:45
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Radio, DatePicker, Modal, message } from 'antd'
@@ -140,13 +140,19 @@ const RebateActivity: React.FC = () => {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button onClick={() => _editDialog(record)}>查看</Button>
-          <Button onClick={() => _editGoodsDialog(record)}>关联商品</Button>
-          <Button onClick={() => _editActivityDialog(record)}>关联清单</Button>
+          <span className="operation" onClick={() => _editDialog(record)}>
+            查看
+          </span>
+          <span className="operation" onClick={() => _editGoodsDialog(record)}>
+            关联商品
+          </span>
+          <span className="operation" onClick={() => _editActivityDialog(record)}>
+            关联清单
+          </span>
           {/* <Button onClick={() => _editDialog(record)}>数据统计</Button> */}
-          <Button onClick={() => _delItem(record)} danger>
+          <span className="operation" onClick={() => _delItem(record)}>
             删除
-          </Button>
+          </span>
         </Space>
       ),
     },
@@ -361,9 +367,7 @@ const RebateActivity: React.FC = () => {
                 <Button type="primary" onClick={showAdd}>
                   添加
                 </Button>
-                <Button type="primary" htmlType="submit">
-                  查询
-                </Button>
+                <Button htmlType="submit">查询</Button>
                 <Button type="primary" onClick={resetTable}>
                   重置
                 </Button>

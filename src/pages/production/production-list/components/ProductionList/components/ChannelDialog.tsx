@@ -73,7 +73,8 @@ const ChannelDialog: FC<Props> = ({ id, goodsName, show = false, onSuccess, onCl
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button
+          <span
+            className="operation"
             onClick={() => {
               ProductionService.soldOutByHead({ channelId: record.channelId, goodsId: id }).then((res) => {
                 if (res.code === '200') {
@@ -86,7 +87,7 @@ const ChannelDialog: FC<Props> = ({ id, goodsName, show = false, onSuccess, onCl
             }}
           >
             下架
-          </Button>
+          </span>
         </Space>
       ),
     },
@@ -128,9 +129,7 @@ const ChannelDialog: FC<Props> = ({ id, goodsName, show = false, onSuccess, onCl
 
             <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
               <Space>
-                <Button type="primary" htmlType="submit">
-                  查询
-                </Button>
+                <Button htmlType="submit">查询</Button>
                 <Button type="primary" onClick={resetTable}>
                   重置
                 </Button>
