@@ -79,8 +79,12 @@ const MessageListPage: React.FC = () => {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button onClick={() => _editDialog(record)}>查看</Button>
-          <Button onClick={() => _delete(record)}>删除</Button>
+          <span className="operation" onClick={() => _editDialog(record)}>
+            查看
+          </span>
+          <span className="operation" onClick={() => _delete(record)}>
+            删除
+          </span>
         </Space>
       ),
     },

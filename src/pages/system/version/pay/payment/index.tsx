@@ -1,7 +1,14 @@
 /* eslint-disable react/display-name */
-import { InputTemp, SelectTemp, TimePickerTemp, DatePickerTemp, RangePickerTemp, LowAndHighTemp } from '@/components/filter/formItem'
+import {
+  InputTemp,
+  SelectTemp,
+  TimePickerTemp,
+  DatePickerTemp,
+  RangePickerTemp,
+  LowAndHighTemp,
+} from '@/components/filter/formItem'
 import { delUser, userList } from '@/service/user'
-import { Button, Col, Form, Row, Space, Table, Divider, } from 'antd'
+import { Button, Col, Form, Row, Space, Table, Divider } from 'antd'
 import React, { useEffect, useState } from 'react'
 // import AddUserDialog, { DialogMode } from './components/AddUserDialog'
 import './index.less'
@@ -14,7 +21,7 @@ const PaymentPage: React.FC = () => {
   const [data, setData] = useState([])
   const [showDialog, setShowDialog] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
-//   const [dialogMode, setDialogMode] = useState<DialogMode>('add')
+  //   const [dialogMode, setDialogMode] = useState<DialogMode>('add')
 
   useEffect(() => {
     loadData()
@@ -31,38 +38,40 @@ const PaymentPage: React.FC = () => {
   const columns = [
     {
       title: '序号',
-      align:'center',
+      align: 'center',
       render: (text, record, index) => `${index + 1}`,
     },
     {
       title: '模版名称',
-      align:'center',
+      align: 'center',
       dataIndex: 'name',
     },
     {
       title: '支付类型',
       dataIndex: 'type',
-      align:'center',
+      align: 'center',
     },
     {
-        title: '状态',
-        dataIndex: 'state',
-        align:'center',
+      title: '状态',
+      dataIndex: 'state',
+      align: 'center',
     },
     {
-        title: '渠道',
-        dataIndex: 'way',
-        align:'center',
+      title: '渠道',
+      dataIndex: 'way',
+      align: 'center',
     },
     {
       title: '操作',
-      align:'center',
+      align: 'center',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button onClick={() => showAddDialog(record, false)}>编辑</Button>
-          <Button danger onClick={() => _onDelProject(record)}>
+          <span className="operation" onClick={() => showAddDialog(record, false)}>
+            编辑
+          </span>
+          <span className="operation" onClick={() => _onDelProject(record)}>
             删除
-          </Button>
+          </span>
         </Space>
       ),
     },
@@ -112,11 +121,11 @@ const PaymentPage: React.FC = () => {
 
   return (
     <div className="page-root">
-        <div>
-            <h1 style={{marginLeft:'20px'}}>支付模块</h1>
-        </div>
-        <Divider/>
-        <Button style={{float:'right',marginBottom:'20px'}}>新增</Button>
+      <div>
+        <h1 style={{ marginLeft: '20px' }}>支付模块</h1>
+      </div>
+      <Divider />
+      <Button style={{ float: 'right', marginBottom: '20px' }}>新增</Button>
       <Table rowKey="id" columns={columns} dataSource={[...data]} pagination={{ onChange: onChange }} />
       {/* <AddUserDialog
         data={selectedData}

@@ -128,20 +128,22 @@ const AllocatedListPage: React.FC = () => {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button
+          <span
+            className="operation"
             onClick={() => {
               toDetails(record)
             }}
           >
             详情
-          </Button>
-          <Button
+          </span>
+          <span
+            className="operation"
             onClick={() => {
               toEditDetails(record)
             }}
           >
             分配
-          </Button>
+          </span>
         </Space>
       ),
     },

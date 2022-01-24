@@ -115,7 +115,8 @@ const ProductionList: React.FC<any> = observer(({}) => {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button
+          <span
+            className="operation"
             onClick={() => {
               history.push(
                 `/production/production-detail?channelGoodsId=${record.channelGoodsId}&id=${record.id}&type=detailList`
@@ -123,10 +124,11 @@ const ProductionList: React.FC<any> = observer(({}) => {
             }}
           >
             查看
-          </Button>
+          </span>
           {/* 未发布可以删除 */}
           {record?.state !== 2 && (
-            <Button
+            <span
+              className="operation"
               onClick={() => {
                 Modal.confirm({
                   title: '删除内容页？',
@@ -146,22 +148,24 @@ const ProductionList: React.FC<any> = observer(({}) => {
               }}
             >
               删除
-            </Button>
+            </span>
           )}
 
           {record?.state !== 2 && (
-            <Button
+            <span
+              className="operation"
               onClick={() => {
                 console.log(record)
                 history.push(`/production/release-product?id=${record.id}`)
               }}
             >
               编辑
-            </Button>
+            </span>
           )}
 
           {record?.state !== 0 && (
-            <Button
+            <span
+              className="operation"
               onClick={() => {
                 ProductionService.ban(record.id).then((res) => {
                   if (res.code === '200') {
@@ -171,7 +175,7 @@ const ProductionList: React.FC<any> = observer(({}) => {
               }}
             >
               禁用
-            </Button>
+            </span>
           )}
         </Space>
       ),

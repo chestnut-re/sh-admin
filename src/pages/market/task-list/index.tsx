@@ -66,16 +66,21 @@ const TaskListPage: React.FC = () => {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button
+          <span
+            className="operation"
             onClick={() => {
               setDeShowDialog(!deShowDialog)
               setSelectedData(record)
             }}
           >
             查看
-          </Button>
-          <Button onClick={() => _editState(record)}>{record.state != 0 ? '启用' : '禁用'}</Button>
-          <Button onClick={() => _delItem(record)}>删除</Button>
+          </span>
+          <span className="operation" onClick={() => _editState(record)}>
+            {record.state != 0 ? '启用' : '禁用'}
+          </span>
+          <span className="operation" onClick={() => _delItem(record)}>
+            删除
+          </span>
         </Space>
       ),
     },

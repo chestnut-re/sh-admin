@@ -140,13 +140,14 @@ const OrderListPage: React.FC = () => {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button
+          <span
+            className="operation"
             onClick={() => {
               toDetails(record)
             }}
           >
             详情
-          </Button>
+          </span>
         </Space>
       ),
     },

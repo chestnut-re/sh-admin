@@ -60,7 +60,9 @@ const UserPage: React.FC = () => {
           {/* <Button danger onClick={() => _onDelProject(record)}>
             删除
           </Button> */}
-          <Button onClick={() => showAddDialog(record, false)}>编辑</Button>
+          <span className="operation" onClick={() => showAddDialog(record, false)}>
+            编辑
+          </span>
         </Space>
       ),
     },

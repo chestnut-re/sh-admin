@@ -79,7 +79,9 @@ const AccountPage: React.FC = () => {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button onClick={() => _editDialog(record)}>查看明细</Button>
+          <span className="operation" onClick={() => _editDialog(record)}>
+            查看明细
+          </span>
         </Space>
       ),
     },

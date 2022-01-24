@@ -91,16 +91,20 @@ const CommissionSchemePage: React.FC = () => {
       render: (_text: any, record: any) => (
         <Space size="middle">
           <AuthEle id={65}>
-            <Button onClick={() => showAddDialog(record, 'see')}>查看</Button>
+            <span className="operation" onClick={() => showAddDialog(record, 'see')}>
+              查看
+            </span>
           </AuthEle>
           <AuthEle id={67}>
-            <Button onClick={() => showAddDialog(record, 'edit')}>编辑</Button>
+            <span className="operation" onClick={() => showAddDialog(record, 'edit')}>
+              编辑
+            </span>
           </AuthEle>
           {/* <Button>删除</Button> */}
           <AuthEle id={68}>
-            <Button onClick={() => _delItem(record)} danger>
+            <span className="operation" onClick={() => _delItem(record)}>
               删除
-            </Button>
+            </span>
           </AuthEle>
         </Space>
       ),

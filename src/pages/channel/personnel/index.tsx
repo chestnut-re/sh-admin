@@ -147,7 +147,7 @@ const PersonnelManagement: React.FC = () => {
               okText="确定"
               cancelText="取消"
             >
-              <Button danger>删除</Button>
+              <span className="operation">删除</span>
             </Popconfirm>
           </AuthEle>
         </Space>

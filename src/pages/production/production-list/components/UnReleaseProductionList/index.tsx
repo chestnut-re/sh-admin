@@ -97,31 +97,34 @@ const UnReleaseProductionListPage: React.FC<any> = observer(({}) => {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button
+          <span
+            className="operation"
             onClick={() => {
               history.push(`/production/production-detail?id=${record.id}&type=unRelease`)
             }}
           >
             查看
-          </Button>
+          </span>
           {!(record?.checkState == 0) && (
-            <Button
+            <span
+              className="operation"
               onClick={() => {
                 console.log(record)
                 history.push(`/production/release-product?id=${record.id}`)
               }}
             >
               编辑
-            </Button>
+            </span>
           )}
-          <Button
+          <span
+            className="operation"
             onClick={() => {
               console.log(record)
               history.push(`/production/production-config-detail?id=${record.id}`)
             }}
           >
             配置详情
-          </Button>
+          </span>
         </Space>
       ),
     },

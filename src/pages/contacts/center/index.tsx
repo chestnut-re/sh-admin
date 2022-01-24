@@ -140,13 +140,14 @@ const ContactsCenter: React.FC = () => {
       title: '操作',
       render: (text, record) => (
         <Space size="middle">
-          <a
+          <span
+            className="operation"
             onClick={() => {
               contactsUseHandle('edit', record)
             }}
           >
             编辑
-          </a>
+          </span>
           <Popconfirm
             title="确定要删除该客服吗?"
             onConfirm={() => {
@@ -155,7 +156,7 @@ const ContactsCenter: React.FC = () => {
             okText="确定"
             cancelText="取消"
           >
-            <a>删除</a>
+            <span className="operation">删除</span>
           </Popconfirm>
         </Space>
       ),

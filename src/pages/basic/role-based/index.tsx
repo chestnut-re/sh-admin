@@ -89,8 +89,12 @@ const RolePage: React.FC = () => {
       render: (_text: any, record: any) => (
         <Space size="middle">
           {/* <Button >查看</Button> */}
-          <Button onClick={() => showAddDialog(record, false)}>编辑</Button>
-          <Button onClick={() => _delete(record)}>删除</Button>
+          <span className="operation" onClick={() => showAddDialog(record, false)}>
+            编辑
+          </span>
+          <span className="operation" onClick={() => _delete(record)}>
+            删除
+          </span>
         </Space>
       ),
     },

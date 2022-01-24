@@ -91,7 +91,8 @@ const AuditScreen: React.FC<Props> = ({ type }) => {
       render: (text: any, record: any) => (
         <Space size="middle">
           {record?.checkState !== 0 && (
-            <Button
+            <span
+              className="operation"
               onClick={() => {
                 console.log(record)
                 history.push(
@@ -100,11 +101,12 @@ const AuditScreen: React.FC<Props> = ({ type }) => {
               }}
             >
               查看
-            </Button>
+            </span>
           )}
 
           {record?.checkState === 0 && (
-            <Button
+            <span
+              className="operation"
               onClick={() => {
                 console.log(record)
                 if (type === 'release') {
@@ -121,7 +123,7 @@ const AuditScreen: React.FC<Props> = ({ type }) => {
               }}
             >
               审核
-            </Button>
+            </span>
           )}
         </Space>
       ),
