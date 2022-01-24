@@ -8,7 +8,6 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "NODE_ENV=development webpack serve --open --config ./config/webpack.dev.config.js --mode development --hot",
     "start:dev": "NODE_ENV=development webpack serve --open --config ./config/webpack.dev.config.js --mode development --hot",
     "start:test": "NODE_ENV=development webpack serve --open --config ./config/webpack.test.config.js --mode development --hot",
     "start:prod": "NODE_ENV=development webpack serve --open --config ./config/webpack.prod.config.js --mode development --hot",

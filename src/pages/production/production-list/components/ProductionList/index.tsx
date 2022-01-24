@@ -129,10 +129,11 @@ const ProductionList: React.FC<any> = observer(({}) => {
             <Button
               onClick={() => {
                 Modal.confirm({
-                  title: '提示',
-                  content: '确定要删除当前',
+                  title: '删除内容页？',
+                  content: '将删除该内容页及其已填写信息内容',
                   okText: '确认',
-                  cancelText: '取消',
+                  okType: 'primary',
+                  cancelText: '返回填写',
                   onOk: () => {
                     ProductionService.del(record.id).then((res) => {
                       if (res.code === '200') {

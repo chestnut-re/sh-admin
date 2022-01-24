@@ -1,6 +1,6 @@
 /*
  * @Description: 任务清单
- * @LastEditTime: 2022-01-13 13:51:23
+ * @LastEditTime: 2022-01-24 16:14:17
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Modal, message, Select } from 'antd'
@@ -85,11 +85,11 @@ const TaskListPage: React.FC = () => {
   }
   const _editState = (record) => {
     Modal.confirm({
-      title: '提示',
-      icon: <ExclamationCircleOutlined />,
-      content: '确定要改变当前状态吗？',
+      title: '删除内容页？',
+      content: '将删除该内容页及其已填写信息内容',
       okText: '确认',
-      cancelText: '取消',
+      okType: 'primary',
+      cancelText: '返回填写',
       onOk: () => {
         taskService.editState({ id: record.id, state: record.state == 0 ? 1 : 0 }).then((res) => {
           if (res.code === HttpCode.success) {
@@ -102,11 +102,11 @@ const TaskListPage: React.FC = () => {
   /**删除 */
   const _delItem = (record) => {
     Modal.confirm({
-      title: '提示',
-      icon: <ExclamationCircleOutlined />,
-      content: '确定要删除当前',
+      title: '删除内容页？',
+      content: '将删除该内容页及其已填写信息内容',
       okText: '确认',
-      cancelText: '取消',
+      okType: 'primary',
+      cancelText: '返回填写',
       onOk: () => {
         taskService.del({ id: record.id }).then((res) => {
           if (res.code === HttpCode.success) {

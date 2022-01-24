@@ -5,7 +5,6 @@ import { HttpCode } from '@/constants/HttpCode'
 import dayjs from 'dayjs'
 import moment from 'moment'
 import UploadImage from '@/components/formItem/UploadImage'
-import { formateTime } from '@/utils/timeUtils'
 import locale from 'antd/lib/date-picker/locale/zh_CN'
 import 'moment/locale/zh-cn'
 moment.locale('zh-cn')
@@ -41,6 +40,8 @@ const AEBannerDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClos
 
   /**提交数据 */
   const _handleUpdate = async () => {
+    console.log(form.getFieldsValue())
+
     form
       .validateFields()
       .then((formData) => {
@@ -68,12 +69,13 @@ const AEBannerDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClos
   }
 
   const _formClose = () => {
+    console.log('_formClose')
     form.resetFields()
     onClose()
   }
 
   return (
-    <Modal title="轮播图配置" visible={show} onOk={_handleUpdate} onCancel={_formClose}>
+    <Modal title="轮播图配置" visible={show} onOk={_handleUpdate} onCancel={_formClose} afterClose={_formClose}>
       <Form
         name="basic"
         labelCol={{ span: 6 }}

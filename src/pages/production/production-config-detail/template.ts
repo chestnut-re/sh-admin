@@ -117,4 +117,5 @@ export const getTemplate = (key) => {
     t = endTemplate.find((i) => i.key === key)
     return t
   }
+  return null
 }

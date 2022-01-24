@@ -76,4 +76,9 @@ export const createChannel = {
   1: 'biz山海',
 }
 
+/**
+ * 弹框状态管理
+ * 添加: add
+ * 编辑: edit
+ */
 export type DialogMode = 'add' | 'edit'

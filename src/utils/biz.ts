@@ -1,3 +1,4 @@
+import { USER_DETAIL } from '@/constants/CookiesC'
 import { getCookie, removeCookie, setCookie } from './cookies'
 
 /**
@@ -5,6 +6,7 @@ import { getCookie, removeCookie, setCookie } from './cookies'
  */
 export function userLoginOut() {
   removeJWT()
+  removeCookie(USER_DETAIL)
   if (window.location.pathname === '/login') return
   window.location.href = '/login'
 }

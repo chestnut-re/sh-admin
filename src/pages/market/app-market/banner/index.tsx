@@ -22,7 +22,7 @@ const BannerListPage: React.FC = () => {
   const [visible, setVisible] = useState(false)
 
   const [showDialog, setShowDialog] = useState(false)
-  const [selectedData, setSelectedData] = useState(null)
+  const [selectedData, setSelectedData] = useState<any>()
   const [dialogMode, setDialogMode] = useState<DialogMode>('add')
 
   useEffect(() => {
@@ -111,6 +111,7 @@ const BannerListPage: React.FC = () => {
 
   /**删除 */
   const _delItem = () => {
+    if (!selectedData) return
     BannerService.del({ id: selectedData.id }).then((res) => {
       if (res.code === HttpCode.success) {
         loadData(pageIndex)
@@ -194,13 +195,16 @@ const BannerListPage: React.FC = () => {
           total: total,
         }}
       />
-      <AEBannerDialog
-        data={selectedData}
-        mode={dialogMode}
-        onSuccess={_onDialogSuccess}
-        show={showDialog}
-        onClose={_onDialogClose}
-      />
+      {showDialog && (
+        <AEBannerDialog
+          data={selectedData}
+          mode={dialogMode}
+          onSuccess={_onDialogSuccess}
+          show={showDialog}
+          onClose={_onDialogClose}
+        />
+      )}
+
       <Modal title="提示" visible={visible} okText="确认删除" cancelText="取消" onOk={_delItem} onCancel={handleCancel}>
         <span>是否确认删除?</span>
       </Modal>

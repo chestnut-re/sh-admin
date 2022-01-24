@@ -10,8 +10,58 @@
   margin-top: 4px;
 }
 // modal confirm 底部按钮
+.ant-modal-confirm-confirm{
+  width: 512px !important;
+.ant-modal-body{
+  padding: 48px 72px !important;
+.ant-modal-confirm-body{
+  .anticon{
+    width: 100%;
+    margin-right: 0;
+    svg{
+      width: 56px;
+      height: 56px;
+    }
+  }
+  .ant-modal-confirm-title{
+    width: 100%;
+    margin: 0;
+    padding: 16px 0 8px 0 !important;
+    font-size: 24px;
+    color: #252b3a;
+    text-align: center;
+  }
+  .ant-modal-confirm-content{
+    margin-bottom: 54px;
+    margin-left: 0 !important;
+    text-align: center;
+    color: #8A8E99;
+    // width: 100%;
+    // margin: 16px 0 8px 0 !important;
+    // font-size: 24px;
+    // color: #252b3a;
+
+  }
+ 
+} 
 .ant-modal-confirm-btns{
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+  .ant-btn{
+    width: 176px;
+    padding:10px 32px ;
+    font-size: 14px;
+    line-height: 20px;
+    height: 40px;
+    margin: 0px ;
+    box-sizing: border-box;
+    color: @primary-color;
+    border: 1px solid @primary-color;
+  }
+  .ant-btn-primary{
+    color: #FFFFFF;
+  }
 }
+}}

@@ -1,7 +1,6 @@
-import { Form, Input, Modal, DatePicker, Select, Radio } from 'antd'
+import { Form, Input, Modal, Select } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
 import { HttpCode } from '@/constants/HttpCode'
-import { WithdrawalReviewService } from '@/service/FinanceAccountService'
 import { AllocationService } from '@/service/AllocationService'
 
 export type DialogMode = 'add' | 'edit'
@@ -24,6 +23,7 @@ const AEBannerDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClos
   const [parentList, setParentList] = useState<any>([])
   const [parent, setParent] = useState('0')
   const [addClassName, setAddClassName] = useState('')
+
   useEffect(() => {
     getParentList()
     form.setFieldsValue({
@@ -45,13 +45,13 @@ const AEBannerDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClos
       .then((formData) => {
         console.log(formData)
         if (mode === 'add') {
-          AllocationService.edit([{ operationType: 1, sortName: formData.sortName, parentId: formData.parentId }]).then(
-            (res) => {
-              if (res.code === HttpCode.success) {
-                onSuccess()
-              }
+          AllocationService.edit([
+            { operationType: 1, sortName: formData.sortName, parentId: formData.parentId ?? '0' },
+          ]).then((res) => {
+            if (res.code === HttpCode.success) {
+              onSuccess()
             }
-          )
+          })
         } else {
           //edit
           AllocationService.edit([{ operationType: 2, sortName: formData.sortName, parentId: formData.parentId }]).then(

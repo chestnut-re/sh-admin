@@ -21,7 +21,7 @@ const TemplateDialog: FC<Props> = ({ type, show = false, onSuccess, onClose }) =
   const [templateList, setTemplateList] = useState<any[]>([])
 
   const [selectedTemplate, setSelectedTemplate] = useState<any>(null)
-  const [currentIndex, setCurrentIndex] = useState(0)
+  const [currentIndex, setCurrentIndex] = useState<number | undefined>()
 
   useEffect(() => {
     setTemplateList(templateMap[type])
@@ -49,10 +49,11 @@ const TemplateDialog: FC<Props> = ({ type, show = false, onSuccess, onClose }) =
                 className={name}
                 src={item.templateImgUrl}
                 onClick={() => {
-                  setCurrentIndex(item.key)
                   if (item == selectedTemplate) {
+                    setCurrentIndex(undefined)
                     setSelectedTemplate(null)
                   } else {
+                    setCurrentIndex(item.key)
                     setSelectedTemplate(item)
                   }
                 }}

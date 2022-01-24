@@ -60,8 +60,8 @@ const AEDialog: FC<Props> = ({ data, show = false, onSuccess, onClose }) => {
           endDate,
           phone: data?.phone,
         }).then((res) => {
-          setTableData(res.data.records)
-          setTotal(res.data.total)
+          setTableData(res.data?.records ?? [])
+          setTotal(res.data?.total)
         })
       })
       .catch((e) => {
@@ -118,7 +118,14 @@ const AEDialog: FC<Props> = ({ data, show = false, onSuccess, onClose }) => {
   }
 
   return (
-    <Modal title="商品分佣方案" visible={show} onOk={_handleUpdate} onCancel={_formClose} width="90%">
+    <Modal
+      title="商品分佣方案"
+      visible={show}
+      onOk={_handleUpdate}
+      onCancel={_formClose}
+      width="90%"
+      afterClose={_formClose}
+    >
       <div className="sales__root">
         <div className="sales-header">
           <span>账户中心/账户明细</span>

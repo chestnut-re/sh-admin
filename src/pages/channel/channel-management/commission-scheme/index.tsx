@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道分佣列表
- * @LastEditTime: 2022-01-15 15:06:31
+ * @LastEditTime: 2022-01-24 16:13:53
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Select,Modal,message } from 'antd'
@@ -107,11 +107,11 @@ const CommissionSchemePage: React.FC = () => {
   /**删除 */
   const _delItem = (record) => {
     Modal.confirm({
-      title: '提示',
-      // icon: <ExclamationCircleOutlined />,
-      content: '确定要删除当前',
+      title: '删除内容页？',
+      content: '将删除该内容页及其已填写信息内容',
       okText: '确认',
-      cancelText: '取消',
+      okType: 'primary',
+      cancelText: '返回填写',
       onOk: () => {
         ChannelService.ChannelPlan.del({ id: record.id }).then((res) => {
           if (res.code == 200) {

@@ -39,6 +39,10 @@ const VersionCPage: React.FC = () => {
       dataIndex: 'clientVersionNo',
     },
     {
+      title: '版本Code',
+      dataIndex: 'minorVersionNo',
+    },
+    {
       title: '客户端类型',
       dataIndex: 'clientType',
       render: (text: any, record: any) => {
@@ -157,13 +161,16 @@ const VersionCPage: React.FC = () => {
           total: total,
         }}
       />
-      <AEVersionDialog
-        data={selectedData}
-        mode={dialogMode}
-        onSuccess={_onDialogSuccess}
-        show={showDialog}
-        onClose={_onDialogClose}
-      />
+
+      {showDialog && (
+        <AEVersionDialog
+          data={selectedData}
+          mode={dialogMode}
+          onSuccess={_onDialogSuccess}
+          show={showDialog}
+          onClose={_onDialogClose}
+        />
+      )}
     </div>
   )
 }

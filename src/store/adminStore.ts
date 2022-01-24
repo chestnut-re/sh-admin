@@ -76,6 +76,7 @@ class AdminData {
   /**是否是分中心 */
   isSubCenter() {
     return this.userDetails.channelLevel !== 1
+    // return false
   }
 }
 

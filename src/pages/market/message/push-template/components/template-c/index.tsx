@@ -210,14 +210,16 @@ const TemplateCPage: React.FC = () => {
   return (
     <div className="page-root">
       <Table rowKey="id" columns={columns} scroll={{ x: 'max-content' }} dataSource={[...data]} />
-      <AEVersionDialog
-        data={selectedData}
-        mode={dialogMode}
-        type={dialogType}
-        onSuccess={_onDialogSuccess}
-        show={showDialog}
-        onClose={_onDialogClose}
-      />
+      {showDialog && (
+        <AEVersionDialog
+          data={selectedData}
+          mode={dialogMode}
+          type={dialogType}
+          onSuccess={_onDialogSuccess}
+          show={showDialog}
+          onClose={_onDialogClose}
+        />
+      )}
     </div>
   )
 }

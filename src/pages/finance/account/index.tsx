@@ -31,17 +31,17 @@ const AccountPage: React.FC = () => {
 
     FinanceAccountService.list({ current: pageIndex, size: pageSize, ...params }).then((res) => {
       setData(
-        res.data?.records.map((i) => {
+        res.data?.records?.map((i) => {
           i.key = getNanoId()
           return i
         })
       )
-      setTotal(res.data.total)
+      setTotal(res.data?.total)
     })
   }
   const channelData = () => {
     ChannelService.list({ current: 1, pageSize: 10 }).then((res) => {
-      setChannel(res.data?.records)
+      setChannel(res.data?.records ?? [])
     })
   }
 
@@ -130,8 +130,8 @@ const AccountPage: React.FC = () => {
                   <Select style={{ width: 120 }}>
                     {channel?.map((item: any) => {
                       return (
-                        <Option value={item.id} key={item.id}>
-                          {item.name}
+                        <Option value={item?.id} key={item?.id}>
+                          {item?.name}
                         </Option>
                       )
                     })}

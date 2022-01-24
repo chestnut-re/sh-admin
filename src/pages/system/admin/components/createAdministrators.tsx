@@ -38,7 +38,7 @@ const CreateAdminDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onC
 
   const loadRoleData = () => {
     getRoles({ state: 0 }).then((res) => {
-      setRoleList(res.data)
+      setRoleList(res.data ?? [])
     })
   }
 

@@ -7,7 +7,7 @@ import { action, makeObservable, observable } from 'mobx'
 export const getPriceFromTravels = (travels: any[], priceKeyStr: string) => {
   let sum = 0
   travels.map((item) => {
-    item.travelDetails.map((travelDetail) => {
+    item.travelDetails?.map((travelDetail) => {
       if (travelDetail.travelGoods.airTicket) {
         sum += travelDetail.travelGoods.airTicket[priceKeyStr]
       }
@@ -271,7 +271,7 @@ class ProductionData {
     if (travelType !== 0) {
       travelGoods[travelTypeKey[travelType]] = { ...travelDetail }
     }
-    const newTravelDetail = { key: getNanoId(), travelType: travelType, travelGoods: travelGoods }
+    const newTravelDetail = { key: getNanoId(), travelType: travelType, travelGoods: travelGoods, travelTime: '12:00' }
     lastDay.travelDetails.push(newTravelDetail)
 
     this.updateGoods(editGoodsPrices[0])

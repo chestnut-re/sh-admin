@@ -3,7 +3,7 @@ import React, { FC, useEffect, useState } from 'react'
 import { DialogMode, personType } from '@/utils/enum'
 import RoleSelect from '@/components/formItem/RoleSelect'
 import { PersonService } from '@/service/PersonService'
-import { cityDispose,lastOneJoin } from '@/utils/tree'
+import { cityDispose, lastOneJoin } from '@/utils/tree'
 import { HttpCode } from '@/constants/HttpCode'
 import AreaSelect from '@/components/formItem/AreaSelect'
 
@@ -95,15 +95,15 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
     form
       .validateFields()
       .then((formData) => {
-        console.log(channelId,'------')
-        console.log(name,'----0000')
-        
+        console.log(channelId, '------')
+        console.log(name, '----0000')
+
         if (mode === 'add') {
           const params = { ...formData }
           params.state = params.state ? 1 : 0
           delete params.channel
           params.address = lastOneJoin(formData.address)
-          PersonService.add({ ...params,channelId:channelId,channelName:name }).then((res) => {
+          PersonService.add({ ...params, channelId: channelId, channelName: name }).then((res) => {
             if (res.code === HttpCode.success) {
               onSuccess()
             }
@@ -138,13 +138,13 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
   const _changeRoleSelect = (e) => {
     console.log(e)
   }
-  const _onChangeAddress=(e)=>{
+  const _onChangeAddress = (e) => {
     form.setFieldsValue({
-      address:e
+      address: e,
     })
   }
   return (
-    <Modal title="添加人员" visible={show} onOk={_handleUpdate} onCancel={_formClose}>
+    <Modal title="添加人员" visible={show} onOk={_handleUpdate} onCancel={_formClose} afterClose={_formClose}>
       <Form
         name="basic"
         labelCol={{ span: 6 }}
@@ -189,14 +189,14 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
           <Select allowClear>
             {Object.keys(personType).map((item) => {
               return (
-                <Select.Option key={item} value={item} >
+                <Select.Option key={item} value={item}>
                   {personType[item]}
                 </Select.Option>
               )
             })}
           </Select>
         </Form.Item>
-        <Form.Item name="roleId" label="角色名称" rules={[{ required: true,message:'请输入角色名称' }]}>
+        <Form.Item name="roleId" label="角色名称" rules={[{ required: true, message: '请输入角色名称' }]}>
           <RoleSelect channelId={channelId} onChange={_changeRoleSelect} value={form.getFieldValue('roleId')} />
         </Form.Item>
         {/* <Form.Item name="state"  valuePropName="checked" label="是否启用"  rules={[{ required: true }]}>

@@ -6,6 +6,7 @@ import update from '@/assets/img/update.png'
 import del from '@/assets/img/del.png'
 import wring from '@/assets/img/wring.png'
 import './index.less'
+import { getTemplate } from '../../template'
 
 interface Props {
   data: any
@@ -19,14 +20,6 @@ interface Props {
 const TemplateItem: React.FC<Props> = ({ data, onDel, onEdit }) => {
   const [showBox, setShowBox] = useState(false)
   const [isModalVisible, setIsModalVisible] = useState(false)
-  const mouseOver = () => {
-    console.log('划入悬停')
-    setShowBox(true)
-  }
-  const mouseOut = () => {
-    console.log('划出')
-    setShowBox(false)
-  }
   const handleOk = () => {
     setIsModalVisible(false)
     onDel?.(data.key)
@@ -37,13 +30,12 @@ const TemplateItem: React.FC<Props> = ({ data, onDel, onEdit }) => {
   const delItem = () => {
     setIsModalVisible(true)
   }
+
+  const temp = getTemplate(data.pageTemplateKey)
+
   return (
-    <div
-      className="TemplateItem__root"
-      // onMouseOver={mouseOver}
-      // onMouseOut={mouseOut}
-    >
-      <img className="bg" src={data.templateImgUrl} />
+    <div className="TemplateItem__root">
+      <img className="bg" src={temp?.templateImgUrl} />
       {!showBox && (
         <div className="btn-div">
           <div className="btn-num">

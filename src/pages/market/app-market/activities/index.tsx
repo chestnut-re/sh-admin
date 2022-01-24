@@ -100,11 +100,11 @@ const BannerListPage: React.FC = () => {
   /**删除 */
   const _delItem = (record) => {
     Modal.confirm({
-      title: '提示',
-      icon: <ExclamationCircleOutlined />,
-      content: '确定要删除当前',
+      title: '删除内容页？',
+      content: '将删除该内容页及其已填写信息内容',
       okText: '确认',
-      cancelText: '取消',
+      okType: 'primary',
+      cancelText: '返回填写',
       onOk: () => {
         ActivitiesService.del({ id: record.id }).then((res) => {
           if (res.code === HttpCode.success) {
