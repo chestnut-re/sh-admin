@@ -62,11 +62,19 @@
   }
 }
 .ant-radio-group-outline {
-  .ant-radio-button-wrapper {
+  .ant-radio-button-wrapper-checked {
+    position: relative;
     padding: 0px 21px;
     &::after {
       content: '';
-  
+      width: 20px;
+      height: 20px;
+      border-top: 20px solid #8aa4ed;
+      border-left: 20px solid transparent;
+      top: 0px;
+      right: 0;
+      position: absolute;
+
     }
   }
 }

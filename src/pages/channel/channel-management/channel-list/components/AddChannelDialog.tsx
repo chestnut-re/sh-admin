@@ -1,6 +1,6 @@
 /*
  * @Description: 添加渠道
- * @LastEditTime: 2022-01-12 15:56:11
+ * @LastEditTime: 2022-01-24 18:23:37
  */
 
 import { Form, Input, Modal, Cascader, Switch, message, Button } from 'antd'
@@ -259,7 +259,7 @@ const AddUserDialog: FC<Props> = ({ data, mode, channelId, structure, show = fal
             { max: 10, message: '最大不可超过20个字符' },
           ]}
         >
-          <Input disabled={mode == 'see'} />
+          <Input disabled={mode == 'see' || mode=='edit'} />
         </Form.Item>
         <Form.Item
           label="手机号"
@@ -269,7 +269,7 @@ const AddUserDialog: FC<Props> = ({ data, mode, channelId, structure, show = fal
             { pattern: /^1[3456789]\d{9}$/, message: '请输入正确的手机号' },
           ]}
         >
-          <Input disabled={mode == 'see'} />
+          <Input disabled={mode == 'see' || mode=='edit'} />
         </Form.Item>
         <Form.Item
           label="渠道账户"
