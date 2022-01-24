@@ -162,16 +162,15 @@ const VersionCPage: React.FC = () => {
         }}
       />
 
-      {
-        showDialog &&     <AEVersionDialog
-        data={selectedData}
-        mode={dialogMode}
-        onSuccess={_onDialogSuccess}
-        show={showDialog}
-        onClose={_onDialogClose}
-      />
-      }
-  
+      {showDialog && (
+        <AEVersionDialog
+          data={selectedData}
+          mode={dialogMode}
+          onSuccess={_onDialogSuccess}
+          show={showDialog}
+          onClose={_onDialogClose}
+        />
+      )}
     </div>
   )
 }
