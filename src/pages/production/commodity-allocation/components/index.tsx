@@ -138,13 +138,16 @@ const ListPage: React.FC = () => {
           total: total,
         }}
       />
-      <AEBannerDialog
-        data={selectedData}
-        mode={dialogMode}
-        onSuccess={_onDialogSuccess}
-        show={showDialog}
-        onClose={_onDialogClose}
-      />
+      {showDialog && (
+        <AEBannerDialog
+          data={selectedData}
+          mode={dialogMode}
+          onSuccess={_onDialogSuccess}
+          show={showDialog}
+          onClose={_onDialogClose}
+        />
+      )}
+
       <Modal
         title="提示"
         visible={isModalVisible}

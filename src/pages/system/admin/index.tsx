@@ -201,13 +201,16 @@ const AdminListPage: React.FC = () => {
           total: total,
         }}
       />
-      <CreateAdminDialog
-        data={selectedData}
-        mode={dialogMode}
-        onSuccess={_onDialogSuccess}
-        show={showDialog}
-        onClose={_onDialogClose}
-      />
+      {showDialog && (
+        <CreateAdminDialog
+          data={selectedData}
+          mode={dialogMode}
+          onSuccess={_onDialogSuccess}
+          show={showDialog}
+          onClose={_onDialogClose}
+        />
+      )}
+
       <Modal
         title="提示"
         visible={visible}
