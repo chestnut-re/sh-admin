@@ -161,13 +161,17 @@ const VersionCPage: React.FC = () => {
           total: total,
         }}
       />
-      <AEVersionDialog
+
+      {
+        showDialog &&     <AEVersionDialog
         data={selectedData}
         mode={dialogMode}
         onSuccess={_onDialogSuccess}
         show={showDialog}
         onClose={_onDialogClose}
       />
+      }
+  
     </div>
   )
 }
