@@ -208,13 +208,6 @@ export default [
                       path: '/channel/channel-management/channel-list',
                       hide: false,
                     },
-                    // {
-                    //   name: '创建渠道',
-                    //   id: 312,
-                    //   hidden:true,
-                    //      type:'menu',componentPath: '/channel/channel-management/create-channel',
-                    //   path: '/channel/channel-management/create-channel',
-                    // },
                     {
                       name: '渠道权限',
                       id: md5('/channel/channel-management/authority-management'),
