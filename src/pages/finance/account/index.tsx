@@ -34,7 +34,7 @@ const AccountPage: React.FC = () => {
         res.data?.records?.map((i) => {
           i.key = getNanoId()
           return i
-        })
+        }) ?? []
       )
       setTotal(res.data?.total)
     })
@@ -146,9 +146,7 @@ const AccountPage: React.FC = () => {
               <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
                 <Space>
                   <Button htmlType="submit">查询</Button>
-                  <Button type="primary" onClick={resetTable}>
-                    重置
-                  </Button>
+                  <Button onClick={resetTable}>重置</Button>
                 </Space>
               </Form.Item>
             </Row>

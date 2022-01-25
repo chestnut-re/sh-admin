@@ -14,6 +14,7 @@ import { cityDispose } from '@/utils/tree'
 // import { enumState } from '@/utils/enum'
 import { AuthEle } from '@/components/Common/AuthEle'
 import './index.less'
+import { PlusOutlined } from '@ant-design/icons'
 const ChannelPage: React.FC = () => {
   const [form] = Form.useForm()
   const [data, setData] = useState([])
@@ -199,7 +200,7 @@ const ChannelPage: React.FC = () => {
                 <Col span={2} className="table-from-label">
                   渠道名称
                 </Col>
-                <Col span={3}>
+                <Col span={4}>
                   <InputTemp name="channel" />
                 </Col>
                 {/* <Col span={1} className="table-from-label">
@@ -219,14 +220,20 @@ const ChannelPage: React.FC = () => {
                   </Form.Item>
                 </Col> */}
                 <Col span={6}>
-                  <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
+                  <Form.Item>
                     <Space>
                       <Button htmlType="submit">查询</Button>
                       <Button htmlType="button" onClick={onReset}>
                         清除
                       </Button>
+                    </Space>
+                  </Form.Item>
+                </Col>
+                <Col span={12} style={{ textAlign: 'right' }}>
+                  <Form.Item>
+                    <Space>
                       <AuthEle id={62}>
-                        <Button type="primary" onClick={showAddDialog}>
+                        <Button type="primary" icon={<PlusOutlined />} onClick={showAddDialog}>
                           创建渠道
                         </Button>
                       </AuthEle>

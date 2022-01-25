@@ -13,6 +13,7 @@ import ChannelService from '@/service/ChannelService'
 import RoleService from '@/service/RoleService'
 import { cityDispose } from '@/utils/tree'
 import { enumRoleState } from '@/utils/enum'
+import { PlusOutlined } from '@ant-design/icons'
 import './index.less'
 const RolePage: React.FC = () => {
   const [form] = Form.useForm()
@@ -161,8 +162,10 @@ const RolePage: React.FC = () => {
               form={form}
             >
               <Row gutter={[10, 0]}>
-                <Col className="table-from-label">搜索条件</Col>
-                <Col>
+                <Col span={4} className="table-from-label">
+                  搜索条件
+                </Col>
+                <Col span={4}>
                   <InputTemp name="roleNameLike" placeholder="角色名称" />
                 </Col>
                 {/* <Col span={1} className="table-from-label">
@@ -181,14 +184,20 @@ const RolePage: React.FC = () => {
                     </Select>
                   </Form.Item>
                 </Col> */}
-                <Col span={5}>
-                  <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
+                <Col span={6}>
+                  <Form.Item>
                     <Space>
                       <Button htmlType="submit">查询</Button>
                       <Button htmlType="button" onClick={onReset}>
                         清除
                       </Button>
-                      <Button type="primary" onClick={showAddDialog}>
+                    </Space>
+                  </Form.Item>
+                </Col>
+                <Col span={10} style={{ textAlign: 'right' }}>
+                  <Form.Item>
+                    <Space>
+                      <Button type="primary" icon={<PlusOutlined />} onClick={showAddDialog}>
                         添加角色
                       </Button>
                     </Space>

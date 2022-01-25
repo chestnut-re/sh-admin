@@ -11,6 +11,7 @@ import { ProductionService } from '@/service/ProductionService'
 import GoodsState from '@/components/tableColumn/GoodsState'
 import ChannelDialog from './components/ChannelDialog'
 import NewPrice from '@/components/tableColumn/NewPrice'
+import { PlusOutlined } from '@ant-design/icons'
 
 /**
  * 商品库 总部
@@ -222,7 +223,7 @@ const ProductionList: React.FC<any> = observer(({}) => {
       <div>
         <Form name="basic" initialValues={{ remember: true }} onFinish={onFinish} form={form}>
           <Row gutter={[5, 0]} style={{ paddingLeft: '10px' }}>
-            <Col span={6}>
+            <Col span={4}>
               <InputTemp name="searchDim" placeholder="商品ID/名称/始发地" />
             </Col>
             <Col span={2} className="table-from-label">
@@ -237,24 +238,25 @@ const ProductionList: React.FC<any> = observer(({}) => {
             <Col span={4}>
               <ProductionState name="state" />
             </Col>
-
-            <Form.Item wrapperCol={{ offset: 2, span: 12 }}>
-              <Space>
-                <Button htmlType="submit">查询</Button>
-                <Button onClick={resetTable} htmlType="button">
-                  重置
-                </Button>
-              </Space>
-            </Form.Item>
-          </Row>
-          <Row justify="end">
-            <Form.Item>
-              <Space>
-                <Button type="primary" htmlType="button" onClick={_addProduction}>
-                  添加商品
-                </Button>
-              </Space>
-            </Form.Item>
+            <Col span={4}>
+              <Form.Item>
+                <Space>
+                  <Button htmlType="submit">查询</Button>
+                  <Button onClick={resetTable} htmlType="button">
+                    重置
+                  </Button>
+                </Space>
+              </Form.Item>
+            </Col>
+            <Col style={{ textAlign: 'right' }} span={4}>
+              <Form.Item>
+                <Space>
+                  <Button type="primary" icon={<PlusOutlined />} htmlType="button" onClick={_addProduction}>
+                    添加商品
+                  </Button>
+                </Space>
+              </Form.Item>
+            </Col>
           </Row>
         </Form>
       </div>

@@ -11,6 +11,7 @@ import { HttpCode } from '@/constants/HttpCode'
 import TaskBasicInfo from './components/TaskBasicInfo/TaskBasicInfo'
 import ImageColumn from '@/components/tableColumn/ImageColumn'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
+import { PlusOutlined } from '@ant-design/icons'
 
 import { InputTemp } from '@/components/filter/formItem'
 import DEDialog from '@/components/components/Dedialog'
@@ -167,7 +168,7 @@ const TaskListPage: React.FC = () => {
             <Col span={4}>
               <InputTemp name="idOrName" placeholder="清单名称" />
             </Col>
-            <Col span={1} className="table-from-label">
+            <Col span={2} className="table-from-label">
               状态
             </Col>
             <Col span={4}>
@@ -185,15 +186,25 @@ const TaskListPage: React.FC = () => {
                 </Select>
               </Form.Item>
             </Col>
-            <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
-              <Space>
-                <Button htmlType="submit">查询</Button>
-                <Button onClick={resetTable} htmlType="button">
-                  重置
-                </Button>
-                <Button onClick={addModal}>添加</Button>
-              </Space>
-            </Form.Item>
+            <Col span={8}>
+              <Form.Item>
+                <Space>
+                  <Button htmlType="submit">查询</Button>
+                  <Button onClick={resetTable} htmlType="button">
+                    重置
+                  </Button>
+                </Space>
+              </Form.Item>
+            </Col>
+            <Col span={6} style={{ textAlign: 'right' }}>
+              <Form.Item>
+                <Space>
+                  <Button icon={<PlusOutlined />} type="primary" onClick={addModal}>
+                    添加
+                  </Button>
+                </Space>
+              </Form.Item>
+            </Col>
           </Row>
         </Form>
       </div>

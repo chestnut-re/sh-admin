@@ -8,6 +8,7 @@ import { useHistory } from 'react-router-dom'
 import dayjs from 'dayjs'
 import { getCookie } from '@/utils/cookies'
 import { getNanoId } from '@/utils/nanoid'
+import { UploadOutlined } from '@ant-design/icons'
 /**
  * 用户提现
  */
@@ -176,7 +177,7 @@ const UserPage: React.FC = () => {
           form={form}
         >
           <Row gutter={[10, 0]}>
-            <Col span={4}>
+            <Col span={6}>
               <Form.Item name="name">
                 <Input />
               </Form.Item>
@@ -184,7 +185,7 @@ const UserPage: React.FC = () => {
             <Col span={2} className="table-from-label">
               状态
             </Col>
-            <Col span={2}>
+            <Col span={4}>
               <Form.Item name="sts">
                 <Select>
                   <Option value={1}>待审核</Option>
@@ -198,14 +199,22 @@ const UserPage: React.FC = () => {
                 <RangePicker showTime />
               </Form.Item>
             </Col>
-            <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
-              <Space>
-                <Button htmlType="submit">查询</Button>
-                <Button htmlType="button" onClick={_export}>
-                  导出
-                </Button>
-              </Space>
-            </Form.Item>
+            <Col span={4}>
+              <Form.Item>
+                <Space>
+                  <Button htmlType="submit">查询</Button>
+                </Space>
+              </Form.Item>
+            </Col>
+            <Col span={4} style={{ textAlign: 'right' }}>
+              <Form.Item>
+                <Space>
+                  <Button htmlType="button" icon={<UploadOutlined />} type="primary" onClick={_export}>
+                    导出
+                  </Button>
+                </Space>
+              </Form.Item>
+            </Col>
           </Row>
         </Form>
       </div>

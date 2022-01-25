@@ -1,5 +1,5 @@
 /*
- * @Description: 
+ * @Description:
  * @LastEditTime: 2022-01-24 17:44:45
  */
 import React, { useState, useEffect } from 'react'
@@ -18,6 +18,7 @@ import ModalDialog from '@/components/components/ModalDialog'
 import ShowTaskModal from './components/ShowTaskModal'
 import ShowGoodsTaskModal from './components/ShowGoodsTaskModal'
 import { formateTime } from '@/utils/timeUtils'
+import { PlusOutlined } from '@ant-design/icons'
 const RebateActivity: React.FC = () => {
   const { RangePicker } = DatePicker
   const [form] = Form.useForm()
@@ -327,7 +328,7 @@ const RebateActivity: React.FC = () => {
         <Form name="basic" initialValues={{ remember: true }} onFinish={onFinish} form={form}>
           <Row gutter={[10, 10]}>
             <Col span={1} className="table-from-label"></Col>
-            <Col lg={10} xl={7} xxl={5} span={4}>
+            <Col span={4}>
               <Form.Item name="state">
                 <Radio.Group
                   value={checkState}
@@ -343,14 +344,14 @@ const RebateActivity: React.FC = () => {
                 </Radio.Group>
               </Form.Item>
             </Col>
-            {/* <Col span={1} className="table-from-label"></Col> */}
+            <Col span={1} className="table-from-label"></Col>
             <Col span={3}>
               <InputTemp name="rebateName" placeholder="活动ID/活动名称" />
             </Col>
             <Col lg={4} xl={2} xxl={2} span={2} className="table-from-label">
               创建时间
             </Col>
-            <Col span={3}>
+            <Col span={5}>
               <Form.Item name="time">
                 <RangePicker showTime />
               </Form.Item>
@@ -361,18 +362,21 @@ const RebateActivity: React.FC = () => {
             <Col span={3}>
               <StatusRoute name="state" />
             </Col> */}
-
-            <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
+            <Col span={4}>
+              <Form.Item>
+                <Space>
+                  <Button htmlType="submit">查询</Button>
+                  <Button onClick={resetTable}>重置</Button>
+                </Space>
+              </Form.Item>
+            </Col>
+            <Col span={4} style={{ textAlign: 'right' }}>
               <Space>
-                <Button type="primary" onClick={showAdd}>
+                <Button type="primary" icon={<PlusOutlined />} onClick={showAdd}>
                   添加
                 </Button>
-                <Button htmlType="submit">查询</Button>
-                <Button type="primary" onClick={resetTable}>
-                  重置
-                </Button>
               </Space>
-            </Form.Item>
+            </Col>
           </Row>
         </Form>
       </div>

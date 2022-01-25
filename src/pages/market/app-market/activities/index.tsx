@@ -8,6 +8,7 @@ import RemainTime from '@/components/tableColumn/RemainTime'
 import ImageColumn from '@/components/tableColumn/ImageColumn'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { status } from './utils'
+import { PlusOutlined } from '@ant-design/icons'
 /**
  * App营销-Activity管理-List
  */
@@ -150,14 +151,16 @@ const BannerListPage: React.FC = () => {
     <div className="channel-list">
       <div>
         <Form name="basic" initialValues={{ remember: true }} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-          <Row gutter={[10, 0]}>
-            <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
-              <Space>
-                <Button type="primary" htmlType="submit">
-                  添加
-                </Button>
-              </Space>
-            </Form.Item>
+          <Row gutter={[10, 0]} justify="end">
+            <Col>
+              <Form.Item>
+                <Space>
+                  <Button type="primary" icon={<PlusOutlined />} htmlType="submit">
+                    添加
+                  </Button>
+                </Space>
+              </Form.Item>
+            </Col>
           </Row>
         </Form>
       </div>

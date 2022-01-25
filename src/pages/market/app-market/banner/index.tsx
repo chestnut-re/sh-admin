@@ -8,6 +8,7 @@ import dayjs from 'dayjs'
 import duration from 'dayjs/plugin/duration'
 import ImageColumn from '@/components/tableColumn/ImageColumn'
 import RemainTime from '@/components/tableColumn/RemainTime'
+import { PlusOutlined } from '@ant-design/icons'
 
 /**
  * App营销-Banner管理-List
@@ -175,14 +176,16 @@ const BannerListPage: React.FC = () => {
           onFinishFailed={onFinishFailed}
           form={form}
         >
-          <Row gutter={[10, 0]}>
-            <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
-              <Space>
-                <Button type="primary" htmlType="submit">
-                  添加
-                </Button>
-              </Space>
-            </Form.Item>
+          <Row gutter={[10, 0]} justify="end">
+            <Col>
+              <Form.Item>
+                <Space>
+                  <Button type="primary" icon={<PlusOutlined />} htmlType="submit">
+                    添加
+                  </Button>
+                </Space>
+              </Form.Item>
+            </Col>
           </Row>
         </Form>
       </div>

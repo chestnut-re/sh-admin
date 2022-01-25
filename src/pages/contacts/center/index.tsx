@@ -4,6 +4,7 @@ import { ContactsCenterApi } from '@/service/ContactsCenter'
 import dayjs from 'dayjs'
 import AEDialog from './component/AEDialog'
 import { DialogMode } from '@/utils/enum'
+import { PlusOutlined } from '@ant-design/icons'
 import './index.less'
 /**
  * 客服中心-客服列表
@@ -183,6 +184,7 @@ const ContactsCenter: React.FC = () => {
         <Col span={4} className="add-contacts-btn">
           <Button
             type="primary"
+            icon={<PlusOutlined />}
             onClick={() => {
               contactsUseHandle('add', '')
             }}
