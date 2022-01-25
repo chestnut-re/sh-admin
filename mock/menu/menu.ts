@@ -408,6 +408,7 @@ export default [
                   id: md5('/contacts/center'),
                   type: 'menu',
                   icon: '',
+                  visible: false,
                   componentPath: '/contacts/center',
                   path: '/contacts/center',
                 },
@@ -452,7 +453,7 @@ export default [
                   type: 'menu',
                   icon: '',
                   componentPath: '/basic/role-based',
-                  path: '/basic/role-based ',
+                  path: '/basic/role-based',
                   visible: false,
                 },
                 {
