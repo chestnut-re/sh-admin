@@ -1,3 +1,7 @@
+<!--
+ * @Description: 
+ * @LastEditTime: 2022-01-25 17:36:59
+-->
 
 
 山海旅游 管理后台
@@ -27,3 +31,7 @@
 - [ ](hht)浅色表头 class
 - [ ](hht)Column 状态样式 - 单独组件 
 - [ ](hht)表头悬浮提示 - antd 不支持就不做了
+
+ ### 菜单，暂时mock mock/menu/menu.ts
+-   不再左侧显示visible: false, 在左侧显示 true 不在左侧显示 
+-   暂定 type 1 按钮 2 菜单，
