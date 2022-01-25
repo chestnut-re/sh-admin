@@ -21,14 +21,28 @@ const SurveyPage: React.FC = () => {
     form.validateFields().then((query) => {
       const payBeginTime = query.time ? dayjs(query.time[0]).format('YYYY-MM-DD HH:mm:ss') : ''
       const payEndTime = query.time ? dayjs(query.time[1]).format('YYYY-MM-DD HH:mm:ss') : ''
+      let params = {}
+      if (payEndTime !== '' && payBeginTime !== '') {
+        params = {
+          startDate: payBeginTime,
+          endDate: payEndTime,
+        }
+      } else {
+        params = {
+          days: checkTime,
+        }
+      }
       FinancialManagementService.fianceOverview({
-        startDate: payBeginTime,
-        endDate: payEndTime,
+        ...params,
       }).then((res) => {
         setData(res?.data ?? {})
       })
     })
   }
+
+  useEffect(() => {
+    loadData()
+  }, [checkTime])
 
   const onFinish = (values: any) => {
     console.log('Success:', values)
@@ -37,6 +51,12 @@ const SurveyPage: React.FC = () => {
 
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo)
+  }
+
+  const _reset = () => {
+    form.resetFields()
+    setCheckTime('')
+    loadData()
   }
   return (
     <div className="survey__root">
@@ -49,12 +69,11 @@ const SurveyPage: React.FC = () => {
                   value={checkTime}
                   onChange={(value) => {
                     setCheckTime(value.target.value)
-                    loadData()
                   }}
                 >
                   <Radio.Button value="0">今天</Radio.Button>
-                  <Radio.Button value="1">近7天</Radio.Button>
-                  <Radio.Button value="2">近30天</Radio.Button>
+                  <Radio.Button value="7">近7天</Radio.Button>
+                  <Radio.Button value="30">近30天</Radio.Button>
                 </Radio.Group>
               </Form.Item>
             </Col>
@@ -69,7 +88,9 @@ const SurveyPage: React.FC = () => {
             <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
               <Space>
                 <Button htmlType="submit">查询</Button>
-                <Button htmlType="submit">重置</Button>
+                <Button htmlType="submit" onClick={_reset}>
+                  重置
+                </Button>
               </Space>
             </Form.Item>
           </Row>

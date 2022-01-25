@@ -15,6 +15,7 @@ const DetailedPage: React.FC = () => {
   const [total, setTotal] = useState()
   const [detail, setDetail] = useState<any>('1')
   const [columns, setColumns] = useState<any>([])
+  const [checkTime, setCheckTime] = useState('0')
   useEffect(() => {
     loadData(pageIndex)
   }, [pageIndex])
@@ -23,12 +24,22 @@ const DetailedPage: React.FC = () => {
     form.validateFields().then((query) => {
       const payBeginTime = query.time ? dayjs(query.time[0]).format('YYYY-MM-DD HH:mm:ss') : ''
       const payEndTime = query.time ? dayjs(query.time[1]).format('YYYY-MM-DD HH:mm:ss') : ''
+      let params = {}
+      if (payEndTime !== '' && payBeginTime !== '') {
+        params = {
+          startDate: payBeginTime,
+          endDate: payEndTime,
+        }
+      } else {
+        params = {
+          days: checkTime,
+        }
+      }
       FinancialManagementService.list({
         current: pageIndex,
         pageSize: pageSize,
         detailType: detail,
-        startDate: payBeginTime,
-        endDate: payEndTime,
+        ...params,
       }).then((res) => {
         setData(res.data?.records ?? [])
         setTotal(res.data.total)
@@ -172,6 +183,15 @@ const DetailedPage: React.FC = () => {
       setColumns(columnsFL)
     }
   }, [data])
+
+  useEffect(() => {
+    loadData(pageIndex)
+  }, [checkTime])
+
+  // useEffect(() => {
+  //   setCheckTime('0')
+  // }, [form.resetFields()])
+
   const onFinish = (values: any) => {
     console.log('Success:', values)
     loadData(pageIndex)
@@ -180,6 +200,13 @@ const DetailedPage: React.FC = () => {
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo)
   }
+
+  const _reset = () => {
+    form.resetFields()
+    setCheckTime('')
+    loadData(pageIndex)
+  }
+
   return (
     <div className="list__root">
       <div className="list-form">
@@ -192,17 +219,15 @@ const DetailedPage: React.FC = () => {
         >
           <Row gutter={[5, 0]}>
             <Col span={6}>
-              <Form.Item name="channelId">
+              <Form.Item name="days">
                 <Radio.Group
-                // value={checkState}
-                // onChange={(value) => {
-                //   setCheckState(value.target.value)
-                //   loadData(pageIndex)
-                // }}
+                  onChange={(value) => {
+                    setCheckTime(value.target.value)
+                  }}
                 >
                   <Radio.Button value="0">今天</Radio.Button>
-                  <Radio.Button value="1">近7天</Radio.Button>
-                  <Radio.Button value="2">近30天</Radio.Button>
+                  <Radio.Button value="7">近7天</Radio.Button>
+                  <Radio.Button value="30">近30天</Radio.Button>
                 </Radio.Group>
               </Form.Item>
             </Col>
@@ -229,7 +254,9 @@ const DetailedPage: React.FC = () => {
             <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
               <Space>
                 <Button htmlType="submit">查询</Button>
-                <Button htmlType="button">重置</Button>
+                <Button htmlType="button" onClick={_reset}>
+                  重置
+                </Button>
                 {/* <Button htmlType="button">导出</Button> */}
               </Space>
             </Form.Item>
