@@ -1,10 +1,14 @@
+/*
+ * @Description: 
+ * @LastEditTime: 2022-01-25 16:48:44
+ */
 import { Layout } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { Redirect, Route, Switch, withRouter } from 'react-router-dom'
 import loadable from '@loadable/component'
 import { useStore } from '@/store/context'
 import { observer } from 'mobx-react-lite'
-import BreadcrumbList from '../BreadcrumbList/index'
+// import BreadcrumbList from '../BreadcrumbList/index'
 type ContentLayoutProps = {
   location: any
 }
@@ -27,7 +31,7 @@ function ContentLayout({ location }: ContentLayoutProps): JSX.Element {
     <Layout.Content>
       <Switch location={location}>
         <>
-          <BreadcrumbList adminStore={adminStore.menu}>
+          {/* <BreadcrumbList adminStore={adminStore.menu}> */}
             <>
               {tempMenuList.map((route) => {
                 return (
@@ -42,7 +46,7 @@ function ContentLayout({ location }: ContentLayoutProps): JSX.Element {
                 )
               })}
             </>
-          </BreadcrumbList>
+          {/* </BreadcrumbList> */}
         </>
 
         {/* {adminStore.menu?.length > 0 && <Redirect to="/error/404" />} */}
