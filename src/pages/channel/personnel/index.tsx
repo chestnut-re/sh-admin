@@ -199,7 +199,7 @@ const PersonnelManagement: React.FC = () => {
 
   return (
     <div className="PersonnelManagement__root">
-      <Row gutter={[24, 0]}>
+      <Row gutter={[24, 0]} className="PersonnelManagement-row">
         <Col xxl={3} xl={5} lg={7} md={8}>
           {/* <StructureTree structure={structure} onSelectStructure={_onSelectStructure} /> */}
           {structure.length > 0 ? (

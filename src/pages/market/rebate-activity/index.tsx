@@ -1,6 +1,6 @@
 /*
- * @Description:
- * @LastEditTime: 2022-01-24 16:13:24
+ * @Description: 
+ * @LastEditTime: 2022-01-24 17:44:45
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Radio, DatePicker, Modal, message } from 'antd'
@@ -296,7 +296,7 @@ const RebateActivity: React.FC = () => {
       onOk: () => {
         setSelectRecord(record.id)
         setrebateName(record.name)
-        setActivityShowDialog(true)
+        setGoodsShowDialog(true)
         setActivityRoleList([])
       },
       onCancel: () => {
