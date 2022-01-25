@@ -10,6 +10,7 @@ import { ConfigRefundService } from '@/service/OrderService'
 import { HttpCode } from '@/constants/HttpCode'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { formateTime } from '@/utils/timeUtils'
+import { PlusOutlined } from '@ant-design/icons'
 const RefundReason: React.FC = () => {
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
@@ -115,14 +116,16 @@ const RefundReason: React.FC = () => {
     <div className="channel-list">
       <div>
         <Form name="basic" initialValues={{ remember: true }} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-          <Row gutter={[10, 0]}>
-            <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
-              <Space>
-                <Button type="primary" htmlType="submit">
-                  添加
-                </Button>
-              </Space>
-            </Form.Item>
+          <Row gutter={[10, 0]} justify="end">
+            <Col>
+              <Form.Item>
+                <Space>
+                  <Button type="primary" htmlType="submit" icon={<PlusOutlined />}>
+                    添加
+                  </Button>
+                </Space>
+              </Form.Item>
+            </Col>
           </Row>
         </Form>
       </div>

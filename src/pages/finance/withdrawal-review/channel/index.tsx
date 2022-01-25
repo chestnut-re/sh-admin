@@ -8,6 +8,7 @@ import { WithdrawalReviewService } from '@/service/FinanceAccountService'
 import AEBannerDialog, { DialogMode } from './components/AEBannerDialog'
 import { useHistory } from 'react-router-dom'
 import { getCookie } from '@/utils/cookies'
+import { UploadOutlined } from '@ant-design/icons'
 /**
  * 渠道提现
  */
@@ -231,14 +232,22 @@ const ChannelPage: React.FC = () => {
                 <RangePicker showTime />
               </Form.Item>
             </Col>
-            <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
-              <Space>
-                <Button htmlType="submit">查询</Button>
-                <Button htmlType="button" onClick={_export}>
-                  导出
-                </Button>
-              </Space>
-            </Form.Item>
+            <Col span={4}>
+              <Form.Item>
+                <Space>
+                  <Button htmlType="submit">查询</Button>
+                </Space>
+              </Form.Item>
+            </Col>
+            <Col span={2} style={{ textAlign: 'right' }}>
+              <Form.Item>
+                <Space>
+                  <Button type="primary" icon={<UploadOutlined />} htmlType="button" onClick={_export}>
+                    导出
+                  </Button>
+                </Space>
+              </Form.Item>
+            </Col>
           </Row>
         </Form>
       </div>

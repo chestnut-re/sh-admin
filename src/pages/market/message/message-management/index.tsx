@@ -5,6 +5,7 @@ import AEMessageDialog, { DialogMode } from './components/AEMessageDialog'
 import { MessageService } from '@/service/MessageService'
 import dayjs from 'dayjs'
 import { HttpCode } from '@/constants/HttpCode'
+import { PlusOutlined } from '@ant-design/icons'
 /**
  * 消息管理
  */
@@ -48,6 +49,13 @@ const MessageListPage: React.FC = () => {
     {
       title: '消息标题',
       dataIndex: 'pushTitle',
+      render: (text: any, record: any) => {
+        if (record.pushTitle == undefined) {
+          return `- -`
+        } else {
+          return record.pushTitle
+        }
+      },
     },
     {
       title: '发布内容',
@@ -146,7 +154,7 @@ const MessageListPage: React.FC = () => {
           form={form}
         >
           <Row gutter={[5, 0]} style={{ paddingLeft: '40px' }}>
-            <Col span={4}>
+            <Col span={6}>
               <Form.Item name="title">
                 <Input placeholder="请输入消息标题" />
               </Form.Item>
@@ -159,17 +167,25 @@ const MessageListPage: React.FC = () => {
                 <RangePicker showTime />
               </Form.Item>
             </Col>
-            <Form.Item wrapperCol={{ offset: 4, span: 12 }}>
-              <Space>
-                <Button htmlType="submit">查询</Button>
-                <Button htmlType="button" onClick={_reset}>
-                  重置
-                </Button>
-                <Button htmlType="button" type="primary" onClick={_addMessage}>
-                  发布消息
-                </Button>
-              </Space>
-            </Form.Item>
+            <Col span={6}>
+              <Form.Item>
+                <Space>
+                  <Button htmlType="submit">查询</Button>
+                  <Button htmlType="button" onClick={_reset}>
+                    重置
+                  </Button>
+                </Space>
+              </Form.Item>
+            </Col>
+            <Col span={6} style={{ textAlign: 'right' }}>
+              <Form.Item>
+                <Space>
+                  <Button htmlType="button" icon={<PlusOutlined />} type="primary" onClick={_addMessage}>
+                    发布消息
+                  </Button>
+                </Space>
+              </Form.Item>
+            </Col>
           </Row>
         </Form>
       </div>

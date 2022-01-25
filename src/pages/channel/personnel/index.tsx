@@ -8,6 +8,7 @@ import AEDialog from './component/AEDialog'
 import ChannelListTree from '@/components/components/ChannelListTree'
 import { DialogMode, createChannel } from '@/utils/enum'
 import { AuthEle } from '@/components/Common/AuthEle'
+import { PlusOutlined } from '@ant-design/icons'
 /*
  * 人员管理
  */
@@ -216,7 +217,7 @@ const PersonnelManagement: React.FC = () => {
           <div>
             <Form name="basic" initialValues={{ remember: true }} onFinish={onFinish} form={form}>
               <Row gutter={[12, 12]}>
-                <Col span={5}>
+                <Col span={7}>
                   <InputTemp name="keyword" placeholder="渠道名称/责任区域" />
                 </Col>
                 {/* <Col span={1} className="table-from-label">
@@ -225,31 +226,40 @@ const PersonnelManagement: React.FC = () => {
                 <Col span={3}>
                   <PersonalState name="state" />
                 </Col> */}
-                <Col span={2} className="table-from-label">
+                <Col span={4} className="table-from-label">
                   人员类型
                 </Col>
-                <Col span={3}>
+                <Col span={5}>
                   {/* name type */}
                   <AccountType name="accountType" />
                 </Col>
-                <Form.Item wrapperCol={{ offset: 4, span: 12 }}>
-                  <Space size={16}>
-                    <Button htmlType="submit">查询</Button>
-                    <Button htmlType="button" onClick={resetTable}>
-                      重置
-                    </Button>
-                    <AuthEle id={70}>
-                      <Button
-                        type="primary"
-                        onClick={() => {
-                          showAdd()
-                        }}
-                      >
-                        添加人员
+                <Col span={4}>
+                  <Form.Item>
+                    <Space size={16}>
+                      <Button htmlType="submit">查询</Button>
+                      <Button htmlType="button" onClick={resetTable}>
+                        重置
                       </Button>
-                    </AuthEle>
-                  </Space>
-                </Form.Item>
+                    </Space>
+                  </Form.Item>
+                </Col>
+                <Col span={4} style={{ textAlign: 'right' }}>
+                  <Form.Item>
+                    <Space size={16}>
+                      <AuthEle id={70}>
+                        <Button
+                          icon={<PlusOutlined />}
+                          type="primary"
+                          onClick={() => {
+                            showAdd()
+                          }}
+                        >
+                          添加人员
+                        </Button>
+                      </AuthEle>
+                    </Space>
+                  </Form.Item>
+                </Col>
               </Row>
             </Form>
           </div>

@@ -69,8 +69,8 @@
       content: '';
       width: 20px;
       height: 20px;
-      border-top: 20px solid #8aa4ed;
-      border-left: 20px solid transparent;
+      // border-top: 20px solid #8aa4ed;
+      // border-left: 20px solid transparent;
       top: 0px;
       right: 0;
       position: absolute;
@@ -79,16 +79,14 @@
 }
 // 面包屑、
 .ant-breadcrumb {
-  .ant-breadcrumb-link  {
-    a{
-
-      color: #5f7ce0 ;
+  .ant-breadcrumb-link {
+    a {
+      color: #5f7ce0;
     }
   }
-
 }
-.ant-breadcrumb > span:last-child{
-  color:#575D6C !important ;
+.ant-breadcrumb > span:last-child {
+  color: #575d6c !important ;
 }
 //列表下划线样式
 .table-con-underline {
@@ -101,4 +99,8 @@
 .operation {
   color: #526ecc;
   cursor: pointer;
+}
+
+.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
+  color: @black;
 }

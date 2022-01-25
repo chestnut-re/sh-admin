@@ -5,6 +5,7 @@ import CreateAdminDialog, { DialogMode } from './components/createAdministrators
 import { AdminService } from '@/service/AdminService'
 import { getRoles } from '@/service/role'
 import { HttpCode } from '@/constants/HttpCode'
+import { PlusOutlined } from '@ant-design/icons'
 
 /**
  * 管理员账号
@@ -143,12 +144,10 @@ const AdminListPage: React.FC = () => {
   }
   return (
     <div className="admin__root">
-      <div className="admin-header">
+      {/* <div className="admin-header">
         <span className="header-title">管理员账号</span>
-        <Button type="primary" onClick={_addAdmin}>
-          添加管理员
-        </Button>
-      </div>
+        
+      </div> */}
       <div className="admin-form">
         <Form
           name="basic"
@@ -166,7 +165,7 @@ const AdminListPage: React.FC = () => {
             <Col span={2} className="table-from-label">
               角色
             </Col>
-            <Col span={4}>
+            <Col span={6}>
               <Form.Item name="roleId">
                 <Select style={{ width: 120 }} placeholder="请选择">
                   {roleData?.map((item: any, index) => {
@@ -179,14 +178,25 @@ const AdminListPage: React.FC = () => {
                 </Select>
               </Form.Item>
             </Col>
-            <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
-              <Space>
-                <Button htmlType="submit">查询</Button>
-                <Button htmlType="button" onClick={resetTable}>
-                  重置
-                </Button>
-              </Space>
-            </Form.Item>
+            <Col span={4}>
+              <Form.Item>
+                <Space>
+                  <Button htmlType="submit">查询</Button>
+                  <Button htmlType="button" onClick={resetTable}>
+                    重置
+                  </Button>
+                </Space>
+              </Form.Item>
+            </Col>
+            <Col span={4} style={{ textAlign: 'right' }}>
+              <Form.Item>
+                <Space>
+                  <Button type="primary" icon={<PlusOutlined />} htmlType="button" onClick={_addAdmin}>
+                    添加管理员
+                  </Button>
+                </Space>
+              </Form.Item>
+            </Col>
           </Row>
         </Form>
       </div>

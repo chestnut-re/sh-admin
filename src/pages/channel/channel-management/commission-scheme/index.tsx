@@ -13,6 +13,7 @@ import ChannelService from '@/service/ChannelService'
 import { cityDispose, getMaxFloor, getTwoTier, getLastTwoTier } from '@/utils/tree'
 import { enumState } from '@/utils/enum'
 import { AuthEle } from '@/components/Common/AuthEle'
+import { PlusOutlined } from '@ant-design/icons'
 import './index.less'
 const CommissionSchemePage: React.FC = () => {
   const [form] = Form.useForm()
@@ -190,10 +191,10 @@ const CommissionSchemePage: React.FC = () => {
               form={form}
             >
               <Row gutter={[10, 0]}>
-                <Col span={2} className="table-from-label">
+                <Col span={4} className="table-from-label">
                   方案名称
                 </Col>
-                <Col span={3}>
+                <Col span={6}>
                   <InputTemp name="planName" />
                 </Col>
                 {/* <Col span={1} className="table-from-label">
@@ -212,15 +213,21 @@ const CommissionSchemePage: React.FC = () => {
                     </Select>
                   </Form.Item>
                 </Col> */}
-                <Col span={5}>
-                  <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
+                <Col span={6}>
+                  <Form.Item>
                     <Space>
                       <Button htmlType="submit">查询</Button>
                       <Button htmlType="button" onClick={onReset}>
                         清除
                       </Button>
+                    </Space>
+                  </Form.Item>
+                </Col>
+                <Col span={8} style={{ textAlign: 'right' }}>
+                  <Form.Item>
+                    <Space>
                       <AuthEle id={66}>
-                        <Button type="primary" onClick={showAddDialog}>
+                        <Button type="primary" icon={<PlusOutlined />} onClick={showAddDialog}>
                           创建分佣方案
                         </Button>
                       </AuthEle>

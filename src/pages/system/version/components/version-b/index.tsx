@@ -2,6 +2,7 @@ import { Space, Table, Tag, Form, Row, Col, Button } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { VersionService } from '@/service/VersionService'
 import AEVersionDialog, { DialogMode } from './components/AEVersionDialog'
+import { PlusOutlined } from '@ant-design/icons'
 /**
  * 系统中心-版本管理-B端版本管理
  */
@@ -139,14 +140,16 @@ const VersionBPage: React.FC = () => {
           onFinishFailed={onFinishFailed}
           form={form}
         >
-          <Row gutter={[10, 0]}>
-            <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
-              <Space>
-                <Button type="primary" onClick={_addVersion}>
-                  添加版本记录
-                </Button>
-              </Space>
-            </Form.Item>
+          <Row gutter={[10, 0]} justify="end">
+            <Col>
+              <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
+                <Space>
+                  <Button type="primary" icon={<PlusOutlined />} onClick={_addVersion}>
+                    添加版本记录
+                  </Button>
+                </Space>
+              </Form.Item>
+            </Col>
           </Row>
         </Form>
       </div>
