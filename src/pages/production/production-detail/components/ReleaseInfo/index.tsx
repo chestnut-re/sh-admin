@@ -132,7 +132,7 @@ const ReleaseInfo: React.FC = () => {
         </Form.Item>
 
         <div>
-          预估计利润：xxx <p>预估利润 = 现售价 - 供应成本价</p>
+          {/* 预估计利润：xxx <p>预估利润 = 现售价 - 供应成本价</p> */}
         </div>
 
         <Form.Item label="分佣方案" name="distPlanId" rules={[{ required: true }]}>
