@@ -1,6 +1,6 @@
 /*
  * @Description:
- * @LastEditTime: 2022-01-19 18:38:10
+ * @LastEditTime: 2022-01-25 15:30:39
  */
 import { USER_DETAIL } from '@/constants/CookiesC'
 import { getMenus, getDevMenus } from '@/service/menu'
@@ -51,7 +51,7 @@ class AdminData {
     } else {
       if (getCookie(USER_DETAIL)) {
         this.userDetails = JSON.parse(getCookie(USER_DETAIL) ?? '')
-        console.log('this.userDetails', this.userDetails)
+        // console.log('this.userDetails', this.userDetails)
       }
     }
   }
