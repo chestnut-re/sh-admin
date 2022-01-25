@@ -107,7 +107,7 @@ const ExamineDialog: FC<Props> = ({ data, show = false, onSuccess, onClose }) =>
               onClick={() => {
                 setChecked1(true)
                 setChecked(false)
-                setActionType('0')
+                setActionType('2')
               }}
               icon={checked1 ? <CheckOutlined /> : null}
             >
