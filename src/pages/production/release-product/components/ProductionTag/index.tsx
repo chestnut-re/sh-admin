@@ -11,8 +11,8 @@ interface Props {
 /**
  * 商品标签
  */
-const ProductionTag: React.FC<Props> = ({value, onChange}) => {
-  const [productType, setProductType] = useState([])
+const ProductionTag: React.FC<Props> = ({ value, onChange }) => {
+  const [productType, setProductType] = useState<any[]>([])
   const [fetching, setFetching] = useState(false)
 
   useEffect(() => {
@@ -24,7 +24,28 @@ const ProductionTag: React.FC<Props> = ({value, onChange}) => {
     setProductType([])
     ProductionService.tagList({ sortName: value }).then((res) => {
       setFetching(false)
-      setProductType(res.data ?? [])
+      if (res.data) {
+        const list: any[] = []
+        res.data.map((i) => {
+          list.push({
+            id: i.id,
+            operationType: i.operationType,
+            parentId: i.parentId,
+            sortName: i.sortName,
+          })
+          if (i.children) {
+            i.children.map((c) => {
+              list.push({
+                id: c.id,
+                operationType: c.operationType,
+                parentId: c.parentId,
+                sortName: c.sortName,
+              })
+            })
+          }
+        })
+        setProductType(list)
+      }
     })
   }
 
