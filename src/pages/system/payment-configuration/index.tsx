@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import './index.less'
 import { Button, Table, Space } from 'antd'
 import AEPaymentDialog, { DialogMode } from './components/AEPaymentDialog'
+import { PlusOutlined } from '@ant-design/icons'
 /**
  * 支付配置
  */
@@ -88,9 +89,12 @@ const PaymentConfigurationPage: React.FC = () => {
   }
   return (
     <div className="pay__root">
-      <div className="pay-header">
+      {/* <div className="pay-header">
         <span className="header-title">支付配置</span>
-        <Button type="primary" onClick={_addAdmin}>
+        
+      </div> */}
+      <div style={{ textAlign: 'right', marginBottom: 10 }}>
+        <Button type="primary" icon={<PlusOutlined />} onClick={_addAdmin}>
           创建
         </Button>
       </div>

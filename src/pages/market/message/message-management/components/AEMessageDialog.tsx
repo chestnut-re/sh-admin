@@ -23,8 +23,8 @@ const { TextArea } = Input
  */
 const AEMessageDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) => {
   const [form] = Form.useForm()
-  const [messageType, setMessageType] = React.useState(0)
-  const [selectData, setSelectData] = useState({})
+  const [messageType, setMessageType] = useState(0)
+  const [selectData, setSelectData] = useState<any>({})
 
   useEffect(() => {
     if (data?.id) {
@@ -40,6 +40,7 @@ const AEMessageDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClo
       messageType: selectData?.messageType,
       pushUser: selectData?.pushUser,
     })
+    setMessageType(selectData?.messageType)
   }, [selectData])
 
   const getDetails = () => {
@@ -85,7 +86,7 @@ const AEMessageDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClo
         name="basic"
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 16 }}
-        initialValues={{ remember: true }}
+        initialValues={{ messageType: 0 }}
         onFinish={(values: any) => {}}
         onFinishFailed={(errorInfo: any) => {}}
         autoComplete="off"
@@ -99,7 +100,7 @@ const AEMessageDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClo
           </Select>
         </Form.Item>
         <Form.Item label="消息类型" name="messageType">
-          <Radio.Group onChange={(e) => setMessageType(e.target.value)} value={messageType}>
+          <Radio.Group onChange={(e) => setMessageType(e.target.value)}>
             <Radio value={0}>APP推送</Radio>
             <Radio value={1}>站内信</Radio>
             <Radio value={2}>短信</Radio>

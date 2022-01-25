@@ -8,6 +8,7 @@ import TimeColumn from '@/components/tableColumn/TimeColumn'
 import TravelModeColumn from '@/components/tableColumn/TravelModeColumn'
 import { useHistory } from 'react-router-dom'
 import NewPrice from '@/components/tableColumn/NewPrice'
+import { PlusOutlined } from '@ant-design/icons'
 
 /**
  * 商品库 待发布
@@ -168,27 +169,29 @@ const UnReleaseProductionListPage: React.FC<any> = observer(({}) => {
             <Col span={4}>
               <TravelMode name="travelMode" />
             </Col>
+            <Col span={4}>
+              <Form.Item>
+                <Space>
+                  <Button htmlType="submit">查询</Button>
+                  <Button onClick={resetTable} htmlType="button">
+                    重置
+                  </Button>
+                </Space>
+              </Form.Item>
+            </Col>
 
-            <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
-              <Space>
-                <Button htmlType="submit">查询</Button>
-                <Button onClick={resetTable} htmlType="button">
-                  重置
-                </Button>
-              </Space>
-            </Form.Item>
-          </Row>
-          <Row justify="end">
-            <Form.Item>
-              <Space>
-                <Button type="primary" htmlType="button" onClick={_addProduction}>
-                  添加商品
-                </Button>
-                {/* <Button htmlType="button" type="primary">
+            <Col span={8} style={{ textAlign: 'right' }}>
+              <Form.Item>
+                <Space>
+                  <Button type="primary" icon={<PlusOutlined />} htmlType="button" onClick={_addProduction}>
+                    添加商品
+                  </Button>
+                  {/* <Button htmlType="button" type="primary">
                   下架
                 </Button> */}
-              </Space>
-            </Form.Item>
+                </Space>
+              </Form.Item>
+            </Col>
           </Row>
         </Form>
       </div>

@@ -9,6 +9,7 @@ import TravelModeColumn from '@/components/tableColumn/TravelModeColumn'
 import { useHistory } from 'react-router-dom'
 import { ProductionService } from '@/service/ProductionService'
 import NewPrice from '@/components/tableColumn/NewPrice'
+import { PlusOutlined } from '@ant-design/icons'
 
 /**
  * 商品库 分中心
@@ -183,24 +184,25 @@ const ProductionListCenter: React.FC<any> = observer(({}) => {
             <Col span={4}>
               <SubCenterProductionState name="channelGoodsState" />
             </Col>
-
-            <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
-              <Space>
-                <Button htmlType="submit">查询</Button>
-                <Button onClick={resetTable} htmlType="button">
-                  重置
-                </Button>
-              </Space>
-            </Form.Item>
-          </Row>
-          <Row justify="end">
-            <Form.Item>
-              <Space>
-                <Button type="primary" htmlType="button" onClick={_addProduction}>
-                  添加商品
-                </Button>
-              </Space>
-            </Form.Item>
+            <Col span={4}>
+              <Form.Item>
+                <Space>
+                  <Button htmlType="submit">查询</Button>
+                  <Button onClick={resetTable} htmlType="button">
+                    重置
+                  </Button>
+                </Space>
+              </Form.Item>
+            </Col>
+            <Col span={4} style={{ textAlign: 'right' }}>
+              <Form.Item>
+                <Space>
+                  <Button type="primary" icon={<PlusOutlined />} htmlType="button" onClick={_addProduction}>
+                    添加商品
+                  </Button>
+                </Space>
+              </Form.Item>
+            </Col>
           </Row>
         </Form>
       </div>

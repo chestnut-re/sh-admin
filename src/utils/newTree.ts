@@ -1,6 +1,6 @@
 /*
  * @Description: 结构树处理 新 之前有些乱 不动 慢慢在这维护
- * @LastEditTime: 2022-01-18 11:43:52
+ * @LastEditTime: 2022-01-25 14:24:32
  */
 /**
  * @description:  根据id 获取父 - 子 数据
@@ -8,6 +8,8 @@
  * @param {string} isId
  * @return {Array}
  */
+
+import { find } from 'lodash'
 
 export const shellArray = (arr: any[], id: string, areas = 'areas', adcode = 'adcode', pid = 'adcode') => {
   // eslint-disable-next-line prefer-const
@@ -132,4 +134,21 @@ export const newGetMenu = (menuList: Array<any>, parentId = 0) => {
     pre.push(child)
     return pre
   }, [])
+}
+
+export const getBread = (treeData: Array<any>, path) => {
+  for (let i = 0; i < treeData.length; i++) {
+    if (treeData[i].path == path) {
+      return [treeData[i]]
+    } else {
+      if (treeData[i].children) {
+        let res = getBread(treeData[i].children, path)
+        if (res !== undefined) {
+          const nowArr = treeData[i]
+          const newArr = [nowArr].concat(...res)
+          return newArr
+        }
+      }
+    }
+  }
 }
