@@ -38,7 +38,7 @@ export const ProductionState: FC<any> = ({ name, ...props }) => {
 /**
  * 分中心商品状态：
  */
- export const SubCenterProductionState: FC<any> = ({ name, ...props }) => {
+export const SubCenterProductionState: FC<any> = ({ name, ...props }) => {
   return (
     <Form.Item name={name}>
       <Select allowClear {...props}>
@@ -134,12 +134,9 @@ export const OrderState: FC<any> = ({ name, ...props }) => {
       <Select allowClear {...props}>
         <Select.Option value={''}>全部</Select.Option>
         <Select.Option value={1}>待付款</Select.Option>
-        <Select.Option value={3}>待确认</Select.Option>
+        <Select.Option value={3}>待核销</Select.Option>
         <Select.Option value={4}>已完成</Select.Option>
         <Select.Option value={2}>已失效</Select.Option>
-        <Select.Option value={5}>退款中</Select.Option>
-        <Select.Option value={6}>退款成功</Select.Option>
-        <Select.Option value={7}>退款失败</Select.Option>
       </Select>
     </Form.Item>
   )

@@ -34,7 +34,7 @@ const OrderListPage: React.FC = () => {
 
   useEffect(() => {
     loadData(pageIndex)
-    getChannel()
+    // getChannel()
   }, [pageIndex])
 
   const loadData = (pageIndex) => {
@@ -51,20 +51,19 @@ const OrderListPage: React.FC = () => {
         source: query.source,
         state: query.state,
       }).then((res) => {
-        setData(res.data.records)
+        setData(res.data?.records ?? [])
         setTotal(res.data.total)
       })
     })
   }
 
-  const getChannel = () => {
-    ChannelService.list({ pages: 1, size: 10 }).then((res) => {
-      if (res.code === HttpCode.success) {
-        setChannelData(res.data?.records ?? [])
-        console.log(channelData, 'ccc')
-      }
-    })
-  }
+  // const getChannel = () => {
+  //   ChannelService.list({ pages: 1, size: 10 }).then((res) => {
+  //     if (res.code === HttpCode.success) {
+  //       setChannelData(res.data?.records ?? [])
+  //     }
+  //   })
+  // }
 
   const columns = [
     {
@@ -78,6 +77,18 @@ const OrderListPage: React.FC = () => {
     {
       title: '商品名称',
       dataIndex: 'goodsName',
+      render: (text: any, record: any) => {
+        return (
+          <span
+            className="table-con-underline"
+            onClick={() => {
+              toDetails(record)
+            }}
+          >
+            {record?.goodsName}
+          </span>
+        )
+      },
     },
     {
       title: '单价',
@@ -93,10 +104,20 @@ const OrderListPage: React.FC = () => {
     {
       title: '营销活动',
       dataIndex: 'activityTypeVal',
+      render: (text: any, record: any) => {
+        if (record?.activityTypeVal) {
+          return <span className="table-con-underline">{record?.activityTypeVal}</span>
+        } else {
+          return `- -`
+        }
+      },
     },
     {
       title: '下单数量',
       dataIndex: 'orderCount',
+      render: (text: any, record: any) => {
+        return <span className="table-con-underline">{record?.orderCount}</span>
+      },
     },
     {
       title: '应付款',
@@ -181,7 +202,7 @@ const OrderListPage: React.FC = () => {
   return (
     <div className="order__root">
       <div className="order-header">
-        <span className="header-title">订单列表</span>
+        {/* <span className="header-title">订单列表</span> */}
         {/* <span className="header-btn">
           <span>46</span>
           &nbsp;笔待分配订单&nbsp;&nbsp;
@@ -207,7 +228,7 @@ const OrderListPage: React.FC = () => {
           onFinishFailed={onFinishFailed}
           form={form}
         >
-          <Row gutter={[5, 0]} style={{ paddingLeft: '40px' }}>
+          <Row gutter={[0, 0]}>
             {/* <Col span={6}>
               <Select value={selData} style={{ width: 120 }} onChange={(value) => setSelData(value)}>
                 {selectData?.map((item) => {
@@ -232,7 +253,7 @@ const OrderListPage: React.FC = () => {
                 <Input style={{ width: 120 }} />
               )}
             </Col> */}
-            <Col span={2} className="table-from-label">
+            {/* <Col span={2} className="table-from-label">
               渠道名称
             </Col>
             <Col span={4}>
@@ -247,11 +268,16 @@ const OrderListPage: React.FC = () => {
                   })}
                 </Select>
               </Form.Item>
+            </Col> */}
+            <Col span={2}>
+              <Form.Item name="orderNoLike">
+                <Input placeholder="商品名称/订单编号" />
+              </Form.Item>
             </Col>
             <Col span={2} className="table-from-label">
               下单时间
             </Col>
-            <Col span={4}>
+            <Col span={2}>
               <Form.Item name="time">
                 <RangePicker showTime />
               </Form.Item>
@@ -268,15 +294,13 @@ const OrderListPage: React.FC = () => {
             <Col span={2}>
               <OrderRoute name="source" />
             </Col>
-          </Row>
-          <Row gutter={[5, 0]} style={{ marginLeft: '-52px' }} justify="start">
             <Col span={4} className="table-from-label">
-              订单/售后状态
+              订单状态
             </Col>
             <Col span={2}>
               <OrderState name="state" />
             </Col>
-            <Form.Item wrapperCol={{ offset: 4, span: 12 }}>
+            <Form.Item wrapperCol={{ offset: 4, span: 2 }}>
               <Space>
                 <Button htmlType="submit">查询</Button>
                 <Button htmlType="button" onClick={resetTable}>
