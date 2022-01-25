@@ -49,6 +49,13 @@ const MessageListPage: React.FC = () => {
     {
       title: '消息标题',
       dataIndex: 'pushTitle',
+      render: (text: any, record: any) => {
+        if (record.pushTitle == undefined) {
+          return `- -`
+        } else {
+          return record.pushTitle
+        }
+      },
     },
     {
       title: '发布内容',
