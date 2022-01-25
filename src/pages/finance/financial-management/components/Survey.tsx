@@ -2,88 +2,37 @@ import React, { useState, useEffect } from 'react'
 import { Form, Button, Input, Row, Col, Select, Space, Table, DatePicker, Radio } from 'antd'
 import './survey.less'
 import { InfoCircleOutlined } from '@ant-design/icons'
-import ChannelService from '@/service/ChannelService'
+import { FinancialManagementService } from '@/service/FinanceAccountService'
 import { HttpCode } from '@/constants/HttpCode'
-import * as echarts from 'echarts/core'
-
-import {
-  TitleComponent,
-  TitleComponentOption,
-  TooltipComponent,
-  TooltipComponentOption,
-  LegendComponent,
-  LegendComponentOption,
-} from 'echarts/components'
-import { PieChart, PieSeriesOption } from 'echarts/charts'
-import { LabelLayout } from 'echarts/features'
-import { CanvasRenderer } from 'echarts/renderers'
-
-echarts.use([TitleComponent, TooltipComponent, LegendComponent, PieChart, CanvasRenderer, LabelLayout])
-
-type EChartsOption = echarts.ComposeOption<
-  TitleComponentOption | TooltipComponentOption | LegendComponentOption | PieSeriesOption
->
+import dayjs from 'dayjs'
 
 /**财务管理-财务概况 */
 const SurveyPage: React.FC = () => {
   const [form] = Form.useForm()
   const { RangePicker } = DatePicker
-  const { Option } = Select
-  const [data, setData] = useState([])
-
-  // setTimeout(() => {
-  //   const chartDom = document.getElementById('main')!
-  //   const myChart = echarts.init(chartDom)
-  //   const option: EChartsOption = {
-  //     tooltip: {
-  //       trigger: 'item',
-  //       formatter: '{b} : {c} ({d}%)',
-  //     },
-  //     legend: {
-  //       orient: 'horizontal',
-  //       left: 'center',
-  //       top: 'bottom',
-  //       icon: 'circle',
-  //     },
-  //     series: [
-  //       {
-  //         name: 'Access From',
-  //         type: 'pie',
-  //         radius: '50%',
-  //         data: [
-  //           { value: 1048, name: '销售分佣金额' },
-  //           { value: 735, name: '提现金额' },
-  //           { value: 580, name: '运营资金' },
-  //           { value: 484, name: '退款金额' },
-  //           { value: 300, name: '销售总额' },
-  //         ],
-  //         emphasis: {
-  //           itemStyle: {
-  //             shadowBlur: 10,
-  //             shadowOffsetX: 0,
-  //             shadowColor: 'rgba(0, 0, 0, 0.5)',
-  //           },
-  //         },
-  //       },
-  //     ],
-  //   }
-  //   option && myChart.setOption(option)
-  // }, 1)
+  const [data, setData] = useState<any>([])
+  const [checkTime, setCheckTime] = useState('0')
 
   useEffect(() => {
     loadData()
   }, [])
 
   const loadData = () => {
-    // AdminService.list({ current: pageIndex, pageSize: pageSize }).then((res) => {
-    //   console.log(res)
-    //   setData(res.data.records)
-    //   setTotal(res.data.total)
-    // })
+    form.validateFields().then((query) => {
+      const payBeginTime = query.time ? dayjs(query.time[0]).format('YYYY-MM-DD HH:mm:ss') : ''
+      const payEndTime = query.time ? dayjs(query.time[1]).format('YYYY-MM-DD HH:mm:ss') : ''
+      FinancialManagementService.fianceOverview({
+        startDate: payBeginTime,
+        endDate: payEndTime,
+      }).then((res) => {
+        setData(res?.data ?? {})
+      })
+    })
   }
 
   const onFinish = (values: any) => {
     console.log('Success:', values)
+    loadData()
   }
 
   const onFinishFailed = (errorInfo: any) => {
@@ -97,11 +46,11 @@ const SurveyPage: React.FC = () => {
             <Col span={6}>
               <Form.Item name="channelId">
                 <Radio.Group
-                // value={checkState}
-                // onChange={(value) => {
-                //   setCheckState(value.target.value)
-                //   loadData(pageIndex)
-                // }}
+                  value={checkTime}
+                  onChange={(value) => {
+                    setCheckTime(value.target.value)
+                    loadData()
+                  }}
                 >
                   <Radio.Button value="0">今天</Radio.Button>
                   <Radio.Button value="1">近7天</Radio.Button>
@@ -127,42 +76,15 @@ const SurveyPage: React.FC = () => {
         </Form>
       </div>
       <div className="survey-content">
-        {/* <div className="charts">
-          <div id="main" style={{ width: 400, height: 400 }}></div>
-        </div> */}
         <div className="des">
-          {/* <div>
-            <span>销售总额：</span>
-            <span>¥100000.00</span>
-          </div>
-          <div>
-            <span>销售分佣金额：</span>
-            <span>¥2000.00</span>
-          </div>
-          <div>
-            <span>运营资金：</span>
-            <span>¥1000.00</span>
-          </div>
-          <div>
-            <span>退款金额：</span>
-            <span>¥1000.00</span>
-          </div>
-          <div>
-            <span>提现金额：</span>
-            <span>¥1000.00</span>
-          </div>
-          <div>
-            <span>实际收益：</span>
-            <span>¥5000.00</span>
-          </div> */}
           <h3>财务指标</h3>
           <Row gutter={[12, 48]}>
             <Col className="gutter-row" span={12}>
-              账户当前余额：111&nbsp;&nbsp;
+              账户当前余额：{data?.balance}&nbsp;&nbsp;
               <InfoCircleOutlined style={{ color: '#999' }} />
             </Col>
             <Col className="gutter-row" span={12}>
-              订单收入总额：111&nbsp;&nbsp;
+              订单收入总额：{data?.orderTotal}&nbsp;&nbsp;
               <InfoCircleOutlined style={{ color: '#999' }} />
             </Col>
           </Row>
@@ -176,11 +98,11 @@ const SurveyPage: React.FC = () => {
           </Row>
           <Row gutter={[12, 24]}>
             <Col className="gutter-row" span={12}>
-              退款总额：111&nbsp;&nbsp;
+              退款总额：{data?.refundTotal}&nbsp;&nbsp;
               <InfoCircleOutlined style={{ color: '#999' }} />
             </Col>
             <Col className="gutter-row" span={12}>
-              已释放总额：111&nbsp;&nbsp;
+              已释放总额：{data?.releasedTotal}&nbsp;&nbsp;
               <InfoCircleOutlined style={{ color: '#999' }} />
             </Col>
           </Row>
@@ -194,11 +116,11 @@ const SurveyPage: React.FC = () => {
           </Row>
           <Row gutter={[12, 24]}>
             <Col className="gutter-row" span={12}>
-              待释放金额：111&nbsp;&nbsp;
+              待释放金额：{data?.toBeReleasedTotal}&nbsp;&nbsp;
               <InfoCircleOutlined style={{ color: '#999' }} />
             </Col>
             <Col className="gutter-row" span={12}>
-              实际利润：111 &nbsp;&nbsp;
+              实际利润：{data?.profit} &nbsp;&nbsp;
               <InfoCircleOutlined style={{ color: '#999' }} />
             </Col>
           </Row>
@@ -213,11 +135,11 @@ const SurveyPage: React.FC = () => {
           <h3 style={{ paddingTop: 20 }}>其他指标</h3>
           <Row gutter={[12, 24]}>
             <Col className="gutter-row" span={12}>
-              代币已使用总额：111&nbsp;&nbsp;
+              代币已使用总额：{data?.tokenUsed} &nbsp;&nbsp;
               <InfoCircleOutlined style={{ color: '#999' }} />
             </Col>
             <Col className="gutter-row" span={12}>
-              已提现总额：111 &nbsp;&nbsp;
+              已提现总额：{data?.cashed} &nbsp;&nbsp;
               <InfoCircleOutlined style={{ color: '#999' }} />
             </Col>
           </Row>
@@ -231,11 +153,11 @@ const SurveyPage: React.FC = () => {
           </Row>
           <Row gutter={[12, 24]}>
             <Col className="gutter-row" span={12}>
-              提现申请中总额：111&nbsp;&nbsp;
+              提现申请中总额：{data?.cashing} &nbsp;&nbsp;
               <InfoCircleOutlined style={{ color: '#999' }} />
             </Col>
             <Col className="gutter-row" span={12}>
-              代币流通总额：111 &nbsp;&nbsp;
+              代币流通总额：{data?.tokenAvTotal} &nbsp;&nbsp;
               <InfoCircleOutlined style={{ color: '#999' }} />
             </Col>
           </Row>

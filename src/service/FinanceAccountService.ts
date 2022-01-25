@@ -107,3 +107,21 @@ export class WithdrawalReviewService {
     })
   }
 }
+
+export class FinancialManagementService {
+  /**
+   * 财务概况
+   */
+  static fianceOverview(data): Promise<any> {
+    return axios.post('/api/wallet/a/fianceOverview', data)
+  }
+
+  /**
+   * 财务明细
+   */
+  static list(data): Promise<any> {
+    return axios.get('/api/wallet/a/fianceDetail', {
+      params: data,
+    })
+  }
+}

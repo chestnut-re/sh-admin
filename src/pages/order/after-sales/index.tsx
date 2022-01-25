@@ -82,6 +82,13 @@ const AfterSalesListPage: React.FC = () => {
     {
       title: '退款金额',
       dataIndex: 'amount',
+      render: (text: any, record: any) => {
+        if (parseInt(record.amount)) {
+          return (parseInt(record.amount) / 1000).toFixed(2)
+        } else {
+          return ''
+        }
+      },
     },
     {
       title: '退款代币',
@@ -101,18 +108,7 @@ const AfterSalesListPage: React.FC = () => {
     },
     {
       title: '售后状态',
-      dataIndex: 'refundState',
-      render: (text: any, record: any) => {
-        if (record?.refundState == '1') {
-          return `退款中`
-        } else if (record?.refundState == '2') {
-          return `商家退款成功`
-        } else if (record?.refundState == '3') {
-          return `商家退款失败`
-        } else if (record?.refundState == '4') {
-          return `到账成功`
-        }
-      },
+      dataIndex: 'refundStateVal',
     },
     {
       title: '操作',

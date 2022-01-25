@@ -42,14 +42,8 @@ const OrderListPage: React.FC = () => {
       const payBeginTime = query.time ? dayjs(query.time[0]).format('YYYY-MM-DD HH:mm:ss') : ''
       const payEndTime = query.time ? dayjs(query.time[1]).format('YYYY-MM-DD HH:mm:ss') : ''
       OrderService.list({
-        current: pageIndex,
-        size: pageSize,
         payBeginTime,
         payEndTime,
-        channelId: query.channelId,
-        orderType: query.orderType,
-        source: query.source,
-        state: query.state,
       }).then((res) => {
         setData(res.data?.records ?? [])
         setTotal(res.data.total)
