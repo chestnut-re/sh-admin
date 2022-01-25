@@ -66,11 +66,11 @@ const MessageListPage: React.FC = () => {
       title: '推送方式',
       dataIndex: 'messageType',
       render: (text: any, record: any) => {
-        if (record?.messageType == '0') {
+        if (record?.messageType == '2') {
           return `APP推送`
-        } else if (record?.messageType == '1') {
+        } else if (record?.messageType == '0') {
           return `站内信`
-        } else if (record?.messageType == '2') {
+        } else if (record?.messageType == '1') {
           return `短信`
         }
       },
