@@ -40,7 +40,7 @@ const AEMessageDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClo
       messageType: selectData?.messageType,
       pushUser: selectData?.pushUser,
     })
-    setMessageType(selectData?.messageType)
+    setMessageType(selectData?.messageType ?? 0)
   }, [selectData])
 
   const getDetails = () => {
@@ -54,9 +54,10 @@ const AEMessageDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClo
     form
       .validateFields()
       .then((formData) => {
+        console.log(formData, messageType)
         if (mode === 'add') {
           // create
-          MessageService.add({ ...formData }).then((res) => {
+          MessageService.add({ ...formData, messageType: messageType }).then((res) => {
             if (res.code === HttpCode.success) {
               onSuccess()
             }
@@ -86,7 +87,7 @@ const AEMessageDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClo
         name="basic"
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 16 }}
-        initialValues={{ messageType: 0 }}
+        // initialValues={{ messageType: 0 }}
         onFinish={(values: any) => {}}
         onFinishFailed={(errorInfo: any) => {}}
         autoComplete="off"
@@ -100,14 +101,14 @@ const AEMessageDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClo
           </Select>
         </Form.Item>
         <Form.Item label="消息类型" name="messageType">
-          <Radio.Group onChange={(e) => setMessageType(e.target.value)}>
-            <Radio value={0}>APP推送</Radio>
-            <Radio value={1}>站内信</Radio>
-            <Radio value={2}>短信</Radio>
+          <Radio.Group defaultValue={0} onChange={(e) => setMessageType(e.target.value)}>
+            <Radio value={0}>站内信</Radio>
+            <Radio value={2}>APP推送</Radio>
+            <Radio value={1}>短信</Radio>
           </Radio.Group>
         </Form.Item>
 
-        {messageType === 0 ? (
+        {messageType === 2 ? (
           <>
             <Form.Item label="推送链接" name="pushLink">
               <Input />
@@ -116,7 +117,7 @@ const AEMessageDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClo
         ) : (
           <></>
         )}
-        {messageType !== 2 ? (
+        {messageType !== 1 ? (
           <>
             <Form.Item label="推送标题" name="pushTitle">
               <Input />
