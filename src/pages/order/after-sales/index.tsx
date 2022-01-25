@@ -50,6 +50,7 @@ const AfterSalesListPage: React.FC = () => {
         orderEndTime: payEndTime,
         refundState: query.refundState,
         auditState: query.auditState,
+        keyword: query.keyword,
       }).then((res) => {
         setData(res.data.records)
         setTotal(res.data.total)
@@ -191,17 +192,8 @@ const AfterSalesListPage: React.FC = () => {
           form={form}
         >
           <Row gutter={[5, 0]} style={{ paddingLeft: '40px' }}>
-            {/* {/* <Col span={4}>
-              <Form.Item>
-                <Select style={{ width: 120 }} defaultValue={1}>
-                  <Select.Option value={1}>订单编号</Select.Option>
-                  <Select.Option value={2}>商品名称</Select.Option>
-                  <Select.Option value={3}>买家手机号</Select.Option>
-                </Select>
-              </Form.Item>
-            </Col> */}
             <Col span={2}>
-              <Form.Item name="channelId">
+              <Form.Item name="keyword">
                 <Input />
               </Form.Item>
             </Col>
