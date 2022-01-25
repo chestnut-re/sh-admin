@@ -36,7 +36,7 @@ const ReviewDetails: React.FC = () => {
           </div>
           <div>
             <span>提现金额</span>
-            <span>{data?.amount}</span>
+            <span>{parseInt(data?.amount).toFixed(2)}</span>
           </div>
           {data?.sts == 1 ? (
             <div>
