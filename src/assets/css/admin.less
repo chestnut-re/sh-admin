@@ -77,11 +77,17 @@
     }
   }
 }
-
-.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
-  color: @black;
+// 面包屑、
+.ant-breadcrumb {
+  .ant-breadcrumb-link {
+    a {
+      color: #5f7ce0;
+    }
+  }
 }
-
+.ant-breadcrumb > span:last-child {
+  color: #575d6c !important ;
+}
 //列表下划线样式
 .table-con-underline {
   text-decoration: underline;
@@ -93,4 +99,8 @@
 .operation {
   color: #526ecc;
   cursor: pointer;
+}
+
+.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
+  color: @black;
 }

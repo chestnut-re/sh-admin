@@ -4,7 +4,7 @@ import { Redirect, Route, Switch, withRouter } from 'react-router-dom'
 import loadable from '@loadable/component'
 import { useStore } from '@/store/context'
 import { observer } from 'mobx-react-lite'
-
+import BreadcrumbList from '../BreadcrumbList/index'
 type ContentLayoutProps = {
   location: any
 }
@@ -26,16 +26,25 @@ function ContentLayout({ location }: ContentLayoutProps): JSX.Element {
   return (
     <Layout.Content>
       <Switch location={location}>
-        {tempMenuList.map((route) => {
-          return (
-            <Route
-              exact
-              component={loadable(() => import(/* webpackChunkName: 'page'*/ `../../../pages${route.componentPath}`))}
-              key={route.path}
-              path={route.path}
-            />
-          )
-        })}
+        <>
+          <BreadcrumbList adminStore={adminStore.menu}>
+            <>
+              {tempMenuList.map((route) => {
+                return (
+                  <Route
+                    exact
+                    component={loadable(
+                      () => import(/* webpackChunkName: 'page'*/ `../../../pages${route.componentPath}`)
+                    )}
+                    key={route.path}
+                    path={route.path}
+                  />
+                )
+              })}
+            </>
+          </BreadcrumbList>
+        </>
+
         {/* {adminStore.menu?.length > 0 && <Redirect to="/error/404" />} */}
       </Switch>
     </Layout.Content>
