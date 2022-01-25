@@ -50,6 +50,7 @@ const AfterSalesListPage: React.FC = () => {
         orderEndTime: payEndTime,
         refundState: query.refundState,
         auditState: query.auditState,
+        keyword: query.keyword,
       }).then((res) => {
         setData(res.data.records)
         setTotal(res.data.total)
@@ -82,6 +83,13 @@ const AfterSalesListPage: React.FC = () => {
     {
       title: '退款金额',
       dataIndex: 'amount',
+      render: (text: any, record: any) => {
+        if (parseInt(record.amount)) {
+          return (parseInt(record.amount) / 1000).toFixed(2)
+        } else {
+          return ''
+        }
+      },
     },
     {
       title: '退款代币',
@@ -101,18 +109,7 @@ const AfterSalesListPage: React.FC = () => {
     },
     {
       title: '售后状态',
-      dataIndex: 'refundState',
-      render: (text: any, record: any) => {
-        if (record?.refundState == '1') {
-          return `退款中`
-        } else if (record?.refundState == '2') {
-          return `商家退款成功`
-        } else if (record?.refundState == '3') {
-          return `商家退款失败`
-        } else if (record?.refundState == '4') {
-          return `到账成功`
-        }
-      },
+      dataIndex: 'refundStateVal',
     },
     {
       title: '操作',
@@ -195,17 +192,8 @@ const AfterSalesListPage: React.FC = () => {
           form={form}
         >
           <Row gutter={[5, 0]} style={{ paddingLeft: '40px' }}>
-            {/* {/* <Col span={4}>
-              <Form.Item>
-                <Select style={{ width: 120 }} defaultValue={1}>
-                  <Select.Option value={1}>订单编号</Select.Option>
-                  <Select.Option value={2}>商品名称</Select.Option>
-                  <Select.Option value={3}>买家手机号</Select.Option>
-                </Select>
-              </Form.Item>
-            </Col> */}
             <Col span={2}>
-              <Form.Item name="channelId">
+              <Form.Item name="keyword">
                 <Input />
               </Form.Item>
             </Col>

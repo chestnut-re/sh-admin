@@ -1,7 +1,32 @@
+import { FileService } from '@/service/FileService'
 import { useStore } from '@/store/context'
 import { observer } from 'mobx-react-lite'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './index.less'
+
+/**
+ *
+ */
+const OptImg: React.FC<any> = ({ it }) => {
+  const [fullUrl, setFullUrl] = useState<string | undefined>()
+
+  useEffect(() => {
+    // it
+    console.log('it', it)
+    if (it && !it?.startsWith('https')) {
+      FileService.getFileDownloadUrl(it).then((res) => {
+        setFullUrl(res.data)
+      })
+    }
+    setFullUrl(it)
+  }, [])
+
+  return (
+    <div className="pic-box">
+      <img src={fullUrl} alt="" />
+    </div>
+  )
+}
 
 /**
  * 移动详情页信息
@@ -76,9 +101,7 @@ const DetailPageInfo: React.FC = () => {
                     {item?.contentImages?.map((it, i) => {
                       return (
                         <div key={i}>
-                          <div className="pic-box">
-                            <img src={it} alt="" />
-                          </div>
+                          <OptImg it={it} />
                           <div>轮播图{i + 1}</div>
                         </div>
                       )

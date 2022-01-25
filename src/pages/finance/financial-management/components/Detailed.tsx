@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Form, Button, Row, Col, Select, Space, Table, DatePicker, Radio } from 'antd'
 import './index.less'
-import { HttpCode } from '@/constants/HttpCode'
+import { FinancialManagementService } from '@/service/FinanceAccountService'
+import dayjs from 'dayjs'
 
 /**财务管理-财务明细 */
 const DetailedPage: React.FC = () => {
@@ -12,82 +13,91 @@ const DetailedPage: React.FC = () => {
   const [pageIndex, setPageIndex] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [total, setTotal] = useState()
-  const [detail, setDetail] = useState<any>('0')
+  const [detail, setDetail] = useState<any>('1')
   const [columns, setColumns] = useState<any>([])
   useEffect(() => {
     loadData(pageIndex)
   }, [pageIndex])
 
   const loadData = (pageIndex) => {
-    // AdminService.list({ current: pageIndex, pageSize: pageSize }).then((res) => {
-    //   console.log(res)
-    //   setData(res.data.records)
-    //   setTotal(res.data.total)
-    // })
+    form.validateFields().then((query) => {
+      const payBeginTime = query.time ? dayjs(query.time[0]).format('YYYY-MM-DD HH:mm:ss') : ''
+      const payEndTime = query.time ? dayjs(query.time[1]).format('YYYY-MM-DD HH:mm:ss') : ''
+      FinancialManagementService.list({
+        current: pageIndex,
+        pageSize: pageSize,
+        detailType: detail,
+        startDate: payBeginTime,
+        endDate: payEndTime,
+      }).then((res) => {
+        setData(res.data?.records ?? [])
+        setTotal(res.data.total)
+      })
+    })
   }
 
   const columnsX = [
     {
       title: '订单编号',
-      dataIndex: 'nickName',
+      dataIndex: 'orderNo',
     },
     {
       title: '入账现金(¥)',
-      dataIndex: 'mobile',
+      dataIndex: 'payAmount',
     },
     {
       title: '入账乐豆',
-      dataIndex: 'roleName',
+      dataIndex: 'tokenAmount',
     },
     {
       title: '入账时间',
-      dataIndex: 'state',
+      dataIndex: 'time',
     },
   ]
   const columnsT = [
     {
       title: '订单编号',
-      dataIndex: 'nickName',
+      dataIndex: 'subOrderNo',
     },
     {
       title: '退款账号',
-      dataIndex: 'mobile',
+      dataIndex: 'account',
     },
     {
       title: '支出现金(¥)',
-      dataIndex: 'roleName',
+      dataIndex: 'payAmount',
     },
     {
       title: '支出乐豆',
-      dataIndex: 'state',
+      dataIndex: 'tokenAmount',
     },
     {
       title: '支出时间',
-      dataIndex: 'state',
+      dataIndex: 'refundTime',
     },
   ]
   const columnsY = [
     {
       title: '订单编号',
-      dataIndex: 'nickName',
+      dataIndex: 'subOrderNo',
     },
     {
       title: '渠道名称',
-      dataIndex: 'mobile',
+      dataIndex: 'channelNm',
     },
     {
       title: '收支金额(¥)',
-      dataIndex: 'roleName',
+      dataIndex: 'amount',
     },
     {
       title: '支出时间',
-      dataIndex: 'state',
+      dataIndex: 'time',
     },
   ]
   const columnsFY = [
     {
       title: '订单编号',
-      dataIndex: 'nickName',
+      dataIndex: 'orderNo',
     },
     {
       title: '订单类型',
@@ -99,71 +109,72 @@ const DetailedPage: React.FC = () => {
     },
     {
       title: '收支时间',
-      dataIndex: 'state',
+      dataIndex: 'time',
     },
   ]
   const columnsD = [
     {
       title: '账户平台',
-      dataIndex: 'nickName',
+      dataIndex: 'userType',
     },
     {
       title: '待释放类型',
-      dataIndex: 'mobile',
+      dataIndex: 'typeNm',
     },
     {
       title: '订单编号',
-      dataIndex: 'nickName',
+      dataIndex: 'subOrderNo',
     },
     {
       title: '账户',
-      dataIndex: 'mobile',
+      dataIndex: 'account',
     },
     {
       title: '待释放金额(¥)',
-      dataIndex: 'roleName',
+      dataIndex: 'amount',
     },
     {
       title: '待释放金额下发时间',
-      dataIndex: 'state',
+      dataIndex: 'time',
     },
   ]
   const columnsFL = [
     {
       title: '订单编号',
-      dataIndex: 'nickName',
+      dataIndex: 'subOrderNo',
     },
     {
       title: '账户',
-      dataIndex: 'mobile',
+      dataIndex: 'account',
     },
     {
       title: '返利乐豆(¥)',
-      dataIndex: 'roleName',
+      dataIndex: 'amount',
     },
     {
       title: '乐豆下发时间',
-      dataIndex: 'state',
+      dataIndex: 'time',
     },
   ]
 
   useEffect(() => {
-    if (detail == '0') {
+    if (detail == '1') {
       setColumns(columnsX)
-    } else if (detail == '1') {
-      setColumns(columnsT)
     } else if (detail == '2') {
-      setColumns(columnsY)
+      setColumns(columnsT)
     } else if (detail == '3') {
-      setColumns(columnsFY)
+      setColumns(columnsY)
     } else if (detail == '4') {
-      setColumns(columnsD)
+      setColumns(columnsFY)
     } else if (detail == '5') {
+      setColumns(columnsD)
+    } else if (detail == '6') {
       setColumns(columnsFL)
     }
-  }, [detail])
+  }, [data])
   const onFinish = (values: any) => {
     console.log('Success:', values)
+    loadData(pageIndex)
   }
 
   const onFinishFailed = (errorInfo: any) => {
@@ -172,7 +183,13 @@ const DetailedPage: React.FC = () => {
   return (
     <div className="list__root">
       <div className="list-form">
-        <Form name="basic" initialValues={{ l: 0 }} onFinish={onFinish} onFinishFailed={onFinishFailed} form={form}>
+        <Form
+          name="basic"
+          initialValues={{ detailType: '销售明细' }}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
+          form={form}
+        >
           <Row gutter={[5, 0]}>
             <Col span={6}>
               <Form.Item name="channelId">
@@ -198,14 +215,14 @@ const DetailedPage: React.FC = () => {
               </Form.Item>
             </Col>
             <Col span={4}>
-              <Form.Item name="l">
+              <Form.Item name="detailType">
                 <Select style={{ width: 120 }} onChange={(value) => setDetail(value)}>
-                  <Option value={0}>销售明细</Option>
-                  <Option value={1}>退款明细</Option>
-                  <Option value={2}>运营资金明细</Option>
-                  <Option value={3}>分佣明细</Option>
-                  <Option value={4}>待释放明细</Option>
-                  <Option value={5}>返利明细</Option>
+                  <Option value={1}>销售明细</Option>
+                  <Option value={2}>退款明细</Option>
+                  <Option value={3}>运营资金明细</Option>
+                  <Option value={4}>分佣明细</Option>
+                  <Option value={5}>待释放明细</Option>
+                  <Option value={6}>返利明细</Option>
                 </Select>
               </Form.Item>
             </Col>
@@ -213,7 +230,7 @@ const DetailedPage: React.FC = () => {
               <Space>
                 <Button htmlType="submit">查询</Button>
                 <Button htmlType="button">重置</Button>
-                <Button htmlType="button">导出</Button>
+                {/* <Button htmlType="button">导出</Button> */}
               </Space>
             </Form.Item>
           </Row>

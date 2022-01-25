@@ -8,9 +8,9 @@ const FinancialManagementPage: React.FC = () => {
   const { TabPane } = Tabs
   return (
     <div className="financial__root">
-      <div className="financial-header">
+      {/* <div className="financial-header">
         <span>财务管理</span>
-      </div>
+      </div> */}
       <div className="financial-tabs">
         <Tabs defaultActiveKey="1">
           <TabPane tab="财务概况" key="1">
