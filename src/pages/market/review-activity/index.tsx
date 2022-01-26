@@ -1,6 +1,6 @@
 /*
  * @Description: 活动审核
- * @LastEditTime: 2022-01-26 15:14:05
+ * @LastEditTime: 2022-01-26 16:53:14
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Radio,Select } from 'antd'
@@ -137,9 +137,9 @@ const enumState = {
     <div className="rebateActivity__root">
       <div>
         <Form name="basic" initialValues={{ auditResult: undefined, type: '0' }}  onFinish={onFinish} form={form}>
-          <Row gutter={[10, 10]}>
-            <Col span={1} className="table-from-label"></Col>
-            <Col lg={10} xl={7} xxl={5} span={4}>
+          <Row gutter={[20, 10]}>
+            <Col  className="table-from-label"></Col>
+            <Col >
               <Form.Item label="" name="auditResult">
                 <Radio.Group
                   value={checkState}
@@ -156,13 +156,13 @@ const enumState = {
               </Form.Item>
             </Col>
 
-            <Col span={3}>
+            <Col >
               <InputTemp name="idOrName" placeholder="清单ID/清单名称" />
             </Col>
-            <Col span={2} className="table-from-label">
+            <Col  className="table-from-label">
               状态
             </Col>
-            <Col span={4}>
+            <Col span={2}>
               <Form.Item name="type">
                 <Select allowClear>
                   {Object.keys(enumState)

@@ -1,6 +1,6 @@
 /*
  * @Description:
- * @LastEditTime: 2022-01-26 11:56:15
+ * @LastEditTime: 2022-01-26 16:50:42
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Radio, DatePicker, Modal, message } from 'antd'
@@ -327,58 +327,62 @@ const RebateActivity: React.FC = () => {
   return (
     <div className="rebateActivity__root">
       <div>
-        <Form name="basic" initialValues={{ remember: true }} onFinish={onFinish} form={form}>
-          <Row gutter={[10, 10]}>
-            <Col span={1} className="table-from-label"></Col>
-            <Col span={4}>
-              <Form.Item name="state">
-                <Radio.Group
-                  value={checkState}
-                  onChange={(value) => {
-                    setCheckState(value.target.value)
-                  }}
-                >
-                  <Radio.Button value="">全部</Radio.Button>
-                  <Radio.Button value="1">进行中</Radio.Button>
-                  <Radio.Button value="2">已结束</Radio.Button>
-                  <Radio.Button value="3">未开始</Radio.Button>
-                  {/* checkState 0 待审核 1审核通过 2审核不通过 */}
-                </Radio.Group>
-              </Form.Item>
-            </Col>
-            <Col span={1} className="table-from-label"></Col>
-            <Col span={3}>
-              <InputTemp name="rebateName" placeholder="活动ID/活动名称" />
-            </Col>
-            <Col lg={4} xl={2} xxl={2} span={2} className="table-from-label">
-              创建时间
-            </Col>
-            <Col span={5}>
-              <Form.Item name="time">
-                <RangePicker showTime />
-              </Form.Item>
-            </Col>
-            {/* <Col span={1} className="table-from-label">
+        <Form name="basic" initialValues={{ checkState: '' }} onFinish={onFinish} form={form}>
+          <Row>
+            <Col span={21}>
+             <Row gutter={[20, 0]}>
+             <Col className="table-from-label" ></Col>
+              <Col >
+                <Form.Item name="checkState">
+                  <Radio.Group
+                    value={checkState}
+                    onChange={(value) => {
+                      setCheckState(value.target.value)
+                    }}
+                  >
+                    <Radio.Button value="">全部</Radio.Button>
+                    <Radio.Button value="1">进行中</Radio.Button>
+                    <Radio.Button value="2">已结束</Radio.Button>
+                    <Radio.Button value="3">未开始</Radio.Button>
+                    {/* checkState 0 待审核 1审核通过 2审核不通过 */}
+                  </Radio.Group>
+                </Form.Item>
+              </Col>
+              <Col className="table-from-label"></Col>
+              <Col>
+                <InputTemp name="rebateName" placeholder="活动ID/活动名称" />
+              </Col>
+              <Col className="table-from-label">创建时间</Col>
+              <Col>
+                <Form.Item name="time">
+                  <RangePicker showTime />
+                </Form.Item>
+              </Col>
+              {/* <Col span={1} className="table-from-label">
               状态
             </Col>
             <Col span={3}>
               <StatusRoute name="state" />
             </Col> */}
-            <Col span={4}>
-              <Form.Item>
+              <Col>
+                <Form.Item>
+                  <Space>
+                    <Button htmlType="submit">查询</Button>
+                    <Button onClick={resetTable}>重置</Button>
+                  </Space>
+                </Form.Item>
+              </Col>
+             </Row>
+            </Col>
+            <Row style={{ textAlign: 'right' }}>
+              <Col>
                 <Space>
-                  <Button htmlType="submit">查询</Button>
-                  <Button onClick={resetTable}>重置</Button>
+                  <Button type="primary" icon={<PlusOutlined />} onClick={showAdd}>
+                    添加
+                  </Button>
                 </Space>
-              </Form.Item>
-            </Col>
-            <Col span={4} style={{ textAlign: 'right' }}>
-              <Space>
-                <Button type="primary" icon={<PlusOutlined />} onClick={showAdd}>
-                  添加
-                </Button>
-              </Space>
-            </Col>
+              </Col>
+            </Row>
           </Row>
         </Form>
       </div>
