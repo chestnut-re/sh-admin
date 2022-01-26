@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Popconfirm } from 'antd'
 import { AccountType, InputTemp, PersonalState } from '@/components/filter/formItem'
 import './index.less'
-import { del, PersonService } from '@/service/PersonService'
+import { del, edit, PersonService } from '@/service/PersonService'
 import { cityDispose } from '@/utils/tree'
 import AEDialog from './component/AEDialog'
 import ChannelListTree from '@/components/components/ChannelListTree'
@@ -137,6 +137,9 @@ const PersonnelManagement: React.FC = () => {
             编辑
           </Button> */}
           {/* <Button type="default">查看</Button> */}
+          <span className="operation" onClick={() => _editDialog(record)}>
+            编辑
+          </span>
           <AuthEle id={72}>
             <Popconfirm
               title="确定删除吗"
@@ -159,7 +162,9 @@ const PersonnelManagement: React.FC = () => {
   /**编辑 */
   const _editDialog = (record) => {
     setDialogMode('edit')
+    console.log(record,'----')
     setSelectedData(record)
+    // console.log(selectedData,'----')
     setShowDialog(true)
   }
 
@@ -168,7 +173,6 @@ const PersonnelManagement: React.FC = () => {
     setShowDialog(true)
     setDialogMode('add')
   }
-
   /**筛选 */
   const onFinish = () => {
     setPageIndex(1)
@@ -279,13 +283,15 @@ const PersonnelManagement: React.FC = () => {
           />
         </Col>
       </Row>
-      <AEDialog
+     {
+       showDialog&&<AEDialog
         data={selectedData}
         mode={dialogMode}
         onSuccess={_onDialogSuccess}
         show={showDialog}
         onClose={_onDialogClose}
       />
+     }
     </div>
   )
 }

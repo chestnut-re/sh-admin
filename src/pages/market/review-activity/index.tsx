@@ -1,9 +1,9 @@
 /*
  * @Description: 活动审核
- * @LastEditTime: 2022-01-26 10:50:43
+ * @LastEditTime: 2022-01-26 15:14:05
  */
 import React, { useState, useEffect } from 'react'
-import { Form, Col, Row, Button, Table, Space, Radio } from 'antd'
+import { Form, Col, Row, Button, Table, Space, Radio,Select } from 'antd'
 import './index.less'
 import { InputTemp } from '@/components/filter/formItem'
 import { rebateService } from '@/service/marketService'
@@ -23,7 +23,11 @@ const ReviewActivity: React.FC = () => {
   useEffect(() => {
     loadData(pageIndex)
   }, [pageIndex])
-
+const enumState = {
+  0:'全部',
+  1:'商品',
+  2:'清单'
+}
   const loadData = (pageIndex) => {
     const params = form.getFieldsValue()
     rebateService.list({ current: pageIndex, size: pageSize, ...params }).then((res) => {
@@ -132,7 +136,7 @@ const ReviewActivity: React.FC = () => {
   return (
     <div className="rebateActivity__root">
       <div>
-        <Form name="basic" initialValues={{ auditResult: undefined }} onFinish={onFinish} form={form}>
+        <Form name="basic" initialValues={{ auditResult: undefined, type: '0' }}  onFinish={onFinish} form={form}>
           <Row gutter={[10, 10]}>
             <Col span={1} className="table-from-label"></Col>
             <Col lg={10} xl={7} xxl={5} span={4}>
@@ -155,6 +159,25 @@ const ReviewActivity: React.FC = () => {
             <Col span={3}>
               <InputTemp name="idOrName" placeholder="清单ID/清单名称" />
             </Col>
+            <Col span={2} className="table-from-label">
+              状态
+            </Col>
+            <Col span={4}>
+              <Form.Item name="type">
+                <Select allowClear>
+                  {Object.keys(enumState)
+                    .sort()
+                    .map((item) => {
+                      return (
+                        <Select.Option key={item} value={item}>
+                          {enumState[item]}
+                        </Select.Option>
+                      )
+                    })}
+                </Select>
+              </Form.Item>
+            </Col>
+
             <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
               <Space>
                 <Button htmlType="submit">查询</Button>

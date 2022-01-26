@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /*
  * @Description: 城市数据处理
- * @LastEditTime: 2021-12-31 15:01:18
+ * @LastEditTime: 2022-01-26 14:43:49
  */
 
 /**
@@ -164,6 +164,7 @@ export const regionsCodeArray = (array: string, area: any[], areas = 'areas', ad
   return array.split(',').map((item: string) => {
     return analysisId(area, item, areas, adcode)
   })
+
 }
 
 /**

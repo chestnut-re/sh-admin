@@ -1,3 +1,7 @@
+/*
+ * @Description:
+ * @LastEditTime: 2022-01-26 13:37:27
+ */
 import axios from '@/request'
 
 /**
@@ -27,8 +31,8 @@ export class PersonService {
    * 获取角色列表
    */
   static getRoles(data): Promise<any> {
-    return axios.get('/api/platform/role/list',{
-      params:data
+    return axios.get('/api/platform/role/list', {
+      params: data,
     })
   }
 
@@ -45,6 +49,16 @@ export class PersonService {
   static add(data): Promise<any> {
     return axios.post('/api/users/admin/user/add', data)
   }
+  /**
+   * 编辑人员
+   */
+  static edit(data): Promise<any> {
+    return axios.put(`/api/users/admin/user/update`, data)
+  }
+  static  getInfo(userId): Promise<any> {
+    return axios.get(`/api/users/admin/user/get/${userId}`)
+  }
+  
 }
 
 /**

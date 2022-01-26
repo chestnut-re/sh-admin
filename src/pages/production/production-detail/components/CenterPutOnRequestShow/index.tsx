@@ -25,59 +25,28 @@ const CenterPutOnRequestShow: React.FC = () => {
     console.log('center CenterPutOnRequestShow')
     const id = query.get('id') ?? ''
     ProductionService.channelGoodsListByGoodsId(id).then((res) => {
-      setData(res.data)
-      const arr: any = []
-      treeToList(arr, res.data)
-      // setDistPlan(res.data?.channelPlanList)
+      const d: any[] = []
+      res.data.map((i) => {
+        i.channelPlanList.map((ii) => {
+          d.push({
+            channelName: i.channelName,
+            distPlanName: i.distPlanName,
+            directScale: i.directScale,
+            directChannelName: ii.channelName,
+            directDirectScale: ii.directScale,
+            saleScale2: ii.saleScalePlan.find((sp) => sp.level === 2)?.saleScale,
+            saleScale3: ii.saleScalePlan.find((sp) => sp.level === 3)?.saleScale,
+            saleScale4: ii.saleScalePlan.find((sp) => sp.level === 4)?.saleScale,
+            saleScale5: ii.saleScalePlan.find((sp) => sp.level === 5)?.saleScale,
+            teamPrice: i.teamPrice
+          })
+          return ii
+        })
+        return i
+      })
+      setData(d)
     })
   }, [])
-
-  const treeToList = (arr, tree) => {
-    console.log(tree)
-    // debugger
-    tree ??
-      tree.map((item, index) => {
-        console.log('?', item)
-      })
-    // arr.push({
-    //   channelLeave: tree.channelLeave,
-    //   distScale: tree.distScale,
-    //   outLetScale: tree.outLetScale,
-    //   saleAuth: tree.saleAuth,
-    //   serviceCharge: tree.serviceCharge,
-    // })
-    // arr.map((item, index) => {
-    //   item.saleAuth.map((it) => {
-    //     console.log(it, item)
-    //     item['s' + it.level] = it.saleScale
-    //   })
-    // })
-    // if (tree.children) {
-    //   treeToList(arr, tree.children)
-    // } else {
-    //   return arr
-    // }
-    // for (const item of tree) {
-    //   if (item.children && item.children.length > 0) {
-    //     const sitem = { ...item }
-    //     delete sitem.children
-    //     arr = arr.concat(sitem, treeToList(item.children))
-    //   } else {
-    //     delete item.children
-    //     arr.push(item)
-    //   }
-    // }
-    // return arr
-
-    // tree ??
-    //   tree.map((item, index) => {
-    //     console.log('???')
-    //     item.saleScalePlan.map((it) => {
-    //       console.log(it, item)
-    //       item['s' + it.level] = it.saleScale
-    //     })
-    //   })
-  }
 
   return (
     <div className="CenterPutOnRequestShow__root">
@@ -89,16 +58,17 @@ const CenterPutOnRequestShow: React.FC = () => {
         </div>
         <div>
           <Table dataSource={data} bordered>
-            <Column title="上架渠道" dataIndex="channelName" key="channelName" className="table-light-color" />
-            <Column title="分佣方案名称" dataIndex="distPlanName" key="distPlanName" className="table-light-color" />
-            <Column title="直销方（分佣）" dataIndex="outLetScale" key="outLetScale" className="table-light-color" />
-            <Column title="直销分佣比例" dataIndex="directScale" key="directScale" className="table-light-color" />
-            <ColumnGroup title="分销分佣" className="table-light-color">
-              <Column title="二级名称" dataIndex="s2" key="firstName" className="table-light-color" />
-              <Column title="三级名称" dataIndex="s3" key="lastName" className="table-light-color" />
-              <Column title="四级名称" dataIndex="s4" key="lastName" className="table-light-color" />
+            <Column title="上架渠道" dataIndex="channelName" key="channelName" />
+            <Column title="分佣方案名称" dataIndex="distPlanName" key="distPlanName" />
+            <Column title="直销方" dataIndex="directChannelName" key="directScale" />
+            <Column title="直销方（分佣）" dataIndex="directDirectScale" key="directScale" />
+            <ColumnGroup title="分销分佣">
+              <Column title="二级名称" dataIndex="saleScale2" key="firstName" />
+              <Column title="三级名称" dataIndex="saleScale3" key="lastName" />
+              <Column title="四级名称" dataIndex="saleScale4" key="lastName" />
+              <Column title="五级名称" dataIndex="saleScale5" key="lastName" />
             </ColumnGroup>
-            <Column title="发团服务费" dataIndex="teamPrice" key="teamPrice" className="table-light-color" />
+            <Column title="发团服务费" dataIndex="teamPrice" key="teamPrice" />
           </Table>
         </div>
 

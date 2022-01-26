@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 渠道列表
- * @LastEditTime: 2022-01-24 16:13:47
+ * @LastEditTime: 2022-01-26 13:12:54
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Modal, message } from 'antd'
@@ -47,7 +47,7 @@ const ChannelPage: React.FC = () => {
       const postForm = { current: pageIndex, size: pageSize, ...query, id: channelId }
       ChannelService.list(postForm).then((res) => {
         setData(res.data?.records ?? [])
-        setTotal(res.data?.total)
+        setTotal(res.data?.total??0)
       })
     })
   }

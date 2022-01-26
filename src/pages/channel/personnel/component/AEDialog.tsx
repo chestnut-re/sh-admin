@@ -3,7 +3,7 @@ import React, { FC, useEffect, useState } from 'react'
 import { DialogMode, personType } from '@/utils/enum'
 import RoleSelect from '@/components/formItem/RoleSelect'
 import { PersonService } from '@/service/PersonService'
-import { cityDispose, lastOneJoin } from '@/utils/tree'
+import { cityDispose, lastOneJoin, regionsCodeArray } from '@/utils/tree'
 import { HttpCode } from '@/constants/HttpCode'
 import AreaSelect from '@/components/formItem/AreaSelect'
 
@@ -25,6 +25,8 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
   const [leader, setLeader] = useState<any[]>([])
   const [channelId, setChannelId] = useState<string>('')
   const [name, setName] = useState<string>('')
+  const [addressValue, setAddress] = useState<string>('')
+
   const [level, setLevel] = useState<number>(0)
   useEffect(() => {
     getChannel()
@@ -40,6 +42,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
 
   useEffect(() => {
     getLeaders()
+
     form.setFieldsValue({
       supUserId: undefined,
       roleId: undefined,
@@ -79,15 +82,32 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
   }
 
   useEffect(() => {
-    form.setFieldsValue({
-      planName: data?.planName,
-      saleScale: data?.saleScale,
-      state: true,
-      channelPlanList: data?.channelPlanList.map((item, index) => {
-        item.key = `${Date.now()}-${index}`
-        return item
-      }),
-    })
+    if (show) {
+      console.log(mode)
+      if (mode == 'add') {
+        form.setFieldsValue({
+          planName: data?.planName,
+          saleScale: data?.saleScale,
+          state: true,
+          channelPlanList: data?.channelPlanList.map((item, index) => {
+            item.key = `${Date.now()}-${index}`
+            return item
+          }),
+        })
+      } else {
+        PersonService.getInfo(data?.userId).then((res) => {
+          setChannelId(res.data?.channelId)
+          const dataValue = res?.data
+          dataValue.supUserId = String(res?.data?.supUserId)
+          dataValue.roleId = String(res?.data?.roleId)
+          setAddress(res.data?.address)
+          
+          setTimeout(() => {
+            form.setFieldsValue(dataValue)
+          }, 0)
+        })
+      }
+    }
   }, [show])
 
   /**提交数据 */
@@ -109,11 +129,13 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
             }
           })
         } else {
-          // ProductionCommission.edit({ ...formData, id: data.id }).then((res) => {
-          //   if (res.code === HttpCode.success) {
-          //     onSuccess()
-          //   }
-          // })
+          const params = { ...formData }
+          params.address = lastOneJoin(formData.address)
+          PersonService.edit({ ...params, userId: data?.userId }).then((res) => {
+            if (res.code === HttpCode.success) {
+              onSuccess()
+            }
+          })
         }
       })
       .catch((e) => {
@@ -153,24 +175,29 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
         autoComplete="off"
         form={form}
       >
-        <Form.Item label="归属渠道" name="channel" rules={[{ required: true, message: '设置渠道' }]}>
-          <Cascader
-            options={structure}
-            changeOnSelect
-            fieldNames={{ label: 'name', value: 'id', children: 'children' }}
-            onChange={changeStructure}
-          />
-        </Form.Item>
+        {mode == 'add' ? (
+          <Form.Item label="归属渠道" name="channel" rules={[{ required: true, message: '设置渠道' }]}>
+            <Cascader
+              options={structure}
+              changeOnSelect
+              fieldNames={{ label: 'name', value: 'id', children: 'children' }}
+              onChange={changeStructure}
+            />
+          </Form.Item>
+        ) : (
+          <Form.Item label="归属渠道">{form.getFieldValue('channelName')}</Form.Item>
+        )}
+
         {level == 1 ? (
           ``
         ) : (
           <Form.Item name="supUserId" label="上级人员" rules={[{ required: false }]}>
-            <Select placeholder="无" options={leader} />
+            <Select placeholder="无" disabled={mode=='edit'} options={leader} />
           </Form.Item>
         )}
 
         <Form.Item label="责任区域" name="address" rules={[{ required: true, message: '请选择' }]}>
-          <AreaSelect channelId={channelId} onChange={_onChangeAddress} />
+          <AreaSelect channelId={channelId} perlValue={addressValue} onChange={_onChangeAddress} />
         </Form.Item>
 
         <Form.Item name="realName" label="姓名" rules={[{ required: true }]}>
@@ -179,17 +206,17 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
         <Form.Item name="wechatNum" label="微信号">
           <Input />
         </Form.Item>
-        <Form.Item name="phone" label="手机号/账号" rules={[{ required: true }]}>
-          <Input />
+        <Form.Item name="phone"  label="手机号/账号" rules={[{ required: true }]}>
+          <Input  disabled={mode=='edit'} />
         </Form.Item>
         <Form.Item name="subsidy" label="定制补贴">
           <InputNumber placeholder="补贴比例" value={data?.saleSettleDay} addonAfter="%" style={{ width: 160 }} />
         </Form.Item>
         <Form.Item name="accountType" label="人员类型" rules={[{ required: true }]}>
-          <Select allowClear>
+          <Select allowClear disabled={mode=='edit'}>
             {Object.keys(personType).map((item) => {
               return (
-                <Select.Option key={item} value={item}>
+                <Select.Option key={item} value={Number(item)}>
                   {personType[item]}
                 </Select.Option>
               )
@@ -197,7 +224,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
           </Select>
         </Form.Item>
         <Form.Item name="roleId" label="角色名称" rules={[{ required: true, message: '请输入角色名称' }]}>
-          <RoleSelect channelId={channelId} onChange={_changeRoleSelect} value={form.getFieldValue('roleId')} />
+          <RoleSelect channelId={channelId}  disabled={mode=='edit'} onChange={_changeRoleSelect} value={form.getFieldValue('roleId')} />
         </Form.Item>
         {/* <Form.Item name="state"  valuePropName="checked" label="是否启用"  rules={[{ required: true }]}>
           <Switch />
