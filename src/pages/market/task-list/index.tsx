@@ -1,6 +1,6 @@
 /*
  * @Description: 任务清单
- * @LastEditTime: 2022-01-24 16:14:17
+ * @LastEditTime: 2022-01-26 11:47:21
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Modal, message, Select } from 'antd'
@@ -62,7 +62,10 @@ const TaskListPage: React.FC = () => {
       dataIndex: 'activityTitle',
       render: (text: any, record: any) => `${record.state == 0 ? '启用' : '禁用'}`,
     },
-
+    {
+      title: '匹配权重',
+      render: (text, record) => `${record?.mathFlag == 1 ? '随机匹配' : '关联地域'}`,
+    },
     {
       title: '操作',
       render: (text: any, record: any) => (
@@ -90,20 +93,29 @@ const TaskListPage: React.FC = () => {
     form.resetFields()
   }
   const _editState = (record) => {
-    Modal.confirm({
-      title: '删除内容页？',
-      content: '将删除该内容页及其已填写信息内容',
-      okText: '确认',
-      okType: 'primary',
-      cancelText: '返回填写',
-      onOk: () => {
-        taskService.editState({ id: record.id, state: record.state == 0 ? 1 : 0 }).then((res) => {
-          if (res.code === HttpCode.success) {
-            loadData(pageIndex)
-          }
-        })
-      },
-    })
+    if (record.state == '0') {
+      Modal.confirm({
+        title: `是否禁用${record.name}？`,
+        content: '一旦禁用该清单将无效，关联活动将无法启用改清单',
+        okText: '确认',
+        okType: 'primary',
+        cancelText: '返回',
+        onOk: () => {
+          taskService.editState({ id: record.id, state: record.state == 0 ? 1 : 0 }).then((res) => {
+            if (res.code === HttpCode.success) {
+              loadData(pageIndex)
+            }
+          })
+        },
+      })
+    } else {
+      taskService.editState({ id: record.id, state: record.state == 0 ? 1 : 0 }).then((res) => {
+        if (res.code === HttpCode.success) {
+          message.success('该清单启用成功')
+          loadData(pageIndex)
+        }
+      })
+    }
   }
   /**删除 */
   const _delItem = (record) => {
@@ -112,7 +124,7 @@ const TaskListPage: React.FC = () => {
       content: '将删除该内容页及其已填写信息内容',
       okText: '确认',
       okType: 'primary',
-      cancelText: '返回填写',
+      cancelText: '返回',
       onOk: () => {
         taskService.del({ id: record.id }).then((res) => {
           if (res.code === HttpCode.success) {

@@ -73,7 +73,7 @@ const RefundReason: React.FC = () => {
       content: '将删除该内容页及其已填写信息内容',
       okText: '确认',
       okType: 'primary',
-      cancelText: '返回填写',
+      cancelText: '返回',
       onOk: () => {
         ConfigRefundService.del({ id: record.id }).then((res) => {
           if (res.code === HttpCode.success) {

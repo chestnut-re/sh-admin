@@ -1,6 +1,6 @@
 /*
  * @Description: 配置商品详情
- * @LastEditTime: 2022-01-20 15:50:21
+ * @LastEditTime: 2022-01-26 11:05:21
  */
 import { Table, Space, Button, Modal, Form, Row, Col } from 'antd'
 import { ActivitiesService } from '@/service/ActivitiesService'
@@ -73,7 +73,7 @@ const GoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList, goodsAlreadyData,
   }
   return (
     <div className="goodsTable__root">
-      <Modal title="商品管理" width={700} visible={goodsShow} onOk={_handleUpdate} onCancel={_formClose}>
+      <Modal title="商品管理" width={700} visible={goodsShow} okText={!!query?'提交审核':'确定'} onOk={_handleUpdate} onCancel={_formClose}>
         <Form name="basic" initialValues={{ keyword: '' }} onFinish={onFinish} form={form}>
           <Row gutter={[5, 0]} style={{ paddingLeft: '10px' }}>
             <Col span={12}>

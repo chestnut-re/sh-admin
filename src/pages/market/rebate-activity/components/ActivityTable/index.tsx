@@ -1,6 +1,6 @@
 /*
  * @Description: 配置关联清单
- * @LastEditTime: 2022-01-12 18:13:57
+ * @LastEditTime: 2022-01-26 11:06:22
  */
 import { Table, Space, Button, Modal, Form, Row, Col, Select } from 'antd'
 import { taskService } from '@/service/marketService'
@@ -93,7 +93,7 @@ const ActivityTableModal: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess
   }
   return (
     <div className="goodsTable__root">
-      <Modal title="配置关联清单" width={700} visible={goodsShow} onOk={_handleUpdate} onCancel={_formClose}>
+      <Modal title="配置关联清单" width={700} okText='提交审核' visible={goodsShow} onOk={_handleUpdate} onCancel={_formClose}>
         <Form name="basic" initialValues={{ keyword: '', state: '' }} onFinish={onFinish} form={form}>
           <Row gutter={[5, 0]} style={{ paddingLeft: '10px' }}>
             <Col span={5}>
