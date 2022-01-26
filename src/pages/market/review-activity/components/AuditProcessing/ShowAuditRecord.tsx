@@ -33,39 +33,46 @@ const ShowAuditRecord: React.FC<Props> = ({ data }) => {
     {
       title: '序号',
       align: 'center',
+      className: 'table-light-color',
       render: (text, record, index) => `${index + 1}`,
     },
     {
       title: '审核项目',
       align: 'center',
       dataIndex: 'rebateName',
+      className: 'table-light-color',
       render: (text, record, index) => `${record.type == 1 ? '商品' : '清单'}`,
     },
     {
       title: '审核内容',
       align: 'center',
       dataIndex: 'content',
+      className: 'table-light-color',
     },
     {
       title: '驳回原因',
       align: 'center',
       dataIndex: 'refuseReason',
+      className: 'table-light-color',
     },
     {
       title: '审核结果',
       align: 'center',
       dataIndex: 'password',
+      className: 'table-light-color',
       render: (text, record, index) => `${statusEnum[record.auditResult]}`,
     },
     {
       title: '审核人',
       align: 'center',
       dataIndex: 'auditUserName',
+      className: 'table-light-color',
     },
     {
       title: '审核时间',
       align: 'center',
       dataIndex: 'auditTime',
+      className: 'table-light-color',
     },
   ]
 

@@ -14,27 +14,32 @@ const ShowTaskModal: React.FC<Props> = ({ data }) => {
     {
       title: '序号',
       align: 'center',
+      className: 'table-light-color',
       render: (text, record, index) => `${index + 1}`,
     },
     {
       title: '清单ID',
       align: 'center',
       dataIndex: 'account',
+      className: 'table-light-color',
     },
     {
       title: '清单名称',
       align: 'center',
       dataIndex: 'password',
+      className: 'table-light-color',
     },
     {
       title: '关联时间',
       align: 'center',
       dataIndex: 'name',
+      className: 'table-light-color',
     },
     {
       title: '审核状态',
       align: 'center',
       dataIndex: 'role',
+      className: 'table-light-color',
     },
   ]
 

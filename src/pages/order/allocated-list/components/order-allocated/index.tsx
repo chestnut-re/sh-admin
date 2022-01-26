@@ -61,34 +61,42 @@ const AllocatedDetailsPage: React.FC = () => {
     {
       title: '订单关系',
       dataIndex: 'orderShip',
+      className: 'table-light-color',
     },
     {
       title: '姓名',
       dataIndex: 'userName',
+      className: 'table-light-color',
     },
     {
       title: '关系归属',
       dataIndex: 'relationship',
+      className: 'table-light-color',
     },
     {
       title: '买家常住地/渠道责任区域',
       dataIndex: 'responsibilityArea',
+      className: 'table-light-color',
     },
     {
       title: '始发地同异',
       dataIndex: 'areaEqualFlag',
+      className: 'table-light-color',
     },
     {
       title: '手机号',
       dataIndex: 'phoneNumber',
+      className: 'table-light-color',
     },
     {
       title: '平台身份',
       dataIndex: 'accountTypeVal',
+      className: 'table-light-color',
     },
     {
       title: '当前返利任务',
       dataIndex: 'rebateFlag',
+      className: 'table-light-color',
       render: (text: any, record: any) => {
         if (record.rebateFlag == 0) {
           return `-`

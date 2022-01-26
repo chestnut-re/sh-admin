@@ -55,30 +55,37 @@ const ServiceList: React.FC<Props> = ({ id, setSelectData }) => {
     {
       title: '姓名',
       dataIndex: 'realName',
+      className: 'table-light-color',
     },
     {
       title: '订单关联',
       dataIndex: 'nickName',
+      className: 'table-light-color',
     },
     {
       title: '所属归属',
       dataIndex: 'belongChannel',
+      className: 'table-light-color',
     },
     {
       title: '责任区域',
       dataIndex: 'address',
+      className: 'table-light-color',
     },
     {
       title: '手机号',
       dataIndex: 'phone',
+      className: 'table-light-color',
     },
     {
       title: '团建奖金',
       dataIndex: 'havePresetBonus',
+      className: 'table-light-color',
     },
     {
       title: '当前返利',
       dataIndex: 'haveRebate',
+      className: 'table-light-color',
     },
   ]
 

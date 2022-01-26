@@ -34,9 +34,10 @@ const TabOnePage: React.FC<Props> = ({ data }) => {
           endDate,
           phone: data?.phone,
           type: 1,
+          balanceType: formData.balanceType,
         }).then((res) => {
           if (res.code === HttpCode.success) {
-            setTableData(res.data.records)
+            setTableData(res.data?.records ?? [])
             setTotal(res.data.total)
           }
         })
@@ -49,23 +50,28 @@ const TabOnePage: React.FC<Props> = ({ data }) => {
   const columns = [
     {
       title: '序号',
+      className: 'table-light-color',
       render: (text, record, index) => `${index + 1}`,
     },
     {
       title: '订单编号',
       dataIndex: 'orderNo',
+      className: 'table-light-color',
     },
     {
       title: '分佣类型',
-      dataIndex: 'commissionTypeName',
+      dataIndex: 'typeName',
+      className: 'table-light-color',
     },
     {
       title: '收支金额(¥)',
       dataIndex: 'amount',
+      className: 'table-light-color',
     },
     {
       title: '时间',
       dataIndex: 'time',
+      className: 'table-light-color',
     },
   ]
 
@@ -92,9 +98,9 @@ const TabOnePage: React.FC<Props> = ({ data }) => {
               收支状态
             </Col>
             <Col span={4}>
-              <Form.Item name="channelId">
+              <Form.Item name="balanceType">
                 <Select style={{ width: 120 }}>
-                  <Option value={0} key="0">
+                  <Option value={''} key="0">
                     全部
                   </Option>
                   <Option value={1} key="1">

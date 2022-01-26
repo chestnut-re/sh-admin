@@ -8,14 +8,14 @@ import { Table, Switch, Space, message, Menu } from 'antd'
 import React, { useState, useEffect } from 'react'
 import { getMenusType } from '@/service/menu'
 import { cityDispose } from '@/utils/tree'
-import {isInclude} from '@/utils/newTree'
+import { isInclude } from '@/utils/newTree'
 import ChannelService from '@/service/ChannelService'
 import { getRenderPropValue } from 'antd/lib/_util/getRenderPropValue'
 interface Props {
   adminType: boolean
   bType: boolean
   roleList: any
-  datachannel:any
+  datachannel: any
   getFucValue: (string) => void
   _setBType: (string) => void
   _setAdminType: (string) => void
@@ -33,74 +33,79 @@ const TableMenu: React.FC<Props> = ({
   const [checkStrictly, setCheckStrictly] = useState(false)
   const [selectedRowKeys, setSelectedRowKeys] = useState([])
   const [switchFc, setSwitchFunc] = useState('admin')
-const [tobeActList,setTobeActList] = useState([])
-const [adminActList,setAdminActList] = useState([])
+  const [tobeActList, setTobeActList] = useState([])
+  const [adminActList, setAdminActList] = useState([])
   const [menu, setMenu] = useState(false)
 
   useEffect(() => {
     init()
- 
+
     // setSelectedRowKeys([])
-  }, [switchFc,datachannel])
+  }, [switchFc, datachannel])
 
   const init = async () => {
     const res = await getMenusType({
       platformType: switchFc == 'admin' ? 0 : 1,
-      channelId:datachannel?.channelId
+      channelId: datachannel?.channelId,
     })
     const menuList = cityDispose(res?.data, 'children')
     setMenu(menuList)
     let adminActList = []
     let tobeActList = []
-    roleList.forEach(element => {
-      console.log(isInclude(menuList,element),'isInclude(menuList,element)')
-      if(isInclude(menuList,element)){
-        if(switchFc=='admin'){
+    roleList.forEach((element) => {
+      console.log(isInclude(menuList, element), 'isInclude(menuList,element)')
+      if (isInclude(menuList, element)) {
+        if (switchFc == 'admin') {
           adminActList.push(element)
-        }else{
+        } else {
           tobeActList.push(element)
         }
-      }else{
-        if(switchFc!='admin'){
+      } else {
+        if (switchFc != 'admin') {
           adminActList.push(element)
-        }else{
+        } else {
           tobeActList.push(element)
         }
       }
-    });
+    })
     setAdminActList(adminActList)
     setTobeActList(tobeActList)
-    console.log(tobeActList,'tobeActList')
-    console.log(adminActList,'adminActList')
-    
+    console.log(tobeActList, 'tobeActList')
+    console.log(adminActList, 'adminActList')
   }
   const columns = [
     {
       title: 'id',
       dataIndex: 'id',
       key: 'id',
+      className: 'table-light-color',
     },
     {
       title: 'name',
       dataIndex: 'name',
       key: 'name',
       width: '12%',
+      className: 'table-light-color',
     },
     {
       title: 'path',
       dataIndex: 'path',
       width: '30%',
       key: 'path',
+      className: 'table-light-color',
     },
-    {},
+    {
+      className: 'table-light-color',
+    },
   ]
 
   const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows,e) => {      
-      if(switchFc =='admin'){
+    onChange: (selectedRowKeys, selectedRows, e) => {
+      if (switchFc == 'admin') {
         getFucValue(tobeActList.concat(Array.from(selectedRowKeys)))
         setSelectedRowKeys(tobeActList.concat(Array.from(selectedRowKeys)))
-      }else{roleList
+      } else {
+        roleList
         getFucValue(adminActList.concat(Array.from(selectedRowKeys)))
         setSelectedRowKeys(adminActList.concat(Array.from(selectedRowKeys)))
       }
@@ -127,12 +132,11 @@ const [adminActList,setAdminActList] = useState([])
   }
   return (
     <>
-  
       <Menu onClick={(e) => setSwitchFunc(e.key)} className="mb20" selectedKeys={[switchFc]} mode="horizontal">
         <Menu.Item key="admin">管理后台权限</Menu.Item>
         <Menu.Item key="toB">B端权限</Menu.Item>
       </Menu>
-      <div style={{marginTop:'20px'}}></div>
+      <div style={{ marginTop: '20px' }}></div>
       {/* {switchFc == 'admin' ? (
         <Space align="center" style={{ marginBottom: 16 }}>
           是否开启: <Switch className="Ad" checked={!!bType} onChange={setBType} />

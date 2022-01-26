@@ -31,14 +31,16 @@ const GoodsTable: React.FC<Props> = ({ goodsShow, id, onSuccess, onClose }) => {
     {
       title: '商品ID',
       dataIndex: 'goodsId',
+      className: 'table-light-color',
     },
     {
       title: '商品名称',
       dataIndex: 'goodsName',
+      className: 'table-light-color',
     },
   ]
   const _formClose = () => {
-      console.log('---')
+    console.log('---')
   }
 
   return (

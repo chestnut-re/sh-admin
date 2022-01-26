@@ -39,21 +39,25 @@ const ReleaseInfoShow: React.FC = () => {
       title: '分佣方案名称',
       dataIndex: 'planName',
       key: 'planName',
+      className: 'table-light-color',
     },
     {
       title: '分佣比例',
       dataIndex: 'distScale',
       key: 'distScale',
+      className: 'table-light-color',
     },
     {
       title: '分中心渠道等级',
       dataIndex: 'channelId',
       key: 'channelId',
+      className: 'table-light-color',
     },
     {
       title: '分中心名称',
       dataIndex: 'channelName',
       key: 'channelName',
+      className: 'table-light-color',
     },
   ]
   useEffect(() => {

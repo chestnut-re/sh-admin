@@ -77,14 +77,14 @@ const CenterPutOnRequestShowSubCenter: React.FC = () => {
             <div>分佣方案 {data?.distPlanName} </div>
             <div>
               <Table dataSource={data?.channelPlanList} bordered>
-                <Column title="渠道名称" dataIndex="channelName" key="channelName" />
-                <Column title="直销分佣比例" dataIndex="directScale" key="directScale" />
-                <Column title="渠道等级" dataIndex="level" key="level" />
-                <ColumnGroup title="分销分佣">
-                  <Column title="渠道等级" dataIndex="lastName" key="lastName" />
-                  <Column title="分销分佣比例" dataIndex="lastName" key="lastName" />
+                <Column title="渠道名称" dataIndex="channelName" key="channelName" className="table-light-color" />
+                <Column title="直销分佣比例" dataIndex="directScale" key="directScale" className="table-light-color" />
+                <Column title="渠道等级" dataIndex="level" key="level" className="table-light-color" />
+                <ColumnGroup title="分销分佣" className="table-light-color">
+                  <Column title="渠道等级" dataIndex="lastName" key="lastName" className="table-light-color" />
+                  <Column title="分销分佣比例" dataIndex="lastName" key="lastName" className="table-light-color" />
                 </ColumnGroup>
-                <Column title="发团服务费" dataIndex="teamPrice" key="teamPrice" />
+                <Column title="发团服务费" dataIndex="teamPrice" key="teamPrice" className="table-light-color" />
               </Table>
             </div>
           </div>

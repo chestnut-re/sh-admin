@@ -89,16 +89,16 @@ const CenterPutOnRequestShow: React.FC = () => {
         </div>
         <div>
           <Table dataSource={data} bordered>
-            <Column title="上架渠道" dataIndex="channelName" key="channelName" />
-            <Column title="分佣方案名称" dataIndex="distPlanName" key="distPlanName" />
-            <Column title="直销方（分佣）" dataIndex="outLetScale" key="outLetScale" />
-            <Column title="直销分佣比例" dataIndex="directScale" key="directScale" />
-            <ColumnGroup title="分销分佣">
-              <Column title="二级名称" dataIndex="s2" key="firstName" />
-              <Column title="三级名称" dataIndex="s3" key="lastName" />
-              <Column title="四级名称" dataIndex="s4" key="lastName" />
+            <Column title="上架渠道" dataIndex="channelName" key="channelName" className="table-light-color" />
+            <Column title="分佣方案名称" dataIndex="distPlanName" key="distPlanName" className="table-light-color" />
+            <Column title="直销方（分佣）" dataIndex="outLetScale" key="outLetScale" className="table-light-color" />
+            <Column title="直销分佣比例" dataIndex="directScale" key="directScale" className="table-light-color" />
+            <ColumnGroup title="分销分佣" className="table-light-color">
+              <Column title="二级名称" dataIndex="s2" key="firstName" className="table-light-color" />
+              <Column title="三级名称" dataIndex="s3" key="lastName" className="table-light-color" />
+              <Column title="四级名称" dataIndex="s4" key="lastName" className="table-light-color" />
             </ColumnGroup>
-            <Column title="发团服务费" dataIndex="teamPrice" key="teamPrice" />
+            <Column title="发团服务费" dataIndex="teamPrice" key="teamPrice" className="table-light-color" />
           </Table>
         </div>
 

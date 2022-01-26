@@ -82,54 +82,56 @@ const AEMessageDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClo
   }
 
   return (
-    <Modal title="发布消息" visible={show} onOk={_handleUpdate} onCancel={_formClose} okText="推送">
-      <Form
-        name="basic"
-        labelCol={{ span: 6 }}
-        wrapperCol={{ span: 16 }}
-        // initialValues={{ messageType: 0 }}
-        onFinish={(values: any) => {}}
-        onFinishFailed={(errorInfo: any) => {}}
-        autoComplete="off"
-        form={form}
-      >
-        <Form.Item label="推送用户" name="pushUser">
-          <Select>
-            <Option value={0}>全部</Option>
-            <Option value={1}>B端用户</Option>
-            <Option value={2}>C端用户</Option>
-          </Select>
-        </Form.Item>
-        <Form.Item label="消息类型" name="messageType">
-          <Radio.Group defaultValue={0} onChange={(e) => setMessageType(e.target.value)}>
-            <Radio value={0}>站内信</Radio>
-            <Radio value={2}>APP推送</Radio>
-            <Radio value={1}>短信</Radio>
-          </Radio.Group>
-        </Form.Item>
+    <>
+      {mode == 'add' ? (
+        <Modal title="发布消息" visible={show} onOk={_handleUpdate} onCancel={_formClose} okText="推送">
+          <Form
+            name="basic"
+            labelCol={{ span: 6 }}
+            wrapperCol={{ span: 16 }}
+            // initialValues={{ messageType: 0 }}
+            onFinish={(values: any) => {}}
+            onFinishFailed={(errorInfo: any) => {}}
+            autoComplete="off"
+            form={form}
+          >
+            <Form.Item label="推送用户" name="pushUser">
+              <Select>
+                <Option value={0}>全部</Option>
+                <Option value={1}>B端用户</Option>
+                <Option value={2}>C端用户</Option>
+              </Select>
+            </Form.Item>
+            <Form.Item label="消息类型" name="messageType">
+              <Radio.Group defaultValue={0} onChange={(e) => setMessageType(e.target.value)}>
+                <Radio value={0}>站内信</Radio>
+                <Radio value={2}>APP推送</Radio>
+                <Radio value={1}>短信</Radio>
+              </Radio.Group>
+            </Form.Item>
 
-        {messageType === 2 ? (
-          <>
-            <Form.Item label="推送链接" name="pushLink">
-              <Input />
+            {messageType === 2 ? (
+              <>
+                <Form.Item label="推送链接" name="pushLink">
+                  <Input />
+                </Form.Item>
+              </>
+            ) : (
+              <></>
+            )}
+            {messageType !== 1 ? (
+              <>
+                <Form.Item label="推送标题" name="pushTitle">
+                  <Input />
+                </Form.Item>
+              </>
+            ) : (
+              <></>
+            )}
+            <Form.Item label="推送内容" name="pushContent">
+              <TextArea rows={4} />
             </Form.Item>
-          </>
-        ) : (
-          <></>
-        )}
-        {messageType !== 1 ? (
-          <>
-            <Form.Item label="推送标题" name="pushTitle">
-              <Input />
-            </Form.Item>
-          </>
-        ) : (
-          <></>
-        )}
-        <Form.Item label="推送内容" name="pushContent">
-          <TextArea rows={4} />
-        </Form.Item>
-        {/* {messageType === 2 ? (
+            {/* {messageType === 2 ? (
           <div>
             发送条数&nbsp;&nbsp;&nbsp;&nbsp;发送条数：
             <span>200</span>
@@ -139,8 +141,70 @@ const AEMessageDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClo
         ) : (
           <></>
         )} */}
-      </Form>
-    </Modal>
+          </Form>
+        </Modal>
+      ) : (
+        <Modal title="发布消息" visible={show} footer={null} onOk={_handleUpdate} onCancel={_formClose} okText="推送">
+          <Form
+            name="basic"
+            labelCol={{ span: 6 }}
+            wrapperCol={{ span: 16 }}
+            // initialValues={{ messageType: 0 }}
+            onFinish={(values: any) => {}}
+            onFinishFailed={(errorInfo: any) => {}}
+            autoComplete="off"
+            form={form}
+          >
+            <Form.Item label="推送用户" name="pushUser">
+              <Select>
+                <Option value={0}>全部</Option>
+                <Option value={1}>B端用户</Option>
+                <Option value={2}>C端用户</Option>
+              </Select>
+            </Form.Item>
+            <Form.Item label="消息类型" name="messageType">
+              <Radio.Group defaultValue={0} onChange={(e) => setMessageType(e.target.value)}>
+                <Radio value={0}>站内信</Radio>
+                <Radio value={2}>APP推送</Radio>
+                <Radio value={1}>短信</Radio>
+              </Radio.Group>
+            </Form.Item>
+
+            {messageType === 2 ? (
+              <>
+                <Form.Item label="推送链接" name="pushLink">
+                  <Input />
+                </Form.Item>
+              </>
+            ) : (
+              <></>
+            )}
+            {messageType !== 1 ? (
+              <>
+                <Form.Item label="推送标题" name="pushTitle">
+                  <Input />
+                </Form.Item>
+              </>
+            ) : (
+              <></>
+            )}
+            <Form.Item label="推送内容" name="pushContent">
+              <TextArea rows={4} />
+            </Form.Item>
+            {/* {messageType === 2 ? (
+          <div>
+            发送条数&nbsp;&nbsp;&nbsp;&nbsp;发送条数：
+            <span>200</span>
+            条&nbsp;&nbsp;&nbsp;&nbsp;可用短信条数：
+            <span>10000</span>条
+          </div>
+        ) : (
+          <></>
+        )} */}
+          </Form>
+        </Modal>
+      )}
+    </>
   )
 }
 
