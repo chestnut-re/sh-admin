@@ -33,13 +33,16 @@ const ActivityDetailTable: React.FC<Props> = ({ goodsIdList, onSuccess }) => {
     {
       title: '商品ID',
       dataIndex: 'goodsId',
+      className: 'table-light-color',
     },
     {
       title: '商品名称',
       dataIndex: 'goodsName',
+      className: 'table-light-color',
     },
     {
       title: '操作',
+      className: 'table-light-color',
       render: (text: any, record: any, index) => (
         <Space size="middle">
           <span className="operation" onClick={() => _delItem(record, index)}>

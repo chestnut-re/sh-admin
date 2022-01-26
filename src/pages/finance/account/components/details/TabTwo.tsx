@@ -34,7 +34,7 @@ const TabTwoPage: React.FC<Props> = ({ data }) => {
           type: 2,
         }).then((res) => {
           if (res.code === HttpCode.success) {
-            setTableData(res.data.records)
+            setTableData(res.data?.records ?? [])
             setTotal(res.data.total)
           }
         })
@@ -46,15 +46,18 @@ const TabTwoPage: React.FC<Props> = ({ data }) => {
   const columns = [
     {
       title: '序号',
+      className: 'table-light-color',
       render: (text, record, index) => `${index + 1}`,
     },
     {
       title: '收支金额(¥)',
       dataIndex: 'amount',
+      className: 'table-light-color',
     },
     {
       title: '变动时间',
       dataIndex: 'time',
+      className: 'table-light-color',
     },
   ]
 

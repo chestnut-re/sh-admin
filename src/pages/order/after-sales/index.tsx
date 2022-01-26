@@ -105,7 +105,7 @@ const AfterSalesListPage: React.FC = () => {
     },
     {
       title: '渠道审核状态',
-      dataIndex: '',
+      dataIndex: 'auditStateVal',
     },
     {
       title: '售后状态',

@@ -44,14 +44,17 @@ const ActivityTableModal: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess
     {
       title: '清单ID',
       dataIndex: 'id',
+      className: 'table-light-color',
     },
     {
       title: '清单名称',
       dataIndex: 'name',
+      className: 'table-light-color',
     },
     {
       title: '关联商品数量',
       dataIndex: 'activityDetailImg',
+      className: 'table-light-color',
       render: (text: any, record: any) => `${record.taskInventoryGood?.length ?? 0}`,
     },
     // {
@@ -61,6 +64,7 @@ const ActivityTableModal: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess
     {
       title: '状态',
       dataIndex: 'activityTitle',
+      className: 'table-light-color',
       render: (text: any, record: any) => `${record.state == 0 ? '启用' : '禁用'}`,
     },
   ]

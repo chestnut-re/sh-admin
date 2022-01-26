@@ -37,14 +37,17 @@ const AssociatedGoods: React.FC<Props> = ({ data }) => {
     {
       title: '清单ID',
       dataIndex: 'id',
+      className: 'table-light-color',
     },
     {
       title: '清单名称',
       dataIndex: 'name',
+      className: 'table-light-color',
     },
     {
       title: '关联商品量',
       dataIndex: 'goodsName',
+      className: 'table-light-color',
       render: (text: any, record: any) => {
         return `${record?.taskInventoryGood?.length ?? 0}`
       },
@@ -52,6 +55,7 @@ const AssociatedGoods: React.FC<Props> = ({ data }) => {
     {
       title: '关联活动量',
       dataIndex: 'goodsName',
+      className: 'table-light-color',
       render: (text: any, record: any) => {
         return `${record?.orders?.length ?? 0}`
       },
@@ -59,6 +63,7 @@ const AssociatedGoods: React.FC<Props> = ({ data }) => {
     {
       title: '状态',
       dataIndex: 'goodsName',
+      className: 'table-light-color',
       render: (text: any, record: any) => {
         if (record.state == 0) {
           return `启用`

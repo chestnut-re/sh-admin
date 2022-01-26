@@ -23,44 +23,52 @@ const ShowGoodsTaskModal: React.FC<Props> = ({ data, showType }) => {
           {
             title: '序号',
             align: 'center',
+            className: 'table-light-color',
             render: (text, record, index) => `${index + 1}`,
           },
           {
             title: '商品ID',
             align: 'center',
             dataIndex: 'goodsId',
+            className: 'table-light-color',
           },
           {
             title: '商品名称',
             align: 'center',
             dataIndex: 'goodsName',
+            className: 'table-light-color',
           },
           {
             title: '关联时间',
             align: 'center',
             dataIndex: 'releTime',
+            className: 'table-light-color',
           },
         ]
       : [
           {
             title: '序号',
             align: 'center',
+            className: 'table-light-color',
             render: (text, record, index) => `${index + 1}`,
           },
           {
             title: '清单ID',
             align: 'center',
             dataIndex: 'id',
+            className: 'table-light-color',
           },
           {
             title: '清单名称',
             align: 'center',
             dataIndex: 'name',
+            className: 'table-light-color',
           },
           {
             title: '关联时间',
             align: 'center',
             dataIndex: 'releTime',
+            className: 'table-light-color',
           },
         ]
 

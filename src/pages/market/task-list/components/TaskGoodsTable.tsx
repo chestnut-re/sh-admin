@@ -41,10 +41,12 @@ const ActivityGoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList, onSuccess
     {
       title: '商品ID',
       dataIndex: 'goodsId',
+      className: 'table-light-color',
     },
     {
       title: '商品名称',
       dataIndex: 'goodsName',
+      className: 'table-light-color',
     },
   ]
   const _handleUpdate = () => {

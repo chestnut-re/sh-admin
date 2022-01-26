@@ -5,7 +5,7 @@
 import React, { useState, FC, useEffect } from 'react'
 import { Drawer, Button, Descriptions, Table, Row, Col } from 'antd'
 import { marketService } from '@/service/marketService'
-import {formateTime} from '@/utils/timeUtils'
+import { formateTime } from '@/utils/timeUtils'
 import './index.less'
 interface props {
   data: any
@@ -16,7 +16,7 @@ const BasicInfo: FC<props> = ({ data }) => {
 
   useEffect(() => {
     if (!!data) {
-      console.log(JSON.parse(data),'JSON.parse(data)JSON.parse(data)JSON.parse(data)')
+      console.log(JSON.parse(data), 'JSON.parse(data)JSON.parse(data)JSON.parse(data)')
       let list = []
       marketService.get(JSON.parse(data)?.rebateId).then((res) => {
         setDataSource(res?.data)
@@ -32,7 +32,7 @@ const BasicInfo: FC<props> = ({ data }) => {
             condition: `${res?.data?.isShareSuccess == 1 ? '分享成功' : ''}
   ${res?.data?.isSharePoint == '1' ? `触达独立IP${res?.data?.sharePointIp}个` : ''}`,
             rebateAmount: `每次均分`,
-            id:1
+            id: 1,
           })
         }
         if (res?.data.isPullRebate == 1) {
@@ -41,7 +41,7 @@ const BasicInfo: FC<props> = ({ data }) => {
             target: `${res?.data.pullTotal}个`,
             condition: type[res?.data.pullType],
             rebateAmount: `每次均分`,
-            id:2
+            id: 2,
           })
         }
         setList(list)
@@ -53,18 +53,22 @@ const BasicInfo: FC<props> = ({ data }) => {
     {
       title: '返利任务方式',
       dataIndex: 'name',
+      className: 'table-light-color',
     },
     {
       title: '任务目标',
       dataIndex: 'target',
+      className: 'table-light-color',
     },
     {
       title: '完成条件',
       dataIndex: 'condition',
+      className: 'table-light-color',
     },
     {
       title: '返利金额',
       dataIndex: 'rebateAmount',
+      className: 'table-light-color',
     },
   ]
 

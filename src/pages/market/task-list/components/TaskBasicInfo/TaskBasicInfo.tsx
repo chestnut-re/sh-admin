@@ -12,31 +12,34 @@ interface Props {
 }
 const TaskBasicInfo: FC<Props> = ({ dataValue }) => {
   const [data, setData] = useState([])
-  const [dataSourceValue,setDataSource] = useState([])
+  const [dataSourceValue, setDataSource] = useState([])
   useEffect(() => {
-    if(!!dataValue){
-    taskService.get(dataValue?.id).then((res) => {
-      setData(res?.data)
-      console.log(res?.data?.taskInventoryGood,'res?.data?.taskInventoryGood)')
-      setDataSource(res?.data?.taskInventoryGood)
-    })
+    if (!!dataValue) {
+      taskService.get(dataValue?.id).then((res) => {
+        setData(res?.data)
+        console.log(res?.data?.taskInventoryGood, 'res?.data?.taskInventoryGood)')
+        setDataSource(res?.data?.taskInventoryGood)
+      })
     }
-  },[dataValue])
+  }, [dataValue])
 
   const columns = [
     {
       title: '序号',
       dataIndex: 'name',
       dataIndex: '',
+      className: 'table-light-color',
       render: (text, record, index) => `${index + 1}`,
     },
     {
       title: '商品名称',
       dataIndex: 'goodsName',
+      className: 'table-light-color',
     },
     {
       title: '关联返利活动名称',
       dataIndex: 'rebateName',
+      className: 'table-light-color',
     },
   ]
 
@@ -49,7 +52,7 @@ const TaskBasicInfo: FC<Props> = ({ dataValue }) => {
               {data?.name}
             </Descriptions.Item>
             <Descriptions.Item span={24} label="匹配权重">
-              {data?.mathFlag==1?'随机匹配':'关联地域'}
+              {data?.mathFlag == 1 ? '随机匹配' : '关联地域'}
             </Descriptions.Item>
             <Descriptions.Item span={24} label="分享商品">
               <Table rowKey="goodsNo" bordered dataSource={dataSourceValue} columns={columns} pagination={false} />

@@ -35,19 +35,6 @@ const AccountDetails: React.FC = () => {
         <span className="header-title">账户中心/账户明细</span>
       </div>
       <div className="content">
-        {/* <Descriptions column={1} labelStyle={{ color: '#999' }}>
-          <Descriptions.Item label="归属渠道">Zhou Maomao</Descriptions.Item>
-          <Descriptions.Item label="姓名">1810000000</Descriptions.Item>
-          <Descriptions.Item label="账号">Hangzhou, Zhejiang</Descriptions.Item>
-          <Descriptions.Item label="账户余额">111</Descriptions.Item>
-          <Descriptions.Item label="" contentStyle={{ color: '#999', marginLeft: 70 }}>
-            除了运营资金，包含待释放跟提现中
-          </Descriptions.Item>
-          <Descriptions.Item label="待释放">1</Descriptions.Item>
-          <Descriptions.Item label="提现中">1</Descriptions.Item>
-          <Descriptions.Item label="可提现">1</Descriptions.Item>
-          <Descriptions.Item label="运营资金">1</Descriptions.Item>
-        </Descriptions> */}
         <Row gutter={[0, 24]}>
           <Col className="gutter-row" span={4}>
             归属渠道：{history.location.state.record?.channelName}

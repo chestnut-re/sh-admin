@@ -55,34 +55,42 @@ const OrderDetailsPage: React.FC = () => {
     {
       title: '订单关系',
       dataIndex: 'orderShip',
+      className: 'table-light-color',
     },
     {
       title: '姓名',
       dataIndex: 'userName',
+      className: 'table-light-color',
     },
     {
       title: '关系归属',
       dataIndex: 'relationship',
+      className: 'table-light-color',
     },
     {
       title: '买家常住地/渠道责任区域',
       dataIndex: 'responsibilityArea',
+      className: 'table-light-color',
     },
     {
       title: '始发地同异',
       dataIndex: 'areaEqualFlag',
+      className: 'table-light-color',
     },
     {
       title: '手机号',
       dataIndex: 'phoneNumber',
+      className: 'table-light-color',
     },
     {
       title: '平台身份',
       dataIndex: 'accountTypeVal',
+      className: 'table-light-color',
     },
     {
       title: '当前返利任务',
       dataIndex: 'rebateFlag',
+      className: 'table-light-color',
       render: (text: any, record: any) => {
         if (record.rebateFlag == 0) {
           return `-`
@@ -96,14 +104,17 @@ const OrderDetailsPage: React.FC = () => {
     {
       title: '订单编号',
       dataIndex: 'suborderNo',
+      className: 'table-light-color',
     },
     {
       title: '出行人信息',
       dataIndex: 'nickName',
+      className: 'table-light-color',
     },
     {
       title: '单价',
       dataIndex: 'originPrice',
+      className: 'table-light-color',
       render: (text: any, record: any) => {
         return (parseInt(record.originPrice) / 1000).toFixed(2)
       },
@@ -111,6 +122,7 @@ const OrderDetailsPage: React.FC = () => {
     {
       title: '使用代币',
       dataIndex: 'tokenAmount',
+      className: 'table-light-color',
       render: (text: any, record: any) => {
         return (parseInt(record.tokenAmount) / 1000).toFixed(2)
       },
@@ -118,6 +130,7 @@ const OrderDetailsPage: React.FC = () => {
     {
       title: '实付款',
       dataIndex: 'payAmount',
+      className: 'table-light-color',
       render: (text: any, record: any) => {
         return (parseInt(record.payAmount) / 1000).toFixed(2)
       },
@@ -125,10 +138,12 @@ const OrderDetailsPage: React.FC = () => {
     {
       title: '出行确认码',
       dataIndex: 'state',
+      className: 'table-light-color',
     },
     {
       title: '订单信息状态',
       dataIndex: 'state',
+      className: 'table-light-color',
       render: (text: any, record: any) => {
         if (record.state == 1) {
           return `待付款`
@@ -150,40 +165,49 @@ const OrderDetailsPage: React.FC = () => {
     {
       title: '行程状态',
       dataIndex: 'state',
+      className: 'table-light-color',
     },
   ]
   const columnsF = [
     {
       title: '商品分佣',
       dataIndex: 'channelName',
+      className: 'table-light-color',
     },
     {
       title: '渠道关系',
       dataIndex: 'distScale',
+      className: 'table-light-color',
     },
     {
       title: '渠道分佣',
       dataIndex: 'distPrice',
+      className: 'table-light-color',
       children: [
         {
           title: '二级',
           dataIndex: 'building',
+          className: 'table-light-color',
         },
         {
           title: '三级',
           dataIndex: 'number',
+          className: 'table-light-color',
         },
         {
           title: '四级',
           dataIndex: 'number',
+          className: 'table-light-color',
         },
         {
           title: '五级',
           dataIndex: 'number',
+          className: 'table-light-color',
         },
         {
           title: '发团服务费',
           dataIndex: 'number',
+          className: 'table-light-color',
         },
       ],
     },
@@ -251,7 +275,13 @@ const OrderDetailsPage: React.FC = () => {
       {/* <div className="details-title">买家信息</div>
       <Table rowKey="id" columns={columnsM} scroll={{ x: 'max-content' }} dataSource={[...dataM]} /> */}
       <div className="details-title">订单关联人</div>
-      <Table rowKey="id" columns={columnsD} scroll={{ x: 'max-content' }} dataSource={[...dataD]} />
+      <Table
+        className="table-light-color"
+        rowKey="id"
+        columns={columnsD}
+        scroll={{ x: 'max-content' }}
+        dataSource={[...dataD]}
+      />
       <div className="details-title">分佣方案</div>
       <Table rowKey="id" columns={columnsF} scroll={{ x: 'max-content' }} dataSource={[...dataF]} />
       <div className="details-title">子订单信息</div>
