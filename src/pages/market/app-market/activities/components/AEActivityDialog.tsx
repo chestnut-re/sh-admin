@@ -39,6 +39,7 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
         activityImg: data?.activityImg,
         activitySubtitle: data?.activitySubtitle,
         activityUrl: data?.activityUrl,
+        sort:data?.sort,
         activityDetailImg: data?.activityDetailImg,
         state: String(data?.state),
         activityDate: !!data?.startDate
@@ -150,6 +151,7 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
               <Form.Item label="副标题" name="activitySubtitle" rules={[{ required: false, message: '请输入副标题' }]}>
                 <Input />
               </Form.Item>
+
               <Form.Item
                 label="活动展示时间"
                 name="activityDate"
@@ -180,7 +182,9 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
                     })}
                 </Radio.Group>
               </Form.Item>
-
+              <Form.Item label="排序" name="sort" rules={[{ required: false, message: '请输入排序' }]}>
+                <Input />
+              </Form.Item>
               <Form.Item label="活动关联商品" name="activityGoodsIdList">
                 <Button type="primary" onClick={editGoods}>
                   配置商品
