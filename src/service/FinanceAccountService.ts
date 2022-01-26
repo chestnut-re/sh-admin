@@ -124,4 +124,13 @@ export class FinancialManagementService {
       params: data,
     })
   }
+
+  /**
+   * 财务明细-导出
+   */
+  static export(data): Promise<any> {
+    return axios.get('/api/wallet/a/fianceDetailExport', {
+      params: data,
+    })
+  }
 }

@@ -101,11 +101,11 @@ const SurveyPage: React.FC = () => {
           <h3>财务指标</h3>
           <Row gutter={[12, 48]}>
             <Col className="gutter-row" span={12}>
-              账户当前余额：{parseInt(data?.balance).toFixed(2)}&nbsp;&nbsp;
+              账户当前余额：{(parseInt(data?.balance) / 1000).toFixed(2)}&nbsp;&nbsp;
               <InfoCircleOutlined style={{ color: '#999' }} />
             </Col>
             <Col className="gutter-row" span={12}>
-              订单收入总额：{parseInt(data?.orderTotal).toFixed(2)}&nbsp;&nbsp;
+              订单收入总额：{(parseInt(data?.orderTotal) / 1000).toFixed(2)}&nbsp;&nbsp;
               <InfoCircleOutlined style={{ color: '#999' }} />
             </Col>
           </Row>
@@ -119,11 +119,11 @@ const SurveyPage: React.FC = () => {
           </Row>
           <Row gutter={[12, 24]}>
             <Col className="gutter-row" span={12}>
-              退款总额：{parseInt(data?.refundTotal).toFixed(2)}&nbsp;&nbsp;
+              退款总额：{(parseInt(data?.refundTotal) / 1000).toFixed(2)}&nbsp;&nbsp;
               <InfoCircleOutlined style={{ color: '#999' }} />
             </Col>
             <Col className="gutter-row" span={12}>
-              已释放总额：{parseInt(data?.releasedTotal).toFixed(2)}&nbsp;&nbsp;
+              已释放总额：{(parseInt(data?.releasedTotal) / 1000).toFixed(2)}&nbsp;&nbsp;
               <InfoCircleOutlined style={{ color: '#999' }} />
             </Col>
           </Row>
@@ -137,11 +137,11 @@ const SurveyPage: React.FC = () => {
           </Row>
           <Row gutter={[12, 24]}>
             <Col className="gutter-row" span={12}>
-              待释放金额：{parseInt(data?.toBeReleasedTotal).toFixed(2)}&nbsp;&nbsp;
+              待释放金额：{(parseInt(data?.toBeReleasedTotal) / 1000).toFixed(2)}&nbsp;&nbsp;
               <InfoCircleOutlined style={{ color: '#999' }} />
             </Col>
             <Col className="gutter-row" span={12}>
-              实际利润：{parseInt(data?.profit).toFixed(2)} &nbsp;&nbsp;
+              实际利润：{(parseInt(data?.profit) / 1000).toFixed(2)} &nbsp;&nbsp;
               <InfoCircleOutlined style={{ color: '#999' }} />
             </Col>
           </Row>
@@ -156,11 +156,11 @@ const SurveyPage: React.FC = () => {
           <h3 style={{ paddingTop: 20 }}>其他指标</h3>
           <Row gutter={[12, 24]}>
             <Col className="gutter-row" span={12}>
-              代币已使用总额：{parseInt(data?.tokenUsed).toFixed(2)} &nbsp;&nbsp;
+              代币已使用总额：{(parseInt(data?.tokenUsed) / 1000).toFixed(2)} &nbsp;&nbsp;
               <InfoCircleOutlined style={{ color: '#999' }} />
             </Col>
             <Col className="gutter-row" span={12}>
-              已提现总额：{parseInt(data?.cashed).toFixed(2)} &nbsp;&nbsp;
+              已提现总额：{(parseInt(data?.cashed) / 1000).toFixed(2)} &nbsp;&nbsp;
               <InfoCircleOutlined style={{ color: '#999' }} />
             </Col>
           </Row>
@@ -174,11 +174,11 @@ const SurveyPage: React.FC = () => {
           </Row>
           <Row gutter={[12, 24]}>
             <Col className="gutter-row" span={12}>
-              提现申请中总额：{parseInt(data?.cashing).toFixed(2)} &nbsp;&nbsp;
+              提现申请中总额：{(parseInt(data?.cashing) / 1000).toFixed(2)} &nbsp;&nbsp;
               <InfoCircleOutlined style={{ color: '#999' }} />
             </Col>
             <Col className="gutter-row" span={12}>
-              代币流通总额：{parseInt(data?.tokenAvTotal).toFixed(2)} &nbsp;&nbsp;
+              代币流通总额：{(parseInt(data?.tokenAvTotal) / 1000).toFixed(2)} &nbsp;&nbsp;
               <InfoCircleOutlined style={{ color: '#999' }} />
             </Col>
           </Row>

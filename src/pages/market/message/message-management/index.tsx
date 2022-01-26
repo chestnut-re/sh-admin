@@ -70,9 +70,10 @@ const MessageListPage: React.FC = () => {
           return `APP推送`
         } else if (record?.messageType == '0') {
           return `站内信`
-        } else if (record?.messageType == '1') {
-          return `短信`
         }
+        // else if (record?.messageType == '1') {
+        //   return `短信`
+        // }
       },
     },
     {

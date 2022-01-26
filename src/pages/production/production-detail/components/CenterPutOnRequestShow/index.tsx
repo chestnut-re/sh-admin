@@ -38,7 +38,7 @@ const CenterPutOnRequestShow: React.FC = () => {
             saleScale3: ii.saleScalePlan.find((sp) => sp.level === 3)?.saleScale,
             saleScale4: ii.saleScalePlan.find((sp) => sp.level === 4)?.saleScale,
             saleScale5: ii.saleScalePlan.find((sp) => sp.level === 5)?.saleScale,
-            teamPrice: i.teamPrice
+            teamPrice: i.teamPrice,
           })
           return ii
         })
@@ -58,17 +58,22 @@ const CenterPutOnRequestShow: React.FC = () => {
         </div>
         <div>
           <Table dataSource={data} bordered>
-            <Column title="上架渠道" dataIndex="channelName" key="channelName" />
-            <Column title="分佣方案名称" dataIndex="distPlanName" key="distPlanName" />
-            <Column title="直销方" dataIndex="directChannelName" key="directScale" />
-            <Column title="直销方（分佣）" dataIndex="directDirectScale" key="directScale" />
-            <ColumnGroup title="分销分佣">
-              <Column title="二级名称" dataIndex="saleScale2" key="firstName" />
-              <Column title="三级名称" dataIndex="saleScale3" key="lastName" />
-              <Column title="四级名称" dataIndex="saleScale4" key="lastName" />
-              <Column title="五级名称" dataIndex="saleScale5" key="lastName" />
+            <Column className="table-light-color" title="上架渠道" dataIndex="channelName" key="channelName" />
+            <Column className="table-light-color" title="分佣方案名称" dataIndex="distPlanName" key="distPlanName" />
+            <Column className="table-light-color" title="直销方" dataIndex="directChannelName" key="directScale" />
+            <Column
+              className="table-light-color"
+              title="直销方（分佣）"
+              dataIndex="directDirectScale"
+              key="directScale"
+            />
+            <ColumnGroup className="table-light-color" title="分销分佣">
+              <Column className="table-light-color" title="二级名称" dataIndex="saleScale2" key="firstName" />
+              <Column className="table-light-color" title="三级名称" dataIndex="saleScale3" key="lastName" />
+              <Column className="table-light-color" title="四级名称" dataIndex="saleScale4" key="lastName" />
+              <Column className="table-light-color" title="五级名称" dataIndex="saleScale5" key="lastName" />
             </ColumnGroup>
-            <Column title="发团服务费" dataIndex="teamPrice" key="teamPrice" />
+            <Column className="table-light-color" title="发团服务费" dataIndex="teamPrice" key="teamPrice" />
           </Table>
         </div>
 

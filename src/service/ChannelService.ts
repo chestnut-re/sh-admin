@@ -25,15 +25,20 @@ export default class ChannelService {
   static edit(data): Promise<any> {
     return axios.put('/api/market/channel/update', data)
   }
-  static getProvinceCity(data={}): Promise<any> {
-    return axios.get(`/api/area/provinceCity`,{
-      params:data
+  static getProvinceCity(data = {}): Promise<any> {
+    return axios.get(`/api/area/provinceCity`, {
+      params: data,
+    })
+  }
+  static getAllChannel(data): Promise<any> {
+    return axios.get(`/api/market/channel/findNextChannelListById`, {
+      params: data,
     })
   }
 
-  static closestCity(data={}): Promise<any> {
-    return axios.get(`/api/area/closestCity`,{
-      params:data
+  static closestCity(data = {}): Promise<any> {
+    return axios.get(`/api/area/closestCity`, {
+      params: data,
     })
   }
   static ChannelPlan = {
@@ -51,7 +56,7 @@ export default class ChannelService {
     saveChannelPlan(data): Promise<any> {
       return axios.post(`/api/market/channel/saveChannelDistPlan`, data)
     },
-     del({ id }): Promise<any> {
+    del({ id }): Promise<any> {
       return axios.delete(`/api/market/channel/dist/plan/delete/${id}`)
     },
     edit(data): Promise<any> {

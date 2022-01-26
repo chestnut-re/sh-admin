@@ -40,8 +40,8 @@ const AccountPage: React.FC = () => {
     })
   }
   const channelData = () => {
-    ChannelService.list({ current: 1, pageSize: 10 }).then((res) => {
-      setChannel(res.data?.records ?? [])
+    ChannelService.getStructure().then((res) => {
+      setChannel(res.data?.children ?? [])
     })
   }
 
