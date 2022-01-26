@@ -1,6 +1,6 @@
 /*
  * @Description: 任务清单
- * @LastEditTime: 2022-01-26 11:14:51
+ * @LastEditTime: 2022-01-26 11:47:21
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Modal, message, Select } from 'antd'
@@ -62,7 +62,10 @@ const TaskListPage: React.FC = () => {
       dataIndex: 'activityTitle',
       render: (text: any, record: any) => `${record.state == 0 ? '启用' : '禁用'}`,
     },
-
+    {
+      title: '匹配权重',
+      render: (text, record) => `${record?.mathFlag == 1 ? '随机匹配' : '关联地域'}`,
+    },
     {
       title: '操作',
       render: (text: any, record: any) => (
