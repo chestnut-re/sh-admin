@@ -1,6 +1,6 @@
 /*
  * @Description:
- * @LastEditTime: 2022-01-25 18:40:53
+ * @LastEditTime: 2022-01-26 10:38:44
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Radio, DatePicker, Modal, message } from 'antd'
@@ -214,7 +214,7 @@ const RebateActivity: React.FC = () => {
     setGoodsRoleList([])
   }
   const activityOnSuccess = (rowKeys, rowList) => {
-    if (rowList.length > 0) {
+    // if (rowList.length > 0) {
       const List = rowList.map((res) => {
         return res
       })
@@ -233,7 +233,7 @@ const RebateActivity: React.FC = () => {
             loadData(pageIndex)
           }
         })
-    }
+    // }
     setActivityShowDialog(false)
     setActivityRoleList([])
   }
