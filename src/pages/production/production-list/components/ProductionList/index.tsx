@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import React, { useState, useEffect } from 'react'
-import { Button, Col, Form, message, Modal, Row, Space, Table } from 'antd'
+import { Button, Col, Form, message, Modal, Row, Space, Table, Tooltip } from 'antd'
 import { InputTemp, ProductionState, TravelMode } from '@/components/filter/formItem'
 import './index.less'
 import { ProductionListService } from '@/service/ProductionListService'
@@ -12,6 +12,7 @@ import GoodsState from '@/components/tableColumn/GoodsState'
 import ChannelDialog from './components/ChannelDialog'
 import NewPrice from '@/components/tableColumn/NewPrice'
 import { PlusOutlined } from '@ant-design/icons'
+import StateStyle from '@/components/state'
 
 /**
  * 商品库 总部
@@ -85,7 +86,11 @@ const ProductionList: React.FC<any> = observer(({}) => {
       dataIndex: '',
     },
     {
-      title: '已上架渠道',
+      title: (
+        <Tooltip title="创建渠道：该商品由该渠道添加">
+          <span>已创建渠道</span>
+        </Tooltip>
+      ),
       render: (text, record, index) => {
         return (
           <Button
@@ -102,7 +107,44 @@ const ProductionList: React.FC<any> = observer(({}) => {
     {
       title: '状态',
       dataIndex: 'state',
-      render: (text, record, index) => <GoodsState state={record?.state} />,
+      render: (text, record, index) => {
+        if (record?.state == '0') {
+          return (
+            <>
+              <StateStyle color="red" />
+              <GoodsState state={record?.state} />
+            </>
+          )
+        } else if (record?.state == '1') {
+          return (
+            <>
+              <StateStyle color="orange" />
+              <GoodsState state={record?.state} />
+            </>
+          )
+        } else if (record?.state == '2') {
+          return (
+            <>
+              <StateStyle color="green" />
+              <GoodsState state={record?.state} />
+            </>
+          )
+        } else if (record?.state == '3') {
+          return (
+            <>
+              <StateStyle color="grey" />
+              <GoodsState state={record?.state} />
+            </>
+          )
+        } else if (record?.state == '4') {
+          return (
+            <>
+              <StateStyle color="red" />
+              <GoodsState state={record?.state} />
+            </>
+          )
+        }
+      },
     },
     {
       title: '创建渠道',
@@ -110,7 +152,13 @@ const ProductionList: React.FC<any> = observer(({}) => {
     },
     {
       title: '创建时间',
-      render: (text, record, index) => <TimeColumn time={record?.updateDate} />,
+      render: (text, record, index) => {
+        return (
+          <>
+            <TimeColumn time={record?.updateDate} />
+          </>
+        )
+      },
     },
     {
       title: '操作',
