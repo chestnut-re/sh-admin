@@ -106,7 +106,7 @@ const AEMessageDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClo
               <Radio.Group defaultValue={0} onChange={(e) => setMessageType(e.target.value)}>
                 <Radio value={0}>站内信</Radio>
                 <Radio value={2}>APP推送</Radio>
-                <Radio value={1}>短信</Radio>
+                {/* <Radio value={1}>短信</Radio> */}
               </Radio.Group>
             </Form.Item>
 
@@ -144,7 +144,7 @@ const AEMessageDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClo
           </Form>
         </Modal>
       ) : (
-        <Modal title="发布消息" visible={show} footer={null} onOk={_handleUpdate} onCancel={_formClose} okText="推送">
+        <Modal title="查看消息" visible={show} footer={null} onCancel={_formClose}>
           <Form
             name="basic"
             labelCol={{ span: 6 }}
@@ -156,24 +156,24 @@ const AEMessageDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClo
             form={form}
           >
             <Form.Item label="推送用户" name="pushUser">
-              <Select>
+              <Select disabled>
                 <Option value={0}>全部</Option>
                 <Option value={1}>B端用户</Option>
                 <Option value={2}>C端用户</Option>
               </Select>
             </Form.Item>
             <Form.Item label="消息类型" name="messageType">
-              <Radio.Group defaultValue={0} onChange={(e) => setMessageType(e.target.value)}>
+              <Radio.Group disabled>
                 <Radio value={0}>站内信</Radio>
                 <Radio value={2}>APP推送</Radio>
-                <Radio value={1}>短信</Radio>
+                {/* <Radio value={1}>短信</Radio> */}
               </Radio.Group>
             </Form.Item>
 
             {messageType === 2 ? (
               <>
                 <Form.Item label="推送链接" name="pushLink">
-                  <Input />
+                  <Input disabled />
                 </Form.Item>
               </>
             ) : (
@@ -182,14 +182,14 @@ const AEMessageDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClo
             {messageType !== 1 ? (
               <>
                 <Form.Item label="推送标题" name="pushTitle">
-                  <Input />
+                  <Input disabled />
                 </Form.Item>
               </>
             ) : (
               <></>
             )}
             <Form.Item label="推送内容" name="pushContent">
-              <TextArea rows={4} />
+              <TextArea disabled rows={4} />
             </Form.Item>
             {/* {messageType === 2 ? (
           <div>
