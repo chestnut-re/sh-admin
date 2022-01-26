@@ -1,9 +1,9 @@
 /*
  * @Description:
- * @LastEditTime: 2022-01-12 15:55:14
+ * @LastEditTime: 2022-01-26 14:42:22
  */
 import ChannelService from '@/service/ChannelService'
-import { cityDispose } from '@/utils/tree'
+import { cityDispose,regionsCodeArray } from '@/utils/tree'
 import { Cascader } from 'antd'
 import React, { useEffect, useState } from 'react'
 
@@ -12,6 +12,7 @@ export type Mode = 'order' | 'other'
 interface Props {
   defaultValue?: Array<any>
   channelId: any
+  perlValue?:any
   mode: Mode
   onChange?: (value: string) => void
 }
@@ -19,7 +20,7 @@ interface Props {
 /**
  * 城市选择
  */
-const AreaSelect: React.FC<Props> = ({ defaultValue, onChange, mode, channelId }) => {
+const AreaSelect: React.FC<Props> = ({ defaultValue,perlValue, onChange, mode, channelId }) => {
   const [area, setArea] = useState<Array<any>>([])
   const [regions, setRegions] = useState('')
   const [value, setValue] = useState<Array<any>>([])
@@ -29,6 +30,7 @@ const AreaSelect: React.FC<Props> = ({ defaultValue, onChange, mode, channelId }
       getChannelInfo()
     }
   }, [channelId])
+
   useEffect(() => {
     setValue(JSON.parse(JSON.stringify(defaultValue ?? [])))
   }, [defaultValue])
@@ -69,6 +71,10 @@ const AreaSelect: React.FC<Props> = ({ defaultValue, onChange, mode, channelId }
   const getProvinceCity = async () => {
     ChannelService.getProvinceCity({ adcodes: regions }).then((res) => {
       setArea(cityDispose(res?.data, 'areas'))
+      if(!!perlValue){
+        console.log(regionsCodeArray(perlValue,res?.data))
+        setValue(regionsCodeArray(perlValue,res?.data))
+      }
     })
   }
   // const casOnChange = (data: any[]) => {
