@@ -144,8 +144,9 @@ const TravelInfo: React.FC = () => {
                                     <Row>
                                       <Col span={11} className="travelGoods">
                                         景点：{e.travelGoods.scenicSpot.scenicSpotName}\限
-                                        {e.travelGoods.scenicSpot.visitingTime}分钟\附加项目：
-                                        {JSON.stringify(e.travelGoods.scenicSpot.additionItem)}
+                                        {e.travelGoods.scenicSpot.visitingTime}分钟
+                                        {/* \附加项目：
+                                        {JSON.stringify(e.travelGoods.scenicSpot.additionItem)} */}
                                       </Col>
                                       <Col span={8} className="remark">
                                         {e.travelGoods.scenicSpot.remark}
