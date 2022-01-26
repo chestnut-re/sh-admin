@@ -1,6 +1,6 @@
 /*
  * @Description: 用户详情
- * @LastEditTime: 2021-12-29 11:12:38
+ * @LastEditTime: 2022-01-26 18:57:59
  */
 
 import { usersAddUser } from '@/service/user'
@@ -42,29 +42,29 @@ const AEBannerDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClos
 
   /**提交数据 */
   const _handleUpdate = async () => {
-    form
-      .validateFields()
-      .then((formData) => {
-        if (mode === 'add') {
+    if (mode === 'add') {
+      form
+        .validateFields()
+        .then((formData) => {
           // create
           usersAddUser({ ...formData }).then((res) => {
             if (res.code === HttpCode.success) {
               onSuccess()
             }
           })
-        } else {
-          onSuccess()
-          //edit
-          // BannerService.edit({ ...formData }).then((res) => {
-          //   if (res.code === HttpCode.success) {
-          //     onSuccess()
-          //   }
-          // })
-        }
-      })
-      .catch((e) => {
-        console.error(e)
-      })
+        })
+        .catch((e) => {
+          console.error(e)
+        })
+    } else {
+      onSuccess()
+      //edit
+      // BannerService.edit({ ...formData }).then((res) => {
+      //   if (res.code === HttpCode.success) {
+      //     onSuccess()
+      //   }
+      // })
+    }
   }
 
   const _formClose = () => {
@@ -79,7 +79,7 @@ const AEBannerDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClos
       visible={show}
       onCancel={_formClose}
       footer={[
-        <Button key="ok"  type="primary"  onClick={_handleUpdate}>
+        <Button key="ok" type="primary" onClick={_handleUpdate}>
           确定
         </Button>,
       ]}

@@ -221,7 +221,19 @@ export default [
                       componentPath: '/channel/channel-management/authority-management',
                       path: '/channel/channel-management/authority-management',
                       visible: false,
+                      children: [
+                        {
+                          name: '编辑渠道',
+                          id: md5('/channel/channel-management/authority-management/edit'),
+                          type: 'menu',
+                          icon: '',
+                          componentPath: '/channel/channel-management/authority-management/edit',
+                          path: '/channel/channel-management/authority-management/edit',
+                          visible: true,
+                        },
+                      ],
                     },
+
                     {
                       name: '渠道分佣方案',
                       id: md5('/channel/channel-management/commission-scheme'),
@@ -420,7 +432,7 @@ export default [
                   componentPath: '/contacts/chat',
                   path: '/contacts/chat',
                   visible: false,
-                }
+                },
               ],
             },
             // {
