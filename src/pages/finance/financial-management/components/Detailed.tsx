@@ -3,6 +3,8 @@ import { Form, Button, Row, Col, Select, Space, Table, DatePicker, Radio } from 
 import './index.less'
 import { FinancialManagementService } from '@/service/FinanceAccountService'
 import dayjs from 'dayjs'
+import { getCookie } from '@/utils/cookies'
+import { UploadOutlined } from '@ant-design/icons'
 
 /**财务管理-财务明细 */
 const DetailedPage: React.FC = () => {
@@ -108,15 +110,15 @@ const DetailedPage: React.FC = () => {
   const columnsFY = [
     {
       title: '订单编号',
-      dataIndex: 'orderNo',
+      dataIndex: 'subOrderNo',
     },
     {
       title: '订单类型',
-      dataIndex: 'mobile',
+      dataIndex: 'typeNm',
     },
     {
       title: '收支金额(¥)',
-      dataIndex: 'roleName',
+      dataIndex: 'amount',
     },
     {
       title: '收支时间',
@@ -192,6 +194,28 @@ const DetailedPage: React.FC = () => {
   //   setCheckTime('0')
   // }, [form.resetFields()])
 
+  const _export = () => {
+    form.validateFields().then((query) => {
+      const beginTime = query.time ? dayjs(query.time[0]).format('YYYY-MM-DD HH:mm:ss') : ''
+      const endTime = query.time ? dayjs(query.time[1]).format('YYYY-MM-DD HH:mm:ss') : ''
+      let url = ''
+      if (beginTime !== '' && endTime !== '') {
+        url =
+          '/api/wallet/a/fianceDetailExport?' +
+          getCookie('auth') +
+          '&detailType=' +
+          detail +
+          '&startDate=' +
+          beginTime +
+          '&endDate=' +
+          endTime
+      } else {
+        url = '/api/wallet/a/fianceDetailExport?' + getCookie('auth') + '&detailType=' + detail + '&days=' + checkTime
+      }
+      window.open(url)
+    })
+  }
+
   const onFinish = (values: any) => {
     console.log('Success:', values)
     loadData(pageIndex)
@@ -251,15 +275,25 @@ const DetailedPage: React.FC = () => {
                 </Select>
               </Form.Item>
             </Col>
-            <Form.Item wrapperCol={{ offset: 1, span: 12 }}>
-              <Space>
-                <Button htmlType="submit">查询</Button>
-                <Button htmlType="button" onClick={_reset}>
-                  重置
-                </Button>
-                {/* <Button htmlType="button">导出</Button> */}
-              </Space>
-            </Form.Item>
+            <Col span={4}>
+              <Form.Item>
+                <Space>
+                  <Button htmlType="submit">查询</Button>
+                  <Button htmlType="button" onClick={_reset}>
+                    重置
+                  </Button>
+                </Space>
+              </Form.Item>
+            </Col>
+            <Col span={4} style={{ textAlign: 'right' }}>
+              <Form.Item>
+                <Space>
+                  <Button type="primary" icon={<UploadOutlined />} htmlType="button" onClick={_export}>
+                    导出
+                  </Button>
+                </Space>
+              </Form.Item>
+            </Col>
           </Row>
         </Form>
       </div>
