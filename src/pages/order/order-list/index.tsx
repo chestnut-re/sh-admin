@@ -8,6 +8,7 @@ import { OrderService } from '@/service/OrderService'
 import ChannelService from '@/service/ChannelService'
 import { HttpCode } from '@/constants/HttpCode'
 import dayjs from 'dayjs'
+import StateStyle from '@/components/state'
 /**
  * 订单列表
  */
@@ -42,6 +43,8 @@ const OrderListPage: React.FC = () => {
       const payBeginTime = query.time ? dayjs(query.time[0]).format('YYYY-MM-DD HH:mm:ss') : ''
       const payEndTime = query.time ? dayjs(query.time[1]).format('YYYY-MM-DD HH:mm:ss') : ''
       OrderService.list({
+        current: pageIndex,
+        size: pageSize,
         payBeginTime,
         payEndTime,
       }).then((res) => {
@@ -148,8 +151,39 @@ const OrderListPage: React.FC = () => {
       dataIndex: 'orderTypeVal',
     },
     {
-      title: '订单/售后状态',
+      title: '订单状态',
       dataIndex: 'stateVal',
+      render: (text, record) => {
+        if (record?.stateVal == '待付款') {
+          return (
+            <>
+              <StateStyle color="yellow" />
+              {record?.stateVal}
+            </>
+          )
+        } else if (record?.stateVal == '待核销') {
+          return (
+            <>
+              <StateStyle color="orange" />
+              {record?.stateVal}
+            </>
+          )
+        } else if (record?.stateVal == '已完成') {
+          return (
+            <>
+              <StateStyle color="green" />
+              {record?.stateVal}
+            </>
+          )
+        } else if (record?.stateVal == '已失效') {
+          return (
+            <>
+              <StateStyle color="red" />
+              {record?.stateVal}
+            </>
+          )
+        }
+      },
     },
     {
       title: '操作',
@@ -223,46 +257,6 @@ const OrderListPage: React.FC = () => {
           form={form}
         >
           <Row gutter={[0, 0]}>
-            {/* <Col span={6}>
-              <Select value={selData} style={{ width: 120 }} onChange={(value) => setSelData(value)}>
-                {selectData?.map((item) => {
-                  return (
-                    <Option value={item.value} key={item.key}>
-                      {item.value}
-                    </Option>
-                  )
-                })}
-              </Select>
-              {selData === '渠道名称' ? (
-                <Select value={selData} style={{ width: 120 }} onChange={(value) => setSelData(value)}>
-                  {selectData?.map((item) => {
-                    return (
-                      <Option value={item.value} key={item.key}>
-                        {item.value}
-                      </Option>
-                    )
-                  })}
-                </Select>
-              ) : (
-                <Input style={{ width: 120 }} />
-              )}
-            </Col> */}
-            {/* <Col span={2} className="table-from-label">
-              渠道名称
-            </Col>
-            <Col span={4}>
-              <Form.Item name="channelId">
-                <Select value={channelData} style={{ width: 120 }}>
-                  {channelData?.map((item: any) => {
-                    return (
-                      <Option value={item.id} key={item.id}>
-                        {item.name}
-                      </Option>
-                    )
-                  })}
-                </Select>
-              </Form.Item>
-            </Col> */}
             <Col span={2}>
               <Form.Item name="orderNoLike">
                 <Input placeholder="商品名称/订单编号" />

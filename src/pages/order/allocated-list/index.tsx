@@ -7,6 +7,7 @@ import { AllocatedOrderService } from '@/service/OrderService'
 import ChannelService from '@/service/ChannelService'
 import { HttpCode } from '@/constants/HttpCode'
 import dayjs from 'dayjs'
+import StateStyle from '@/components/state'
 /**
  * 待分配列表
  */
@@ -121,8 +122,39 @@ const AllocatedListPage: React.FC = () => {
       dataIndex: 'orderTypeVal',
     },
     {
-      title: '订单/售后状态',
+      title: '订单状态',
       dataIndex: 'stateVal',
+      render: (text, record) => {
+        if (record?.stateVal == '待付款') {
+          return (
+            <>
+              <StateStyle color="yellow" />
+              {record?.stateVal}
+            </>
+          )
+        } else if (record?.stateVal == '待核销') {
+          return (
+            <>
+              <StateStyle color="orange" />
+              {record?.stateVal}
+            </>
+          )
+        } else if (record?.stateVal == '已完成') {
+          return (
+            <>
+              <StateStyle color="green" />
+              {record?.stateVal}
+            </>
+          )
+        } else if (record?.stateVal == '已失效') {
+          return (
+            <>
+              <StateStyle color="red" />
+              {record?.stateVal}
+            </>
+          )
+        }
+      },
     },
     {
       title: '操作',
