@@ -1,6 +1,6 @@
 /*
  * @Description: 添加分佣方案
- * @LastEditTime: 2022-01-26 11:43:08
+ * @LastEditTime: 2022-01-26 16:39:29
  */
 
 import { Form, Input, Modal, Cascader, message, Row, Col, InputNumber, Button, Tooltip } from 'antd'
@@ -8,6 +8,7 @@ import React, { FC, useEffect, useState } from 'react'
 import { analysisNameDuo } from '@/utils/tree'
 import ChannelService from '@/service/ChannelService'
 import { formateTime } from '@/utils/timeUtils'
+import './index.less'
 // export type DialogMode = 'add' | 'edit'
 interface Props {
   data: any
@@ -67,7 +68,8 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
               // if (res['level'] == '2') {
               //   mapList = array.slice(0, index + 1) ?? []
               // } else {
-                const mapList = array.slice(0, index) ?? []
+              res.teamBonus = resData?.teamBonus
+              const mapList = array.slice(0, index) ?? []
               // }
               res.saleScalePlan = mapList.filter((mRes, Ci) => {
                 if (mRes.saleAuth == 1) {
@@ -82,7 +84,7 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
             //
             const isList = getInit(dataList, resData?.presetBonus, resData?.isGroupServiceFee)
             form.setFieldsValue({
-              teamBonus: resData?.presetBonus??0,
+              teamBonus: resData?.presetBonus ?? 0,
             })
             // console.log(dataList,'dataListdataListdataListdataListdataList')
             // setChannelDistAuth(isList)
@@ -120,7 +122,7 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
           channelPlanList: resultData?.channelPlanList,
           level: structure[0].level,
           planName: resultData?.planName,
-          teamBonus: (resultData?.teamBonus),
+          teamBonus: resultData?.teamBonus,
           state: resultData?.state,
           createTime: formateTime(resultData?.createTime),
           createUserName: resultData?.createUserName,
@@ -223,8 +225,9 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
   return (
     <Modal
       title={type[mode]}
+     
       visible={show}
-      width={700}
+      width={1000}
       // onOk={_handleUpdate}
       onCancel={_formClose}
       footer={
@@ -246,15 +249,14 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
     >
       <Form
         name="basic"
-        labelCol={{ span: 6 }}
-        wrapperCol={{ span: 16 }}
+        className="AddCommissionSchemeDialog__root"
         onFinish={onFinish}
         onFinishFailed={onFinish}
         autoComplete="off"
         form={form}
       >
         {level == 1 || mode == 'add' ? (
-          <Form.Item label="所属渠道" name="structureId" rules={[{ required: true, message: '请输入' }]}>
+          <Form.Item label="所属渠道"        labelCol={{ span: 2 }} name="structureId" rules={[{ required: true, message: '请输入' }]}>
             {mode == 'add' ? (
               <Cascader
                 options={structure}
@@ -271,83 +273,38 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
           ''
         )}
 
-        <Form.Item label="方案名称" name="planName" rules={[{ required: true, message: '请输入' }]}>
+        <Form.Item label="方案名称"       labelCol={{ span: 2 }} name="planName" rules={[{ required: true, message: '请输入' }]}>
           <Input disabled={mode == 'see'} />
         </Form.Item>
         <Form.Item label="团建奖金" name="teamBonus">
           <InputNumber disabled max={100} min={0} addonAfter="%" />
         </Form.Item>
+
+        <div className="rowList">
+          <div className="row-l1"></div>
+          <div className="row-l2">直销渠道</div>
+          <div className="row-l3" style={{justifyContent:'center',background:'#FFFFFF'}}>提成分佣</div>
+          <div className="row-l4">发团服务费</div>
+          <div className="row-l5">合计分佣</div>
+        </div>
+
         {(channelDistAuth ?? []).map((res: any, index, array) => {
           return (
             <div key={index}>
               <>
-                <Form.Item label="直销渠道">{res?.level}级渠道</Form.Item>
-                <Row key={index} gutter={23}>
-                  {res.directAuth == 1 ||res.directScale ? (
-                    <Col span={12} style={{ textAlign: 'right' }}>
-                      <Form.Item
-                        labelCol={{ offset: 4 }}
-                        label="直销分佣比例"
-                        rules={[
-                          {
-                            pattern: /^([1-9]\d|\d)$/,
-                            message: '请输入0-99的整数!',
-                          },
-                        ]}
-                        name={['channelPlanList', index, 'directScale']}
-                      >
-                        <InputNumber
-                          onChange={changeInput}
-                          disabled={mode == 'see' || mode == 'edit'}
-                          max={100}
-                          min={0}
-                          addonAfter="%"
-                        />
-                      </Form.Item>
-                    </Col>
-                  ) : (
-                    ''
-                  )}
-
-                  {res.isGroupServiceFee == 1||res.teamPrice ? (
-                    <Col span={12} style={{ textAlign: 'right' }}>
-                      <Form.Item
-                        labelCol={{ offset: 4 }}
-                        label="发团服务费"
-                        rules={[
-                          {
-                            pattern: /^([1-9]\d|\d)$/,
-                            message: '请输入0-99的整数!',
-                          },
-                        ]}
-                        name={['channelPlanList', index, 'teamPrice']}
-                      >
-                        <InputNumber
-                          onChange={changeInput}
-                          disabled={mode == 'see' || mode == 'edit'}
-                          max={100}
-                          min={0}
-                          addonAfter="%"
-                        />
-                      </Form.Item>
-                    </Col>
-                  ) : (
-                    ''
-                  )}
-
-                  {(res.saleScalePlan ?? []).map((mRes, Ci) => {
-                    return (
-                      <Col span={12} style={{ textAlign: 'right' }} key={Ci}>
+                <div>
+                  <div style={{ display: 'flex' }} className="rowList">
+                    <div className="row-l1">{res?.level}级渠道</div>
+                    <div className="row-l2">
+                      {res.directAuth == 1 || res.directScale ? (
                         <Form.Item
-                          labelCol={{ offset: 4 }}
-                          label={mRes.level + '级渠道分销分佣比例'}
                           rules={[
                             {
                               pattern: /^([1-9]\d|\d)$/,
                               message: '请输入0-99的整数!',
                             },
                           ]}
-                          name={['channelPlanList', index, 'saleScalePlan', Ci, 'saleScale']}
+                          name={['channelPlanList', index, 'directScale']}
                         >
                           <InputNumber
                             onChange={changeInput}
@@ -357,33 +314,80 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
                             addonAfter="%"
                           />
                         </Form.Item>
-                      </Col>
-                    )
-                  })}
-                  <Col span={12} style={{ textAlign: 'right' }}>
-                    `{' '}
-                    <Form.Item
-                      labelCol={{ offset: 4 }}
-                      label={'合计'}
-                      rules={[
-                        {
-                          pattern: /^100$|^(\d|[1-9]\d)$/,
-                          message: '每级直销渠道的团建奖金，分佣比例和发团服务费不可超过100%',
-                        },
-                      ]}
-                      name={['channelPlanList', index, 'total']}
-                    >
-                      <InputNumber disabled max={100} min={0} addonAfter="%" />
-                    </Form.Item>
-                    <Tooltip
-                      placement="right"
-                      title={
-                        '团建奖金以商品分佣所得额为基数，如订单10000，商品分佣10%，团建奖金配置了1%，最终所得团建奖金为10000*10%*1%'
-                      }
-                    ></Tooltip>
-                    `
-                  </Col>
-                </Row>
+                      ) : (
+                        ''
+                      )}
+                    </div>
+                    <div className="row-l3">
+                      {(res.saleScalePlan ?? []).map((mRes, Ci) => {
+                        return (
+                          <div className="row-l3-li" key={Ci}>
+                            <Form.Item
+                              label={mRes.level + '级提成'}
+                              rules={[
+                                {
+                                  pattern: /^([1-9]\d|\d)$/,
+                                  message: '请输入0-99的整数!',
+                                },
+                              ]}
+                              name={['channelPlanList', index, 'saleScalePlan', Ci, 'saleScale']}
+                            >
+                              <InputNumber
+                                onChange={changeInput}
+                                disabled={mode == 'see' || mode == 'edit'}
+                                max={100}
+                                min={0}
+                                addonAfter="%"
+                              />
+                            </Form.Item>
+                          </div>
+                        )
+                      })}
+                    </div>
+                    <div className="row-l4">
+                      {res.isGroupServiceFee == 1 || res.teamPrice ? (
+                        <Form.Item
+                          rules={[
+                            {
+                              pattern: /^([1-9]\d|\d)$/,
+                              message: '请输入0-99的整数!',
+                            },
+                          ]}
+                          name={['channelPlanList', index, 'teamPrice']}
+                        >
+                          <InputNumber
+                            onChange={changeInput}
+                            disabled={mode == 'see' || mode == 'edit'}
+                            max={100}
+                            min={0}
+                            addonAfter="%"
+                          />
+                        </Form.Item>
+                      ) : (
+                        ''
+                      )}
+                    </div>
+                    <div className="row-l5">
+                      <Form.Item
+                        rules={[
+                          {
+                            pattern: /^100$|^(\d|[1-9]\d)$/,
+                            message: '每级直销渠道的团建奖金，分佣比例和发团服务费不可超过100%',
+                          },
+                        ]}
+                        name={['channelPlanList', index, 'total']}
+                      >
+                        <InputNumber disabled max={100} min={0} addonAfter="%" />
+                      </Form.Item>
+                      <Tooltip
+                        placement="right"
+                        title={
+                          '团建奖金以商品分佣所得额为基数，如订单10000，商品分佣10%，团建奖金配置了1%，最终所得团建奖金为10000*10%*1%'
+                        }
+                      ></Tooltip>
+                    </div>
+                  </div>
+                </div>
               </>
             </div>
           )
@@ -391,7 +395,7 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
 
         <Form.Item
           label="level"
-          name="level"
+          name="level"       labelCol={{ span: 2 }}
           rules={[{ required: true, message: '请输入' }]}
           style={{ visibility: 'hidden', height: 0 }}
         >
@@ -401,10 +405,10 @@ const AddCommissionSchemeDialog: FC<Props> = ({ data, mode, structure, show = fa
           <></>
         ) : (
           <>
-            <Form.Item label="创建人" name="createUserName">
+            <Form.Item label="创建人"       labelCol={{ span: 2 }} name="createUserName">
               <Input disabled />
             </Form.Item>
-            <Form.Item label="创建时间" name="createTime">
+            <Form.Item label="创建时间"       labelCol={{ span: 2 }} name="createTime">
               <Input disabled />
             </Form.Item>
           </>
