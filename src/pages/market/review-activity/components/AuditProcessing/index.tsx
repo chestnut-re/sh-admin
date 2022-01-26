@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description:查看
- * @LastEditTime: 2022-01-13 13:22:50
+ * @LastEditTime: 2022-01-26 10:56:11
  */
 import React, { useState, FC, useEffect } from 'react'
 import { Drawer, Button, Input, Radio, Descriptions, Row, Col, Form, message } from 'antd'
@@ -99,7 +99,7 @@ const AuditProcessing: FC<Props> = ({ data, showType, onSuccess }) => {
           <Form.Item
             label="审核结果"
             name="auditResult"
-            rules={[{ required: true, message: 'Please input your username!' }]}
+            rules={[{ required: true, message: '请选择审核结果!' }]}
           >
             <Radio.Group onChange={onChangeRadio}>
               {/* <Radio.Button value="0">待审核</Radio.Button> */}

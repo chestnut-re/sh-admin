@@ -144,7 +144,7 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
         >
           <Row gutter={[10, 0]}>
             <Col span={18} className="table-from-label">
-              <Form.Item label="主题名称" name="activityTitle" rules={[{ required: false, message: '请输入活动标题' }]}>
+              <Form.Item label="主题名称" name="activityTitle" rules={[{ required: false, message: '请输入主题名称' }]}>
                 <Input />
               </Form.Item>
               <Form.Item label="副标题" name="activitySubtitle" rules={[{ required: false, message: '请输入副标题' }]}>

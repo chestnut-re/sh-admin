@@ -1,6 +1,6 @@
 /*
  * @Description:退款理由
- * @LastEditTime: 2022-01-07 11:50:22
+ * @LastEditTime: 2022-01-26 10:57:36
  */
 import { ConfigRefundService } from '@/service/OrderService'
 import { Form, Input, Modal} from 'antd'
@@ -68,7 +68,7 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
           autoComplete="off"
           form={form}
         >
-          <Form.Item label="退款理由" name="dictValue" rules={[{ required: false, message: '请输入活动标题' }]}>
+          <Form.Item label="退款理由" name="dictValue" rules={[{ required: false, message: '请选择退款理由' }]}>
             <Input />
           </Form.Item>
         </Form>

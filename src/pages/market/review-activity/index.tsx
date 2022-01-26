@@ -1,6 +1,6 @@
 /*
  * @Description: 活动审核
- * @LastEditTime: 2022-01-21 15:05:32
+ * @LastEditTime: 2022-01-26 10:50:43
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Radio } from 'antd'
@@ -51,7 +51,10 @@ const ReviewActivity: React.FC = () => {
       dataIndex: 'createTime',
       render: (text: any, record) => `${dayjs(record?.createTime).format('YYYY-MM-DD HH:mm:ss')}`,
     },
-
+    {
+      title: '审核内容',
+      render: (text: any, record) => `${record?.type=='1'?'商品':'清单'}`,
+    },
     {
       title: '状态',
       dataIndex: 'state',
