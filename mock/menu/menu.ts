@@ -412,15 +412,15 @@ export default [
                   componentPath: '/contacts/center',
                   path: '/contacts/center',
                 },
-                // {
-                //   name: '客服聊天',
-                //   id: md5('/contacts/chat'),
-                //   type: 'menu',
-                //   icon: '',
-                //   componentPath: '/contacts/chat',
-                //   path: '/contacts/chat',
-                //   visible: false,
-                // }
+                {
+                  name: '客服聊天',
+                  id: md5('/contacts/chat'),
+                  type: 'menu',
+                  icon: '',
+                  componentPath: '/contacts/chat',
+                  path: '/contacts/chat',
+                  visible: false,
+                }
               ],
             },
             // {
