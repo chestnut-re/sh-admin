@@ -1,18 +1,19 @@
 /*
  * @Description:
- * @LastEditTime: 2022-01-26 14:42:22
+ * @LastEditTime: 2022-01-26 19:17:21
  */
 import ChannelService from '@/service/ChannelService'
-import { cityDispose,regionsCodeArray } from '@/utils/tree'
+import { cityDispose, regionsCodeArray } from '@/utils/tree'
 import { Cascader } from 'antd'
 import React, { useEffect, useState } from 'react'
-
+import { PersonService } from '@/service/PersonService'
 export type Mode = 'order' | 'other'
 
 interface Props {
   defaultValue?: Array<any>
-  channelId: any
-  perlValue?:any
+  channelId?: any
+  perlValue?: any
+  supUser?: any
   mode: Mode
   onChange?: (value: string) => void
 }
@@ -20,7 +21,7 @@ interface Props {
 /**
  * 城市选择
  */
-const AreaSelect: React.FC<Props> = ({ defaultValue,perlValue, onChange, mode, channelId }) => {
+const AreaSelect: React.FC<Props> = ({ defaultValue, perlValue, supUser, onChange, mode, channelId }) => {
   const [area, setArea] = useState<Array<any>>([])
   const [regions, setRegions] = useState('')
   const [value, setValue] = useState<Array<any>>([])
@@ -30,6 +31,20 @@ const AreaSelect: React.FC<Props> = ({ defaultValue,perlValue, onChange, mode, c
       getChannelInfo()
     }
   }, [channelId])
+
+  useEffect(() => {
+    // PersonService.getInfo(supUser)
+    getProvinceCity()
+    if (supUser) {
+      getUserArea()
+    }
+  }, [supUser])
+
+  const getUserArea = () => {
+    ChannelService.getUserArea(supUser).then((res) => {
+      setRegions(res?.data)
+    })
+  }
 
   useEffect(() => {
     setValue(JSON.parse(JSON.stringify(defaultValue ?? [])))
@@ -71,9 +86,9 @@ const AreaSelect: React.FC<Props> = ({ defaultValue,perlValue, onChange, mode, c
   const getProvinceCity = async () => {
     ChannelService.getProvinceCity({ adcodes: regions }).then((res) => {
       setArea(cityDispose(res?.data, 'areas'))
-      if(!!perlValue){
-        console.log(regionsCodeArray(perlValue,res?.data))
-        setValue(regionsCodeArray(perlValue,res?.data))
+      if (!!perlValue) {
+        console.log(regionsCodeArray(perlValue, res?.data))
+        setValue(regionsCodeArray(perlValue, res?.data))
       }
     })
   }

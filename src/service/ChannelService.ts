@@ -1,6 +1,6 @@
 /*
  * @Description:渠道管理
- * @LastEditTime: 2022-01-07 18:07:08
+ * @LastEditTime: 2022-01-26 19:17:59
  */
 import axios from '@/request'
 
@@ -9,6 +9,14 @@ export default class ChannelService {
     return axios.get('/api/market/channel/page', {
       params: data,
     })
+  }
+  
+  static getUserArea(data): Promise<any> {
+    return axios.get('/api/users/admin/getUserArea', {
+      params: {
+        userId:data
+      },
+    } )
   }
   static add(data): Promise<any> {
     return axios.post('/api/market/channel/save', data)

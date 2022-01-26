@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description:
- * @LastEditTime: 2021-12-30 18:10:44
+ * @LastEditTime: 2022-01-26 19:30:32
  */
 
 import React, { useState, useEffect } from 'react'
@@ -72,6 +72,8 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
         id: chanId,
         ...PostData,
       }
+      query.saleSettleDay = Number(PostData.saleSettleDay)
+      query.groupSettleDay = Number(PostData.groupSettleDay)
       ChannelService.edit(query).then((res) => {
         message.success('成功了!')
       })
@@ -197,7 +199,7 @@ const CommissionAuthority: React.FC<Props> = ({ chanId, structure, ranked, chann
                     ]}
                     style={{ marginBottom: '0' }}
                   >
-                    <InputNumber addonAfter="天" />
+                    <InputNumber min={0} addonAfter="天" />
                   </Form.Item>
                 </div>{' '}
                 &nbsp; &nbsp;
