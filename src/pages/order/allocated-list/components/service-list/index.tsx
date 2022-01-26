@@ -37,16 +37,16 @@ const ServiceList: React.FC<Props> = ({ id, setSelectData }) => {
         orderId: id,
         ...query,
       }).then((res) => {
-        setData(res.data.records)
+        setData(res.data?.records ?? [])
         setTotal(res.data.total)
       })
     })
   }
 
   const getChannel = () => {
-    ChannelService.list({ pages: 1, size: 10 }).then((res) => {
+    ChannelService.getStructure().then((res) => {
       if (res.code === HttpCode.success) {
-        setChannelData(res.data?.records ?? [])
+        setChannelData(res.data?.children ?? [])
       }
     })
   }

@@ -19,7 +19,6 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
   const [data, setData] = useState<any>({})
   const [relationList, setRelationList] = useState<any[]>([])
   const [sums, setSums] = useState(0)
-  const [temp, setTemp] = useState<any>([])
   useEffect(() => {
     const arr: any[] = []
     orderData.map((item: any) => {
