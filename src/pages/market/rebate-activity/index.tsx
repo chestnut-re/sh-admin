@@ -1,6 +1,6 @@
 /*
  * @Description:
- * @LastEditTime: 2022-01-26 10:38:44
+ * @LastEditTime: 2022-01-26 11:56:15
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Radio, DatePicker, Modal, message } from 'antd'
@@ -79,6 +79,8 @@ const RebateActivity: React.FC = () => {
     {
       title: '返利方式',
       dataIndex: 'bannerUrl',
+      render: (text, record) =>
+        `${record?.isShareRebate == 1 ? '分享任务，' : ''}${record?.isPullRebate == 1 ? '行动转换' : ''}`,
     },
     {
       title: '创建时间',
@@ -187,52 +189,51 @@ const RebateActivity: React.FC = () => {
   }
 
   const goodsOnSuccess = (rowKeys, rowList) => {
-    
     // if (rowList.length > 0) {
-      const goodsList = rowList.map((res) => {
-        // res.goodsId = res.id
-        return res
+    const goodsList = rowList.map((res) => {
+      // res.goodsId = res.id
+      return res
+    })
+    console.log(goodsList, '---')
+    marketService
+      .rebateAuditApply({ rebateId: selectRecord, rebateName: rebateName, type: 1, goodsList: goodsList })
+      .then((res) => {
+        if (res.code === HttpCode.success) {
+          message.success('关联商品提交成功')
+          //   Modal.confirm({
+          //   title: '提交成功',
+          //   // icon: <ExclamationCircleOutlined />,
+          //   content: '提交完成，',
+          //   okText: '确认',
+          //   cancelText: '取消',
+          // })
+          loadData(pageIndex)
+        }
       })
-      console.log(goodsList, '---')
-      marketService
-        .rebateAuditApply({ rebateId: selectRecord, rebateName: rebateName, type: 1, goodsList: goodsList })
-        .then((res) => {
-          if (res.code === HttpCode.success) {
-            message.success('关联商品提交成功')
-            //   Modal.confirm({
-            //   title: '提交成功',
-            //   // icon: <ExclamationCircleOutlined />,
-            //   content: '提交完成，',
-            //   okText: '确认',
-            //   cancelText: '取消',
-            // })
-            loadData(pageIndex)
-          }
-        })
     // }
     setGoodsShowDialog(false)
     setGoodsRoleList([])
   }
   const activityOnSuccess = (rowKeys, rowList) => {
     // if (rowList.length > 0) {
-      const List = rowList.map((res) => {
-        return res
+    const List = rowList.map((res) => {
+      return res
+    })
+    marketService
+      .rebateAuditApply({ rebateId: selectRecord, rebateName, rebateName, type: 2, paperList: List })
+      .then((res) => {
+        if (res.code === HttpCode.success) {
+          message.success('关联任务清单提交成功')
+          // Modal.confirm({
+          //   title: '提交成功',
+          //   // icon: <ExclamationCircleOutlined />,
+          //   content: '需完成哦诶值任务清单后，才能进入上线审核流程',
+          //   okText: '确认',
+          //   cancelText: '取消',
+          // })
+          loadData(pageIndex)
+        }
       })
-      marketService
-        .rebateAuditApply({ rebateId: selectRecord, rebateName, rebateName, type: 2, paperList: List })
-        .then((res) => {
-          if (res.code === HttpCode.success) {
-            message.success('关联任务清单提交成功')
-            // Modal.confirm({
-            //   title: '提交成功',
-            //   // icon: <ExclamationCircleOutlined />,
-            //   content: '需完成哦诶值任务清单后，才能进入上线审核流程',
-            //   okText: '确认',
-            //   cancelText: '取消',
-            // })
-            loadData(pageIndex)
-          }
-        })
     // }
     setActivityShowDialog(false)
     setActivityRoleList([])
