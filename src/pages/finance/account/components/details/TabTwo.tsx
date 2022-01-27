@@ -88,7 +88,7 @@ const TabTwoPage: React.FC<Props> = ({ data }) => {
                 <RangePicker showTime />
               </Form.Item>
             </Col>
-            <Form.Item wrapperCol={{ offset: 2, span: 0 }}>
+            <Form.Item wrapperCol={{ offset: 2, span: 12 }}>
               <Space>
                 <Button htmlType="submit">查询</Button>
                 <Button htmlType="submit">重置</Button>
