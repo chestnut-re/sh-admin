@@ -23,6 +23,7 @@ const ProductionListWrap: React.FC = () => {
         history.push('/production/draftbox')
       }}
       htmlType="button"
+      style={{marginLeft: '40px'}}
     >
       草稿箱
     </Button>
