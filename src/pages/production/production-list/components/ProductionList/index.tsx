@@ -155,7 +155,7 @@ const ProductionList: React.FC<any> = observer(({}) => {
       render: (text, record, index) => {
         return (
           <>
-            <TimeColumn time={record?.updateDate} />
+            <TimeColumn time={record?.createTime} />
           </>
         )
       },
