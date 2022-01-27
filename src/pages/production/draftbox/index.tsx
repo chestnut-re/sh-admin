@@ -114,9 +114,9 @@ const DraftListPage: React.FC = observer(() => {
             <Col span={6}>
               <InputTemp name="keyword" placeholder="商ID/名称" />
             </Col>
-            <Col span={2} className="table-from-label">
+            {/* <Col span={2} className="table-from-label">
               创建时间
-            </Col>
+            </Col> */}
             <Col span={12}>
               <Form.Item wrapperCol={{ offset: 0, span: 0 }} name="timeRange">
                 <DatePicker.RangePicker showTime={{ format: 'HH:mm' }} format="YYYY-MM-DD HH:mm" />
