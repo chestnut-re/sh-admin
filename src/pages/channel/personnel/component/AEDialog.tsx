@@ -98,8 +98,8 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
         PersonService.getInfo(data?.userId).then((res) => {
           setChannelId(res.data?.channelId)
           const dataValue = res?.data
-          dataValue.supUserId = res?.data?.supUserId ? String(res?.data?.supUserId) : res?.data?.supUserId
-          dataValue.roleId = res?.data?.roleId ? String(res?.data?.roleId) : res?.data?.roleId
+          dataValue.supUserId =  (res?.data?.supUserId).toString()
+          dataValue.roleId = (res?.data?.roleId).toString()
           setAddress(res.data?.address)
 
           setTimeout(() => {
