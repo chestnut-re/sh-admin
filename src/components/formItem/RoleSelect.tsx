@@ -1,5 +1,5 @@
 /*
- * @LastEditTime: 2022-01-26 15:03:32
+ * @LastEditTime: 2022-01-27 18:57:20
  */
 import { PersonService } from '@/service/PersonService'
 import { useSetState } from 'ahooks'
@@ -25,7 +25,7 @@ const RoleSelect: React.FC<Props> = ({ value, onChange, channelId,disabled }) =>
       setRoleName(
         res.data.map((item) => {
           return {
-            value: String(item.id),
+            value: (item.id).toString(),
             label: item.roleName,
           }
         })

@@ -41,7 +41,7 @@ const AEActivityDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onCl
         activityUrl: data?.activityUrl,
         sort:data?.sort,
         activityDetailImg: data?.activityDetailImg,
-        state: String(data?.state),
+        state: (data?.state).toString(),
         activityDate: !!data?.startDate
           ? [dayjsFormat(data?.startDate, 'YYYY-MM-DD HH:mm:ss'), dayjsFormat(data?.endDate, 'YYYY-MM-DD HH:mm:ss')]
           : null,
