@@ -7,7 +7,6 @@ import { cityDispose, lastOneJoin, regionsCodeArray } from '@/utils/tree'
 import { HttpCode } from '@/constants/HttpCode'
 import AreaSelect from '@/components/formItem/AreaSelect'
 
-
 interface Props {
   data: any
   mode: DialogMode
@@ -99,8 +98,8 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
         PersonService.getInfo(data?.userId).then((res) => {
           setChannelId(res.data?.channelId)
           const dataValue = res?.data
-          dataValue.supUserId = String(res?.data?.supUserId)
-          dataValue.roleId = String(res?.data?.roleId)
+          dataValue.supUserId = res?.data?.supUserId ? String(res?.data?.supUserId) : res?.data?.supUserId
+          dataValue.roleId = res?.data?.roleId ? String(res?.data?.roleId) : res?.data?.roleId
           setAddress(res.data?.address)
 
           setTimeout(() => {
@@ -203,7 +202,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
 
         <Form.Item label="责任区域" name="address" rules={[{ required: true, message: '请选择' }]}>
           {/* <AreaSelect  supUser={supUser}  perlValue={addressValue} onChange={_onChangeAddress} /> */}
-          <AreaSelect  channelId={channelId}  perlValue={addressValue} onChange={_onChangeAddress} /> 
+          <AreaSelect channelId={channelId} perlValue={addressValue} onChange={_onChangeAddress} />
         </Form.Item>
 
         <Form.Item name="realName" label="姓名" rules={[{ required: true }]}>

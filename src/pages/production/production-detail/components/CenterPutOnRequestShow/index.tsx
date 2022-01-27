@@ -52,32 +52,34 @@ const CenterPutOnRequestShow: React.FC = () => {
     <div className="CenterPutOnRequestShow__root">
       <h4>5. 上架申请信息</h4>
       {/* <div>{JSON.stringify(data)}</div> */}
-      <div className="info">
-        <div className="one-info">
-          <div className="canal">上架渠道 {data?.length} </div>
-        </div>
-        <div>
-          <Table dataSource={data} bordered>
-            <Column className="table-light-color" title="上架渠道" dataIndex="channelName" key="channelName" />
-            <Column className="table-light-color" title="分佣方案名称" dataIndex="distPlanName" key="distPlanName" />
-            <Column className="table-light-color" title="直销方" dataIndex="directChannelName" key="directScale" />
-            <Column
-              className="table-light-color"
-              title="直销方（分佣）"
-              dataIndex="directDirectScale"
-              key="directScale"
-            />
-            <ColumnGroup className="table-light-color" title="分销分佣">
-              <Column className="table-light-color" title="二级名称" dataIndex="saleScale2" key="firstName" />
-              <Column className="table-light-color" title="三级名称" dataIndex="saleScale3" key="lastName" />
-              <Column className="table-light-color" title="四级名称" dataIndex="saleScale4" key="lastName" />
-              <Column className="table-light-color" title="五级名称" dataIndex="saleScale5" key="lastName" />
-            </ColumnGroup>
-            <Column className="table-light-color" title="发团服务费" dataIndex="teamPrice" key="teamPrice" />
-          </Table>
+      <div className="box">
+        <div className="left">
+          <div className="one-info">
+            <div className="canal">上架渠道 {data?.length} </div>
+          </div>
+          <div>
+            <Table dataSource={data} bordered>
+              <Column className="table-light-color" title="上架渠道" dataIndex="channelName" key="channelName" />
+              <Column className="table-light-color" title="分佣方案名称" dataIndex="distPlanName" key="distPlanName" />
+              <Column className="table-light-color" title="直销方" dataIndex="directChannelName" key="directScale" />
+              <Column
+                className="table-light-color"
+                title="直销方（分佣）"
+                dataIndex="directDirectScale"
+                key="directScale"
+              />
+              <ColumnGroup className="table-light-color" title="分销分佣">
+                <Column className="table-light-color" title="二级名称" dataIndex="saleScale2" key="firstName" />
+                <Column className="table-light-color" title="三级名称" dataIndex="saleScale3" key="lastName" />
+                <Column className="table-light-color" title="四级名称" dataIndex="saleScale4" key="lastName" />
+                <Column className="table-light-color" title="五级名称" dataIndex="saleScale5" key="lastName" />
+              </ColumnGroup>
+              <Column className="table-light-color" title="发团服务费" dataIndex="teamPrice" key="teamPrice" />
+            </Table>
+          </div>
         </div>
 
-        <div>
+        <div className="right">
           {data.map((item, index) => {
             return (
               <div key={index}>
@@ -87,13 +89,13 @@ const CenterPutOnRequestShow: React.FC = () => {
               </div>
             )
           })}
-          <Button
+          {/* <Button
             onClick={() => {
               console.log(data)
             }}
           >
             查看上架审核记录
-          </Button>
+          </Button> */}
         </div>
       </div>
     </div>
