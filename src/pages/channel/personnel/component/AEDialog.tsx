@@ -6,7 +6,6 @@ import { PersonService } from '@/service/PersonService'
 import { cityDispose, lastOneJoin, regionsCodeArray } from '@/utils/tree'
 import { HttpCode } from '@/constants/HttpCode'
 import AreaSelect from '@/components/formItem/AreaSelect'
-import { useSetState } from 'ahooks'
 
 interface Props {
   data: any
@@ -27,7 +26,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
   const [channelId, setChannelId] = useState<string>('')
   const [name, setName] = useState<string>('')
   const [addressValue, setAddress] = useState<string>('')
-  const [supUser, setSupUser] = useState(null)
+
   const [level, setLevel] = useState<number>(0)
   useEffect(() => {
     getChannel()
@@ -102,7 +101,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
           dataValue.supUserId = String(res?.data?.supUserId)
           dataValue.roleId = String(res?.data?.roleId)
           setAddress(res.data?.address)
-
+          
           setTimeout(() => {
             form.setFieldsValue(dataValue)
           }, 0)
@@ -166,10 +165,6 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
       address: e,
     })
   }
-  const getSupUser = (e) => {
-    console.log(e, '---')
-    setSupUser(e)
-  }
   return (
     <Modal title="添加人员" visible={show} onOk={_handleUpdate} onCancel={_formClose} afterClose={_formClose}>
       <Form
@@ -197,12 +192,12 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
           ``
         ) : (
           <Form.Item name="supUserId" label="上级人员" rules={[{ required: false }]}>
-            <Select placeholder="无" onChange={(e) => getSupUser(e)} disabled={mode == 'edit'} options={leader} />
+            <Select placeholder="无" disabled={mode=='edit'} options={leader} />
           </Form.Item>
         )}
 
         <Form.Item label="责任区域" name="address" rules={[{ required: true, message: '请选择' }]}>
-          <AreaSelect  channelId={channelId}  perlValue={addressValue} onChange={_onChangeAddress} />
+          <AreaSelect supUser={supUser} perlValue={addressValue} onChange={_onChangeAddress} />
         </Form.Item>
 
         <Form.Item name="realName" label="姓名" rules={[{ required: true }]}>
@@ -211,14 +206,14 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
         <Form.Item name="wechatNum" label="微信号">
           <Input />
         </Form.Item>
-        <Form.Item name="phone" label="手机号/账号" rules={[{ required: true }]}>
-          <Input disabled={mode == 'edit'} />
+        <Form.Item name="phone"  label="手机号/账号" rules={[{ required: true }]}>
+          <Input  disabled={mode=='edit'} />
         </Form.Item>
         <Form.Item name="subsidy" label="定制补贴">
           <InputNumber placeholder="补贴比例" value={data?.saleSettleDay} addonAfter="%" style={{ width: 160 }} />
         </Form.Item>
         <Form.Item name="accountType" label="人员类型" rules={[{ required: true }]}>
-          <Select allowClear disabled={mode == 'edit'}>
+          <Select allowClear disabled={mode=='edit'}>
             {Object.keys(personType).map((item) => {
               return (
                 <Select.Option key={item} value={Number(item)}>
@@ -229,12 +224,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
           </Select>
         </Form.Item>
         <Form.Item name="roleId" label="角色名称" rules={[{ required: true, message: '请输入角色名称' }]}>
-          <RoleSelect
-            channelId={channelId}
-            disabled={mode == 'edit'}
-            onChange={_changeRoleSelect}
-            value={form.getFieldValue('roleId')}
-          />
+          <RoleSelect channelId={channelId}  disabled={mode=='edit'} onChange={_changeRoleSelect} value={form.getFieldValue('roleId')} />
         </Form.Item>
         {/* <Form.Item name="state"  valuePropName="checked" label="是否启用"  rules={[{ required: true }]}>
           <Switch />
