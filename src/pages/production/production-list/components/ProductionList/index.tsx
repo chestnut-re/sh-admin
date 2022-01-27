@@ -88,7 +88,7 @@ const ProductionList: React.FC<any> = observer(({}) => {
     {
       title: (
         <Tooltip title="创建渠道：该商品由该渠道添加">
-          <span>已创建渠道</span>
+          <span>已上架渠道</span>
         </Tooltip>
       ),
       render: (text, record, index) => {
