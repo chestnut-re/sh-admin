@@ -52,7 +52,7 @@ const OrderListPage: React.FC = () => {
         source: query.source
       }).then((res) => {
         setData(res.data?.records ?? [])
-        setTotal(res.data.total)
+        setTotal(res.data?.total ?? 0)
       })
     })
   }
