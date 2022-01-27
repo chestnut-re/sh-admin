@@ -90,6 +90,7 @@ export const SelectRegisterChannel: FC<any> = ({ name, ...props }) => {
         <Select.Option value={3}>商品分享</Select.Option>
         <Select.Option value={4}>app自然流量</Select.Option>
         <Select.Option value={5}>小程序自然流量</Select.Option>
+        <Select.Option value={6}>B端人员创建</Select.Option>
       </Select>
     </Form.Item>
   )

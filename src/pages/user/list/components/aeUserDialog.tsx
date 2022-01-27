@@ -1,6 +1,6 @@
 /*
  * @Description: 用户详情
- * @LastEditTime: 2022-01-26 18:57:59
+ * @LastEditTime: 2022-01-27 14:36:56
  */
 
 import { usersAddUser } from '@/service/user'
@@ -36,6 +36,7 @@ const AEBannerDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClos
         state: status[data?.state],
         tokenAmount: data?.tokenAmount,
         userName: data?.userName,
+        relationChannel:data?.relationChannel
       })
     }
   }, [show])

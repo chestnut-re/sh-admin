@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 用户列表
- * @LastEditTime: 2022-01-14 18:57:49
+ * @LastEditTime: 2022-01-27 14:33:12
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space } from 'antd'
@@ -36,7 +36,7 @@ const BannerListPage: React.FC = () => {
 
   const loadData = (pageIndex) => {
     const query = {
-      current: pageIndex - 1,
+      current: pageIndex,
       pageSize: pageSize,
       ...form.getFieldsValue(),
     }
