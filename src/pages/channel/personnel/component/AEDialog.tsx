@@ -197,7 +197,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
         )}
 
         <Form.Item label="责任区域" name="address" rules={[{ required: true, message: '请选择' }]}>
-          <AreaSelect supUser={supUser} perlValue={addressValue} onChange={_onChangeAddress} />
+          <AreaSelect channelId={channelId} perlValue={addressValue} onChange={_onChangeAddress} />
         </Form.Item>
 
         <Form.Item name="realName" label="姓名" rules={[{ required: true }]}>
