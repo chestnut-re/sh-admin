@@ -86,6 +86,7 @@ const enumState = {
     },
     {
       title: '操作',
+      fixed: 'right',
       render: (text: any, record: any) => (
         <Space size="middle">
           {record.auditResult == 0 ? (

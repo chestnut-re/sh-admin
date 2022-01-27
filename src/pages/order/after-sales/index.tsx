@@ -113,6 +113,7 @@ const AfterSalesListPage: React.FC = () => {
     },
     {
       title: '操作',
+      fixed: 'right',
       render: (text: any, record: any) => (
         <Space size="middle">
           {record.refundState !== 2 && record.refundState !== 3 && (

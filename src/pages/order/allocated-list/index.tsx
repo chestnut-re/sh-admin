@@ -158,6 +158,7 @@ const AllocatedListPage: React.FC = () => {
     },
     {
       title: '操作',
+      fixed: 'right',
       render: (text: any, record: any) => (
         <Space size="middle">
           <span
