@@ -141,6 +141,7 @@ const RebateActivity: React.FC = () => {
     },
     {
       title: '操作',
+      fixed: 'right',
       render: (text: any, record: any) => (
         <Space size="middle">
           <span className="operation" onClick={() => _editDialog(record)}>

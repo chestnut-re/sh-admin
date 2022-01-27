@@ -42,6 +42,7 @@ const ActivityDetailTable: React.FC<Props> = ({ goodsIdList, onSuccess }) => {
     },
     {
       title: '操作',
+      fixed: 'right',
       className: 'table-light-color',
       render: (text: any, record: any, index) => (
         <Space size="middle">

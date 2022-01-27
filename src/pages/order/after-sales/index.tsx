@@ -113,11 +113,15 @@ const AfterSalesListPage: React.FC = () => {
     },
     {
       title: '操作',
+      fixed: 'right',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <span className="operation" onClick={() => _editDialog(record)}>
-            审核
-          </span>
+          {record.refundState !== 2 && record.refundState !== 3 && (
+            <span className="operation" onClick={() => _editDialog(record)}>
+              审核
+            </span>
+          )}
+
           {/* <Button
             onClick={() => {
               toDetails(record)

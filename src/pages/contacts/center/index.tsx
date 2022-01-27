@@ -139,6 +139,7 @@ const ContactsCenter: React.FC = () => {
     },
     {
       title: '操作',
+      fixed: 'right',
       render: (text, record) => (
         <Space size="middle">
           <span

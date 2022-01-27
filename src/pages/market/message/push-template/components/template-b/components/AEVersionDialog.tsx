@@ -23,7 +23,7 @@ const AEVersionDialog: FC<Props> = ({ data, mode, type, show = false, onSuccess,
   const [form] = Form.useForm()
   const { TextArea } = Input
   const [title, setTitle] = useState('查看')
-  const [contentData, setContentData] = useState({})
+  const [contentData, setContentData] = useState<any>({})
   useEffect(() => {
     if (data?.messageType) {
       getContent()
@@ -38,29 +38,37 @@ const AEVersionDialog: FC<Props> = ({ data, mode, type, show = false, onSuccess,
   useEffect(() => {
     let messageType
     if (data?.messageType == '20') {
-      messageType = `订单创建时`
+      messageType = `订单创建成功`
     } else if (data?.messageType == '21') {
-      messageType = `订单付款后`
+      messageType = `订单付款成功`
     } else if (data?.messageType == '22') {
-      messageType = `订单完成`
+      messageType = `订单核销确认后`
     } else if (data?.messageType == '23') {
-      messageType = `订单退款通知`
+      messageType = `订单退款发起`
     } else if (data?.messageType == '24') {
-      messageType = `提现审核通知`
+      messageType = `退款审核通过`
     } else if (data?.messageType == '25') {
-      messageType = `建团`
+      messageType = `退款审核拒绝`
     } else if (data?.messageType == '26') {
-      messageType = `发团通知`
+      messageType = `提现审核通过`
     } else if (data?.messageType == '27') {
-      messageType = `修改出发时间`
+      messageType = `提现审核拒绝`
     } else if (data?.messageType == '28') {
-      messageType = `行程结束`
+      messageType = `建团通知`
     } else if (data?.messageType == '29') {
-      messageType = `人员变动通知（进团/出团）`
+      messageType = `发团通知`
     } else if (data?.messageType == '210') {
-      messageType = `沟通权限申请通知`
+      messageType = `修改出发时间`
     } else if (data?.messageType == '211') {
-      messageType = `区域库审核通知`
+      messageType = `行程结束`
+    } else if (data?.messageType == '212') {
+      messageType = `驳回申请联系权限通知`
+    } else if (data?.messageType == '213') {
+      messageType = `通过申请联系权限通知`
+    } else if (data?.messageType == '214') {
+      messageType = `待处理联系权限提醒`
+    } else if (data?.messageType == '215') {
+      messageType = `区域库下架/禁用某商品`
     }
     form.setFieldsValue({
       titleType: contentData?.titleType,

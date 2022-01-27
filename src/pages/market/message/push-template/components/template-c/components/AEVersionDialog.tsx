@@ -23,7 +23,7 @@ const AEVersionDialog: FC<Props> = ({ data, mode, type, show = false, onSuccess,
   const [form] = Form.useForm()
   const { TextArea } = Input
   const [title, setTitle] = useState('查看')
-  const [contentData, setContentData] = useState({})
+  const [contentData, setContentData] = useState<any>({})
   useEffect(() => {
     if (data?.messageType) {
       getContent()
@@ -38,19 +38,19 @@ const AEVersionDialog: FC<Props> = ({ data, mode, type, show = false, onSuccess,
   useEffect(() => {
     let messageType
     if (data?.messageType == '10') {
-      messageType = `订单创建时`
+      messageType = `订单创建成功`
     } else if (data?.messageType == '11') {
-      messageType = `订单付款后`
+      messageType = `订单付款成功`
     } else if (data?.messageType == '12') {
-      messageType = `订单完成`
+      messageType = `订单核销确认后`
     } else if (data?.messageType == '13') {
-      messageType = `订单退款成功`
+      messageType = `退款审核通过`
     } else if (data?.messageType == '14') {
-      messageType = `订单退款失败`
+      messageType = `退款审核拒绝`
     } else if (data?.messageType == '15') {
-      messageType = `提现审核成功`
+      messageType = `提现审核通过`
     } else if (data?.messageType == '16') {
-      messageType = `提现审核失败`
+      messageType = `提现审核拒绝`
     } else if (data?.messageType == '17') {
       messageType = `发团通知`
     } else if (data?.messageType == '18') {

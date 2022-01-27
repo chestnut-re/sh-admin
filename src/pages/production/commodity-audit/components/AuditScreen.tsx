@@ -88,6 +88,7 @@ const AuditScreen: React.FC<Props> = ({ type }) => {
     },
     {
       title: '操作',
+      fixed: 'right',
       render: (text: any, record: any) => (
         <Space size="middle">
           {record?.checkState !== 0 && (

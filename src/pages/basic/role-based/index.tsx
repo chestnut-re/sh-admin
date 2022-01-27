@@ -87,6 +87,7 @@ const RolePage: React.FC = () => {
     // },
     {
       title: '操作',
+      fixed: 'right',
       render: (_text: any, record: any) => (
         <Space size="middle">
           {/* <Button >查看</Button> */}

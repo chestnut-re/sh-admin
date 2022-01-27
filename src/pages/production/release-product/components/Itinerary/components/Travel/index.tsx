@@ -39,6 +39,7 @@ const Travel: React.FC<Props> = ({ activeKey, data }) => {
                       <Col span={6}>
                         <Input
                           value={travelDetail.travelTitle}
+                          placeholder='该列输入框内填写信息为前端显示内容，可自定义文案。'
                           onChange={(e) => {
                             travelDetail.travelTitle = e.target.value
                           }}

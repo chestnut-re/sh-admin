@@ -35,8 +35,8 @@ const ProductionList: React.FC<any> = observer(({}) => {
   const loadData = (pageIndex) => {
     const params = form.getFieldsValue()
     ProductionListService.list({ current: pageIndex, size: pageSize, ...params }).then((res) => {
-      setData(res.data.records)
-      setTotal(res.data.total)
+      setData(res.data?.records ?? [])
+      setTotal(res.data?.total ?? 0)
     })
   }
 
@@ -162,6 +162,7 @@ const ProductionList: React.FC<any> = observer(({}) => {
     },
     {
       title: '操作',
+      fixed: 'right',
       render: (text: any, record: any) => (
         <Space size="middle">
           <span

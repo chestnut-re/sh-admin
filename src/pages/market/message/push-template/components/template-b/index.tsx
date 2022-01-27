@@ -35,29 +35,37 @@ const TemplateBPage: React.FC = () => {
       dataIndex: 'messageType',
       render: (text: any, record: any) => {
         if (record?.messageType == '20') {
-          return `订单创建时`
+          return `订单创建成功`
         } else if (record?.messageType == '21') {
-          return `订单付款后`
+          return `订单付款成功`
         } else if (record?.messageType == '22') {
-          return `订单完成`
+          return `订单核销确认后`
         } else if (record?.messageType == '23') {
-          return `订单退款通知`
+          return `订单退款发起`
         } else if (record?.messageType == '24') {
-          return `提现审核通知`
+          return `退款审核通过`
         } else if (record?.messageType == '25') {
-          return `建团`
+          return `退款审核拒绝`
         } else if (record?.messageType == '26') {
-          return `发团通知`
+          return `提现审核通过`
         } else if (record?.messageType == '27') {
-          return `修改出发时间`
+          return `提现审核拒绝`
         } else if (record?.messageType == '28') {
-          return `行程结束`
+          return `建团通知`
         } else if (record?.messageType == '29') {
-          return `人员变动通知（进团/出团）`
+          return `发团通知`
         } else if (record?.messageType == '210') {
-          return `沟通权限申请通知`
+          return `修改出发时间`
         } else if (record?.messageType == '211') {
-          return `区域库审核通知`
+          return `行程结束`
+        } else if (record?.messageType == '212') {
+          return `驳回申请联系权限通知`
+        } else if (record?.messageType == '213') {
+          return `通过申请联系权限通知`
+        } else if (record?.messageType == '214') {
+          return `待处理联系权限提醒`
+        } else if (record?.messageType == '215') {
+          return `区域库下架/禁用某商品`
         }
       },
     },

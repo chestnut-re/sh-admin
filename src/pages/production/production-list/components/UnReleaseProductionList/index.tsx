@@ -96,6 +96,7 @@ const UnReleaseProductionListPage: React.FC<any> = observer(({}) => {
     },
     {
       title: '操作',
+      fixed: 'right',
       render: (text: any, record: any) => (
         <Space size="middle">
           <span

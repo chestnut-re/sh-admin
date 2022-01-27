@@ -89,6 +89,7 @@ const CommissionSchemePage: React.FC = () => {
 
     {
       title: '操作',
+      fixed: 'right',
       render: (_text: any, record: any) => (
         <Space size="middle">
           <AuthEle id={65}>

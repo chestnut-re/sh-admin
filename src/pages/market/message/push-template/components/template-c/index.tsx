@@ -35,19 +35,19 @@ const TemplateCPage: React.FC = () => {
       dataIndex: 'messageType',
       render: (text: any, record: any) => {
         if (record?.messageType == '10') {
-          return `订单创建时`
+          return `订单创建成功`
         } else if (record?.messageType == '11') {
-          return `订单付款后`
+          return `订单付款成功`
         } else if (record?.messageType == '12') {
-          return `订单完成`
+          return `订单核销确认后`
         } else if (record?.messageType == '13') {
-          return `订单退款成功`
+          return `退款审核通过`
         } else if (record?.messageType == '14') {
-          return `订单退款失败`
+          return `退款审核拒绝`
         } else if (record?.messageType == '15') {
-          return `提现审核成功`
+          return `提现审核通过`
         } else if (record?.messageType == '16') {
-          return `提现审核失败 `
+          return `提现审核拒绝 `
         } else if (record?.messageType == '17') {
           return `发团通知`
         } else if (record?.messageType == '18') {
