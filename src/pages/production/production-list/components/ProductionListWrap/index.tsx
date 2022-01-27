@@ -1,6 +1,7 @@
 import { useStore } from '@/store/context'
-import { Tabs } from 'antd'
+import { Button, Tabs } from 'antd'
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import ProductionList from '../ProductionList'
 import ProductionListCenter from '../ProductionListCenter'
 import UnReleaseProductionListPage from '../UnReleaseProductionList'
@@ -9,17 +10,29 @@ import UnReleaseProductionListPage from '../UnReleaseProductionList'
  * 商品管理-商品库
  */
 const ProductionListWrap: React.FC = () => {
+  const history = useHistory()
   const { adminStore } = useStore()
 
   const onChange = (activeKey: string) => {
     console.log(activeKey)
   }
 
+  const operations = (
+    <Button
+      onClick={() => {
+        history.push('/production/draftbox')
+      }}
+      htmlType="button"
+    >
+      草稿箱
+    </Button>
+  )
+
   console.log('adminStore.isSubCenter()', adminStore.isSubCenter())
 
   return (
     <div className="page-root">
-      <Tabs defaultActiveKey="1" onChange={onChange}>
+      <Tabs defaultActiveKey="1" onChange={onChange} tabBarExtraContent={operations}>
         <Tabs.TabPane tab="商品库" key="1">
           {adminStore.isSubCenter() && <ProductionListCenter />}
           {!adminStore.isSubCenter() && <ProductionList />}

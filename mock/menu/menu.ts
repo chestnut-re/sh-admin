@@ -49,6 +49,15 @@ export default [
                   ],
                 },
                 {
+                  name: '草稿箱',
+                  id: md5('/production/draftbox'),
+                  type: 'menu',
+                  icon: '',
+                  componentPath: '/production/draftbox',
+                  path: '/production/draftbox',
+                  visible: true,
+                },
+                {
                   name: '发布商品',
                   id: md5('/production/release-product'),
                   type: 'menu',

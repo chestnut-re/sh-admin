@@ -13,14 +13,15 @@ const ProductionManage: React.FC = () => {
 
   return (
     <div className="page-root">
-      <Tabs defaultActiveKey="1" onChange={onChange}>
+      <ProductionListWrap />
+      {/* <Tabs defaultActiveKey="1" onChange={onChange}>
         <Tabs.TabPane tab="商品库" key="1">
           <ProductionListWrap />
         </Tabs.TabPane>
         <Tabs.TabPane tab="草稿箱" key="2">
           <DraftBoxPage />
         </Tabs.TabPane>
-      </Tabs>
+      </Tabs> */}
     </div>
   )
 }
