@@ -1,6 +1,6 @@
 /*
  * @Description: 活动审核
- * @LastEditTime: 2022-01-26 16:53:14
+ * @LastEditTime: 2022-01-27 15:17:38
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Radio,Select } from 'antd'
@@ -24,7 +24,7 @@ const ReviewActivity: React.FC = () => {
     loadData(pageIndex)
   }, [pageIndex])
 const enumState = {
-  0:'全部',
+  '':'全部',
   1:'商品',
   2:'清单'
 }
@@ -137,7 +137,7 @@ const enumState = {
   return (
     <div className="rebateActivity__root">
       <div>
-        <Form name="basic" initialValues={{ auditResult: undefined, type: '0' }}  onFinish={onFinish} form={form}>
+        <Form name="basic" initialValues={{ auditResult: undefined, type: '' }}  onFinish={onFinish} form={form}>
           <Row gutter={[20, 10]}>
             <Col  className="table-from-label"></Col>
             <Col >
@@ -161,7 +161,7 @@ const enumState = {
               <InputTemp name="idOrName" placeholder="清单ID/清单名称" />
             </Col>
             <Col  className="table-from-label">
-              状态
+              审核内容
             </Col>
             <Col span={2}>
               <Form.Item name="type">
