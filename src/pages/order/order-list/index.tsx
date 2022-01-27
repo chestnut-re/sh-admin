@@ -48,6 +48,8 @@ const OrderListPage: React.FC = () => {
         payBeginTime,
         payEndTime,
         orderNoLike: query.orderNoLike,
+        state: query.state,
+        source: query.source
       }).then((res) => {
         setData(res.data?.records ?? [])
         setTotal(res.data.total)
@@ -267,7 +269,7 @@ const OrderListPage: React.FC = () => {
             <Col span={2} className="table-from-label">
               下单时间
             </Col>
-            <Col span={2}>
+            <Col span={3}>
               <Form.Item name="time">
                 <RangePicker showTime />
               </Form.Item>
@@ -284,7 +286,7 @@ const OrderListPage: React.FC = () => {
             <Col span={2}>
               <OrderRoute name="source" />
             </Col>
-            <Col span={4} className="table-from-label">
+            <Col span={3} className="table-from-label">
               订单状态
             </Col>
             <Col span={2}>
