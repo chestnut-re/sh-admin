@@ -47,6 +47,7 @@ const OrderListPage: React.FC = () => {
         size: pageSize,
         payBeginTime,
         payEndTime,
+        orderNoLike: query.orderNoLike,
       }).then((res) => {
         setData(res.data?.records ?? [])
         setTotal(res.data.total)
