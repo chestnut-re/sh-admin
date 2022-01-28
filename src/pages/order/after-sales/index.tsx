@@ -116,7 +116,7 @@ const AfterSalesListPage: React.FC = () => {
       fixed: 'right',
       render: (text: any, record: any) => (
         <Space size="middle">
-          {record.refundState !== 2 && record.refundState !== 3 && (
+          {record.refundState !== 2 && record.refundState !== 3 && record.refundState !== 5 && (
             <span className="operation" onClick={() => _editDialog(record)}>
               审核
             </span>
