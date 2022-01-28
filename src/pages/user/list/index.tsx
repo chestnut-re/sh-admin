@@ -1,14 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*
  * @Description: 用户列表
- * @LastEditTime: 2022-01-27 14:33:12
+ * @LastEditTime: 2022-01-28 10:56:54
  */
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space } from 'antd'
 import AEUserDialog, { DialogMode } from './components/aeUserDialog'
 import { usersQueryList, userGet } from '@/service/user'
 import { regCode } from '@/utils/enum'
-import { SelectEmployeeStatusTemp, SelectRegisterChannel } from '@/components/filter/formItem'
+
+import { SelectEmployeeStatusTemp, SelectRegisterChannel, InputTemp } from '@/components/filter/formItem'
 import TimeColumn from '@/components/tableColumn/TimeColumn'
 // import { AuthEle } from '@/components/Common/AuthEle'
 const BannerListPage: React.FC = () => {
@@ -148,7 +149,10 @@ const BannerListPage: React.FC = () => {
         </AuthEle> */}
         <Form name="basic" initialValues={{ remember: true }} form={form} onFinish={onFinish}>
           <Row gutter={[10, 0]}>
-            <Col span={2} className="table-from-label">
+            <Col span={3}>
+              <InputTemp name="keyword" placeholder=" 姓名/手机号/微信号/关系归属" />{' '}
+            </Col>
+            <Col span={1} className="table-from-label">
               用户类型
             </Col>
             <Col span={4}>
