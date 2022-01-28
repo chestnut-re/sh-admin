@@ -32,7 +32,8 @@ const TravelModel: React.FC = () => {
         <Radio.Button value={0}>固定时间</Radio.Button>
         <Radio.Button value={1}>约定时间</Radio.Button>
       </Radio.Group>
-      <div>至少出行前48小时，最长不得超过45天</div>
+      {/* <div>至少出行前48小时，最长不得超过45天</div> */}
+      <div>最长不得超过45天</div>
     </div>
   )
 }

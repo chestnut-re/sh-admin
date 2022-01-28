@@ -9,12 +9,11 @@ import './index.less'
 const ReviewDetails: React.FC = () => {
   const history = useHistory<any>()
   const [data, setData] = useState<any>({})
+
   useEffect(() => {
     setData(history.location.state.record)
   }, [history.location.state.record])
-  useEffect(() => {
-    console.log(data)
-  }, [data])
+
   return (
     <div className="review__root">
       <div className="details-header">
@@ -36,7 +35,7 @@ const ReviewDetails: React.FC = () => {
           </div>
           <div>
             <span>提现金额</span>
-            <span>{parseInt(data?.amount).toFixed(2)}</span>
+            <span>{(parseInt(data?.amount) / 1000).toFixed(2)}</span>
           </div>
           {data?.sts == 1 ? (
             <div>
