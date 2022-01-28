@@ -116,7 +116,7 @@ const OrderDetailsPage: React.FC = () => {
       dataIndex: 'originPrice',
       className: 'table-light-color',
       render: (text: any, record: any) => {
-        return (parseInt(record.originPrice) / 1000).toFixed(2)
+        return (parseInt(record.unitPrice) / 1000).toFixed(2)
       },
     },
     {
