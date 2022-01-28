@@ -41,11 +41,11 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
       .then((formData) => {
         console.log(formData, day, type)
         if (mode === 'add') {
-          ProductionCommission.add({ ...formData, saleSettleDay: day, saleSettleType: type }).then((res) => {
-            if (res.code === HttpCode.success) {
-              onSuccess()
-            }
-          })
+          // ProductionCommission.add({ ...formData, saleSettleDay: day, saleSettleType: type }).then((res) => {
+          //   if (res.code === HttpCode.success) {
+          //     onSuccess()
+          //   }
+          // })
         } else {
           ProductionCommission.edit({ ...formData, id: data.id }).then((res) => {
             if (res.code === HttpCode.success) {
