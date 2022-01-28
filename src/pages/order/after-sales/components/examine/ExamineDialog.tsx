@@ -1,6 +1,6 @@
 import { getRolesAll } from '@/service/role'
 import { Form, Input, Modal, Select, Radio, Space, Button, Result } from 'antd'
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useEffect, useRef, useState } from 'react'
 import { HttpCode } from '@/constants/HttpCode'
 import { AllocatedOrderService } from '@/service/OrderService'
 import { getRoles } from '@/service/role'
@@ -19,6 +19,7 @@ const { TextArea } = Input
  * 添加&编辑
  */
 const ExamineDialog: FC<Props> = ({ data, show = false, onSuccess, onClose }) => {
+  const instance = useRef({ isPost: false })
   const [form] = Form.useForm()
   const [checked, setChecked] = useState(false)
   const [checked1, setChecked1] = useState(false)
@@ -37,18 +38,22 @@ const ExamineDialog: FC<Props> = ({ data, show = false, onSuccess, onClose }) =>
     form
       .validateFields()
       .then((formData) => {
+        if (instance.current.isPost) return
+        instance.current.isPost = true
         AllocatedOrderService.examine({
           remark: formData.remark,
           refundId: data?.id,
           orderId: data?.orderId,
           actionType,
         }).then((res) => {
+          instance.current.isPost = false
           if (res.code === HttpCode.success) {
             onSuccess()
           }
         })
       })
       .catch((e) => {
+        instance.current.isPost = false
         console.error(e)
       })
     // return (
