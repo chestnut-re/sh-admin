@@ -167,8 +167,8 @@ export const OrderRoute: FC<any> = ({ name, ...props }) => {
       <Select allowClear {...props}>
         <Select.Option value={''}>全部</Select.Option>
         <Select.Option value={1}>自然获客</Select.Option>
-        <Select.Option value={2}>分享链接</Select.Option>
-        <Select.Option value={3}>分享任务</Select.Option>
+        <Select.Option value={2}>分享任务</Select.Option>
+        <Select.Option value={3}>分享链接</Select.Option>
         <Select.Option value={4}>线下扫码</Select.Option>
       </Select>
     </Form.Item>
