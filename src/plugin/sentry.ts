@@ -16,7 +16,7 @@ Sentry.init({
   // 规定上下文数据结构的深度，默认为 3
   normalizeDepth: 100,
   // 版本信息
-  release: 'sh-travel@1.0.0',
+  release: 'travel-admin@1.0.0',
   // 钩子函数，在每次发送 event 前触发
   beforeSend(event) {
     // 网页应用刷新后设置的变量会消失，所以我选择在 beforeSend 触发时插入用户信息
