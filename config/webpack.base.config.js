@@ -9,9 +9,11 @@ const imageInlineSizeLimit = parseInt(process.env.IMAGE_INLINE_SIZE_LIMIT || '10
 
 module.exports = function (webpackEnv) {
   // const isEnvDevelopment = process.env.NODE_ENV === 'development'
-  const isEnvProduction = process.env.NODE_ENV === 'production'
+  const isEnvProduction = process.env.NODE_ENV.includes('production')
+  console.log('process.env.NODE_ENV', process.env.NODE_ENV)
 
   return {
+    mode: isEnvProduction ? 'production' : 'development',
     target: 'web',
     resolve: {
       extensions: ['.ts', '.tsx', '.js'],
@@ -157,7 +159,7 @@ module.exports = function (webpackEnv) {
             from: path.join(__dirname, '../public'),
             to: './',
             filter: async (resourcePath) => {
-              console.log(resourcePath)
+              // console.log(resourcePath)
               const isIndexHtml = resourcePath.endsWith('/public/index.html')
               if (isIndexHtml) {
                 return false

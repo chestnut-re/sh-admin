@@ -14,7 +14,7 @@ import './plugin/sentry'
 import '../mock'
 
 const env = process.env.NODE_ENV
-console.log(env)
+console.log('NODE_ENV', env)
 
 const App = () => {
   useEffect(() => {

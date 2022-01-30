@@ -8,13 +8,13 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:dev": "NODE_ENV=development webpack serve --open --config ./config/webpack.dev.config.js --mode development --hot",
-    "start:test": "NODE_ENV=development webpack serve --open --config ./config/webpack.test.config.js --mode development --hot",
-    "start:prod": "NODE_ENV=development webpack serve --open --config ./config/webpack.prod.config.js --mode development --hot",
-    "start:mock": "NODE_ENV=development webpack serve --open --config ./config/webpack.dev.config.js --mode development --hot",
-    "build": "NODE_ENV=production  webpack --config ./config/webpack.prod.config.js --mode production",
-    "buildtest": "NODE_ENV=productiontest  webpack --config ./config/webpack.prod.config.js --mode production",
-    "analyze": "NODE_ENV=production  webpack --config ./config/webpack.analyze.config.js --mode production"
+    "start:dev": "cross-env NODE_ENV=development webpack serve --open --config ./config/webpack.dev.config.js --hot",
+    "start:test": "cross-env NODE_ENV=development webpack serve --open --config ./config/webpack.test.config.js --hot",
+    "start:prod": "cross-env NODE_ENV=development webpack serve --open --config ./config/webpack.devprod.config.js --hot",
+    "start:mock": "cross-env NODE_ENV=development webpack serve --open --config ./config/webpack.dev.config.js --hot",
+    "build": "cross-env NODE_ENV=production  webpack --config ./config/webpack.prod.config.js",
+    "buildtest": "cross-env NODE_ENV=productiontest  webpack --config ./config/webpack.prod.config.js",
+    "analyze": "cross-env NODE_ENV=production  webpack --config ./config/webpack.analyze.config.js"
   },
   "keywords": [],
   "author": "",
@@ -42,6 +42,7 @@
     "clean-webpack-plugin": "^3.0.0",
     "compression-webpack-plugin": "^7.1.2",
     "copy-webpack-plugin": "^8.1.1",
+    "cross-env": "^7.0.3",
     "css-loader": "^5.2.0",
     "css-minimizer-webpack-plugin": "^2.0.0",
     "cssnano-preset-advanced": "^5.0.0",
