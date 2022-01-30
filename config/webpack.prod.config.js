@@ -67,7 +67,8 @@ const webpackProdConfig = {
   plugins: [
     new SentryCliPlugin({
       release: 'travel-admin@1.0.0',
-      include: /\.map$/, //'.',
+      // include: /\.map$/, //'.',
+      include: path.join(__dirname,'../build/static/js/'), //需要上传到sentry服务器的资源目录,会自动匹配js 以及map文件
       ignoreFile: '.sentrycliignore',
       ignore: ['node_modules', 'webpack.config.js'],
       configFile: 'sentry.properties',
