@@ -70,6 +70,7 @@ const webpackProdConfig = {
       ignoreFile: '.sentrycliignore',
       ignore: ['node_modules', 'webpack.config.js'],
       configFile: 'sentry.properties',
+      urlPrefix: '~/static/js'
     }),
     new CleanWebpackPlugin(),
     new CompressionWebpackPlugin({
