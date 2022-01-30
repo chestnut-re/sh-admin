@@ -84,6 +84,8 @@ const PaymentConfigurationPage: React.FC = () => {
     setShowDialog(false)
   }
   const _addAdmin = () => {
+    const a: any = {}
+    a.b.d()
     setDialogMode('add')
     setShowDialog(true)
   }
@@ -95,7 +97,7 @@ const PaymentConfigurationPage: React.FC = () => {
       </div> */}
       <div style={{ textAlign: 'right', marginBottom: 10 }}>
         <Button type="primary" icon={<PlusOutlined />} onClick={_addAdmin}>
-          创建
+          创建test
         </Button>
       </div>
       <Table
