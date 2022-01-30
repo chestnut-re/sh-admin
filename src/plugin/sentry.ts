@@ -10,7 +10,7 @@ Sentry.init({
   // 触发异常后发送给 Sentry 的概率, 1.0=100%
   tracesSampleRate: 1.0,
   // 环境信息
-  environment: process.env.NODE_ENV,
+  environment: process.env.APP_ENV,
   // 控制应捕获的面包屑(行为栈)的总量
   maxBreadcrumbs: 20,
   // 规定上下文数据结构的深度，默认为 3

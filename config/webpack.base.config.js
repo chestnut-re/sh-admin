@@ -6,11 +6,12 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const copyWebpackPlugin = require('copy-webpack-plugin')
 const AntdDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin')
 const imageInlineSizeLimit = parseInt(process.env.IMAGE_INLINE_SIZE_LIMIT || '10000')
+const ConfigEnvWebpackPlugin = require("config-env-webpack-plugin");
 
 module.exports = function (webpackEnv) {
   // const isEnvDevelopment = process.env.NODE_ENV === 'development'
   const isEnvProduction = process.env.NODE_ENV.includes('production')
-  console.log('process.env.NODE_ENV', process.env.NODE_ENV)
+  // console.log('process.env.NODE_ENV', process.env.NODE_ENV)
 
   return {
     mode: isEnvProduction ? 'production' : 'development',
@@ -142,6 +143,7 @@ module.exports = function (webpackEnv) {
       ],
     },
     plugins: [
+      new ConfigEnvWebpackPlugin(),
       new webpack.ProvidePlugin({
         process: 'process/browser',
       }),

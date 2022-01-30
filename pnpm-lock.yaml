@@ -31,6 +31,7 @@ specifiers:
   babel-loader: ^8.2.2
   clean-webpack-plugin: ^3.0.0
   compression-webpack-plugin: ^7.1.2
+  config-env-webpack-plugin: ^1.1.5
   copy-webpack-plugin: ^8.1.1
   cross-env: ^7.0.3
   css-loader: ^5.2.0
@@ -129,6 +130,7 @@ devDependencies:
   babel-loader: 8.2.3_8dd2b11efd9b7265f9b7da54f0e73ab1
   clean-webpack-plugin: 3.0.0_webpack@5.65.0
   compression-webpack-plugin: 7.1.2_webpack@5.65.0
+  config-env-webpack-plugin: 1.1.5
   copy-webpack-plugin: 8.1.1_webpack@5.65.0
   cross-env: 7.0.3
   css-loader: 5.2.7_webpack@5.65.0
@@ -2879,6 +2881,12 @@ packages:
 
   /concat-map/0.0.1:
     resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
+    dev: true
+
+  /config-env-webpack-plugin/1.1.5:
+    resolution: {integrity: sha512-FLTqCUFftWg7nltRefFzLa/70LvwUVFHs1sjJCRUsWdNVzFJ7N1yAZN2LTxmQ/1bdJ63SX6PwRHi7y+9PnpiHQ==}
+    dependencies:
+      qs: 6.10.3
     dev: true
 
   /connect-history-api-fallback/1.6.0:
@@ -6620,6 +6628,13 @@ packages:
   /punycode/2.1.1:
     resolution: {integrity: sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==}
     engines: {node: '>=6'}
+    dev: true
+
+  /qs/6.10.3:
+    resolution: {integrity: sha512-wr7M2E0OFRfIfJZjKGieI8lBKb7fRCH4Fv5KNPEs7gJ8jadvotdsS08PzOKR7opXhZ/Xkjtt3WF9g38drmyRqQ==}
+    engines: {node: '>=0.6'}
+    dependencies:
+      side-channel: 1.0.4
     dev: true
 
   /qs/6.7.0:

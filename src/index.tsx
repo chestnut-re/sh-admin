@@ -1,4 +1,3 @@
-
 import React, { Suspense, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
@@ -14,7 +13,10 @@ import './plugin/sentry'
 import '../mock'
 
 const env = process.env.NODE_ENV
-console.log('NODE_ENV', env)
+console.log('process.env.NODE_ENV', env)
+
+console.log('process.env.APP_ENV', process.env.APP_ENV)
+
 
 const App = () => {
   useEffect(() => {
