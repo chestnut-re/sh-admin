@@ -13,6 +13,7 @@
     "start:prod": "NODE_ENV=development webpack serve --open --config ./config/webpack.prod.config.js --mode development --hot",
     "start:mock": "NODE_ENV=development webpack serve --open --config ./config/webpack.dev.config.js --mode development --hot",
     "build": "NODE_ENV=production  webpack --config ./config/webpack.prod.config.js --mode production",
+    "buildtest": "NODE_ENV=productiontest  webpack --config ./config/webpack.prod.config.js --mode production",
     "analyze": "NODE_ENV=production  webpack --config ./config/webpack.analyze.config.js --mode production"
   },
   "keywords": [],
