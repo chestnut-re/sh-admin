@@ -1,5 +1,5 @@
 /*
- * @Description: 
+ * @Description:
  * @LastEditTime: 2022-01-21 18:50:14
  */
 /* eslint-disable @typescript-eslint/no-var-requires */
@@ -15,6 +15,7 @@ const webpackConfigBase = require('./webpack.base.config')
 
 const webpackProdConfig = {
   mode: 'production',
+  devtool: 'hidden-source-map',
   entry: {
     app: ['@babel/polyfill', path.join(__dirname, '../src', 'index.tsx')],
   },
@@ -66,11 +67,11 @@ const webpackProdConfig = {
   plugins: [
     new SentryCliPlugin({
       release: 'travel-admin@1.0.0',
-      include: '.',
+      include: /\.map$/, //'.',
       ignoreFile: '.sentrycliignore',
       ignore: ['node_modules', 'webpack.config.js'],
       configFile: 'sentry.properties',
-      urlPrefix: '~/static/js'
+      urlPrefix: '~/static/js',
     }),
     new CleanWebpackPlugin(),
     new CompressionWebpackPlugin({
