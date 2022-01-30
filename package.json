@@ -70,6 +70,8 @@
     "@ant-design/icons": "^4.6.2",
     "@babel/polyfill": "^7.12.1",
     "@loadable/component": "^5.15.0",
+    "@sentry/react": "^6.17.3",
+    "@sentry/tracing": "^6.17.3",
     "@types/lodash": "^4.14.178",
     "ahooks": "^3.1.5",
     "antd": "^4.16.6",

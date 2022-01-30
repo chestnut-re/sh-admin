@@ -9,6 +9,7 @@ import { adminStore, Provider } from '@/store/context'
 // import adminStore from '@/store/adminStore'
 import AdminLayout from '@/components/layout'
 import LoginPage from './pages/login'
+import './plugin/sentry'
 
 import '../mock'
 
