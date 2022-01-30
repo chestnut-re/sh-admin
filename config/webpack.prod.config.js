@@ -8,6 +8,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
+const SentryCliPlugin = require('@sentry/webpack-plugin')
 
 const { merge } = require('webpack-merge')
 const webpackConfigBase = require('./webpack.base.config')
@@ -63,6 +64,13 @@ const webpackProdConfig = {
     publicPath: '/',
   },
   plugins: [
+    new SentryCliPlugin({
+      release: 'travel-admin@1.0.0',
+      include: '.',
+      ignoreFile: '.sentrycliignore',
+      ignore: ['node_modules', 'webpack.config.js'],
+      configFile: 'sentry.properties',
+    }),
     new CleanWebpackPlugin(),
     new CompressionWebpackPlugin({
       filename: '[path][base].gz',

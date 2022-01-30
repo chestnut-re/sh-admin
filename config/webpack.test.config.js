@@ -4,6 +4,7 @@
  */
 
 /* eslint-disable @typescript-eslint/no-var-requires */
+const SentryCliPlugin = require('@sentry/webpack-plugin')
 const path = require('path')
 const { merge } = require('webpack-merge')
 
@@ -20,6 +21,15 @@ const webpackConfigDev = {
     path: path.resolve(__dirname, '../build'),
     publicPath: '/',
   },
+  plugins: [
+    new SentryCliPlugin({
+      release: 'travel-admin@1.0.0',
+      include: '.',
+      ignoreFile: '.sentrycliignore',
+      ignore: ['node_modules', 'webpack.config.js'],
+      configFile: 'sentry.properties',
+    }),
+  ],
   devServer: {
     host: '0.0.0.0',
     // contentBase: path.join(__dirname, '../build'),

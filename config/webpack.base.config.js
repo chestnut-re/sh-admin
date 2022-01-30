@@ -6,7 +6,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const copyWebpackPlugin = require('copy-webpack-plugin')
 const AntdDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin')
 const imageInlineSizeLimit = parseInt(process.env.IMAGE_INLINE_SIZE_LIMIT || '10000')
-const ConfigEnvWebpackPlugin = require("config-env-webpack-plugin");
+const ConfigEnvWebpackPlugin = require('config-env-webpack-plugin')
 
 module.exports = function (webpackEnv) {
   // const isEnvDevelopment = process.env.NODE_ENV === 'development'
