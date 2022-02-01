@@ -16,6 +16,7 @@ const env = process.env.NODE_ENV
 console.log('process.env.NODE_ENV', env)
 
 console.log('process.env.APP_ENV', process.env.APP_ENV)
+console.log('process.env.GIT_TAG', process.env.GIT_TAG)
 
 
 const App = () => {
