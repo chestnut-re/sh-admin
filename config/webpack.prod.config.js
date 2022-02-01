@@ -13,10 +13,10 @@ const SentryCliPlugin = require('@sentry/webpack-plugin')
 const { merge } = require('webpack-merge')
 const webpackConfigBase = require('./webpack.base.config')
 
-const gitTag = require('child_process')
-  .execSync('git describe --tags `git rev-list --tags --max-count=1`')
-  .toString()
-  .trim() // 获取提交版本号
+// const gitTag = require('child_process')
+//   .execSync('git describe --tags `git rev-list --tags --max-count=1`')
+//   .toString()
+//   .trim() // 获取提交版本号
 
 const webpackProdConfig = {
   mode: 'production',
@@ -70,11 +70,11 @@ const webpackProdConfig = {
     publicPath: '/',
   },
   plugins: [
-    new webpack.DefinePlugin({
-      GIT_TAG: gitTag,
-    }),
+    // new webpack.DefinePlugin({
+    //   GIT_TAG: gitTag,
+    // }),
     new SentryCliPlugin({
-      release: gitTag,
+      release: 'travel-admin@1.0.0',
       // include: /\.map$/, //'.',
       include: path.join(__dirname, '../build/static/js/'), //需要上传到sentry服务器的资源目录,会自动匹配js 以及map文件
       ignoreFile: '.sentrycliignore',
