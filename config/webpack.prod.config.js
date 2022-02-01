@@ -73,6 +73,7 @@ const webpackProdConfig = {
       ignore: ['node_modules', 'webpack.config.js'],
       configFile: 'sentry.properties',
       urlPrefix: '~/static/js',
+      deleteAfterCompile: true,
     }),
     new CleanWebpackPlugin(),
     new CompressionWebpackPlugin({
