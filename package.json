@@ -8,10 +8,9 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:dev": "cross-env NODE_ENV=development CONFIG_ENV=development webpack serve --open --config ./config/webpack.dev.config.js --hot",
-    "start:dev2": "cross-env NODE_ENV=development CONFIG_ENV=development webpack serve --open --config ./config/webpack.dev.config.js --hot",
-    "start:test": "cross-env NODE_ENV=development CONFIG_ENV=development webpack serve --open --config ./config/webpack.test.config.js --hot",
-    "start:prod": "cross-env NODE_ENV=development CONFIG_ENV=development webpack serve --open --config ./config/webpack.devprod.config.js --hot",
+    "start:dev": "cross-env NODE_ENV=development BACKEND_ENV=development CONFIG_ENV=development webpack serve --open --config ./config/webpack.dev.config.js --hot",
+    "start:test": "cross-env NODE_ENV=development BACKEND_ENV=test CONFIG_ENV=development webpack serve --open --config ./config/webpack.dev.config.js --hot",
+    "start:prod": "cross-env NODE_ENV=development BACKEND_ENV=production CONFIG_ENV=development webpack serve --open --config ./config/webpack.dev.config.js --hot",
     "start:mock": "cross-env NODE_ENV=development CONFIG_ENV=development webpack serve --open --config ./config/webpack.dev.config.js --hot",
     "build": "cross-env NODE_ENV=production CONFIG_ENV=production webpack --config ./config/webpack.prod.config.js",
     "buildtest": "cross-env NODE_ENV=production CONFIG_ENV=test webpack --config ./config/webpack.prod.config.js",
