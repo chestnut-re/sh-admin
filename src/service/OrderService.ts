@@ -114,6 +114,13 @@ export class OrderService {
   static relation(params): Promise<any> {
     return axios.get(`/api/platform/order/getUserInfo`, { params })
   }
+
+  /**
+   * 详情-订单分佣
+   */
+  static scaleInfo(params): Promise<any> {
+    return axios.get(`/api/platform/order/getScaleInfo`, { params })
+  }
 }
 
 export class AllocatedOrderService {
