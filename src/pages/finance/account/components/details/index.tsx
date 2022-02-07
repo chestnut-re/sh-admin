@@ -53,27 +53,27 @@ const AccountDetails: React.FC = () => {
         </Row>
         <Row gutter={[0, 24]}>
           <Col className="gutter-row" span={4}>
-            账户余额：{data?.total}
+            账户余额：{(parseInt(data?.total) / 1000).toFixed(2)}
           </Col>
           <Col className="gutter-row" span={4}>
-            待释放：{data?.frozen}
+            待释放：{(parseInt(data?.frozen) / 1000).toFixed(2)}
           </Col>
           <Col className="gutter-row" span={4}>
-            提现中：{data?.cashing}
+            提现中：{(parseInt(data?.cashing) / 1000).toFixed(2)}
           </Col>
           <Col className="gutter-row" span={4}>
-            可提现：{data?.cashed}
+            可提现：{(parseInt(data?.cashed) / 1000).toFixed(2)}
           </Col>
         </Row>
         <Row gutter={[0, 24]}>
           <Col className="gutter-row" span={4}>
-            运营资金：{data?.fundsTotal}
+            运营资金：{(parseInt(data?.fundsTotal) / 1000).toFixed(2)}
           </Col>
           <Col className="gutter-row" span={4}>
-            待释放：{data?.fundsFrozen}
+            待释放：{(parseInt(data?.fundsFrozen) / 1000).toFixed(2)}
           </Col>
           <Col className="gutter-row" span={4}>
-            可用：{data?.available}
+            可用：{(parseInt(data?.available) / 1000).toFixed(2)}
           </Col>
         </Row>
       </div>
