@@ -25,4 +25,5 @@ process.env.APP_ENV !== 'development' &&
       }
       return event
     },
+    ignoreErrors: ['ResizeObserver loop limit exceeded'],
   })
