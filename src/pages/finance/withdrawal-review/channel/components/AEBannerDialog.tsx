@@ -34,7 +34,7 @@ const AEBannerDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClos
       channelNm: data?.channelNm,
       name: data?.name,
       account: data?.account,
-      amount: data?.amount,
+      amount: (parseInt(data?.amount) / 1000).toFixed(2),
       rejectReason: data?.rejectReason,
       remark: data?.remark,
     })
