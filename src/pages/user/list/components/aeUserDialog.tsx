@@ -1,12 +1,13 @@
 /*
  * @Description: 用户详情
- * @LastEditTime: 2022-01-27 14:36:56
+ * @LastEditTime: 2022-01-28 11:29:20
  */
 
 import { usersAddUser } from '@/service/user'
 import { status, regCode } from '@/utils/enum'
 import { Form, Input, Modal, Select, Button, Row, Col } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
+import {maskTel} from '@/utils/util'
 import { HttpCode } from '@/constants/HttpCode'
 export type DialogMode = 'add' | 'edit'
 interface Props {
@@ -30,7 +31,7 @@ const AEBannerDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClos
     if (show) {
       form.setFieldsValue({
         address: data?.address,
-        phone: data?.phone,
+        phone: maskTel(data?.phone),
         registerChannel: regCode[data?.registerChannel],
         registerTime: data?.registerTime,
         state: status[data?.state],

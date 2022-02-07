@@ -123,7 +123,8 @@ const OrderListPage: React.FC = () => {
       title: '应付款',
       dataIndex: 'originPrice',
       render: (text: any, record: any) => {
-        return (parseInt(record.originPrice) / 1000).toFixed(2)
+        return ((parseInt(record.originPrice ) - parseInt(record.discountAmount)) / 1000).toFixed(2)
+     
       },
     },
     {

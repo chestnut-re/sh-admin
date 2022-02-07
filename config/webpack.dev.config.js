@@ -1,4 +1,3 @@
-
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path')
 const { merge } = require('webpack-merge')
@@ -23,17 +22,28 @@ const webpackConfigDev = {
     port: 5002,
     hot: true,
     historyApiFallback: true, // router history 模式下需要
+  },
+}
+
+const proxyMap = {
+  test: {
+    proxy: {
+      '/api': { target: 'https://testapi.mountainseas.cn/', secure: false, changeOrigin: true },
+    },
+  },
+  development: {
     proxy: {
       '/api': { target: 'https://devapi.mountainseas.cn/', secure: false, changeOrigin: true },
-      // '/api': { target: 'https://prodapi.mountainseas.cn/', secure: false, changeOrigin: true },
-      // '/api': { target: 'https://testapi.mountainseas.cn/', secure: false, changeOrigin: true },
-      // '/api': { target: 'https://devapi.mountainseas.cn/', secure: false, changeOrigin: true },
-      // '/api': { target: 'http://testapi.mountainseas.cn/', secure: false, changeOrigin: true },
-      // '/api/users': { target: 'http://192.168.10.60:19001', secure: false, changeOrigin: true },
-      // '/api': { target: 'http://192.168.10.60:39210', secure: false, changeOrigin: true },
+    },
+  },
+  production: {
+    proxy: {
+      '/api': { target: 'https://prodapi.mountainseas.cn/', secure: false, changeOrigin: true },
     },
   },
 }
+
+webpackConfigDev.devServer['proxy'] = proxyMap[process.env.BACKEND_ENV].proxy
 
 const baseConfig = webpackConfigBase('development')
 
