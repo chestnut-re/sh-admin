@@ -1,7 +1,7 @@
 import { Form, Input, Modal, InputNumber, Radio, Button } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
 import { HttpCode } from '@/constants/HttpCode'
-import { SubCenterSelect } from '@/components/formItem/SubCenterSelect'
+import { SubCenterSelect } from '@/components/formItem/SubCenterSelect2'
 import { ProductionCommission } from '@/service/ProductionCommission'
 import { DialogMode } from '@/utils/enum'
 
@@ -41,11 +41,11 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
       .then((formData) => {
         console.log(formData, day, type)
         if (mode === 'add') {
-          // ProductionCommission.add({ ...formData, saleSettleDay: day, saleSettleType: type }).then((res) => {
-          //   if (res.code === HttpCode.success) {
-          //     onSuccess()
-          //   }
-          // })
+          ProductionCommission.add({ ...formData, saleSettleDay: day, saleSettleType: type }).then((res) => {
+            if (res.code === HttpCode.success) {
+              onSuccess()
+            }
+          })
         } else {
           ProductionCommission.edit({ ...formData, id: data.id }).then((res) => {
             if (res.code === HttpCode.success) {

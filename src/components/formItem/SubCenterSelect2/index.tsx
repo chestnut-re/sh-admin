@@ -1,4 +1,5 @@
 import { CommonService } from '@/service/CommonService'
+import { getNanoId } from '@/utils/nanoid'
 import { Input, Select, Button, Space, InputNumber, Row, Col } from 'antd'
 import React, { useEffect, useRef, useState } from 'react'
 import { FC } from 'react'
@@ -17,20 +18,17 @@ interface Props {
 export const SubCenterSelect: FC<Props> = ({ ...props }) => {
   const { onChange, value, mode } = props
   const [subCenters, setSubCenters] = useState<any[]>([])
-  const [projects, setProject] = useState<any[]>([{ key: `${Date.now()}` }])
-  const [disabled, setDisabled] = useState(false)
+  const [projects, setProject] = useState<any[]>([])
 
   useEffect(() => {
-    if (value) {
-      if (mode == 'add') {
-        setDisabled(false)
-      } else if (mode == 'edit') {
-        setDisabled(true)
+    if (mode == 'edit') {
+      if (!subCenters) return
+      if (value) {
+        console.log(value)
+        setProject(value)
       }
-      console.log(value)
-      setProject(value)
     }
-  }, [value])
+  }, [value, subCenters])
 
   useEffect(() => {
     onChange?.(projects)
@@ -54,18 +52,21 @@ export const SubCenterSelect: FC<Props> = ({ ...props }) => {
   useEffect(() => {
     CommonService.getStructure().then((res) => {
       setSubCenters(res.data.children)
+      if (mode == 'add') {
+        setProject(
+          res.data.children.map((i) => {
+            return {
+              key: getNanoId(),
+              id: i.id,
+              directScale: 0,
+              channelName: i.name,
+              level: i.level,
+            }
+          })
+        )
+      }
     })
   }, [])
-
-  // const _addNewItem = () => {
-  //   projects.push({ key: `${Date.now()}` })
-  //   setProject([...projects])
-  // }
-
-  // const _delItem = (index) => {
-  //   projects.splice(index, 1)
-  //   setProject([...projects])
-  // }
 
   return (
     <div className="SubCenterSelect__root">
@@ -82,45 +83,25 @@ export const SubCenterSelect: FC<Props> = ({ ...props }) => {
 
         return (
           <div key={pItem.key}>
-            {subCenters &&
-              subCenters?.map((item) => {
-                return (
-                  <Row key={item.id}>
-                    <Col span={14}>应用渠道：{item.name}</Col>
-                    <Col span={10}>
-                      分佣比例
-                      {mode == 'add' ? (
-                        <InputNumber
-                          type="number"
-                          style={{ width: 100 }}
-                          min={0}
-                          max={100}
-                          addonAfter="%"
-                          defaultValue={item['directScale']}
-                          onChange={(value) => {
-                            item['directScale'] = value
-                            setProject([...projects])
-                          }}
-                        />
-                      ) : (
-                        <InputNumber
-                          readOnly
-                          type="number"
-                          min={0}
-                          max={100}
-                          style={{ width: 100 }}
-                          addonAfter="%"
-                          defaultValue={item['directScale']}
-                          onChange={(value) => {
-                            item['directScale'] = value
-                            setProject([...projects])
-                          }}
-                        />
-                      )}
-                    </Col>
-                  </Row>
-                )
-              })}
+            <Row key={pItem.id}>
+              <Col span={14}>应用渠道：{pItem.channelName}</Col>
+              <Col span={10}>
+                <span>分佣比例</span>
+                <InputNumber
+                  readOnly={mode !== 'add'}
+                  type="number"
+                  min={0}
+                  max={100}
+                  style={{ width: 100 }}
+                  addonAfter="%"
+                  defaultValue={pItem['directScale']}
+                  onChange={(value) => {
+                    pItem['directScale'] = value
+                    setProject([...projects])
+                  }}
+                />
+              </Col>
+            </Row>
           </div>
         )
       })}
