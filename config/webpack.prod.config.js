@@ -1,5 +1,5 @@
 /*
- * @Description: 
+ * @Description:
  * @LastEditTime: 2022-01-21 18:50:14
  */
 /* eslint-disable @typescript-eslint/no-var-requires */
@@ -8,12 +8,19 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
+const SentryCliPlugin = require('@sentry/webpack-plugin')
 
 const { merge } = require('webpack-merge')
 const webpackConfigBase = require('./webpack.base.config')
 
+// const gitTag = require('child_process')
+//   .execSync('git describe --tags `git rev-list --tags --max-count=1`')
+//   .toString()
+//   .trim() // 获取提交版本号
+
 const webpackProdConfig = {
   mode: 'production',
+  devtool: 'hidden-source-map',
   entry: {
     app: ['@babel/polyfill', path.join(__dirname, '../src', 'index.tsx')],
   },
@@ -63,6 +70,19 @@ const webpackProdConfig = {
     publicPath: '/',
   },
   plugins: [
+    // new webpack.DefinePlugin({
+    //   GIT_TAG: gitTag,
+    // }),
+    new SentryCliPlugin({
+      release: 'travel-admin@1.0.0',
+      // include: /\.map$/, //'.',
+      include: path.join(__dirname, '../build/static/js/'), //需要上传到sentry服务器的资源目录,会自动匹配js 以及map文件
+      ignoreFile: '.sentrycliignore',
+      ignore: ['node_modules', 'webpack.config.js'],
+      configFile: 'sentry.properties',
+      urlPrefix: '~/static/js',
+      deleteAfterCompile: true,
+    }),
     new CleanWebpackPlugin(),
     new CompressionWebpackPlugin({
       filename: '[path][base].gz',

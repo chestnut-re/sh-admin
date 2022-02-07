@@ -194,13 +194,15 @@ const ProductionCommissionListPage: React.FC = () => {
           total: tableState.total,
         }}
       />
-      <AEDialog
-        data={dialogState.selectedData}
-        mode={dialogState.dialogMode}
-        onSuccess={_onDialogSuccess}
-        show={dialogState.showDialog}
-        onClose={_onDialogClose}
-      />
+      {dialogState.showDialog && (
+        <AEDialog
+          data={dialogState.selectedData}
+          mode={dialogState.dialogMode}
+          onSuccess={_onDialogSuccess}
+          show={dialogState.showDialog}
+          onClose={_onDialogClose}
+        />
+      )}
     </div>
   )
 }

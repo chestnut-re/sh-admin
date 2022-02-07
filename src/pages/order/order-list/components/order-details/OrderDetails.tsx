@@ -22,9 +22,14 @@ const OrderDetailsPage: React.FC = () => {
   const loadData = () => {
     OrderService.details({ orderId: history.location.state.id }).then((res) => {
       if (res.code === HttpCode.success) {
-        setData(res.data)
-        setDataZ(res.data?.subOrderDtoList)
+        setData(res?.data ?? [])
+        setDataZ(res.data?.subOrderDtoList ?? [])
         // setDataF(res.data?.distPlanOrderDTO)
+      }
+    })
+    OrderService.scaleInfo({ orderId: history.location.state.id }).then((res) => {
+      if (res.code === HttpCode.success) {
+        setDataF(res.data?.relationList ?? [])
       }
     })
   }
@@ -32,8 +37,8 @@ const OrderDetailsPage: React.FC = () => {
   const getRelations = () => {
     OrderService.relation({ orderId: history.location.state.id }).then((res) => {
       if (res.code === HttpCode.success) {
-        setDataM(res.data)
-        setDataD(res.data)
+        setDataM(res?.data ?? [])
+        setDataD(res?.data ?? [])
       }
     })
   }
@@ -108,7 +113,7 @@ const OrderDetailsPage: React.FC = () => {
     },
     {
       title: '出行人信息',
-      dataIndex: 'nickName',
+      dataIndex: 'travelerName',
       className: 'table-light-color',
     },
     {
@@ -116,7 +121,7 @@ const OrderDetailsPage: React.FC = () => {
       dataIndex: 'originPrice',
       className: 'table-light-color',
       render: (text: any, record: any) => {
-        return (parseInt(record.unitPrice) / 1000).toFixed(2)
+        return (parseInt(record.originPrice) / 1000).toFixed(2)
       },
     },
     {
@@ -142,25 +147,8 @@ const OrderDetailsPage: React.FC = () => {
     },
     {
       title: '订单信息状态',
-      dataIndex: 'state',
+      dataIndex: 'stateVal',
       className: 'table-light-color',
-      render: (text: any, record: any) => {
-        if (record.state == 1) {
-          return `待付款`
-        } else if (record.state == 2) {
-          return `已失效`
-        } else if (record.state == 3) {
-          return `待确认`
-        } else if (record.state == 4) {
-          return `已完成`
-        } else if (record.state == 5) {
-          return `退款中`
-        } else if (record.state == 6) {
-          return `退款成功`
-        } else if (record.state == 2) {
-          return `退款失败`
-        }
-      },
     },
     {
       title: '行程状态',
@@ -171,45 +159,52 @@ const OrderDetailsPage: React.FC = () => {
   const columnsF = [
     {
       title: '商品分佣',
-      dataIndex: 'channelName',
+      dataIndex: 'allocationAmount',
       className: 'table-light-color',
     },
     {
       title: '渠道关系',
-      dataIndex: 'distScale',
+      dataIndex: 'type',
       className: 'table-light-color',
+      render: (text: any, record: any) => {
+        if (record?.type == 1) {
+          return '关联归属渠道'
+        } else if (record?.type == 2) {
+          return '推荐渠道'
+        } else if (record?.type == 3) {
+          return '服务渠道'
+        } else if (record?.type == 4) {
+          return '从属/服务渠道'
+        } else if (record?.type == 5) {
+          return '推荐/服务渠道'
+        } else if (record?.type == 6) {
+          return '推荐/从属渠道'
+        } else if (record?.type == 7) {
+          return '关联归属/推荐/服务渠道'
+        }
+      },
     },
     {
       title: '渠道分佣',
-      dataIndex: 'distPrice',
       className: 'table-light-color',
-      children: [
-        {
-          title: '二级',
-          dataIndex: 'building',
-          className: 'table-light-color',
-        },
-        {
-          title: '三级',
-          dataIndex: 'number',
-          className: 'table-light-color',
-        },
-        {
-          title: '四级',
-          dataIndex: 'number',
-          className: 'table-light-color',
-        },
-        {
-          title: '五级',
-          dataIndex: 'number',
-          className: 'table-light-color',
-        },
-        {
-          title: '发团服务费',
-          dataIndex: 'number',
-          className: 'table-light-color',
-        },
-      ],
+      dataIndex: 'channelScaleList',
+      render: (text: any, record: any) => {
+        record?.channelScaleList.map((item) => {
+          if (item.level == 2) {
+            return '1'
+          } else {
+            return '2'
+          }
+        })
+      },
+    },
+  ]
+
+  const columnsC = [
+    {
+      title: '二级',
+      dataIndex: 'scale',
+      className: 'table-light-color',
     },
   ]
   return (
@@ -296,10 +291,10 @@ const OrderDetailsPage: React.FC = () => {
                 付款方式:<span>{data.payTypeVal ? data.payTypeVal : ''}</span>
               </div>
               <div>
-                交易单号:<span>{data.thirdPartyPayNo ? data.thirdPartyPayNo : ''}</span>
+                交易单号:<span>{data.OrderNo ? data.OrderNo : ''}</span>
               </div>
               <div>
-                三方交易单号:<span>{data.thirdPartyPayNo ? data.thirdPartyPayNo : ''}</span>
+                三方交易单号:<span>{data.payNo ? data.payNo : ''}</span>
               </div>
             </td>
             <td>实付款</td>

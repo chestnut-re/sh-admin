@@ -1,7 +1,7 @@
 import { Form, Input, Modal, InputNumber, Radio, Button } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
 import { HttpCode } from '@/constants/HttpCode'
-import { SubCenterSelect } from '@/components/formItem/SubCenterSelect'
+import { SubCenterSelect } from '@/components/formItem/SubCenterSelect2'
 import { ProductionCommission } from '@/service/ProductionCommission'
 import { DialogMode } from '@/utils/enum'
 
