@@ -94,6 +94,13 @@ const AfterSalesListPage: React.FC = () => {
     {
       title: '退款代币',
       dataIndex: 'tokenAmount',
+      render: (text: any, record: any) => {
+        if (parseInt(record.tokenAmount)) {
+          return (parseInt(record.tokenAmount) / 1000).toFixed(2)
+        } else {
+          return ''
+        }
+      },
     },
     {
       title: '订单状态',

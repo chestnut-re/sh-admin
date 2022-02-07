@@ -166,38 +166,45 @@ const OrderDetailsPage: React.FC = () => {
       title: '渠道关系',
       dataIndex: 'type',
       className: 'table-light-color',
+      render: (text: any, record: any) => {
+        if (record?.type == 1) {
+          return '关联归属渠道'
+        } else if (record?.type == 2) {
+          return '推荐渠道'
+        } else if (record?.type == 3) {
+          return '服务渠道'
+        } else if (record?.type == 4) {
+          return '从属/服务渠道'
+        } else if (record?.type == 5) {
+          return '推荐/服务渠道'
+        } else if (record?.type == 6) {
+          return '推荐/从属渠道'
+        } else if (record?.type == 7) {
+          return '关联归属/推荐/服务渠道'
+        }
+      },
     },
     {
       title: '渠道分佣',
-      dataIndex: 'relationList',
       className: 'table-light-color',
-      children: [
-        {
-          title: '二级',
-          dataIndex: 'building',
-          className: 'table-light-color',
-        },
-        {
-          title: '三级',
-          dataIndex: 'number',
-          className: 'table-light-color',
-        },
-        {
-          title: '四级',
-          dataIndex: 'number',
-          className: 'table-light-color',
-        },
-        {
-          title: '五级',
-          dataIndex: 'number',
-          className: 'table-light-color',
-        },
-        {
-          title: '发团服务费',
-          dataIndex: 'serviceAmount',
-          className: 'table-light-color',
-        },
-      ],
+      dataIndex: 'channelScaleList',
+      render: (text: any, record: any) => {
+        record?.channelScaleList.map((item) => {
+          if (item.level == 2) {
+            return '1'
+          } else {
+            return '2'
+          }
+        })
+      },
+    },
+  ]
+
+  const columnsC = [
+    {
+      title: '二级',
+      dataIndex: 'scale',
+      className: 'table-light-color',
     },
   ]
   return (
