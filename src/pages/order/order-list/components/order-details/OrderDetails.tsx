@@ -4,12 +4,12 @@ import { useHistory } from 'react-router-dom'
 import { Table, Space, Button } from 'antd'
 import { OrderService } from '@/service/OrderService'
 import { HttpCode } from '@/constants/HttpCode'
+import QRCode from 'qrcode.react'
 /**
  * 订单详情
  */
 const OrderDetailsPage: React.FC = () => {
   const history = useHistory<any>()
-  const [dataM, setDataM] = useState([])
   const [dataD, setDataD] = useState([])
   const [dataZ, setDataZ] = useState([])
   const [dataF, setDataF] = useState([])
@@ -24,11 +24,32 @@ const OrderDetailsPage: React.FC = () => {
       if (res.code === HttpCode.success) {
         setData(res?.data ?? [])
         setDataZ(res.data?.subOrderDtoList ?? [])
-        // setDataF(res.data?.distPlanOrderDTO)
       }
     })
     OrderService.scaleInfo({ orderId: history.location.state.id }).then((res) => {
       if (res.code === HttpCode.success) {
+        const arr = {}
+        res?.data?.relationList.map((item: any) => {
+          item?.channelScaleList.map((item: any) => {
+            if (item.level == 2) {
+              arr.two = item
+            }
+            if (item.level == 3) {
+              arr.three = item
+            }
+            if (item.level == 4) {
+              arr.four = item
+            }
+            if (item.level == 5) {
+              arr.five = item
+            }
+          })
+          item.two = arr.two
+          item.three = arr.three
+          item.four = arr.four
+          item.five = arr.five
+        })
+        console.log(res.data)
         setDataF(res.data?.relationList ?? [])
       }
     })
@@ -37,25 +58,10 @@ const OrderDetailsPage: React.FC = () => {
   const getRelations = () => {
     OrderService.relation({ orderId: history.location.state.id }).then((res) => {
       if (res.code === HttpCode.success) {
-        setDataM(res?.data ?? [])
         setDataD(res?.data ?? [])
       }
     })
   }
-  const columnsM = [
-    {
-      title: '手机号',
-      dataIndex: 'phoneNumber',
-    },
-    {
-      title: '昵称',
-      dataIndex: 'orderUserName',
-    },
-    {
-      title: '常住地',
-      dataIndex: 'departureCity',
-    },
-  ]
   const columnsD = [
     {
       title: '订单关系',
@@ -97,10 +103,10 @@ const OrderDetailsPage: React.FC = () => {
       dataIndex: 'rebateFlag',
       className: 'table-light-color',
       render: (text: any, record: any) => {
-        if (record.rebateFlag == 0) {
-          return `-`
-        } else if (record.rebateFlag == 1) {
+        if (record.rebateFlag == true) {
           return `有`
+        } else {
+          return `--`
         }
       },
     },
@@ -115,13 +121,44 @@ const OrderDetailsPage: React.FC = () => {
       title: '出行人信息',
       dataIndex: 'travelerName',
       className: 'table-light-color',
+      render: (text: any, record: any, index: any) => {
+        return (
+          <div className="travel">
+            <div>
+              <span className="travel-type">
+                {record?.travelerType == 1 ? `成人${index + 1}` : ''}
+                {record?.travelerType == 0 ? `儿童${index + 1}` : ''}
+              </span>
+              <span className="travel-name">{record?.travelerName || '无'}</span>
+              <span className="travel-relation">
+                {record?.travelerRelation == 0 ? '(本人)' : ''}
+                {record?.travelerRelation == 1 ? '(夫妻)' : ''}
+                {record?.travelerRelation == 2 ? '(父母)' : ''}
+                {record?.travelerRelation == 3 ? '(子女)' : ''}
+                {record?.travelerRelation == 4 ? '(亲戚)' : ''}
+                {record?.travelerRelation == 5 ? '(朋友)' : ''}
+                {record?.travelerRelation == 6 ? '(兄弟)' : ''}
+                {record?.travelerRelation == 7 ? '(姐妹)' : ''}
+              </span>
+            </div>
+            <div>
+              <span className="travel-relation">手机号</span>
+              <span>{record?.travelerPhoneNumber || '无'}</span>
+            </div>
+            {/* <div>
+              <span className="travel-type">关系归属</span>
+              <span>{record?.travelerPhoneNumber}</span>
+            </div> */}
+          </div>
+        )
+      },
     },
     {
       title: '单价',
       dataIndex: 'originPrice',
       className: 'table-light-color',
       render: (text: any, record: any) => {
-        return (parseInt(record.originPrice) / 1000).toFixed(2)
+        return ((parseInt(record?.originPrice) - parseInt(record?.discountAmount)) / 1000).toFixed(2)
       },
     },
     {
@@ -144,6 +181,12 @@ const OrderDetailsPage: React.FC = () => {
       title: '出行确认码',
       dataIndex: 'state',
       className: 'table-light-color',
+      render: (text: any, record: any) => {
+        const value = `shtravel://app?data=${encodeURIComponent(
+          JSON.stringify({ orderId: record.orderId, suborderId: record.id, type: 'verifications' })
+        )}`
+        return <QRCode value={value} size={100} />
+      },
     },
     {
       title: '订单信息状态',
@@ -161,6 +204,13 @@ const OrderDetailsPage: React.FC = () => {
       title: '商品分佣',
       dataIndex: 'allocationAmount',
       className: 'table-light-color',
+      render: (text: any, record: any) => {
+        if (record?.allocationAmount) {
+          return `¥${(parseInt(record?.allocationAmount) / 1000).toFixed(2)}`
+        } else {
+          return ''
+        }
+      },
     },
     {
       title: '渠道关系',
@@ -187,26 +237,103 @@ const OrderDetailsPage: React.FC = () => {
     {
       title: '渠道分佣',
       className: 'table-light-color',
-      dataIndex: 'channelScaleList',
-      render: (text: any, record: any) => {
-        record?.channelScaleList.map((item) => {
-          if (item.level == 2) {
-            return '1'
-          } else {
-            return '2'
-          }
-        })
-      },
+      dataIndex: 'arr',
+      children: [
+        {
+          title: '二级',
+          dataIndex: 'two',
+          className: 'table-light-color',
+          render: (text: any, record: any) => {
+            return (
+              <div className="table-f">
+                <div></div>
+                <div className="table-name">
+                  {record?.two?.channelName}/{record?.two?.userName}
+                </div>
+                <div className="table-amount">
+                  ¥{record?.two?.amount ? (parseInt(record?.two?.amount) / 1000).toFixed(2) : 0}
+                </div>
+              </div>
+            )
+          },
+        },
+        {
+          title: '三级',
+          dataIndex: 'three',
+          className: 'table-light-color',
+          render: (text: any, record: any) => {
+            return (
+              <div className="table-f">
+                <div></div>
+                <div className="table-name">
+                  {record?.three?.channelName}/{record?.three?.userName}
+                </div>
+                <div className="table-amount">
+                  ¥{record?.three?.amount ? (parseInt(record?.three?.amount) / 1000).toFixed(2) : 0}
+                </div>
+              </div>
+            )
+          },
+        },
+        {
+          title: '四级',
+          dataIndex: 'four',
+          className: 'table-light-color',
+          render: (text: any, record: any) => {
+            return (
+              <div className="table-f">
+                <div></div>
+                <div className="table-name">
+                  {record?.four?.channelName}/{record?.four?.userName}
+                </div>
+                <div className="table-amount">
+                  ¥{record?.four?.amount ? (parseInt(record?.four?.amount) / 1000).toFixed(2) : 0}
+                </div>
+              </div>
+            )
+          },
+        },
+        {
+          title: '五级',
+          dataIndex: 'five',
+          className: 'table-light-color',
+          render: (text: any, record: any) => {
+            return (
+              <div className="table-f">
+                <div></div>
+                <div className="table-name">
+                  {record?.five?.channelName}/{record?.five?.userName}
+                </div>
+                <div className="table-amount">
+                  ¥{record?.five?.amount ? (parseInt(record?.five?.amount) / 1000).toFixed(2) : 0}
+                </div>
+              </div>
+            )
+          },
+        },
+        {
+          title: '发团服务费',
+          dataIndex: 'serviceAmount',
+          className: 'table-light-color',
+          render: (text: any, record: any) => {
+            return (
+              <div className="table-f">
+                <div></div>
+                {/* <div className="table-name">
+                  {record?.five?.channelName}/{record?.five?.userName}
+                </div> */}
+                <div className="table-amount">
+                  ¥{record.serviceAmount ? (parseInt(record?.serviceAmount) / 1000).toFixed(2) : 0}
+                </div>
+              </div>
+            )
+          },
+        },
+      ],
     },
   ]
 
-  const columnsC = [
-    {
-      title: '二级',
-      dataIndex: 'scale',
-      className: 'table-light-color',
-    },
-  ]
+  const columnsC = []
   return (
     <div className="detail__root">
       <div className="states-con">
@@ -276,11 +403,12 @@ const OrderDetailsPage: React.FC = () => {
         columns={columnsD}
         scroll={{ x: 'max-content' }}
         dataSource={[...dataD]}
+        pagination={false}
       />
       <div className="details-title">分佣方案</div>
       <Table rowKey="id" columns={columnsF} scroll={{ x: 'max-content' }} dataSource={[...dataF]} />
       <div className="details-title">子订单信息</div>
-      <Table rowKey="id" columns={columnsZ} scroll={{ x: 'max-content' }} dataSource={[...dataZ]} />
+      <Table rowKey="id" columns={columnsZ} scroll={{ x: 'max-content' }} dataSource={[...dataZ]} pagination={false} />
 
       <div className="details-title">支付详情</div>
       <div className="bottom">
@@ -303,7 +431,7 @@ const OrderDetailsPage: React.FC = () => {
           </tr>
           <tr>
             <td>{data.payAmount ? (parseInt(data?.payAmount) / 1000).toFixed(2) : 0}</td>
-            <td>{data.originPrice ? (parseInt(data?.originPrice) / 1000).toFixed(2) : 0}</td>
+            <td>{((parseInt(data?.originPrice) - parseInt(data?.discountAmount)) / 1000).toFixed(2)}</td>
             <td>{data.tokenAmount ? (parseInt(data?.tokenAmount) / 1000).toFixed(2) : 0}</td>
           </tr>
         </table>

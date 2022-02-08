@@ -29,13 +29,26 @@ const AllocatedDetailsPage: React.FC = () => {
 
   useEffect(() => {
     const arr = JSON.parse(JSON.stringify(selectData))
+    console.log(arr, 'arr')
     if (arr != []) {
       arr.userName = arr.realName
       arr.orderShip = '接单人'
       arr.relationship = arr.belongChannel
+      arr.responsibilityArea = arr.address
       arr.phoneNumber = arr.phone
       arr.rebateFlag = arr.haveRebate
+      arr.accountTypeVal = '内部渠道'
+      if (arr.address) {
+        if (arr.address.search(data.departureCity) != -1) {
+          arr.areaEqualFlag = '是'
+        } else {
+          arr.areaEqualFlag = '否'
+        }
+      } else {
+        arr.areaEqualFlag = '否'
+      }
     }
+
     setAddData([...dataD, arr])
   }, [selectData])
 
@@ -200,11 +213,11 @@ const AllocatedDetailsPage: React.FC = () => {
         </div>
         <div className="infor">
           <div>成人价</div>
-          <div>{(parseInt(data?.personCurrentPrice) / 1000).toFixed(2)}</div>
+          <div>{data?.personCurrentPrice ? (parseInt(data?.personCurrentPrice) / 1000).toFixed(2) : ''}</div>
         </div>
         <div className="infor">
           <div>儿童价</div>
-          <div>{(parseInt(data?.childCurrentPrice) / 1000).toFixed(2)}</div>
+          <div>{data?.childCurrentPrice ? (parseInt(data?.childCurrentPrice) / 1000).toFixed(2) : ''}</div>
         </div>
         <div className="infor">
           <div>下单数量</div>
@@ -219,11 +232,18 @@ const AllocatedDetailsPage: React.FC = () => {
         </div>
         <div className="infor">
           <div>代币最多可抵</div>
-          <div>{(parseInt(data?.deductionPrice) / 1000).toFixed(2)}</div>
+          <div>{data?.deductionPrice ? (parseInt(data?.deductionPrice) / 1000).toFixed(2) : ''}</div>
         </div>
       </div>
       <div className="details-title">订单关联人</div>
-      <Table rowKey="id" columns={columnsD} scroll={{ x: 'max-content' }} dataSource={[...addData]} />
+      <Table
+        rowKey="id"
+        className="table-light-color"
+        columns={columnsD}
+        scroll={{ x: 'max-content' }}
+        pagination={false}
+        dataSource={[...addData]}
+      />
       {history.location.state.mode == 'edit' ? (
         <div className="ReleaseProduct__root">
           <StepView current={current} />
