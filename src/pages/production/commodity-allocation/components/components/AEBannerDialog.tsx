@@ -34,8 +34,8 @@ const AEBannerDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClos
 
   const getParentList = () => {
     AllocationService.list({ sortName: '', parentId: 0 }).then((res: any) => {
-      const parentData = { id: 0, sortName: '无' }
-      setParentList([...res.data, parentData])
+      const parentData = { id: 0, sortName: '无', parentId: 0 }
+      setParentList([parentData, ...res.data])
     })
   }
 
@@ -46,16 +46,18 @@ const AEBannerDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClos
       .then((formData) => {
         console.log(formData)
         if (mode === 'add') {
-          AllocationService.edit([
-            { operationType: 1, sortName: formData.sortName, parentId: formData.parentId ?? '0' },
-          ]).then((res) => {
+          AllocationService.edit({
+            operationType: 1,
+            sortName: formData.sortName,
+            parentId: formData.parentId ?? '0',
+          }).then((res) => {
             if (res.code === HttpCode.success) {
               onSuccess()
             }
           })
         } else {
           //edit
-          AllocationService.edit([{ operationType: 2, sortName: formData.sortName, parentId: formData.parentId }]).then(
+          AllocationService.edit({ operationType: 2, sortName: formData.sortName, parentId: formData.parentId }).then(
             (res) => {
               if (res.code === HttpCode.success) {
                 onSuccess()
@@ -87,7 +89,7 @@ const AEBannerDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClos
         name="basic"
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 16 }}
-        initialValues={{ remember: true }}
+        initialValues={{ parentId: 0 }}
         autoComplete="off"
         form={form}
       >
