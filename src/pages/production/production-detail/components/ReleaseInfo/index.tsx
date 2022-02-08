@@ -1,11 +1,7 @@
 import useQuery from '@/hooks/useQuery'
-import { ProductionAuditService } from '@/service/ProductionAuditService'
-import { useStore } from '@/store/context'
 import { Button, Form, Input, InputNumber, Radio, RadioChangeEvent, Switch } from 'antd'
-import { useForm } from 'antd/es/form/Form'
 import { observer } from 'mobx-react-lite'
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import Commission from './Commission'
 import './index.less'
 
@@ -13,13 +9,12 @@ import './index.less'
  * 发布信息 审核
  */
 const ReleaseInfo: React.FC = () => {
-  const history = useNavigate()
   const query = useQuery()
-  const { productionDetailStore } = useStore()
 
   const [form] = Form.useForm()
   const [commission, setCommission] = useState<any>({})
   const [checkState, setCheckState] = useState<boolean>(false)
+  const [isDeduction, setIsDeduction] = useState<boolean>(false)
 
   const layout = {
     labelCol: { span: 4 },
@@ -45,7 +40,7 @@ const ReleaseInfo: React.FC = () => {
       .then((formData) => {
         console.log(formData)
         const postData = { ...formData }
-        postData.isDeduction = postData.isDeduction ? 1 : 0
+        postData.isDeduction = isDeduction ? 1 : 0
         postData.isHot = postData.isHot ? 1 : 0
         postData.distPlan = postData.distPlanId.channelPlanList.map((item) => {
           return {
@@ -62,6 +57,10 @@ const ReleaseInfo: React.FC = () => {
 
         postData.distPlanId = postData.distPlanId.id
         postData.id = query.get('id')
+
+        if (!postData.deductionScale) {
+          postData.deductionScale = 0 // 默认给0
+        }
 
         console.log(postData)
         ProductionAuditService.publishAudit(postData).then((res) => {
@@ -95,14 +94,24 @@ const ReleaseInfo: React.FC = () => {
         <Form.Item label="添加库存" name="stock" rules={[{ required: true }]}>
           <InputNumber addonAfter="/出发日" min={0} />
         </Form.Item>
-        <Form.Item label="代币抵现" name="isDeduction" rules={[{ required: true }]}>
+        {/* <Form.Item label="代币抵现" name="isDeduction" rules={[{ required: true }]}>
           <Switch checkedChildren="开启" unCheckedChildren="关闭" />
-        </Form.Item>
+        </Form.Item> */}
+        代币抵现:{' '}
+        <Switch
+          checkedChildren="开启"
+          unCheckedChildren="关闭"
+          onChange={(checked) => {
+            setIsDeduction(checked)
+          }}
+        />
+        {isDeduction && (
+          <Form.Item label='最多可抵"现售价"' name="deductionScale" rules={[{ required: true }]}>
+            <InputNumber min={0} addonAfter="%" />
+          </Form.Item>
+        )}
         <Form.Item label="是否热销" name="isHot" rules={[{ required: true }]}>
           <Switch checkedChildren="是" unCheckedChildren="否" />
-        </Form.Item>
-        <Form.Item label='最多可抵"现售价"' name="deductionScale" rules={[{ required: true }]}>
-          <InputNumber min={0} addonAfter="%" />
         </Form.Item>
         <Form.Item {...layout} label="手工补量" style={{ marginBottom: 0 }}>
           <Form.Item
@@ -130,16 +139,11 @@ const ReleaseInfo: React.FC = () => {
             <InputNumber min={0} />
           </Form.Item>
         </Form.Item>
-
-        <div>
-          {/* 预估计利润：xxx <p>预估利润 = 现售价 - 供应成本价</p> */}
-        </div>
-
+        <div>{/* 预估计利润：xxx <p>预估利润 = 现售价 - 供应成本价</p> */}</div>
         <Form.Item label="分佣方案" name="distPlanId" rules={[{ required: true }]}>
           <Commission onChange={_onCommissionChange} />
         </Form.Item>
         {/* <div>{JSON.stringify(commission)}</div> */}
-
         <Button onClick={_submit}>提交发布</Button>
       </Form>
     </div>
