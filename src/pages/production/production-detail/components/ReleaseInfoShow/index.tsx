@@ -91,7 +91,7 @@ const ReleaseInfoShow: React.FC = () => {
             </div>
           </div>
           <div>
-            <div>分佣方案 {data.distPlanId}</div>
+            <div>分佣方案：{data.distPlanId}</div>
             <div>
               <div>
                 <Table dataSource={data?.distPlan} columns={columns} bordered />
