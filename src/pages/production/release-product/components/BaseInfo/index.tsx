@@ -174,6 +174,7 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
                 </>
               )}
             </Row>
+            <div className="buy-tips">用户首次下单成功日起算，儿童票不占限额</div>
           </Form.Item>
 
           {goodsLimit && (
