@@ -49,7 +49,7 @@ const OrderListPage: React.FC = () => {
         payEndTime,
         orderNoLike: query.orderNoLike,
         state: query.state,
-        source: query.source
+        source: query.source,
       }).then((res) => {
         setData(res.data?.records ?? [])
         setTotal(res.data?.total ?? 0)
@@ -82,7 +82,7 @@ const OrderListPage: React.FC = () => {
           <span
             className="table-con-underline"
             onClick={() => {
-              toDetails(record)
+              history(`/order/order-list/order-details?id=${record.id}`)
             }}
           >
             {record?.goodsName}
@@ -123,8 +123,7 @@ const OrderListPage: React.FC = () => {
       title: '应付款',
       dataIndex: 'originPrice',
       render: (text: any, record: any) => {
-        return ((parseInt(record.originPrice ) - parseInt(record.discountAmount)) / 1000).toFixed(2)
-     
+        return ((parseInt(record.originPrice) - parseInt(record.discountAmount)) / 1000).toFixed(2)
       },
     },
     {
@@ -197,7 +196,7 @@ const OrderListPage: React.FC = () => {
           <span
             className="operation"
             onClick={() => {
-              toDetails(record)
+              history(`/order/order-list/order-details?id=${record.id}`)
             }}
           >
             详情
@@ -206,12 +205,6 @@ const OrderListPage: React.FC = () => {
       ),
     },
   ]
-
-  const toDetails = (record: any) => {
-    history('/order/order-list/order-details', {
-      id: record.id,
-    })
-  }
 
   const onFinish = (values: any) => {
     loadData(pageIndex)
@@ -226,10 +219,6 @@ const OrderListPage: React.FC = () => {
     form.resetFields()
     setPageIndex(1)
     loadData(1)
-  }
-
-  const _toDetails = () => {
-    history('/order/allocated-list', {})
   }
 
   return (
