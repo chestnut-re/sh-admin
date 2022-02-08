@@ -218,7 +218,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
           <InputNumber placeholder="补贴比例" value={data?.saleSettleDay} addonAfter="%" style={{ width: 160 }} />
         </Form.Item>
         <Form.Item name="accountType" label="人员类型" rules={[{ required: true }]}>
-          <Select allowClear disabled={mode == 'edit'}>
+          <Select allowClear disabled={mode == 'edit'&&form.getFieldValue('accountType')}>
             {Object.keys(personType).map((item) => {
               return (
                 <Select.Option key={item} value={Number(item)}>
@@ -231,7 +231,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
         <Form.Item name="roleId" label="角色名称" rules={[{ required: true, message: '请输入角色名称' }]}>
           <RoleSelect
             channelId={channelId}
-            disabled={mode == 'edit'}
+            disabled={mode == 'edit'&&form.getFieldValue('roleId')}
             onChange={_changeRoleSelect}
             value={form.getFieldValue('roleId')}
           />

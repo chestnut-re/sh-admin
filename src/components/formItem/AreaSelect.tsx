@@ -1,6 +1,6 @@
 /*
  * @Description:
- * @LastEditTime: 2022-01-26 19:17:21
+ * @LastEditTime: 2022-02-07 19:13:10
  */
 import ChannelService from '@/service/ChannelService'
 import { cityDispose, regionsCodeArray } from '@/utils/tree'
@@ -14,7 +14,7 @@ interface Props {
   channelId?: any
   perlValue?: any
   supUser?: any
-  mode: Mode
+  mode?: Mode
   onChange?: (value: string) => void
 }
 
@@ -66,7 +66,6 @@ const AreaSelect: React.FC<Props> = ({ defaultValue, perlValue, supUser, onChang
   }, [regions])
 
   const tagRender = (labels, selectedOptions) => {
-    console.log()
     const dataAreas = area.find((res) => res.adcode == labels.value)
     if (!dataAreas) {
       return <>{labels.label + ','}</>
