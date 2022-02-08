@@ -1,10 +1,10 @@
 /*
  * @Description: 配置商品详情
- * @LastEditTime: 2022-01-26 11:05:21
+ * @LastEditTime: 2022-02-08 10:24:27
  */
 import { Table, Space, Button, Modal, Form, Row, Col } from 'antd'
 import { ActivitiesService } from '@/service/ActivitiesService'
-
+import {unique} from './util'
 import { InputTemp } from '@/components/filter/formItem'
 import React, { useEffect, useState } from 'react'
 
@@ -32,9 +32,12 @@ const GoodsTable: React.FC<Props> = ({ goodsShow, goodsIdList, goodsAlreadyData,
     }
   }, [goodsShow])
   const getGoodsDetail = async () => {
+ 
+     
+
     const params = form.getFieldsValue()
     const res = await ActivitiesService.activityGoodsPage({ ...params, ...query })
-    setData([...res?.data, ...(goodsAlreadyData ?? [])])
+    setData(unique([...res?.data, ...(goodsAlreadyData ?? [])]))
   }
   const columns = [
     {

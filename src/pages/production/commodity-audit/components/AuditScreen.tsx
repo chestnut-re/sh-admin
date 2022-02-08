@@ -6,6 +6,7 @@ import TimeColumn from '@/components/tableColumn/TimeColumn'
 import { ProductionReleaseService } from '@/service/ProductionReleaseService'
 import { useHistory } from 'react-router-dom'
 import GoodsAuditState from '@/components/tableColumn/GoodsAuditState'
+import { getNanoId } from '@/utils/nanoid'
 
 interface Props {
   /**发布，上架 */
@@ -34,13 +35,23 @@ const AuditScreen: React.FC<Props> = ({ type }) => {
     console.log(params)
     if (type === 'publish') {
       ProductionAuditService.list({ current: pageIndex, size: pageSize, checkState, ...params }).then((res) => {
-        setData(res.data.records)
-        setTotal(res.data.total)
+        setData(
+          res.data?.records?.map((i) => {
+            i.key = getNanoId()
+            return i
+          })
+        )
+        setTotal(res.data?.total ?? 0)
       })
     } else {
       ProductionReleaseService.list({ current: pageIndex, size: pageSize, checkState, ...params }).then((res) => {
-        setData(res.data.records)
-        setTotal(res.data.total)
+        setData(
+          res.data?.records?.map((i) => {
+            i.key = getNanoId()
+            return i
+          })
+        )
+        setTotal(res.data?.total ?? 0)
       })
     }
   }
@@ -188,10 +199,10 @@ const AuditScreen: React.FC<Props> = ({ type }) => {
         </Row>
       </div>
       <Table
-        rowKey="goodsId"
+        rowKey="key"
         columns={columns}
         scroll={{ x: 'max-content' }}
-        dataSource={[...data]}
+        dataSource={data}
         pagination={{
           onChange: onPaginationChange,
           showSizeChanger: true,
