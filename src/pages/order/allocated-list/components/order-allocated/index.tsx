@@ -236,7 +236,14 @@ const AllocatedDetailsPage: React.FC = () => {
         </div>
       </div>
       <div className="details-title">订单关联人</div>
-      <Table rowKey="id" columns={columnsD} scroll={{ x: 'max-content' }} dataSource={[...addData]} />
+      <Table
+        rowKey="id"
+        className="table-light-color"
+        columns={columnsD}
+        scroll={{ x: 'max-content' }}
+        pagination={false}
+        dataSource={[...addData]}
+      />
       {history.location.state.mode == 'edit' ? (
         <div className="ReleaseProduct__root">
           <StepView current={current} />
