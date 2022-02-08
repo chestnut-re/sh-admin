@@ -121,13 +121,44 @@ const OrderDetailsPage: React.FC = () => {
       title: '出行人信息',
       dataIndex: 'travelerName',
       className: 'table-light-color',
+      render: (text: any, record: any, index: any) => {
+        return (
+          <div className="travel">
+            <div>
+              <span className="travel-type">
+                {record?.travelerType == 1 ? `成人${index + 1}` : ''}
+                {record?.travelerType == 0 ? `儿童${index + 1}` : ''}
+              </span>
+              <span className="travel-name">{record?.travelerName || '无'}</span>
+              <span className="travel-relation">
+                {record?.travelerRelation == 0 ? '(本人)' : ''}
+                {record?.travelerRelation == 1 ? '(夫妻)' : ''}
+                {record?.travelerRelation == 2 ? '(父母)' : ''}
+                {record?.travelerRelation == 3 ? '(子女)' : ''}
+                {record?.travelerRelation == 4 ? '(亲戚)' : ''}
+                {record?.travelerRelation == 5 ? '(朋友)' : ''}
+                {record?.travelerRelation == 6 ? '(兄弟)' : ''}
+                {record?.travelerRelation == 7 ? '(姐妹)' : ''}
+              </span>
+            </div>
+            <div>
+              <span className="travel-relation">手机号</span>
+              <span>{record?.travelerPhoneNumber || '无'}</span>
+            </div>
+            {/* <div>
+              <span className="travel-type">关系归属</span>
+              <span>{record?.travelerPhoneNumber}</span>
+            </div> */}
+          </div>
+        )
+      },
     },
     {
       title: '单价',
       dataIndex: 'originPrice',
       className: 'table-light-color',
       render: (text: any, record: any) => {
-        return (parseInt(record.originPrice) / 1000).toFixed(2)
+        return ((parseInt(record?.originPrice) - parseInt(record?.discountAmount)) / 1000).toFixed(2)
       },
     },
     {
@@ -372,11 +403,12 @@ const OrderDetailsPage: React.FC = () => {
         columns={columnsD}
         scroll={{ x: 'max-content' }}
         dataSource={[...dataD]}
+        pagination={false}
       />
       <div className="details-title">分佣方案</div>
       <Table rowKey="id" columns={columnsF} scroll={{ x: 'max-content' }} dataSource={[...dataF]} />
       <div className="details-title">子订单信息</div>
-      <Table rowKey="id" columns={columnsZ} scroll={{ x: 'max-content' }} dataSource={[...dataZ]} />
+      <Table rowKey="id" columns={columnsZ} scroll={{ x: 'max-content' }} dataSource={[...dataZ]} pagination={false} />
 
       <div className="details-title">支付详情</div>
       <div className="bottom">
@@ -399,7 +431,7 @@ const OrderDetailsPage: React.FC = () => {
           </tr>
           <tr>
             <td>{data.payAmount ? (parseInt(data?.payAmount) / 1000).toFixed(2) : 0}</td>
-            <td>{data.originPrice ? (parseInt(data?.originPrice) / 1000).toFixed(2) : 0}</td>
+            <td>{((parseInt(data?.originPrice) - parseInt(data?.discountAmount)) / 1000).toFixed(2)}</td>
             <td>{data.tokenAmount ? (parseInt(data?.tokenAmount) / 1000).toFixed(2) : 0}</td>
           </tr>
         </table>

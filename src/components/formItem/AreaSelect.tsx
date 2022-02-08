@@ -1,6 +1,6 @@
 /*
  * @Description:
- * @LastEditTime: 2022-02-07 19:13:10
+ * @LastEditTime: 2022-02-08 11:16:46
  */
 import ChannelService from '@/service/ChannelService'
 import { cityDispose, regionsCodeArray } from '@/utils/tree'
@@ -26,8 +26,8 @@ const AreaSelect: React.FC<Props> = ({ defaultValue, perlValue, supUser, onChang
   const [regions, setRegions] = useState('')
   const [value, setValue] = useState<Array<any>>([])
   useEffect(() => {
-    getProvinceCity()
     if (channelId) {
+      getProvinceCity()
       getChannelInfo()
     }
   }, [channelId])
@@ -38,7 +38,7 @@ const AreaSelect: React.FC<Props> = ({ defaultValue, perlValue, supUser, onChang
     if (supUser) {
       getUserArea()
     }
-  }, [supUser])
+  }, [supUser,perlValue])
 
   const getUserArea = () => {
     ChannelService.getUserArea(supUser).then((res) => {
@@ -86,7 +86,6 @@ const AreaSelect: React.FC<Props> = ({ defaultValue, perlValue, supUser, onChang
     ChannelService.getProvinceCity({ adcodes: regions }).then((res) => {
       setArea(cityDispose(res?.data, 'areas'))
       if (!!perlValue) {
-        console.log(regionsCodeArray(perlValue, res?.data))
         setValue(regionsCodeArray(perlValue, res?.data))
       }
     })
