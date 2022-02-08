@@ -14,7 +14,6 @@ import StateStyle from '@/components/state'
 const AllocatedListPage: React.FC = () => {
   const history = useNavigate()
   const [form] = Form.useForm()
-  const { Option } = Select
   const { RangePicker } = DatePicker
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
@@ -44,14 +43,6 @@ const AllocatedListPage: React.FC = () => {
         setData(res.data.records)
         setTotal(res.data.total)
       })
-    })
-  }
-
-  const getChannel = () => {
-    ChannelService.list({ pages: 1, size: 10 }).then((res) => {
-      if (res.code === HttpCode.success) {
-        setChannelData(res.data?.records ?? [])
-      }
     })
   }
 
@@ -91,7 +82,7 @@ const AllocatedListPage: React.FC = () => {
       title: '应付款',
       dataIndex: 'originPrice',
       render: (text: any, record: any) => {
-        return (parseInt(record.originPrice) / 1000).toFixed(2)
+        return ((parseInt(record?.originPrice) - parseInt(record?.discountAmount)) / 1000).toFixed(2)
       },
     },
     {
