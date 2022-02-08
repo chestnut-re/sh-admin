@@ -12,6 +12,7 @@ import { userLoginOut } from '@/utils/biz'
 import zhCN from 'antd/es/locale/zh_CN'
 import { observer } from 'mobx-react-lite'
 import { useStore } from '@/store/context'
+import out from '@/assets/img/out.png'
 function AdminLayout(): JSX.Element {
   const { adminStore } = useStore()
   const _logout = () => {
@@ -27,6 +28,7 @@ function AdminLayout(): JSX.Element {
               {adminStore.isSubCenter() ? '分中心账号: ' : '集团账号: '} {adminStore.userDetails.nickName}
             </div>
             <div className="logout" onClick={_logout}>
+              <img className="img-add" src={out} />
               退出
             </div>
           </div>
