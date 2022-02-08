@@ -9,13 +9,14 @@ import dayjs from 'dayjs'
 import { getCookie } from '@/utils/cookies'
 import { getNanoId } from '@/utils/nanoid'
 import { UploadOutlined } from '@ant-design/icons'
+import qs from 'query-string'
 /**
  * 用户提现
  */
 
 const UserPage: React.FC = () => {
   const [form] = Form.useForm()
-  const history = useNavigate<any>()
+  const history = useNavigate()
   const { RangePicker } = DatePicker
   const { Option } = Select
   const [data, setData] = useState([])
@@ -121,7 +122,12 @@ const UserPage: React.FC = () => {
       fixed: 'right',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <span className="operation" onClick={() => toDetails(record)}>
+          <span
+            className="operation"
+            onClick={() => {
+              history(`/finance/withdrawal-review/details?${qs.stringify(record)}`)
+            }}
+          >
             详情
           </span>
           {record?.sts == 1 ? (
@@ -135,11 +141,11 @@ const UserPage: React.FC = () => {
   ]
 
   /**详情 */
-  const toDetails = (record) => {
-    history('/finance/withdrawal-review/details', {
-      record: record,
-    })
-  }
+  // const toDetails = (record) => {
+  //   history('/finance/withdrawal-review/details', {
+  //     record: record,
+  //   })
+  // }
 
   /**编辑 */
   const _editDialog = (record) => {

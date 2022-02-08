@@ -32,7 +32,7 @@ const TabOnePage: React.FC<Props> = ({ data }) => {
           pageSize: pageSize,
           startDate,
           endDate,
-          phone: data?.phone,
+          phone: data,
           type: 1,
           balanceType: formData.balanceType,
         }).then((res) => {

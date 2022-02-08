@@ -30,7 +30,7 @@ const TabTwoPage: React.FC<Props> = ({ data }) => {
           pageSize: pageSize,
           startDate,
           endDate,
-          phone: data?.phone,
+          phone: data,
           type: 2,
         }).then((res) => {
           if (res.code === HttpCode.success) {

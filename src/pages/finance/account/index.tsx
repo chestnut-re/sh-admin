@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Form, Col, Row, Button, Table, Space, Tabs, Select } from 'antd'
 import './index.less'
+import qs from 'query-string'
 import { InputTemp } from '@/components/filter/formItem'
 import { FinanceAccountService } from '@/service/FinanceAccountService'
 import ChannelService from '@/service/ChannelService'
@@ -80,7 +81,12 @@ const AccountPage: React.FC = () => {
       fixed: 'right',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <span className="operation" onClick={() => _editDialog(record)}>
+          <span
+            className="operation"
+            onClick={() => {
+              history(`/finance/account/details?${qs.stringify(record)}`)
+            }}
+          >
             查看明细
           </span>
         </Space>
@@ -91,7 +97,9 @@ const AccountPage: React.FC = () => {
   /**编辑 */
   const _editDialog = (record) => {
     history('/finance/account/details', {
-      record: record,
+      state: {
+        record: record,
+      },
     })
   }
 

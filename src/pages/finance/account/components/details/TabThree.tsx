@@ -31,7 +31,7 @@ const TabThreePage: React.FC<Props> = ({ data }) => {
           pageSize: pageSize,
           startDate,
           endDate,
-          phone: data?.phone,
+          phone: data,
           type: 3,
           balanceType: formData.balanceType,
         }).then((res) => {
