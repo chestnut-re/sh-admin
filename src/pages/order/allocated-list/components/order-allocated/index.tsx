@@ -213,11 +213,11 @@ const AllocatedDetailsPage: React.FC = () => {
         </div>
         <div className="infor">
           <div>成人价</div>
-          <div>{(parseInt(data?.personCurrentPrice) / 1000).toFixed(2)}</div>
+          <div>{data?.personCurrentPrice ? (parseInt(data?.personCurrentPrice) / 1000).toFixed(2) : ''}</div>
         </div>
         <div className="infor">
           <div>儿童价</div>
-          <div>{(parseInt(data?.childCurrentPrice) / 1000).toFixed(2)}</div>
+          <div>{data?.childCurrentPrice ? (parseInt(data?.childCurrentPrice) / 1000).toFixed(2) : ''}</div>
         </div>
         <div className="infor">
           <div>下单数量</div>
@@ -232,7 +232,7 @@ const AllocatedDetailsPage: React.FC = () => {
         </div>
         <div className="infor">
           <div>代币最多可抵</div>
-          <div>{(parseInt(data?.deductionPrice) / 1000).toFixed(2)}</div>
+          <div>{data?.deductionPrice ? (parseInt(data?.deductionPrice) / 1000).toFixed(2) : ''}</div>
         </div>
       </div>
       <div className="details-title">订单关联人</div>
