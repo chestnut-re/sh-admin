@@ -1,6 +1,6 @@
 /*
  * @Description:
- * @LastEditTime: 2022-01-21 18:50:14
+ * @LastEditTime: 2022-02-08 16:22:31
  */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path')
@@ -100,9 +100,6 @@ const webpackProdConfig = {
     port: 5002,
     hot: true,
     historyApiFallback: true, // router history 模式下需要
-    proxy: {
-      '/api': { target: 'https://prodapi.mountainseas.cn/', secure: false, changeOrigin: true },
-    },
   },
 }
 
