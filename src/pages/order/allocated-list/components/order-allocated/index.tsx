@@ -29,13 +29,26 @@ const AllocatedDetailsPage: React.FC = () => {
 
   useEffect(() => {
     const arr = JSON.parse(JSON.stringify(selectData))
+    console.log(arr, 'arr')
     if (arr != []) {
       arr.userName = arr.realName
       arr.orderShip = '接单人'
       arr.relationship = arr.belongChannel
+      arr.responsibilityArea = arr.address
       arr.phoneNumber = arr.phone
       arr.rebateFlag = arr.haveRebate
+      arr.accountTypeVal = '内部渠道'
+      if (arr.address) {
+        if (arr.address.search(data.departureCity) != -1) {
+          arr.areaEqualFlag = '是'
+        } else {
+          arr.areaEqualFlag = '否'
+        }
+      } else {
+        arr.areaEqualFlag = '否'
+      }
     }
+
     setAddData([...dataD, arr])
   }, [selectData])
 
