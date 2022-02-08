@@ -6,7 +6,7 @@ import Column from 'antd/lib/table/Column'
 import ColumnGroup from 'antd/lib/table/ColumnGroup'
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Commission from './Commission'
 import './index.less'
 
@@ -14,7 +14,7 @@ import './index.less'
  * 上架申请
  */
 const CenterPutOnRequest: React.FC = () => {
-  const history = useHistory()
+  const history = useNavigate()
   const query = useQuery()
   const { productionDetailStore } = useStore()
   const [maxLevel, setMaxLevel] = useState(0)
@@ -74,7 +74,7 @@ const CenterPutOnRequest: React.FC = () => {
         ProductionService.centerPutOnRequest(postData).then((res) => {
           if (res.code === '200') {
             message.success('上架申请提交成功')
-            history.goBack()
+            history(-1)
           }
         })
       })

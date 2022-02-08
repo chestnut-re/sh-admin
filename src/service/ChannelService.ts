@@ -1,6 +1,6 @@
 /*
  * @Description:渠道管理
- * @LastEditTime: 2022-01-26 19:17:59
+ * @LastEditTime: 2022-02-08 15:12:05
  */
 import axios from '@/request'
 
@@ -8,6 +8,11 @@ export default class ChannelService {
   static list(data): Promise<any> {
     return axios.get('/api/market/channel/page', {
       params: data,
+    })
+  }
+  static getCurrentChannelRegions(data): Promise<any> {
+    return axios.get('/api/market/channel/getCurrentChannelRegions', {
+      params: {id:data},
     })
   }
   

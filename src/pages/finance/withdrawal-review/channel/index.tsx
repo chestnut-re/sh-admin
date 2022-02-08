@@ -6,7 +6,7 @@ import { getNanoId } from '@/utils/nanoid'
 import { HttpCode } from '@/constants/HttpCode'
 import { WithdrawalReviewService } from '@/service/FinanceAccountService'
 import AEBannerDialog, { DialogMode } from './components/AEBannerDialog'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { getCookie } from '@/utils/cookies'
 import { UploadOutlined } from '@ant-design/icons'
 /**
@@ -15,7 +15,7 @@ import { UploadOutlined } from '@ant-design/icons'
 
 const ChannelPage: React.FC = () => {
   const [form] = Form.useForm()
-  const history = useHistory<any>()
+  const history = useNavigate<any>()
   const { RangePicker } = DatePicker
   const { Option } = Select
   const [data, setData] = useState([])
@@ -154,7 +154,7 @@ const ChannelPage: React.FC = () => {
 
   /**详情 */
   const toDetails = (record) => {
-    history.push('/finance/withdrawal-review/details', {
+    history('/finance/withdrawal-review/details', {
       record: record,
     })
   }

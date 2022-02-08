@@ -1,11 +1,17 @@
+/* eslint-disable react/display-name */
 import { useStore } from '@/store/context'
 import { getURLPath } from '@/utils/urlUtils'
 import { Layout, Menu } from 'antd'
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
-import { Link, withRouter } from 'react-router-dom'
-import './index.less'
+import { Link, useParams } from 'react-router-dom'
 
+import './index.less'
+function myWithRouter(LayoutSider) {
+  return (props) => {
+    return <LayoutSider {...props} params={useParams()} />
+  }
+}
 function LayoutSider(): JSX.Element {
   const { adminStore } = useStore()
   const selectedKeys = [getURLPath()]
@@ -15,7 +21,7 @@ function LayoutSider(): JSX.Element {
   const getMenuNodes = (_menuList: any[]) => {
     return _menuList.reduce((pre, item) => {
       if (item.visible) return pre
-      if (item.children && item.children.length > 0&&item.children.find(res=>res.visible==false)) {
+      if (item.children && item.children.length > 0 && item.children.find((res) => res.visible == false)) {
         pre.push(
           <Menu.SubMenu
             key={item.path}
@@ -52,4 +58,4 @@ function LayoutSider(): JSX.Element {
   )
 }
 
-export default withRouter(observer(LayoutSider))
+export default myWithRouter(observer(LayoutSider))

@@ -1,16 +1,20 @@
+/*
+ * @Description: 
+ * @LastEditTime: 2022-02-07 15:17:49
+ */
 import useQuery from '@/hooks/useQuery'
 import { ProductionService } from '@/service/ProductionService'
 import { useStore } from '@/store/context'
 import { observer } from 'mobx-react-lite'
 import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import './index.less'
 
 /**
  * 上架信息展示: 分中心视角
  */
 const PutOnInfoShowSubCenter: React.FC = () => {
-  const history = useHistory()
+  const history = useNavigate()
   const query = useQuery()
   const { productionDetailStore } = useStore()
   const [data, setData] = useState<any>({})

@@ -6,7 +6,7 @@ import './index.less'
 import { ProductionListService } from '@/service/ProductionListService'
 import TimeColumn from '@/components/tableColumn/TimeColumn'
 import TravelModeColumn from '@/components/tableColumn/TravelModeColumn'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import NewPrice from '@/components/tableColumn/NewPrice'
 import { PlusOutlined } from '@ant-design/icons'
 
@@ -14,7 +14,7 @@ import { PlusOutlined } from '@ant-design/icons'
  * 商品库 待发布
  */
 const UnReleaseProductionListPage: React.FC<any> = observer(({}) => {
-  const history = useHistory()
+  const history = useNavigate()
   const [form] = Form.useForm()
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
@@ -102,7 +102,7 @@ const UnReleaseProductionListPage: React.FC<any> = observer(({}) => {
           <span
             className="operation"
             onClick={() => {
-              history.push(`/production/production-detail?id=${record.id}&type=unRelease`)
+              history(`/production/production-detail?id=${record.id}&type=unRelease`)
             }}
           >
             查看
@@ -112,7 +112,7 @@ const UnReleaseProductionListPage: React.FC<any> = observer(({}) => {
               className="operation"
               onClick={() => {
                 console.log(record)
-                history.push(`/production/release-product?id=${record.id}`)
+                history(`/production/release-product?id=${record.id}`)
               }}
             >
               编辑
@@ -122,7 +122,7 @@ const UnReleaseProductionListPage: React.FC<any> = observer(({}) => {
             className="operation"
             onClick={() => {
               console.log(record)
-              history.push(`/production/production-config-detail?id=${record.id}`)
+              history(`/production/production-config-detail?id=${record.id}`)
             }}
           >
             配置详情
@@ -153,7 +153,7 @@ const UnReleaseProductionListPage: React.FC<any> = observer(({}) => {
 
   /**添加商品 */
   const _addProduction = () => {
-    history.push('/production/release-product')
+    history('/production/release-product')
   }
 
   return (

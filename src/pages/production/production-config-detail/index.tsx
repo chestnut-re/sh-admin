@@ -4,7 +4,7 @@ import { useStore } from '@/store/context'
 import { Button, message } from 'antd'
 import { observer } from 'mobx-react-lite'
 import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import AEDialog from './components/AEDialog'
 import TemplateItem from './components/TemplateItem'
 import { TemplateType } from './template'
@@ -18,7 +18,7 @@ import UploadImage from '@/components/formItem/UploadImage'
 const ProductionConfigDetail: React.FC = () => {
   const query = useQuery()
   const { productionDetailStore } = useStore()
-  const history = useHistory()
+  const history = useNavigate()
 
   const [showDialog, setShowDialog] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
@@ -83,7 +83,7 @@ const ProductionConfigDetail: React.FC = () => {
     ProductionService.saveToAudit(productionDetailStore.data).then((res) => {
       console.log(res)
       if (res.code === '200') {
-        history.goBack()
+        history(-1)
       } else {
         message.error(res.msg)
       }
@@ -96,7 +96,7 @@ const ProductionConfigDetail: React.FC = () => {
       console.log(res)
       if (res.code === '200') {
         message.success('成功')
-        history.goBack()
+        history(-1)
       } else {
         message.error(res.msg)
       }

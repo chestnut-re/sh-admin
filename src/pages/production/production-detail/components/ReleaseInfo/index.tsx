@@ -5,7 +5,7 @@ import { Button, Form, Input, InputNumber, Radio, RadioChangeEvent, Switch } fro
 import { useForm } from 'antd/es/form/Form'
 import { observer } from 'mobx-react-lite'
 import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Commission from './Commission'
 import './index.less'
 
@@ -13,7 +13,7 @@ import './index.less'
  * 发布信息 审核
  */
 const ReleaseInfo: React.FC = () => {
-  const history = useHistory()
+  const history = useNavigate()
   const query = useQuery()
   const { productionDetailStore } = useStore()
 
@@ -66,7 +66,7 @@ const ReleaseInfo: React.FC = () => {
         console.log(postData)
         ProductionAuditService.publishAudit(postData).then((res) => {
           if (res.code === '200') {
-            history.goBack()
+            history(-1)
           }
         })
       })

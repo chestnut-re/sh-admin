@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect } from 'react'
 import ReactDOM from 'react-dom'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import 'normalize.css'
 import './assets/css/base.css'
 import './assets/css/admin.less'
@@ -28,10 +28,10 @@ const App = () => {
     <Provider>
       <Suspense fallback={<div>Loading...</div>}>
         <BrowserRouter>
-          <Switch>
-            <Route path="/login" exact component={LoginPage}></Route>
-            <Route path="/*" exact component={AdminLayout}></Route>
-          </Switch>
+          <Routes>
+            <Route path="/login"  element={<LoginPage/>}></Route>
+            <Route path="/*"  element={<AdminLayout/>}></Route>
+          </Routes>
         </BrowserRouter>
       </Suspense>
     </Provider>

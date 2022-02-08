@@ -4,7 +4,7 @@ import { useStore } from '@/store/context'
 import { divide } from 'lodash'
 import { observer } from 'mobx-react-lite'
 import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Table, Tag, Space } from 'antd'
 import dayjs from 'dayjs'
 import './index.less'
@@ -13,7 +13,7 @@ import './index.less'
  * 发布信息展示
  */
 const ReleaseInfoShow: React.FC = () => {
-  const history = useHistory()
+  const history = useNavigate()
   const query = useQuery()
   const { productionDetailStore } = useStore()
   const [data, setData] = useState<any>({})
