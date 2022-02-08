@@ -1,9 +1,10 @@
+
 import useQuery from '@/hooks/useQuery'
 import { ProductionService } from '@/service/ProductionService'
 import { useStore } from '@/store/context'
 import { observer } from 'mobx-react-lite'
 import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Table, Tag, Space } from 'antd'
 import './index.less'
 const { Column, ColumnGroup } = Table
@@ -13,7 +14,7 @@ const { Column, ColumnGroup } = Table
  * 分中心视角，查看自己的申请
  */
 const CenterPutOnRequestShowSubCenter: React.FC = () => {
-  const history = useHistory()
+  const history = useNavigate()
   const query = useQuery()
   const { productionDetailStore } = useStore()
   const [data, setData] = useState<any>({})

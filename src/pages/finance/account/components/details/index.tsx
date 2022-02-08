@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import './index.less'
 import { Tabs, Row, Col } from 'antd'
 import { FinanceAccountService } from '@/service/FinanceAccountService'
@@ -12,7 +12,7 @@ import TabThreePage from './TabThree'
  * 查看明细
  */
 const AccountDetails: React.FC = () => {
-  const history = useHistory<any>()
+  const history = useNavigate<any>()
   const [data, setData] = useState<any>({})
   const { TabPane } = Tabs
   useEffect(() => {

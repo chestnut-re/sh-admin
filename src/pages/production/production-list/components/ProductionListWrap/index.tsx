@@ -1,7 +1,7 @@
 import { useStore } from '@/store/context'
 import { Button, Tabs } from 'antd'
 import React from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import ProductionList from '../ProductionList'
 import ProductionListCenter from '../ProductionListCenter'
 import UnReleaseProductionListPage from '../UnReleaseProductionList'
@@ -10,7 +10,7 @@ import UnReleaseProductionListPage from '../UnReleaseProductionList'
  * 商品管理-商品库
  */
 const ProductionListWrap: React.FC = () => {
-  const history = useHistory()
+  const history = useNavigate()
   const { adminStore } = useStore()
 
   const onChange = (activeKey: string) => {
@@ -20,7 +20,7 @@ const ProductionListWrap: React.FC = () => {
   const operations = (
     <Button
       onClick={() => {
-        history.push('/production/draftbox')
+        history('/production/draftbox')
       }}
       htmlType="button"
       style={{marginLeft: '40px'}}

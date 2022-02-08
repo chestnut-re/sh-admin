@@ -6,7 +6,7 @@ import './index.less'
 import { ProductionListService } from '@/service/ProductionListService'
 import TimeColumn from '@/components/tableColumn/TimeColumn'
 import TravelModeColumn from '@/components/tableColumn/TravelModeColumn'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { ProductionService } from '@/service/ProductionService'
 import NewPrice from '@/components/tableColumn/NewPrice'
 import { PlusOutlined } from '@ant-design/icons'
@@ -15,7 +15,7 @@ import { PlusOutlined } from '@ant-design/icons'
  * 商品库 分中心
  */
 const ProductionListCenter: React.FC<any> = observer(({}) => {
-  const history = useHistory()
+  const history = useNavigate()
   const [form] = Form.useForm()
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
@@ -102,7 +102,7 @@ const ProductionListCenter: React.FC<any> = observer(({}) => {
           <span
             className="operation"
             onClick={() => {
-              history.push(
+              history(
                 `/production/production-detail?channelGoodsId=${record.channelGoodsId}&id=${record.id}&type=detailList`
               )
             }}
@@ -113,7 +113,7 @@ const ProductionListCenter: React.FC<any> = observer(({}) => {
             <span
               className="operation"
               onClick={() => {
-                history.push(`/production/production-detail?id=${record.id}&type=centerPublish`)
+                history(`/production/production-detail?id=${record.id}&type=centerPublish`)
               }}
             >
               上架
@@ -162,7 +162,7 @@ const ProductionListCenter: React.FC<any> = observer(({}) => {
 
   /**添加商品 */
   const _addProduction = () => {
-    history.push('/production/release-product')
+    history('/production/release-product')
   }
 
   return (

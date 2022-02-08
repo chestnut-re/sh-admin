@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import './../../../order-list/components/order-details/OrderDetails.less'
 import '@/pages/production/release-product/index.less'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Table, Space, Button, message, Modal } from 'antd'
 import { CheckCircleOutlined } from '@ant-design/icons'
 import { OrderService, AllocatedOrderService } from '@/service/OrderService'
@@ -14,7 +14,7 @@ import DetailsPage from '../config-commission/details'
  * 订单详情
  */
 const AllocatedDetailsPage: React.FC = () => {
-  const history = useHistory<any>()
+  const history = useNavigate<any>()
   const _ref = useRef<any>()
   const [dataD, setDataD] = useState<any>([])
   const [data, setData] = useState<any>([])
@@ -168,11 +168,11 @@ const AllocatedDetailsPage: React.FC = () => {
   }
 
   const toList = () => {
-    history.push('/order/order-list')
+    history('/order/order-list')
   }
 
   const toAllocated = () => {
-    history.push('/order/allocated-list')
+    history('/order/allocated-list')
   }
 
   return (

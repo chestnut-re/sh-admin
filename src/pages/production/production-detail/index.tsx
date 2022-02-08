@@ -1,8 +1,9 @@
+
 import useQuery from '@/hooks/useQuery'
 import { ProductionService } from '@/service/ProductionService'
 import { useStore } from '@/store/context'
 import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import BaseInfo from './components/BaseInfo'
 import CenterPutOnRequest from './components/CenterPutOnRequest'
 import CenterPutOnRequestShow from './components/CenterPutOnRequestShow'
@@ -25,7 +26,7 @@ const ProductionDetail: React.FC = () => {
   const { adminStore, productionDetailStore } = useStore()
   const [presetBonus, setPresetBonus] = useState<any>()
 
-  const history = useHistory()
+  const history = useNavigate()
 
   useEffect(() => {
     console.log(query.get('id'), query.get('type'))

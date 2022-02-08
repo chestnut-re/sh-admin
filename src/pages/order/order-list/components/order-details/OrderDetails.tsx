@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import './OrderDetails.less'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Table, Space, Button } from 'antd'
 import { OrderService } from '@/service/OrderService'
 import { HttpCode } from '@/constants/HttpCode'
@@ -9,7 +9,8 @@ import QRCode from 'qrcode.react'
  * 订单详情
  */
 const OrderDetailsPage: React.FC = () => {
-  const history = useHistory<any>()
+  const history = useNavigate<any>()
+  const [dataM, setDataM] = useState([])
   const [dataD, setDataD] = useState([])
   const [dataZ, setDataZ] = useState([])
   const [dataF, setDataF] = useState([])

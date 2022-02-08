@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Radio, Row, Col, Space, Input, Select, Button, Form, DatePicker, Table } from 'antd'
 import { SelectState, OrderRoute, OrderType, OrderState } from '@/components/filter/formItem'
 import './index.less'
@@ -12,7 +12,7 @@ import StateStyle from '@/components/state'
  * 待分配列表
  */
 const AllocatedListPage: React.FC = () => {
-  const history = useHistory()
+  const history = useNavigate()
   const [form] = Form.useForm()
   const { Option } = Select
   const { RangePicker } = DatePicker
@@ -183,14 +183,14 @@ const AllocatedListPage: React.FC = () => {
   ]
 
   const toDetails = (record: any) => {
-    history.push('/order/allocated-list/order-allocated', {
+    history('/order/allocated-list/order-allocated', {
       id: record.id,
       mode: 'see',
     })
   }
 
   const toEditDetails = (record: any) => {
-    history.push('/order/allocated-list/order-allocated', {
+    history('/order/allocated-list/order-allocated', {
       id: record.id,
       mode: 'edit',
     })

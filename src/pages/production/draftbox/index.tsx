@@ -6,14 +6,14 @@ import './index.less'
 import { ProductionDraftService } from '@/service/ProductionDraftService'
 import TimeColumn from '@/components/tableColumn/TimeColumn'
 import { formateTime } from '@/utils/timeUtils'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { ProductionService } from '@/service/ProductionService'
 
 /**
  * 商品库 草稿箱
  */
 const DraftListPage: React.FC = observer(() => {
-  const history = useHistory()
+  const history = useNavigate()
   const [form] = Form.useForm()
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
@@ -68,7 +68,7 @@ const DraftListPage: React.FC = observer(() => {
             className="operation"
             onClick={() => {
               console.log(record)
-              history.push(`/production/release-product?id=${record.id}`)
+              history(`/production/release-product?id=${record.id}`)
             }}
           >
             编辑

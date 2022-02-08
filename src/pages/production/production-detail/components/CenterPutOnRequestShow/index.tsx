@@ -3,7 +3,7 @@ import { ProductionService } from '@/service/ProductionService'
 import { useStore } from '@/store/context'
 import { observer } from 'mobx-react-lite'
 import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Table, Tag, Space, Button } from 'antd'
 import './index.less'
 import Item from 'antd/lib/list/Item'
@@ -15,7 +15,7 @@ const { Column, ColumnGroup } = Table
  * 总中心视角，查看所有的上架申请
  */
 const CenterPutOnRequestShow: React.FC = () => {
-  const history = useHistory()
+  const history = useNavigate()
   const query = useQuery()
   const { productionDetailStore } = useStore()
   const [data, setData] = useState<any[]>([])
