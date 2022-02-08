@@ -205,7 +205,7 @@ const AfterSalesListPage: React.FC = () => {
           <Row gutter={[5, 0]} style={{ paddingLeft: '40px' }}>
             <Col span={2}>
               <Form.Item name="keyword">
-                <Input />
+                <Input placeholder="订单编号/商品名称" />
               </Form.Item>
             </Col>
             <Col span={2} className="table-from-label">
