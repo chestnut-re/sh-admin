@@ -28,6 +28,7 @@ const AEBannerDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClos
     getParentList()
     form.setFieldsValue({
       sortName: data?.sortName,
+      parentId: data?.parentId,
     })
   }, [show])
 
