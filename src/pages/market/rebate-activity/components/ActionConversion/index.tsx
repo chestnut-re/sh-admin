@@ -1,6 +1,6 @@
 /*
  * @Description:
- * @LastEditTime: 2022-01-15 14:51:41
+ * @LastEditTime: 2022-02-08 16:53:36
  */
 import { Form, Input, Modal, InputNumber, Radio, Switch, Row, Col, Checkbox } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
@@ -23,12 +23,7 @@ const ActionConversion: FC = () => {
             <Col span={7}>
               <Form.Item
                 name="shareTotal"
-                rules={[
-                  {
-                    pattern: /^[0-9]\d{0,1}$/,
-                    message: '请输入0-100的整数!',
-                  },{ required: true, message: '请选择!' }
-                ]}
+                rules={[{ required: true, message: '请输入任务目标!' }]}
                 label="任务目标"
               >
                 <InputNumber addonBefore="累计分享" style={{ width: '180px' }} addonAfter="次" type="number" />
