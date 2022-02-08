@@ -1,13 +1,14 @@
+
 import { recordAnnotationApplied } from 'mobx/dist/internal'
 import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import './index.less'
 
 /**
  * 审核详情
  */
 const ReviewDetails: React.FC = () => {
-  const history = useHistory<any>()
+  const history = useNavigate<any>()
   const [data, setData] = useState<any>({})
 
   useEffect(() => {

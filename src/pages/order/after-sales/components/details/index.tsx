@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import './index.less'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Table, Space, Button } from 'antd'
 import { OrderService } from '@/service/OrderService'
 import { HttpCode } from '@/constants/HttpCode'
@@ -8,7 +8,7 @@ import { HttpCode } from '@/constants/HttpCode'
  * 订单详情
  */
 const OrderDetailsPage: React.FC = () => {
-  const history = useHistory()
+  const history = useNavigate()
   const [dataM, setDataM] = useState([])
   const [dataD, setDataD] = useState([])
   const [dataZ, setDataZ] = useState([])

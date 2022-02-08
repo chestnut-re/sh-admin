@@ -4,7 +4,7 @@ import './index.less'
 import { InputTemp } from '@/components/filter/formItem'
 import { FinanceAccountService } from '@/service/FinanceAccountService'
 import ChannelService from '@/service/ChannelService'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { getNanoId } from '@/utils/nanoid'
 
 /**
@@ -13,7 +13,7 @@ import { getNanoId } from '@/utils/nanoid'
 const AccountPage: React.FC = () => {
   const [form] = Form.useForm()
   const { Option } = Select
-  const history = useHistory<any>()
+  const history = useNavigate<any>()
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
   const [pageSize, setPageSize] = useState(10)
@@ -90,7 +90,7 @@ const AccountPage: React.FC = () => {
 
   /**编辑 */
   const _editDialog = (record) => {
-    history.push('/finance/account/details', {
+    history('/finance/account/details', {
       record: record,
     })
   }

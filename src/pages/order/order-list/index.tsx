@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Radio, Row, Col, Space, Input, Select, Button, Form, DatePicker, Table } from 'antd'
 import { SelectState, OrderRoute, OrderType, OrderState } from '@/components/filter/formItem'
 import './index.less'
@@ -13,7 +13,7 @@ import StateStyle from '@/components/state'
  * 订单列表
  */
 const OrderListPage: React.FC = () => {
-  const history = useHistory<any>()
+  const history = useNavigate<any>()
   const [form] = Form.useForm()
   const { Option } = Select
   const { RangePicker } = DatePicker
@@ -208,7 +208,7 @@ const OrderListPage: React.FC = () => {
   ]
 
   const toDetails = (record: any) => {
-    history.push('/order/order-list/order-details', {
+    history('/order/order-list/order-details', {
       id: record.id,
     })
   }
@@ -229,7 +229,7 @@ const OrderListPage: React.FC = () => {
   }
 
   const _toDetails = () => {
-    history.push('/order/allocated-list', {})
+    history('/order/allocated-list', {})
   }
 
   return (

@@ -4,7 +4,7 @@ import { InputTemp, SelectTemp } from '@/components/filter/formItem'
 import { ProductionAuditService } from '@/service/ProductionAuditService'
 import TimeColumn from '@/components/tableColumn/TimeColumn'
 import { ProductionReleaseService } from '@/service/ProductionReleaseService'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import GoodsAuditState from '@/components/tableColumn/GoodsAuditState'
 import { getNanoId } from '@/utils/nanoid'
 
@@ -17,7 +17,7 @@ interface Props {
  * 商品管理-商品审核
  */
 const AuditScreen: React.FC<Props> = ({ type }) => {
-  const history = useHistory()
+  const history = useNavigate()
   const [form] = Form.useForm()
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
@@ -107,7 +107,7 @@ const AuditScreen: React.FC<Props> = ({ type }) => {
               className="operation"
               onClick={() => {
                 console.log(record)
-                history.push(
+                history(
                   `/production/production-detail?channelGoodsId=${record.channelGoodsId}&goodsId=${record.goodsId}&id=${record.goodsId}&type=${type}Check`
                 )
               }}
@@ -123,12 +123,12 @@ const AuditScreen: React.FC<Props> = ({ type }) => {
                 console.log(record)
                 if (type === 'release') {
                   // 上架审核
-                  history.push(
+                  history(
                     `/production/production-detail?channelGoodsId=${record.channelGoodsId}&goodsId=${record.goodsId}&id=${record.goodsId}&type=${type}`
                   )
                 } else {
                   // 发布审核
-                  history.push(
+                  history(
                     `/production/production-detail?channelGoodsId=${record.channelGoodsId}&goodsId=${record.goodsId}&id=${record.goodsId}&type=${type}`
                   )
                 }

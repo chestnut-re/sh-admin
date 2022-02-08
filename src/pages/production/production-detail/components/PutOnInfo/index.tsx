@@ -1,3 +1,7 @@
+/*
+ * @Description: 
+ * @LastEditTime: 2022-02-07 15:17:37
+ */
 import useQuery from '@/hooks/useQuery'
 import { ProductionAuditService } from '@/service/ProductionAuditService'
 import { useStore } from '@/store/context'
@@ -5,7 +9,7 @@ import { Button, Form, Input, InputNumber, message, Radio, RadioChangeEvent, Swi
 import { useForm } from 'antd/es/form/Form'
 import { observer } from 'mobx-react-lite'
 import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Commission from './Commission'
 import './index.less'
 
@@ -17,7 +21,7 @@ interface Props {
  * 上架信息 审核
  */
 const PutOnInfo: React.FC<Props> = ({ presetBonus }) => {
-  const history = useHistory()
+  const history = useNavigate()
   const query = useQuery()
   const { productionDetailStore } = useStore()
 
@@ -55,7 +59,7 @@ const PutOnInfo: React.FC<Props> = ({ presetBonus }) => {
         ProductionAuditService.putOnAudit(postData).then((res) => {
           if (res.code === '200') {
             message.success('成功')
-            history.goBack()
+            history(-1)
           } else {
             message.error(res.msg)
           }

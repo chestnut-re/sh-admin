@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Radio, Row, Col, Space, Input, Select, Button, Form, DatePicker, Table } from 'antd'
 import { SelectState, OrderRoute, OrderType, OrderState } from '@/components/filter/formItem'
 import './index.less'
@@ -12,7 +12,7 @@ import ExamineDialog from './components/examine/ExamineDialog'
  * 售后管理
  */
 const AfterSalesListPage: React.FC = () => {
-  const history = useHistory()
+  const history = useNavigate()
   const [form] = Form.useForm()
   const { Option } = Select
   const { RangePicker } = DatePicker
@@ -147,7 +147,7 @@ const AfterSalesListPage: React.FC = () => {
   }
 
   const toDetails = (record: any) => {
-    history.push('/order/after-sales/details', {
+    history('/order/after-sales/details', {
       id: record.id,
     })
   }

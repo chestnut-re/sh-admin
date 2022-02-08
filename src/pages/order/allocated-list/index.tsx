@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Radio, Row, Col, Space, Input, Select, Button, Form, DatePicker, Table } from 'antd'
 import { SelectState, OrderRoute, OrderType, OrderState } from '@/components/filter/formItem'
 import './index.less'
@@ -12,9 +12,8 @@ import StateStyle from '@/components/state'
  * 待分配列表
  */
 const AllocatedListPage: React.FC = () => {
-  const history = useHistory()
+  const history = useNavigate()
   const [form] = Form.useForm()
-  const { Option } = Select
   const { RangePicker } = DatePicker
   const [data, setData] = useState([])
   const [pageIndex, setPageIndex] = useState(1)
@@ -44,14 +43,6 @@ const AllocatedListPage: React.FC = () => {
         setData(res.data.records)
         setTotal(res.data.total)
       })
-    })
-  }
-
-  const getChannel = () => {
-    ChannelService.list({ pages: 1, size: 10 }).then((res) => {
-      if (res.code === HttpCode.success) {
-        setChannelData(res.data?.records ?? [])
-      }
     })
   }
 
@@ -91,7 +82,7 @@ const AllocatedListPage: React.FC = () => {
       title: '应付款',
       dataIndex: 'originPrice',
       render: (text: any, record: any) => {
-        return (parseInt(record.originPrice) / 1000).toFixed(2)
+        return ((parseInt(record?.originPrice) - parseInt(record?.discountAmount)) / 1000).toFixed(2)
       },
     },
     {
@@ -183,14 +174,14 @@ const AllocatedListPage: React.FC = () => {
   ]
 
   const toDetails = (record: any) => {
-    history.push('/order/allocated-list/order-allocated', {
+    history('/order/allocated-list/order-allocated', {
       id: record.id,
       mode: 'see',
     })
   }
 
   const toEditDetails = (record: any) => {
-    history.push('/order/allocated-list/order-allocated', {
+    history('/order/allocated-list/order-allocated', {
       id: record.id,
       mode: 'edit',
     })

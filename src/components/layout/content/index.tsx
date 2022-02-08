@@ -1,10 +1,10 @@
 /*
  * @Description: 
- * @LastEditTime: 2022-01-25 16:48:44
+ * @LastEditTime: 2022-02-08 13:56:23
  */
 import { Layout } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { Redirect, Route, Switch, withRouter } from 'react-router-dom'
+import { Redirect, Route, Routes,  } from 'react-router-dom'
 import loadable from '@loadable/component'
 import { useStore } from '@/store/context'
 import { observer } from 'mobx-react-lite'
@@ -29,17 +29,16 @@ function ContentLayout({ location }: ContentLayoutProps): JSX.Element {
 
   return (
     <Layout.Content>
-      <Switch location={location}>
+      <Routes location={location}>
         <>
           {/* <BreadcrumbList adminStore={adminStore.menu}> */}
             <>
               {tempMenuList.map((route) => {
                 return (
                   <Route
-                    exact
-                    component={loadable(
+                    element={React.createElement(loadable(
                       () => import(/* webpackChunkName: 'page'*/ `../../../pages${route.componentPath}`)
-                    )}
+                    ))}
                     key={route.path}
                     path={route.path}
                   />
@@ -50,9 +49,9 @@ function ContentLayout({ location }: ContentLayoutProps): JSX.Element {
         </>
 
         {/* {adminStore.menu?.length > 0 && <Redirect to="/error/404" />} */}
-      </Switch>
+      </Routes>
     </Layout.Content>
   )
 }
 
-export default withRouter(observer(ContentLayout))
+export default (observer(ContentLayout))

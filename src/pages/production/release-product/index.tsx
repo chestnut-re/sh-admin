@@ -1,3 +1,7 @@
+/*
+ * @Description: 
+ * @LastEditTime: 2022-02-07 15:21:17
+ */
 import React, { useEffect, useState, useRef } from 'react'
 import { observer } from 'mobx-react-lite'
 import './index.less'
@@ -7,14 +11,14 @@ import StepView from './components/StepView'
 import { useStore } from '@/store/context'
 import { ProductionService } from '@/service/ProductionService'
 import { message } from 'antd'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import useQuery from '@/hooks/useQuery'
 
 /**
  * 商品管理-发布商品
  */
 const ReleaseProductPage: React.FC = () => {
-  const history = useHistory()
+  const history = useNavigate()
   const query = useQuery()
   const { productionStore } = useStore()
   // 详情页模式
@@ -54,7 +58,7 @@ const ReleaseProductPage: React.FC = () => {
         console.log(res)
         if (res.code === '200') {
           message.success('成功')
-          history.goBack()
+          history(-1)
         }
       })
     }
@@ -76,7 +80,7 @@ const ReleaseProductPage: React.FC = () => {
         ProductionService.save(postData).then((res) => {
           if (res.code === '200') {
             message.success('成功')
-            history.goBack()
+            history(-1)
           }
         })
       })
@@ -87,7 +91,7 @@ const ReleaseProductPage: React.FC = () => {
       ProductionService.save(postData).then((res) => {
         if (res.code === '200') {
           message.success('成功')
-          history.goBack()
+          history(-1)
         }
       })
     }
