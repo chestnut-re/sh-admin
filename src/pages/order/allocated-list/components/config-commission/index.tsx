@@ -110,13 +110,32 @@ const ConfigCommission: React.FC<Props> = ({ orderData, id, receiverData, cRef }
                   {item.relation?.map((item: any, index) => {
                     return (
                       <div className="guanxi" style={{ marginLeft: '62px' }} key={index}>
-                        <span style={{ backgroundColor: 'darkgrey', borderRadius: '15px' }}>
-                          {orderData.map((i) => {
-                            if (i.id == item.userId) {
-                              return <span>{i.orderShip}&nbsp;&nbsp;</span>
-                            }
-                          })}
-                          {receiverData.userId == item.userId ? '接单人' : ''}
+                        {orderData.map((i) => {
+                          if (i.id == item.userId) {
+                            return (
+                              <span
+                                style={{
+                                  backgroundColor: 'darkgrey',
+                                  borderRadius: '15px',
+                                  textAlign: 'center',
+                                  padding: '0 2px',
+                                }}
+                              >
+                                {i.orderShip}
+                              </span>
+                            )
+                          }
+                        })}
+                        <span
+                          style={{
+                            display: 'inline-block',
+                            backgroundColor: 'darkgrey',
+                            borderRadius: '15px',
+                            textAlign: 'center',
+                            padding: '0 2px',
+                          }}
+                        >
+                          {receiverData.userId == item.userId ? '接单人' : null}
                           {item.havePresetBonus ? '有团建奖' : null}
                           {item.haveRebate ? '有返利' : null}
                         </span>
