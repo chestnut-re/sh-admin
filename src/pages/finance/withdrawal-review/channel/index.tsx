@@ -9,6 +9,7 @@ import AEBannerDialog, { DialogMode } from './components/AEBannerDialog'
 import { useNavigate } from 'react-router-dom'
 import { getCookie } from '@/utils/cookies'
 import { UploadOutlined } from '@ant-design/icons'
+import qs from 'query-string'
 /**
  * 渠道提现
  */
@@ -139,7 +140,12 @@ const ChannelPage: React.FC = () => {
       fixed: 'right',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <span className="operation" onClick={() => toDetails(record)}>
+          <span
+            className="operation"
+            onClick={() => {
+              history(`/finance/withdrawal-review/details?${qs.stringify(record)}`)
+            }}
+          >
             详情
           </span>
           {record?.sts == 1 ? (
@@ -153,11 +159,11 @@ const ChannelPage: React.FC = () => {
   ]
 
   /**详情 */
-  const toDetails = (record) => {
-    history('/finance/withdrawal-review/details', {
-      record: record,
-    })
-  }
+  // const toDetails = (record) => {
+  //   history('/finance/withdrawal-review/details', {
+  //     record: record,
+  //   })
+  // }
 
   /**编辑 */
   const _editDialog = (record) => {

@@ -155,7 +155,7 @@ const AllocatedListPage: React.FC = () => {
           <span
             className="operation"
             onClick={() => {
-              toDetails(record)
+              history(`/order/allocated-list/order-allocated?id=${record.id}&mode=see`)
             }}
           >
             详情
@@ -163,7 +163,7 @@ const AllocatedListPage: React.FC = () => {
           <span
             className="operation"
             onClick={() => {
-              toEditDetails(record)
+              history(`/order/allocated-list/order-allocated?id=${record.id}&mode=edit`)
             }}
           >
             分配
@@ -173,19 +173,19 @@ const AllocatedListPage: React.FC = () => {
     },
   ]
 
-  const toDetails = (record: any) => {
-    history('/order/allocated-list/order-allocated', {
-      id: record.id,
-      mode: 'see',
-    })
-  }
+  // const toDetails = (record: any) => {
+  //   history('/order/allocated-list/order-allocated', {
+  //     id: record.id,
+  //     mode: 'see',
+  //   })
+  // }
 
-  const toEditDetails = (record: any) => {
-    history('/order/allocated-list/order-allocated', {
-      id: record.id,
-      mode: 'edit',
-    })
-  }
+  // const toEditDetails = (record: any) => {
+  //   history('/order/allocated-list/order-allocated', {
+  //     id: record.id,
+  //     mode: 'edit',
+  //   })
+  // }
 
   const onFinish = (values: any) => {
     loadData(pageIndex)

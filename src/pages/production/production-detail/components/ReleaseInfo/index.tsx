@@ -1,7 +1,9 @@
 import useQuery from '@/hooks/useQuery'
+import { ProductionAuditService } from '@/service/ProductionAuditService'
 import { Button, Form, Input, InputNumber, Radio, RadioChangeEvent, Switch } from 'antd'
 import { observer } from 'mobx-react-lite'
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Commission from './Commission'
 import './index.less'
 
@@ -10,6 +12,7 @@ import './index.less'
  */
 const ReleaseInfo: React.FC = () => {
   const query = useQuery()
+  const history = useNavigate()
 
   const [form] = Form.useForm()
   const [commission, setCommission] = useState<any>({})

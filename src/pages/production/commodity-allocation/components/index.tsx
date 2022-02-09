@@ -112,9 +112,12 @@ const ListPage: React.FC = () => {
 
   //删除
   const handleOk = () => {
-    AllocationService.edit([
-      { id: selectedData.id, operationType: 3, parentId: selectedData.parentId, sortName: selectedData.sortName },
-    ]).then((res) => {
+    AllocationService.edit({
+      id: selectedData.id,
+      operationType: 3,
+      parentId: selectedData.parentId,
+      sortName: selectedData.sortName,
+    }).then((res) => {
       if (res.code === HttpCode.success) {
         message.success('删除成功')
         setIsModalVisible(false)

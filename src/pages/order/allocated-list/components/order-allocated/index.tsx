@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import useQuery from '@/hooks/useQuery'
 import './../../../order-list/components/order-details/OrderDetails.less'
 import '@/pages/production/release-product/index.less'
 import { useNavigate } from 'react-router-dom'
@@ -14,7 +15,8 @@ import DetailsPage from '../config-commission/details'
  * 订单详情
  */
 const AllocatedDetailsPage: React.FC = () => {
-  const history = useNavigate<any>()
+  const history = useNavigate()
+  const query = useQuery()
   const _ref = useRef<any>()
   const [dataD, setDataD] = useState<any>([])
   const [data, setData] = useState<any>([])
@@ -29,7 +31,6 @@ const AllocatedDetailsPage: React.FC = () => {
 
   useEffect(() => {
     const arr = JSON.parse(JSON.stringify(selectData))
-    console.log(arr, 'arr')
     if (arr != []) {
       arr.userName = arr.realName
       arr.orderShip = '接单人'
@@ -56,7 +57,7 @@ const AllocatedDetailsPage: React.FC = () => {
     setAddData([...dataD])
   }, [dataD])
   const loadData = () => {
-    OrderService.details({ orderId: history.location.state.id }).then((res) => {
+    OrderService.details({ orderId: query.get('id') }).then((res) => {
       if (res.code === HttpCode.success) {
         setData(res.data)
       }
@@ -64,7 +65,7 @@ const AllocatedDetailsPage: React.FC = () => {
   }
 
   const getRelations = () => {
-    OrderService.relation({ orderId: history.location.state.id }).then((res) => {
+    OrderService.relation({ orderId: query.get('id') }).then((res) => {
       if (res.code === HttpCode.success) {
         setDataD(res.data)
       }
@@ -136,11 +137,11 @@ const AllocatedDetailsPage: React.FC = () => {
       channelId: '',
       list: {},
     }
-    data.orderId = history.location.state.id
+    data.orderId = query.get('id') ?? ''
     data.userId = selectData.userId
     data.channelId = selectData.channelId
     data.list = JSON.parse(JSON.stringify(_ref.current?.relationList))
-    data.list.map((item) => {
+    data.list.map((item: any) => {
       delete item.key
       delete item.userId
       item.channelScaleList = item.relation
@@ -244,18 +245,13 @@ const AllocatedDetailsPage: React.FC = () => {
         pagination={false}
         dataSource={[...addData]}
       />
-      {history.location.state.mode == 'edit' ? (
+      {query.get('mode') == 'edit' ? (
         <div className="ReleaseProduct__root">
           <StepView current={current} />
           <div className="steps-content">
-            {current == 0 && <ServiceList id={history.location.state.id} setSelectData={setSelectData} />}
+            {current == 0 && <ServiceList id={query.get('id')} setSelectData={setSelectData} />}
             {current == 1 && (
-              <ConfigCommission
-                orderData={dataD}
-                cRef={_ref}
-                receiverData={selectData}
-                id={history.location.state.id}
-              />
+              <ConfigCommission orderData={dataD} cRef={_ref} receiverData={selectData} id={query.get('id')} />
             )}
             <div className="btnView">
               <div className="item">
@@ -274,7 +270,7 @@ const AllocatedDetailsPage: React.FC = () => {
           </div>
         </div>
       ) : (
-        <DetailsPage id={history.location.state.id} />
+        <DetailsPage id={query.get('id')} />
       )}
       <Modal centered visible={show} footer={false} onCancel={() => setShow(false)} maskClosable={false}>
         <div style={{ textAlign: 'center' }}>

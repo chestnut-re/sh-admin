@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import useQuery from '@/hooks/useQuery'
 import './OrderDetails.less'
 import { useNavigate } from 'react-router-dom'
 import { Table, Space, Button } from 'antd'
@@ -9,7 +10,8 @@ import QRCode from 'qrcode.react'
  * 订单详情
  */
 const OrderDetailsPage: React.FC = () => {
-  const history = useNavigate<any>()
+  const history = useNavigate()
+  const query = useQuery()
   const [dataM, setDataM] = useState([])
   const [dataD, setDataD] = useState([])
   const [dataZ, setDataZ] = useState([])
@@ -21,13 +23,13 @@ const OrderDetailsPage: React.FC = () => {
   }, [])
 
   const loadData = () => {
-    OrderService.details({ orderId: history.location.state.id }).then((res) => {
+    OrderService.details({ orderId: query.get('id') ?? '' }).then((res) => {
       if (res.code === HttpCode.success) {
         setData(res?.data ?? [])
         setDataZ(res.data?.subOrderDtoList ?? [])
       }
     })
-    OrderService.scaleInfo({ orderId: history.location.state.id }).then((res) => {
+    OrderService.scaleInfo({ orderId: query.get('id') ?? '' }).then((res) => {
       if (res.code === HttpCode.success) {
         const arr = {}
         res?.data?.relationList.map((item: any) => {
@@ -50,14 +52,13 @@ const OrderDetailsPage: React.FC = () => {
           item.four = arr.four
           item.five = arr.five
         })
-        console.log(res.data)
         setDataF(res.data?.relationList ?? [])
       }
     })
   }
 
   const getRelations = () => {
-    OrderService.relation({ orderId: history.location.state.id }).then((res) => {
+    OrderService.relation({ orderId: query.get('id') ?? '' }).then((res) => {
       if (res.code === HttpCode.success) {
         setDataD(res?.data ?? [])
       }
@@ -194,11 +195,11 @@ const OrderDetailsPage: React.FC = () => {
       dataIndex: 'stateVal',
       className: 'table-light-color',
     },
-    {
-      title: '行程状态',
-      dataIndex: 'state',
-      className: 'table-light-color',
-    },
+    // {
+    //   title: '行程状态',
+    //   dataIndex: 'state',
+    //   className: 'table-light-color',
+    // },
   ]
   const columnsF = [
     {
@@ -333,8 +334,6 @@ const OrderDetailsPage: React.FC = () => {
       ],
     },
   ]
-
-  const columnsC = []
   return (
     <div className="detail__root">
       <div className="states-con">

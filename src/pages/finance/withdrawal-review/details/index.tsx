@@ -1,20 +1,14 @@
-
 import { recordAnnotationApplied } from 'mobx/dist/internal'
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './index.less'
+import useQuery from '@/hooks/useQuery'
 
 /**
  * 审核详情
  */
 const ReviewDetails: React.FC = () => {
-  const history = useNavigate<any>()
-  const [data, setData] = useState<any>({})
-
-  useEffect(() => {
-    setData(history.location.state.record)
-  }, [history.location.state.record])
-
+  const query = useQuery()
   return (
     <div className="review__root">
       <div className="details-header">
@@ -24,21 +18,21 @@ const ReviewDetails: React.FC = () => {
         <div className="left">
           <div>
             <span>从属关系</span>
-            <span>{data?.channelNm}</span>
+            <span>{query.get('channelNm') ?? ''}</span>
           </div>
           <div>
             <span>姓名</span>
-            <span>{data?.name}</span>
+            <span>{query.get('name') ?? ''}</span>
           </div>
           <div>
             <span>账户</span>
-            <span>{data?.account}</span>
+            <span>{query.get('account') ?? ''}</span>
           </div>
           <div>
             <span>提现金额</span>
-            <span>{(parseInt(data?.amount) / 1000).toFixed(2)}</span>
+            <span>{(parseInt(query.get('amount')) / 1000).toFixed(2)}</span>
           </div>
-          {data?.sts == 1 ? (
+          {query.get('sts') == '1' ? (
             <div>
               <span>审核状态</span>
               <span>待审核</span>
@@ -46,18 +40,18 @@ const ReviewDetails: React.FC = () => {
           ) : (
             ''
           )}
-          {data?.sts == 2 ? (
+          {query.get('sts') == '2' ? (
             <div>
               <span>审核备注</span>
-              <span>{data?.remark}</span>
+              <span>{query.get('remark') ?? ''}</span>
             </div>
           ) : (
             ''
           )}
-          {data?.sts == 3 ? (
+          {query.get('sts') == '3' ? (
             <div>
               <span>驳回理由</span>
-              <span>{data?.rejectReason}</span>
+              <span>{query.get('rejectReason') ?? ''}</span>
             </div>
           ) : (
             ''
@@ -66,11 +60,11 @@ const ReviewDetails: React.FC = () => {
         <div className="right">
           <div>
             <span>审核人</span>
-            <span>{data?.auditor}</span>
+            <span>{query.get('auditor') ?? ''}</span>
           </div>
           <div>
             <span>审核时间</span>
-            <span>{data?.handleTime}</span>
+            <span>{query.get('handleTime') ?? ''}</span>
           </div>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import useQuery from '@/hooks/useQuery'
 import './index.less'
 import { Tabs, Row, Col } from 'antd'
 import { FinanceAccountService } from '@/service/FinanceAccountService'
@@ -12,17 +13,17 @@ import TabThreePage from './TabThree'
  * 查看明细
  */
 const AccountDetails: React.FC = () => {
-  const history = useNavigate<any>()
+  const query = useQuery()
   const [data, setData] = useState<any>({})
   const { TabPane } = Tabs
   useEffect(() => {
-    if (history.location.state.record) {
+    if (query.get('userId')) {
       loadAllData()
     }
-  }, [history.location.state.record])
+  }, [query.get('userId')])
 
   const loadAllData = () => {
-    FinanceAccountService.details({ phone: history.location.state.record?.phone }).then((res) => {
+    FinanceAccountService.details({ phone: query.get('phone') ?? '' }).then((res) => {
       if (res.code === HttpCode.success) {
         setData(res.data ?? {})
       }
@@ -37,13 +38,13 @@ const AccountDetails: React.FC = () => {
       <div className="content">
         <Row gutter={[0, 24]}>
           <Col className="gutter-row" span={4}>
-            归属渠道：{history.location.state.record?.channelName}
+            归属渠道：{query.get('channelName') ?? ''}
           </Col>
           <Col className="gutter-row" span={4}>
-            姓名：{history.location.state.record?.realName}
+            姓名：{query.get('realName') ?? ''}
           </Col>
           <Col className="gutter-row" span={4}>
-            账号：{history.location.state.record?.phone}
+            账号：{query.get('phone') ?? ''}
           </Col>
         </Row>
         <Row gutter={[0, 24]}>
@@ -80,13 +81,13 @@ const AccountDetails: React.FC = () => {
       <div className="sales-tabs">
         <Tabs defaultActiveKey="1">
           <TabPane tab="佣金" key="1">
-            <TabOnePage data={history.location.state.record} />
+            <TabOnePage data={query.get('phone')} />
           </TabPane>
           <TabPane tab="提现" key="2">
-            <TabTwoPage data={history.location.state.record} />
+            <TabTwoPage data={query.get('phone')} />
           </TabPane>
           <TabPane tab="运营资金" key="3">
-            <TabThreePage data={history.location.state.record} />
+            <TabThreePage data={query.get('phone')} />
           </TabPane>
         </Tabs>
       </div>
