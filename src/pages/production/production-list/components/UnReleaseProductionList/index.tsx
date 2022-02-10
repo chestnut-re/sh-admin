@@ -38,7 +38,7 @@ const UnReleaseProductionListPage: React.FC<any> = observer(({}) => {
   const columnsUnRelease = [
     {
       title: '商品ID',
-      dataIndex: 'id',
+      dataIndex: 'goodsNo',
     },
     {
       title: '商品名称',

@@ -4,7 +4,7 @@ import { cityDispose } from '@/utils/tree'
 import { Cascader } from 'antd'
 import { observer } from 'mobx-react-lite'
 import React, { useEffect, useState } from 'react'
-
+import './index.less'
 interface Props {
   value?: any[]
   onChange?: (value: any[]) => void
@@ -53,9 +53,10 @@ const OriginLocation: React.FC<Props> = () => {
   }
 
   return (
-    <div>
-      始发地:
+    <div className="OriginLocation__root">
+      <span className="pla-name">始发地:</span>
       <Cascader
+        size="small"
         options={area}
         onChange={casOnChange}
         value={value}

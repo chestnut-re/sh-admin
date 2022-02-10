@@ -1,5 +1,5 @@
 /*
- * @Description: 
+ * @Description:
  * @LastEditTime: 2022-02-07 15:21:17
  */
 import React, { useEffect, useState, useRef } from 'react'
@@ -106,14 +106,14 @@ const ReleaseProductPage: React.FC = () => {
 
         <div className="btnView">
           <div className="item">
+            <div onClick={() => next()} className="nextBtn">
+              {current === 1 ? '提交至待发布' : '下一步'}
+            </div>
             {current > 0 && (
               <div onClick={() => prev()} className="nextBtn prev">
                 上一步
               </div>
             )}
-            <div onClick={() => next()} className="nextBtn">
-              {current === 1 ? '提交至待发布' : '下一步'}
-            </div>
           </div>
 
           <div onClick={() => onDraft()} className="draftBtn">

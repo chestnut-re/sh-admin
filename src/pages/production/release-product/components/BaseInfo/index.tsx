@@ -127,7 +127,7 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
           </Form.Item>
           <Form.Item label="商品限购">
             <Row>
-              <Col span={4} className="switch">
+              <Col span={2} className="switch">
                 <Switch
                   checked={goodsLimit}
                   checkedChildren="开启"
@@ -139,9 +139,10 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
               </Col>
               {goodsLimit && (
                 <>
-                  <Col span={10}>
+                  <Col span={3}>
                     <Form.Item name={['purchaseConfig', 'purchaseDay']} label="">
                       <InputNumber
+                        className="input-number"
                         addonAfter="天"
                         min={0}
                         step={1}
@@ -155,9 +156,10 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
                       />
                     </Form.Item>
                   </Col>
-                  <Col span={10}>
+                  <Col span={19}>
                     <Form.Item name={['purchaseConfig', 'purchaseNum']} label="">
                       <InputNumber
+                        className="input-number"
                         addonBefore="限购"
                         addonAfter="份"
                         min={0}
@@ -180,7 +182,7 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
           {goodsLimit && (
             <Form.Item label="限购提升">
               <Row>
-                <Col span={4} className="switch">
+                <Col span={2} className="switch">
                   <Switch
                     checked={goodsLimitUp}
                     checkedChildren="开启"
@@ -193,7 +195,7 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
 
                 {goodsLimitUp && (
                   <>
-                    <Col span={8}>
+                    <Col span={4}>
                       <Form.Item name={['purchaseConfig', 'addType']} label="用户分享商品且">
                         <Select>
                           {/* 限购上限增加任务类型1下单付款，2订单核销*/}
@@ -202,9 +204,10 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
                         </Select>
                       </Form.Item>
                     </Col>
-                    <Col span={6}>
+                    <Col span={4}>
                       <Form.Item name={['purchaseConfig', 'finishNum']} label="">
                         <InputNumber
+                          className="input-number"
                           addonAfter="笔订单"
                           min={0}
                           step={1}
@@ -217,9 +220,10 @@ const BaseInfo: React.FC<Props> = (props, ref) => {
                         />
                       </Form.Item>
                     </Col>
-                    <Col span={6}>
+                    <Col span={14}>
                       <Form.Item name={['purchaseConfig', 'addNum']} label="">
                         <InputNumber
+                          className="input-number"
                           addonBefore="限购加"
                           addonAfter="份"
                           min={0}

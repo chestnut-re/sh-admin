@@ -59,7 +59,7 @@ const AuditScreen: React.FC<Props> = ({ type }) => {
   const columns = [
     {
       title: '商品ID',
-      dataIndex: 'goodsId',
+      dataIndex: 'goodsNo',
       // render: (text, record, index) => `${index + 1}`,
     },
     {

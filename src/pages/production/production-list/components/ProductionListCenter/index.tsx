@@ -37,7 +37,7 @@ const ProductionListCenter: React.FC<any> = observer(({}) => {
   const columns = [
     {
       title: '商品ID',
-      dataIndex: 'id',
+      dataIndex: 'goodsNo',
     },
     {
       title: '商品名称',

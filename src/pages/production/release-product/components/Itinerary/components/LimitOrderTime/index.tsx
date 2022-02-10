@@ -14,7 +14,7 @@ const LimitRefundTime: React.FC = () => {
 
   return (
     <div className="LimitRefundTime__root">
-      <div className="label">截止下单时间</div>
+      <div className="label">下单截止时间</div>
       <span className="text">出发前</span>
       <div className="inputNumber">
         <InputNumber

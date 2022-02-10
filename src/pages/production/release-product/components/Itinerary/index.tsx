@@ -16,7 +16,7 @@ import { StickyContainer, Sticky } from 'react-sticky'
 import DateTimeDialog from './components/DateTimeDialog'
 import LimitOrderTime from './components/LimitOrderTime'
 import LimitRefundTime from './components/LimitRefundTime'
-
+import add2 from '@/assets/img/add2.png'
 /**
  * 行程信息
  */
@@ -36,6 +36,7 @@ const Itinerary = (props, ref) => {
   }))
 
   useEffect(() => {
+    console.log('Itinerary next', productionStore)
     setActiveKey(productionStore.data.goodsPrices[0].key)
   }, [productionStore.data.travelMode])
 
@@ -127,53 +128,61 @@ const Itinerary = (props, ref) => {
 
             <div className="footer">
               <div className="item">
-                <Button icon={<PlusOutlined />} onClick={() => setHotelDialogVisible(true)} type="dashed">
+                <Button className="item-btn" onClick={() => setHotelDialogVisible(true)} type="dashed">
+                  <img className="img" src={add2} />
                   添加酒店
                 </Button>
                 <Button
-                  icon={<PlusOutlined />}
+                  className="item-btn"
                   onClick={() => {
                     setScenicDialogVisible(true)
                   }}
                   type="dashed"
                 >
+                  <img className="img" src={add2} />
                   添加景区
                 </Button>
                 <Button
-                  icon={<PlusOutlined />}
+                  className="item-btn"
                   onClick={() => {
                     setMealDialogVisible(true)
                   }}
                   type="dashed"
                 >
+                  <img className="img" src={add2} />
                   添加饭店
                 </Button>
                 <Button
-                  icon={<PlusOutlined />}
+                  className="item-btn"
                   onClick={() => {
                     setTransportationDialogVisible(true)
                   }}
                   type="dashed"
                 >
+                  <img className="img" src={add2} />
                   添加交通
                 </Button>
                 <Button
-                  icon={<PlusOutlined />}
+                  className="item-btn"
                   onClick={() => {
                     productionStore.addTravelDetail(activeKey, 0, {})
                   }}
                   type="dashed"
                 >
+                  <img className="img" src={add2} />
                   添加一条
                 </Button>
-                <Button icon={<PlusOutlined />} onClick={addTravel} type="dashed">
+                <Button className="item-btn" onClick={addTravel} type="dashed">
+                  <img className="img" src={add2} />
                   行程+1天
                 </Button>
               </div>
               <div></div>
               {/* <div className="item">供应成本价: ￥{productionStore.data.goodsPrices[0].personCostPrice}</div> */}
               {/* <div className="item">市场标价: ￥{productionStore.data.goodsPrices[0].personMarkPrice}</div> */}
-              <div className="item">现售价 合计: ￥{productionStore.getCurrentPrice(activeKey)}</div>
+              <div className="item">
+                现售价 合计: <span className="price">￥{productionStore.getCurrentPrice(activeKey)}</span>
+              </div>
             </div>
           </div>
         </Row>

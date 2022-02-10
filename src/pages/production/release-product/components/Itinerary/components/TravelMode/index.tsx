@@ -13,8 +13,9 @@ const TravelModel: React.FC = () => {
 
   return (
     <div className="TravelModel__root">
-      出行时间:
+      <span className="time-name">出行时间:</span>
       <Radio.Group
+        size="small"
         value={productionStore.data.travelMode}
         buttonStyle="solid"
         onChange={(value) => {
@@ -29,11 +30,15 @@ const TravelModel: React.FC = () => {
           })
         }}
       >
-        <Radio.Button value={0}>固定时间</Radio.Button>
-        <Radio.Button value={1}>约定时间</Radio.Button>
+        <Radio.Button className="rad-btn" value={0}>
+          固定时间
+        </Radio.Button>
+        <Radio.Button className="rad-btn" value={1}>
+          约定时间
+        </Radio.Button>
       </Radio.Group>
       {/* <div>至少出行前48小时，最长不得超过45天</div> */}
-      <div>最长不得超过45天</div>
+      <div className="title"> 至少出行前48小时，最长不得超过45天</div>
     </div>
   )
 }
